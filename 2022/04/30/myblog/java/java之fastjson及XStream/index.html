@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="fastjson是阿里出品的处理JSON字符串的Java类库，可以对JSON字符串、JSON对象、Java对象进行互相转换。需要导入fastjson包。 String、JSONObject、Object转换一、字符串转成JSON对象&#x2F;数组字符串转成JSON对象JSON.parseObject(String text)JSON.parse(String text) 字符串转成JSON数组J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java之fastjson及XStream">
+<meta property="og:url" content="http://example.com/2022/04/30/myblog/java/java%E4%B9%8Bfastjson%E5%8F%8AXStream/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="fastjson是阿里出品的处理JSON字符串的Java类库，可以对JSON字符串、JSON对象、Java对象进行互相转换。需要导入fastjson包。 String、JSONObject、Object转换一、字符串转成JSON对象&#x2F;数组字符串转成JSON对象JSON.parseObject(String text)JSON.parse(String text) 字符串转成JSON数组J">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-30T01:44:44.290Z">
+<meta property="article:modified_time" content="2025-07-22T16:13:23.384Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/04/30/myblog/java/java%E4%B9%8Bfastjson%E5%8F%8AXStream/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>java之fastjson及XStream | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/30/myblog/java/java%E4%B9%8Bfastjson%E5%8F%8AXStream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java之fastjson及XStream
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-30 09:44:44" itemprop="dateCreated datePublished" datetime="2022-04-30T09:44:44+08:00">2022-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-23 00:13:23" itemprop="dateModified" datetime="2025-07-23T00:13:23+08:00">2025-07-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>fastjson是阿里出品的处理JSON字符串的Java类库，可以对JSON字符串、JSON对象、Java对象进行互相转换。需要导入fastjson包。</p>
+<h3 id="String、JSONObject、Object转换"><a href="#String、JSONObject、Object转换" class="headerlink" title="String、JSONObject、Object转换"></a>String、JSONObject、Object转换</h3><p>一、字符串转成JSON对象&#x2F;数组<br>字符串转成JSON对象<br>JSON.parseObject(String text)<br>JSON.parse(String text)</p>
+<p>字符串转成JSON数组<br>JSON.parseArray(String text)<br>JSON.parse(String text)</p>
+<p>二、字符串转成Java对象&#x2F;列表<br>字符串转成Java对象<br>JSON.parseObject(String text, Class<T> clazz)</p>
+<p>字符串转成Java对象列表<br>JSON.parseArray(String text, Class<T> clazz)</p>
+<p>三、Java对象&#x2F;列表转成JSON对象&#x2F;数组<br>Java对象转成JSON对象<br>JSONObject.toJSON(Object javaObject)<br>JSON.toJSON(Object javaObject)</p>
+<p>Java对象列表转成JSON数组<br>JSONArray.toJSON(Object javaObject)<br>JSON.toJSON(Object javaObject)</p>
+<p>四、JSON对象&#x2F;数组转成Java对象&#x2F;列表<br>JSON对象转成Java对象<br>JSON.toJavaObject(JSON json, Class<T> clazz)<br>jsonObject.toJavaObject(JSON json) (非静态方法)</p>
+<p>JSON数组转成Java对象列表<br>jsonArray.toJavaList(Class<T> clazz) (非静态方法)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line">import com.alibaba.fastjson.JSONArray;</span><br><span class="line">import com.alibaba.fastjson.JSONObject;</span><br><span class="line">import java.util.List;</span><br><span class="line"> </span><br><span class="line">public class FastJSONLearning &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    String jsonObjectStr = &quot;&#123;\&quot;prop\&quot;:\&quot;code\&quot;,\&quot;label\&quot;:\&quot;代码\&quot;,\&quot;required\&quot;:true,\&quot;key\&quot;:true&#125;&quot;;</span><br><span class="line">    String jsonArrayStr = &quot;[&#123;\&quot;prop\&quot;:\&quot;code\&quot;,\&quot;label\&quot;:\&quot;代码\&quot;,\&quot;required\&quot;:true,\&quot;key\&quot;:true&#125;,&#123;\&quot;prop\&quot;:\&quot;explain\&quot;,\&quot;label\&quot;:\&quot;中文释义\&quot;,\&quot;required\&quot;:true&#125;]&quot;;</span><br><span class="line"> </span><br><span class="line">    // 字符串转成JSON对象/数组</span><br><span class="line">    // 字符串转成JSON对象</span><br><span class="line">    // 方法1</span><br><span class="line">    JSONObject jsonObject1 = JSON.parseObject(jsonObjectStr);</span><br><span class="line">    System.out.println(&quot;字符串转成JSON对象: &quot; + jsonObject1);</span><br><span class="line"> </span><br><span class="line">    // 方法2</span><br><span class="line">    JSONObject jsonObject2 = (JSONObject) JSON.parse(jsonObjectStr);</span><br><span class="line">    System.out.println(&quot;字符串转成JSON对象: &quot; + jsonObject2);</span><br><span class="line"> </span><br><span class="line">    // 字符串转成JSON数组</span><br><span class="line">    // 方法1</span><br><span class="line">    JSONArray jsonArray1 = JSON.parseArray(jsonArrayStr);</span><br><span class="line">    System.out.println(&quot;字符串转成JSON数组: &quot; + jsonArray1);</span><br><span class="line"> </span><br><span class="line">    // 方法2</span><br><span class="line">    JSONArray jsonArray2 = (JSONArray) JSON.parse(jsonArrayStr);</span><br><span class="line">    System.out.println(&quot;字符串转成JSON数组: &quot; + jsonArray2);</span><br><span class="line"> </span><br><span class="line">    // 字符串转成Java对象/列表</span><br><span class="line">    // 字符串转成Java对象</span><br><span class="line">    Dict dict = JSON.parseObject(jsonObjectStr, Dict.class);</span><br><span class="line">    System.out.println(&quot;字符串转成Java对象: &quot; + dict.toString());</span><br><span class="line"> </span><br><span class="line">    // 字符串转成Java对象列表</span><br><span class="line">    List&lt;Dict&gt; dictList = JSON.parseArray(jsonArrayStr, Dict.class);</span><br><span class="line">    System.out.println(&quot;字符串转成Java对象列表: &quot; + dictList.toString());</span><br><span class="line"> </span><br><span class="line">    // Java对象/列表转成JSON对象/数组</span><br><span class="line">    // Java对象转成JSON对象</span><br><span class="line">    // 方法1</span><br><span class="line">    JSONObject jsonObject3 = (JSONObject) JSONObject.toJSON(dict);</span><br><span class="line">    System.out.println(&quot;Java对象转成JSON对象: &quot; + jsonObject3.toJSONString());</span><br><span class="line"> </span><br><span class="line">    // 方法2</span><br><span class="line">    JSONObject jsonObject4 = (JSONObject) JSON.toJSON(dict);</span><br><span class="line">    System.out.println(&quot;Java对象转成JSON对象: &quot; + jsonObject4.toJSONString());</span><br><span class="line"> </span><br><span class="line">    // Java对象列表转成JSON数组</span><br><span class="line">    // 方法1</span><br><span class="line">    JSONArray jsonArray3 = (JSONArray) JSONArray.toJSON(dictList);</span><br><span class="line">    System.out.println(&quot;Java对象列表转成JSON数组: &quot; + jsonArray3.toJSONString());</span><br><span class="line"> </span><br><span class="line">    // 方法2</span><br><span class="line">    JSONArray jsonArray4 = (JSONArray) JSON.toJSON(dictList);</span><br><span class="line">    System.out.println(&quot;Java对象列表转成JSON数组: &quot; + jsonArray4.toJSONString());</span><br><span class="line"> </span><br><span class="line">    // JSON对象/数组转成Java对象/列表</span><br><span class="line">    // JSON对象转成Java对象</span><br><span class="line">    // 方法1</span><br><span class="line">    Dict dict1 = JSON.toJavaObject(jsonObject1, Dict.class);</span><br><span class="line">    System.out.println(&quot;JSON对象转成Java对象: &quot; + dict1);</span><br><span class="line"> </span><br><span class="line">    // JSON对象转成Java对象</span><br><span class="line">    // 方法2</span><br><span class="line">    Dict dict2 = jsonObject1.toJavaObject(Dict.class);</span><br><span class="line">    System.out.println(&quot;JSON对象转成Java对象: &quot; + dict2);</span><br><span class="line"> </span><br><span class="line">    // JSON数组转成Java对象列表</span><br><span class="line">    List&lt;Dict&gt; dictList1 = jsonArray1.toJavaList(Dict.class);</span><br><span class="line">    System.out.println(&quot;JSON数组转成Java对象列表: &quot; + dictList1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lasdaybg/p/15144350.html">https://www.cnblogs.com/lasdaybg/p/15144350.html</a></p>
+<h3 id="json文件中获取"><a href="#json文件中获取" class="headerlink" title="json文件中获取"></a>json文件中获取</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class JsonTest &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void TestJ()&#123;</span><br><span class="line">        try&#123;</span><br><span class="line">            File jsonFile = ResourceUtils.getFile(&quot;classpath:hello.json&quot;);</span><br><span class="line">            String s = FileUtils.readFileToString(jsonFile);</span><br><span class="line">            System.out.println(&quot;s:&quot;+s);</span><br><span class="line">        &#125; catch(Exception e) &#123;</span><br><span class="line">            System.out.println(&quot;error:&quot;+e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FileUtils 需要导包：commons-io。<br>classpath表示项目中的resource文件夹。</p>
+<h3 id="JSONObject、JSONArray"><a href="#JSONObject、JSONArray" class="headerlink" title="JSONObject、JSONArray"></a>JSONObject、JSONArray</h3><p>也是fastjson下的</p>
+<p>JSON是互联网开发过程中应用最广泛的一种数据类型，不管是后端API接口中，还是在前端都能得到广泛应用。JSON 就是一种轻量级的数据交换格式，被广泛应用于 WEB 应用程序开发</p>
+<p>在线解析：<a target="_blank" rel="noopener" href="https://c.runoob.com/front-end/53/">https://c.runoob.com/front-end/53/</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;area&quot;: &quot;山东菏泽&quot;,</span><br><span class="line">  &quot;name&quot;: &quot;马马马马马百万&quot;,</span><br><span class="line">  &quot;age&quot;: [1,2,3]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JSON、JSON对象、JSON数组区别<br>JSON 呢只是一种宏观上的叫法，可以理解为是一种数据结构，就像 xml 结构一样，是一种规约性内容；而 JSON 对象则是对 JSON 的具体体现；JSON 数组则是将多个 JSON 对象进行存储的一个集合，可以想象成 Java 中的 List 和 Object 的关系</p>
+<h4 id="JSONObject"><a href="#JSONObject" class="headerlink" title="JSONObject"></a>JSONObject</h4><p>JSONObject 是根据 JSON 形式在 Java 中存在的对象映射<br>各大 JSON 类库的 JSONObject 内部实现也是不太一样的。<br>例如fastjson：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class JSONObject extends JSON implements Map&lt;String, Object&gt;, Cloneable, Serializable, InvocationHandler &#123;</span><br><span class="line">&#125;</span><br><span class="line">对 HashMap 的一层封装，并提供了一些个性化方法。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JSONObject json = new JSONObject();</span><br><span class="line">json.put(&quot;key&quot;,&quot;value&quot;);</span><br><span class="line">json.put(&quot;key1&quot;,&quot;11&quot;);</span><br><span class="line">System.out.println(json.getInteger(&quot;key1&quot;));</span><br><span class="line">System.out.println(json.getString(&quot;key&quot;));</span><br></pre></td></tr></table></figure>
+
+<h4 id="JSONArray"><a href="#JSONArray" class="headerlink" title="JSONArray"></a>JSONArray</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class JSONArray extends JSON implements List&lt;Object&gt;, Cloneable, RandomAccess, Serializable &#123;</span><br><span class="line">&#125;</span><br><span class="line">一个 List 中 套了个 Map 类结构</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JSONObject person = new JSONObject();</span><br><span class="line">person.put(&quot;name&quot;, &quot;马马马马马百万&quot;);</span><br><span class="line">JSONObject drug = new JSONObject();</span><br><span class="line">drug.put(&quot;drugName&quot;, &quot;盐酸丁卡因注射液&quot;);</span><br><span class="line">JSONArray array = new JSONArray();</span><br><span class="line">array.add(person);</span><br><span class="line">array.add(drug);</span><br></pre></td></tr></table></figure>
+
+<h4 id="各种转换"><a href="#各种转换" class="headerlink" title="各种转换"></a>各种转换</h4><p>普通对象、json字符串、jsonObject</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">将对象转换为json字符串</span><br><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line">String jsonStr = JSON.toJSONString(person);</span><br><span class="line">将json字符串转换为JSONObject对象</span><br><span class="line">JSONObject jsonObject = JSON.parseObject(jsonStr);</span><br><span class="line">将JSONObject 转换为对象</span><br><span class="line">JSONObject person = new JSONObject();</span><br><span class="line">person.put(&quot;name&quot;, &quot;马马马马马百万&quot;);</span><br><span class="line">person.put(&quot;age&quot;, 25);</span><br><span class="line">Student stuObj = JSON.toJavaObject(person, Student.class);</span><br></pre></td></tr></table></figure>
+
+<h3 id="一个对象转换为另一个对象"><a href="#一个对象转换为另一个对象" class="headerlink" title="一个对象转换为另一个对象"></a>一个对象转换为另一个对象</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B = JSON.parseObject(JSON.toString(a), b.class)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="getJSONObject、getJSONArray"><a href="#getJSONObject、getJSONArray" class="headerlink" title="getJSONObject、getJSONArray"></a>getJSONObject、getJSONArray</h3><p>Fastjson中getJSONObject()与getJSONArray()，用于获取JSONObject里的JSONObject、JSONArray()。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;    &quot;package&quot;: &#123;</span><br><span class="line">        &quot;List1&quot;: &#123;</span><br><span class="line">            &quot;errorCode&quot;: &quot;0&quot;,</span><br><span class="line">            &quot;errorMsg&quot;: &quot;Success&quot;,</span><br><span class="line">            &quot;receiverTradeNum&quot;: &quot;&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;List2&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;medicalNum&quot;: &quot;15XXXXXX&quot;,</span><br><span class="line">                &quot;queryDate&quot;: &quot;YYYYMMDD&quot;,</span><br><span class="line">                &quot;name&quot;: &quot;XXX&quot;,</span><br><span class="line">                &quot;authorizationNum&quot;: &quot;xxxxx&quot;,</span><br><span class="line">                &quot;pageNum&quot;: &quot;1&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">JSONObject jsonObj = JSON.parseObject(jsonStr);</span><br><span class="line">JSONObject package = jsonObj.getJSONObject(&quot;package&quot;);     // 定位到package json对象</span><br><span class="line">JSONArray list = package.getJSONArray(&quot;List2&quot;);   //采用getJSONArray方法， 定位到json集合</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="XStream"><a href="#XStream" class="headerlink" title="XStream"></a>XStream</h3><p>XStream是Java类库，用来将对象序列化成XML（JSON）或反序列化为对象。<br>也就是说，使用XStream，我们可以把Java对象转换成XML，也可以将XML转换为Java对象。</p>
+<p>依赖：<br>XStream的必导JAR包：<br>核心JAR包：xstream-1.4.7.jar；<br>必须依赖包：xpp3_min-1.1.4c.jar（XML Pull Parser，一款速度很快的XML解析器）。</p>
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">XStream xStream = new XStream();</span><br><span class="line">xStream.alias(&quot;china&quot;, List.class);   //标签类换成指定字符</span><br><span class="line">xStream.alias(&quot;province&quot;, Province.class);</span><br><span class="line">xStream.alias(&quot;city&quot;, City.class);</span><br><span class="line"></span><br><span class="line">xStream.useAttributeFor(Province.class, &quot;name&quot;); //子元素编程熟悉</span><br><span class="line">xStream.addImplicitCollection(Province.class, &quot;cities&quot;);  //去掉cities标签</span><br><span class="line"></span><br><span class="line">String string = xStream.toXML(proList);</span><br><span class="line">System.out.println(string);</span><br></pre></td></tr></table></figure>
+
+<p>更多：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u014565127/article/details/104419528">https://blog.csdn.net/u014565127/article/details/104419528</a></p>
+<p><strong>高并发情况下的性能问题</strong></p>
+<p>项目中使用了XStream进行XML序列化、反序列化的方案，完成服务之间的接口报文Object与Xmlg格式之间的转化。</p>
+<p>当线上业务量并不大的情况下，一切正常；但是发现当业务量突然加大的情况下，突然发现，线上服务器出现CPU居高不下，服务接口调用速度越来越慢，研究JVM日志分析，发现出现很多的RUNNABLE问题。</p>
+<p>问题原因：XStream在new的时候会创建CompositeClassLoader（初始类加载器），并且不断new会不断创建，导致ygc需要扫描的内容越来越多，最终导致接口调用性能下降。</p>
+<p>XStream是线程安全的，不需要重复初始化xstream对象，每一种类型实例化一个对象即可，而正是由于开发人员错误地在每次处理时都实例化一个新的xstream对象，才导致了该问题。</p>
+<p>解决：单列模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">原来：</span><br><span class="line">XStream xstream = XStreamInitializer.getInstance();</span><br><span class="line">xstream.processAnnotations(this.getClass());</span><br><span class="line">xstream.aliasSystemAttribute(null, &quot;class&quot;);</span><br><span class="line">return xstream.toXML(this);</span><br><span class="line"></span><br><span class="line">现在：</span><br><span class="line">实现单列：</span><br><span class="line">public class XmlHandler&#123;</span><br><span class="line"></span><br><span class="line">    private static final ConcurrentHashMap xStream = new ConcurrentHashMap&lt;String, XStream&gt;();</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * 初始化</span><br><span class="line">     * @param objName</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    private static XStream getXStream(Class&lt;?&gt; objName) &#123;</span><br><span class="line">        String key = objName.getName();</span><br><span class="line">        if (xStream.get(key) == null)</span><br><span class="line">            xStream.put(key, new XStream());</span><br><span class="line">        return (XStream) xStream.get(key);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">序列化：</span><br><span class="line">XStream xstream = XmlHandler.getXStream(Dog.class);</span><br><span class="line">xstream.processAnnotations(Dog.class);</span><br><span class="line">String xml = xstream.toXML(dog);</span><br><span class="line"></span><br><span class="line">反序列化：</span><br><span class="line">XStream xStream = XmlHandler.getXStream(Dog.class);</span><br><span class="line">xStream.processAnnotations(Dog.class);</span><br><span class="line">Dog dog = (Dog) xStream.fromXML(xml);</span><br></pre></td></tr></table></figure>
+
+<p>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43767602/article/details/114824028">https://blog.csdn.net/weixin_43767602/article/details/114824028</a></p>
+<h3 id="JSON与XML转化"><a href="#JSON与XML转化" class="headerlink" title="JSON与XML转化"></a>JSON与XML转化</h3><p>详见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CDWLX/article/details/119038509">https://blog.csdn.net/CDWLX/article/details/119038509</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_37366055/article/details/110468129">https://blog.csdn.net/baidu_37366055/article/details/110468129</a></p>
+<p>xml转json：用 org.jdom，用 dom 提取节点 转成map<br>json转xml： com.alibaba.fastjson.JSONObject</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.jdom&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;jdom&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.1.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;dom4j&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;dom4j&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.6.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;gson&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.2.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.16.graal&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br></pre></td><td class="code"><pre><span class="line">package org.example.javaer;</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.FileOutputStream;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.StringReader;</span><br><span class="line">import java.io.StringWriter;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Map.Entry;</span><br><span class="line">import java.util.Set;</span><br><span class="line"></span><br><span class="line">import org.dom4j.io.OutputFormat;</span><br><span class="line">import org.dom4j.io.SAXReader;</span><br><span class="line">import org.dom4j.io.XMLWriter;</span><br><span class="line">import org.jdom.Document;</span><br><span class="line">import org.jdom.Element;</span><br><span class="line">import org.jdom.JDOMException;</span><br><span class="line">import org.jdom.input.SAXBuilder;</span><br><span class="line">import org.xml.sax.InputSource;</span><br><span class="line"></span><br><span class="line">import com.alibaba.fastjson.JSON;</span><br><span class="line">import com.alibaba.fastjson.JSONArray;</span><br><span class="line">import com.alibaba.fastjson.JSONObject;</span><br><span class="line"></span><br><span class="line">public class JsonXML &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line">        //请注意使用正常的xml</span><br><span class="line">        //xml-&gt;json</span><br><span class="line">//      String jsonStr = xmlToJson(&quot;D:\\NewFile.xml&quot;, null);</span><br><span class="line">//      System.out.println(jsonStr);</span><br><span class="line"></span><br><span class="line">        //json-&gt;xml</span><br><span class="line">        String xmlstr = jsonToXml(&quot;&#123;\&quot;b_content\&quot;:&#123;\&quot;sdata\&quot;:\&quot;Ps/DPJnZZPN6QQJQodY3+hK6PWCF3/2oi3DJPnFEXgKDrXX5rHT7q/I0nQPAruuBbQRfErnenQNvPpbf/lXl690qtye0/ZEuDs0ByFdFAGffQalB+Ij3lLUMDPz=\&quot;,\&quot;userobj\&quot;:&#123;\&quot;uid\&quot;:\&quot;ma000\&quot;,\&quot;realtype\&quot;:\&quot;DC\&quot;,\&quot;cn\&quot;:\&quot;法人用户2\&quot;,\&quot;tokenid\&quot;:\&quot;\&quot;,\&quot;usertype\&quot;:\&quot;2\&quot;,\&quot;link_person_name\&quot;:\&quot;联系人2\&quot;,\&quot;isreal\&quot;:\&quot;true\&quot;,\&quot;telephonenumber\&quot;:\&quot;13*******21\&quot;,\&quot;mail\&quot;:\&quot;ceshi@123.com\&quot;,\&quot;idcardtype\&quot;:\&quot;10\&quot;,\&quot;createtime\&quot;:\&quot;20150618191221\&quot;,\&quot;extproperties\&quot;:[\&quot;address=广东省广州市天河区天河北路XXX号\&quot;,\&quot;legal_code=440***********033\&quot;,\&quot;ent_type=-1\&quot;,\&quot;link_person_code=350************14\&quot;,\&quot;origin=gdbs\&quot;,\&quot;card_type_two_num=-1\&quot;,\&quot;cert_ca=-1\&quot;,\&quot;accout_type=2\&quot;,\&quot;account_uid=2\&quot;,\&quot;comm_code=-1\&quot;,\&quot;unit_type=-1\&quot;,\&quot;legal_id_type=10\&quot;,\&quot;landline=-1\&quot;,\&quot;tax_code=-1\&quot;,\&quot;cert_notafter=-1\&quot;,\&quot;card_type_one_num=-1\&quot;,\&quot;local_user=-1\&quot;,\&quot;legal_person=郑**\&quot;,\&quot;link_person_type=10\&quot;,\&quot;card_type_three=-1\&quot;,\&quot;card_type_two=-1\&quot;,\&quot;card_type_three_num=-1\&quot;,\&quot;cert_data=-1\&quot;,\&quot;area=guangzhou\&quot;,\&quot;uversion=3.0\&quot;,\&quot;cert_notbefore=-1\&quot;,\&quot;card_type_one=-1\&quot;,\&quot;user_typeext=2\&quot;],\&quot;idcardnumber\&quot;:\&quot;11***************23\&quot;,\&quot;useridcode\&quot;:\&quot;38c97fa1ee2e43d4a664cffc4554cde4\&quot;,\&quot;creditable_level_of_account_way\&quot;:\&quot;L2@YSS@2088******653||L0@IDV@44088******75||L3@GW@44088******75\&quot;,\&quot;creditable_level_of_account\&quot;:\&quot;L3\&quot;&#125;,\&quot;pareobj\&quot;:&#123;\&quot;uid\&quot;:\&quot;mayintao\&quot;,\&quot;realtype\&quot;:\&quot;DC\&quot;,\&quot;cn\&quot;:\&quot;单位用户2\&quot;,\&quot;tokenid\&quot;:\&quot;\&quot;,\&quot;usertype\&quot;:\&quot;2\&quot;,\&quot;link_person_name\&quot;:\&quot;联系人2\&quot;,\&quot;isreal\&quot;:\&quot;true\&quot;,\&quot;telephonenumber\&quot;:\&quot;13*******21\&quot;,\&quot;mail\&quot;:\&quot;ceshi@123.com\&quot;,\&quot;idcardtype\&quot;:\&quot;50\&quot;,\&quot;createtime\&quot;:\&quot;20150618191221\&quot;,\&quot;extproperties\&quot;:[\&quot;address=广东省广州市东山区\&quot;,\&quot;legal_id_type=-1\&quot;,\&quot;link_person_type=-1\&quot;,\&quot;legal_code=-1\&quot;,\&quot;origin=gdbs\&quot;,\&quot;tax_code=-1\&quot;,\&quot;legal_person=-1\&quot;,\&quot;area=shenzhen\&quot;,\&quot;link_person_code=-1\&quot;,\&quot;user_typeext=2\&quot;,\&quot;uversion=1.0\&quot;],\&quot;idcardnumber\&quot;:\&quot;456787654\&quot;,\&quot;useridcode\&quot;:\&quot;75c91fagrr2e67d4a169cfmc8735ctrf\&quot;,\&quot;creditable_level_of_account_way\&quot;:\&quot;L2@YSS@2088******653||L0@IDV@44088******75||L3@GW@44088******75\&quot;,\&quot;creditable_level_of_account\&quot;:\&quot;L3\&quot;&#125;,\&quot;user_creditable_level\&quot;:&#123;\&quot;creditable_level_of_account_way\&quot;:\&quot;L2@YSS@2088******653||L0@IDV@44088******75||L3@GW@44088******75\&quot;,\&quot;creditable_level_of_account_way_list\&quot;:[&#123;\&quot;auth_time\&quot;:\&quot;2018-02-28 16:45:26\&quot;,\&quot;uniqueid\&quot;:\&quot;***86f93fb61***\&quot;,\&quot;user_name\&quot;:\&quot;郭**\&quot;,\&quot;auth_identification\&quot;:\&quot;2088******653\&quot;,\&quot;identity_level\&quot;:\&quot;L2\&quot;,\&quot;credential_no\&quot;:\&quot;44088******75\&quot;,\&quot;way_code\&quot;:\&quot;YSS\&quot;&#125;,&#123;\&quot;auth_time\&quot;:null,\&quot;uniqueid\&quot;:\&quot;***764486f93fb61212***\&quot;,\&quot;user_name\&quot;:\&quot;郭**\&quot;,\&quot;auth_identification\&quot;:\&quot;44088******75\&quot;,\&quot;identity_level\&quot;:\&quot;L0\&quot;,\&quot;credential_no\&quot;:\&quot;44088******75\&quot;,\&quot;way_code\&quot;:\&quot;IDV\&quot;&#125;,&#123;\&quot;auth_time\&quot;:\&quot;2018-02-13 17:12:31\&quot;,\&quot;uniqueid\&quot;:\&quot;*****764486f93fb612122*****\&quot;,\&quot;user_name\&quot;:\&quot;郭**\&quot;,\&quot;auth_identification\&quot;:\&quot;44088******75\&quot;,\&quot;identity_level\&quot;:\&quot;L3\&quot;,\&quot;credential_no\&quot;:\&quot;44088******75\&quot;,\&quot;way_code\&quot;:\&quot;GW\&quot;&#125;],\&quot;creditable_level_of_account\&quot;:\&quot;L3\&quot;&#125;&#125;,\&quot;time_stamp\&quot;:\&quot;20200821\&quot;,\&quot;version \&quot;:\&quot;v1\&quot;,\&quot;sign\&quot;:\&quot;rxf0MFT7eQqYgYKWtgzNBi6mhS2tbqkPgI \&quot;&#125;&quot;);</span><br><span class="line">        System.out.println(xmlstr);</span><br><span class="line">        createXMLFile(formatXML(xmlstr), &quot;测试&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * xml转json字符串 注意:路径和字符串二传一另外一个传null&lt;br&gt;</span><br><span class="line">     * 方 法 名：xmlToJson &lt;br&gt;</span><br><span class="line">     * @param xmlPath xml路径(和字符串二传一,两样都传优先使用路径)</span><br><span class="line">     * @param xmlStr xml字符串(和路径二传一,两样都传优先使用路径)</span><br><span class="line">     * @return String</span><br><span class="line">     * @throws IOException</span><br><span class="line">     * @throws JDOMException</span><br><span class="line">     */</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public static String xmlToJson(String xmlPath,String xmlStr)&#123;</span><br><span class="line">        SAXBuilder sbder = new SAXBuilder();</span><br><span class="line">        Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();</span><br><span class="line">        Document document;</span><br><span class="line">        try &#123;</span><br><span class="line">            if(xmlPath!=null)&#123;</span><br><span class="line">                //路径</span><br><span class="line">                document = sbder.build(new File(xmlPath));</span><br><span class="line">            &#125;else if(xmlStr!=null)&#123;</span><br><span class="line">                //xml字符</span><br><span class="line">                StringReader reader = new StringReader(xmlStr);</span><br><span class="line">                InputSource ins = new InputSource(reader);</span><br><span class="line">                document = sbder.build(ins);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                return &quot;&#123;&#125;&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">            //获取根节点</span><br><span class="line">            Element el =  document.getRootElement();</span><br><span class="line">            List&lt;Element&gt; eList =  el.getChildren();</span><br><span class="line">            Map&lt;String, Object&gt; rootMap = new HashMap&lt;String, Object&gt;();</span><br><span class="line">            //得到递归组装的map</span><br><span class="line">            rootMap = xmlToMap(eList,rootMap);</span><br><span class="line">            map.put(el.getName(), rootMap);</span><br><span class="line">            //将map转换为json 返回</span><br><span class="line">            return JSON.toJSONString(map);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            return &quot;&#123;&#125;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * json转xml&lt;br&gt;</span><br><span class="line">     * 方 法 名：jsonToXml &lt;br&gt;</span><br><span class="line">     * @param json</span><br><span class="line">     * @return String</span><br><span class="line">     */</span><br><span class="line">    public static String jsonToXml(String json)&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            StringBuffer buffer = new StringBuffer();</span><br><span class="line">            buffer.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&quot;);</span><br><span class="line">            buffer.append(&quot;&lt;base&gt;&quot;);</span><br><span class="line">            JSONObject jObj = JSON.parseObject(json);</span><br><span class="line">            jsonToXmlstr(jObj,buffer);</span><br><span class="line">            buffer.append(&quot;&lt;/base&gt;&quot;);</span><br><span class="line">            return buffer.toString();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * json转str&lt;br&gt;</span><br><span class="line">     * 方 法 名：jsonToXmlstr &lt;br&gt;</span><br><span class="line">     * @param jObj</span><br><span class="line">     * @param buffer</span><br><span class="line">     * @return String</span><br><span class="line">     */</span><br><span class="line">    public static String jsonToXmlstr(JSONObject jObj,StringBuffer buffer )&#123;</span><br><span class="line">        Set&lt;Entry&lt;String, Object&gt;&gt;  se = jObj.entrySet();</span><br><span class="line">        for( Iterator&lt;Entry&lt;String, Object&gt;&gt;   it = se.iterator();  it.hasNext(); )</span><br><span class="line">        &#123;</span><br><span class="line">            Entry&lt;String, Object&gt; en = it.next();</span><br><span class="line">            if(en.getValue() != null &amp;&amp; en.getValue().getClass().getName().equals(&quot;com.alibaba.fastjson.JSONObject&quot;))&#123;</span><br><span class="line">                buffer.append(&quot;&lt;&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">                JSONObject jo = jObj.getJSONObject(en.getKey());</span><br><span class="line">                jsonToXmlstr(jo,buffer);</span><br><span class="line">                buffer.append(&quot;&lt;/&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">            &#125;else if(en.getValue() != null &amp;&amp; en.getValue().getClass().getName().equals(&quot;com.alibaba.fastjson.JSONArray&quot;))&#123;</span><br><span class="line">                if (en.getKey().equals(&quot;extproperties&quot;)) &#123;</span><br><span class="line">                    JSONArray ja = jObj.getJSONArray(en.getKey());</span><br><span class="line">                    Iterator&lt;Object&gt; it1 = ja.iterator();</span><br><span class="line">                    List&lt;String&gt; list=new ArrayList&lt;String&gt;();</span><br><span class="line">                    while (it1.hasNext()) &#123;</span><br><span class="line">                        String ob = (String) it1.next();</span><br><span class="line">                        System.out.println(ob);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    JSONArray jarray = jObj.getJSONArray(en.getKey());</span><br><span class="line">                    for (int i = 0; i &lt; jarray.size(); i++) &#123;</span><br><span class="line">                        buffer.append(&quot;&lt;&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">                        JSONObject jsonobject =  jarray.getJSONObject(i);</span><br><span class="line">                        jsonToXmlstr(jsonobject,buffer);</span><br><span class="line">                        buffer.append(&quot;&lt;/&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;else if(en.getValue() != null &amp;&amp; en.getValue().getClass().getName().equals(&quot;java.lang.String&quot;))&#123;</span><br><span class="line">                buffer.append(&quot;&lt;&quot;+en.getKey()+&quot;&gt;&quot;+en.getValue());</span><br><span class="line">                buffer.append(&quot;&lt;/&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                buffer.append(&quot;&lt;&quot;+en.getKey()+&quot;&gt;&quot;+&quot;&quot;);</span><br><span class="line">                buffer.append(&quot;&lt;/&quot;+en.getKey()+&quot;&gt;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        return buffer.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 节点转map&lt;br&gt;</span><br><span class="line">     * 方 法 名：xmlToMap &lt;br&gt;</span><br><span class="line">     * @param eList</span><br><span class="line">     * @param map</span><br><span class="line">     * @return Map&lt;String,Object&gt;</span><br><span class="line">     */</span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public static Map&lt;String, Object&gt; xmlToMap(List&lt;Element&gt; eList,Map&lt;String, Object&gt; map)&#123;</span><br><span class="line">        for (Element e : eList) &#123;</span><br><span class="line">            Map&lt;String, Object&gt; eMap = new HashMap&lt;String, Object&gt;();</span><br><span class="line">            List&lt;Element&gt; elementList = e.getChildren();</span><br><span class="line">            if(elementList!=null&amp;&amp;elementList.size()&gt;0)&#123;</span><br><span class="line">                eMap = xmlToMap(elementList,eMap);</span><br><span class="line">                Object obj = map.get(e.getName());</span><br><span class="line">                if(obj!=null)&#123;</span><br><span class="line">                    List&lt;Object&gt; olist = new ArrayList&lt;Object&gt;();</span><br><span class="line">                    if(obj.getClass().getName().equals(&quot;java.util.HashMap&quot;))&#123;</span><br><span class="line">                        olist.add(obj);</span><br><span class="line">                        olist.add(eMap);</span><br><span class="line"></span><br><span class="line">                    &#125;else if(obj.getClass().getName().equals(&quot;java.util.ArrayList&quot;))&#123;</span><br><span class="line">                        olist = (List&lt;Object&gt;)obj;</span><br><span class="line">                        olist.add(eMap);</span><br><span class="line">                    &#125;</span><br><span class="line">                    map.put(e.getName(), olist);</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    map.put(e.getName(), eMap);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                map.put(e.getName(), e.getValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 将已经格式化的xml字符串写入xml文件</span><br><span class="line">     * @param xmlStr</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static boolean createXMLFile(String xmlStr,String xmlName)&#123;</span><br><span class="line">        boolean flag = false;</span><br><span class="line">        try &#123;</span><br><span class="line">            XMLWriter output = null;</span><br><span class="line">            //OutputFormat   format   =   OutputFormat.createPrettyPrint();</span><br><span class="line">            //format.setSuppressDeclaration(true);</span><br><span class="line">            // format.setEncoding(&quot;UTF-8&quot;);</span><br><span class="line"></span><br><span class="line">            //如果上面设置的xml编码类型为GBK，则应当用FileWriter来构建xml文件，否则会出现中文连码问题</span><br><span class="line">                /*outpt = new XMLWriter(</span><br><span class="line">                        new FileWriter(</span><br><span class="line">                                new File(&quot;D:/myeclipse/Workspaces/fusionChartsDemoTest/WebRoot/xml/&quot;+xmlName+&quot;.xml&quot;)) ,</span><br><span class="line">                                    format);</span><br><span class="line">                  */</span><br><span class="line"></span><br><span class="line">            //如果上面设置的xml编码类型为utf-8，则应当用FileOutputStream来构建xml文件，否则还是会出现问题</span><br><span class="line">            output = new XMLWriter(</span><br><span class="line">                    new FileOutputStream(</span><br><span class="line">                            new File(&quot;D:/&quot;+xmlName+&quot;.xml&quot;)));</span><br><span class="line">            output.setEscapeText(false);</span><br><span class="line">            output.write( xmlStr );</span><br><span class="line">            output.close();</span><br><span class="line">            return flag = true;</span><br><span class="line"></span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return flag;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static  String formatXML(String str) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        SAXReader reader=new SAXReader();</span><br><span class="line"></span><br><span class="line">        //创建一个串的字符输入流</span><br><span class="line">        StringReader in=new StringReader(str);</span><br><span class="line">        org.dom4j.Document doc=reader.read(in);</span><br><span class="line">        // 创建输出格式</span><br><span class="line">        OutputFormat formater=OutputFormat.createPrettyPrint();</span><br><span class="line">        //去掉xml文件的版本信息</span><br><span class="line">        //formater.setSuppressDeclaration(true);</span><br><span class="line">        //设置xml的输出编码</span><br><span class="line">        formater.setEncoding(&quot;UTF-8&quot;);</span><br><span class="line">        //创建输出(目标)</span><br><span class="line">        StringWriter out=new StringWriter();</span><br><span class="line">        //创建输出流</span><br><span class="line">        XMLWriter writer=new XMLWriter(out,formater);</span><br><span class="line">        //输出格式化的串到目标中，执行后。格式化后的串保存在out中。</span><br><span class="line">        writer.write(doc);</span><br><span class="line"></span><br><span class="line">        writer.close();</span><br><span class="line"></span><br><span class="line">        // System.out.println(out.toString());</span><br><span class="line"></span><br><span class="line">        //返回我们格式化后的结果</span><br><span class="line">        return out.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/29/myblog/java/java%E5%B8%B8%E8%A7%84%E6%B3%A8%E8%A7%A3/" rel="prev" title="java常规注解">
+      <i class="fa fa-chevron-left"></i> java常规注解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/30/myblog/java/java%E6%8E%A5%E5%8F%A3&%E7%B1%BB/" rel="next" title="java常规接口、类">
+      java常规接口、类 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#String%E3%80%81JSONObject%E3%80%81Object%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">String、JSONObject、Object转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json%E6%96%87%E4%BB%B6%E4%B8%AD%E8%8E%B7%E5%8F%96"><span class="nav-number">2.</span> <span class="nav-text">json文件中获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSONObject%E3%80%81JSONArray"><span class="nav-number">3.</span> <span class="nav-text">JSONObject、JSONArray</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONObject"><span class="nav-number">3.1.</span> <span class="nav-text">JSONObject</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONArray"><span class="nav-number">3.2.</span> <span class="nav-text">JSONArray</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E8%BD%AC%E6%8D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">各种转换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text">一个对象转换为另一个对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getJSONObject%E3%80%81getJSONArray"><span class="nav-number">5.</span> <span class="nav-text">getJSONObject、getJSONArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XStream"><span class="nav-number">6.</span> <span class="nav-text">XStream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON%E4%B8%8EXML%E8%BD%AC%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">JSON与XML转化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

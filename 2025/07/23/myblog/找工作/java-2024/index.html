@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之java2024">
+<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
+<meta property="article:modified_time" content="2025-07-22T16:50:21.162Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之java2024 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之java2024
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-23 00:44:10 / Modified: 00:50:21" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><ul>
+<li>jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针）</li>
+<li>jmm内存模型：多线程环境下对共享变量的同步，保证多线程环境下的可见性、有序性。主内存和工作内存，可见性volatile线程更改了工作内存中的共享变量其他线程能够立马看到，有序性volatile禁止指令重排synchronized锁，原子性synchronized和CAS无锁的原子操作</li>
+</ul>
+<h2 id="锁、并发编程"><a href="#锁、并发编程" class="headerlink" title="锁、并发编程"></a>锁、并发编程</h2><ul>
+<li><p>java有哪些锁：内置锁synchronized、重入锁ReentrantLock、读写锁ReadWriteLock、条件锁Condition</p>
+</li>
+<li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
+</li>
+<li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>CAS：无锁的原子操作，用来在并发编程中实现无锁同步。非阻塞的，减少锁开销。ABA问题，导致自旋，消耗CPU，只能一个变量的原子操作。</p>
+</li>
+<li><p>ReentrantLock：可重入的互斥锁，可重入、API层面锁、可响应中断、可公平不公平、Condition分离对象的等待集合。原理：队列同步器AQS，中volatile变量state记录锁的状态和重入次数，CAS操作更新状态变量和加入等待队列和更新队列头节点，FIFO队列管理等待锁的线程。</p>
+</li>
+<li><p>Condition：条件锁，与ReentrantLock结合使用，更精细控制等待唤醒，有选择地唤醒等待中的线程。</p>
+</li>
+<li><p>公平锁和非公平锁：公平锁所有线程都会被阻塞，非公平锁获锁之前不管等待队列，减少唤醒线程上下文切换开销。</p>
+</li>
+<li><p>信号量Semaphore：控制对有限资源访问的计数器，实现资源池，控制并发数。permit为1时互斥锁。</p>
+</li>
+<li><p>闭锁CountDownLatch：用于等待一组线程都完成之后才继续操作，不可重用。</p>
+</li>
+<li><p>栅栏CyclicBarrier：一组线程互相等待都达到某个屏障点再继续执行，可重用。</p>
+</li>
+<li><p>读写锁ReadWriteLock：可同时读，写操作互斥，原理AQS，状态变量按位切割记录多个线程状态。锁降级：在释放写锁之前先获取读锁，避免在释放写锁和获取读锁之间其他线程修改变量，保证可见性。因为同一线程，所以允许获取读锁。</p>
+</li>
+<li><p>AQS：AbstractQueuedSynchronizer队列同步器，基于FIFO等待队列的同步框架，volatile和CAS实现同步状态管理，内置FIFO队列实现线程排队等待机制。构建各种阻塞性质的同步器。</p>
+</li>
+<li><p>锁优化：1.减小锁粒度：大锁变为不同的小锁来减少锁竞争提高并发，例如ConcurrentHashMap的分段锁。2.锁分离：读写分离ReadWriteLock读锁共享写锁独占。3.锁消除：不必要的不加锁，减少锁持有时间。4.锁粗化：短时间重复获取同一锁，将锁范围扩大，减少锁开销。5.使用无锁数据结构：CopyOnWriteArrayList，atomic下的原子类，volatile+cas，实现无锁的线程安全操作。</p>
+</li>
+<li><p>CopyOnWriteArrayList：线程安全的ArrayList。写时复制。读取的时候在当前数组进行，修改的时候，复制当前列表，在新列表上修改，然后将原列表引用指向新的列表。这个更新操作是原子性的，使用volatile 变量来存储底层数组的引用，写操作在读操作之前完成。</p>
+</li>
+<li><p>悲观锁和乐观锁：悲观锁认为冲突普遍存在，阻止并发访问保证一致性。乐观锁通过数据版本号来检测冲突，冲突之后撤销或重试。</p>
+</li>
+<li><p>死锁：多线程互相持有和等待对方的资源，形成循环等待。互斥条件、请求与保持条件、不可剥夺条件、循环等待条件。CAS破坏互斥条件，银行家算法分配资源之前先检查是否会死锁，破坏循环等待。</p>
+</li>
+<li><p>线程池：管理一系列线程的资源池，避免线程频繁创建销毁开销，提高响应速度。1.ThreadPoolExecutor构造函数创建（核心线程数、最大线程数、阻塞队列、最大线程存活时间、threadFactory、饱和策略）2.Executors工具类创建（不推荐，使用无界阻塞队列OOM，CachedThreadPool使用同步队列创建线程数无限制OOM）</p>
+</li>
+<li><p>线程池饱和策略：AbortPolicy抛出异常来拒绝、CallerRunsPolicy调用线程中运行、DiscardPolicy直接丢弃、DiscardOldestPolicy丢弃最早未处理的。</p>
+</li>
+<li><p>线程池阻塞队列：ArrayBlockingQueue基于数组结构的有界阻塞队列FIFO、LinkedBlockingQueue基于链表的无界阻塞队列、SynchronousQueue同步队列无容量、DelayQueue延迟无界阻塞队列，延迟期满时从队列取出、PriorityBlockingQueue支持优先级排序的无界阻塞队列。</p>
+</li>
+<li><p>线程池处理顺序：核心线程、任务队列、最大线程、饱和策略</p>
+</li>
+<li><p>ThreadPoolExecutor的execute和submit：1.execute是Executor方法，submit是ExecutorService方法。2.execute只接收Runnable，出现异常原地抛出。submit接收Runnable和Callable，返回Future，捕获异常在future.get方法中抛出。</p>
+</li>
+<li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
+</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</li>
+<li>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</li>
+<li>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</li>
+<li>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</li>
+<li>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</li>
+<li>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</li>
+<li>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</li>
+<li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
+<li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
+<li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
+</ul>
+<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
+<li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
+</ul>
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
+<li>IO：涉及到数据的存储、交换，都用IO，文件IO、网络IO</li>
+<li>BIO：同步阻塞IO，每来一个新连接就需要创建一个线程，数据的读取写入都需要阻塞在线程中。浪费线程资源，不适合单机过多连接。</li>
+<li>NIO：同步非阻塞IO，线程发起IO操作，如果数据还没准备好，可立即返回执行其他任务。数据写入读取不再阻塞，但是需要等待IO操作完成，可同时处理多个Socket请求。适用连接多且比较短的。</li>
+<li>NIO多路复用：背景：应用程序询问数据是否就绪需要系统调用。因此为了解决频繁系统调用，一次向内核传递多个需要询问的Socket是否就绪（Seletor）。select、poll实现多路复用的机制，监控多个网络连接的IO事件，poll没有最大连接数限制。epoll提供了更高效的事件通知机制，在内核态开辟了两个集合，空间换时间，不需要每次传入整个Socket集合，减少拷贝，不需要主动地对所有文件描述符进行轮询。（单线程监控多个网络通道，轮询通道是否准备好，epoll通道准备好时得到通知）</li>
+<li>epoll：1⃣️epoll_create:在内核申请一块内存区域用于存储需要监控的fd，红黑树存储。2⃣️epoll_ctl:将需要监控的fd添加到创建的集合中。3⃣️epoll_wait:调用epoll_wait以等待事件发生，这个调用会阻塞直到有事件发生，或者超时。返回就绪的fd集合，链表存储。开发者只需要遍历这个列表并处理每个事件。</li>
+<li>IO多路复用的多线程版本：一个线程监听新连接的接入。若干个线程负责多个Socket的读写。</li>
+<li>AIO：异步非阻塞IO，jdk1.7升级，发起IO请求后立即继续执行后续代码，不需要等待IO操作完成。完成通过回调事件通知来告知调用者。windows中操作系统实现，Linux中使用自建线程池实现。</li>
+<li>Socket；网络通信基本概念，两程序连接进行数据交换</li>
+<li>Channel：能进行读写操作的IO通道。</li>
+<li>Selector：可以监视多个Channel的IO事件。Channel注册在Selector上，允许单线程管理多个网络连接。</li>
+<li>FD：Linux中一切皆文件。无论文件、Socket、设备文件。File Descriptor文件描述符，看作文件的id。进程级别的资源句柄，提供访问文件的抽象层。</li>
+<li>Linux系统分三层：User、Kernel、Hardware</li>
+<li>用户态和内核态：内核态是控制计算机硬件资源，例如协调CPU分配内存空间。用户态是提供应用程序运行的空间。内核提供的一组通用的访问内核管理资源的接口是系统调用。系统调用需要内核态和用户态的切换，涉及到CPU中断、堆栈切换、寄存器保存。</li>
+</ul>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><ul>
+<li><p>死亡对象判断方法：1.引用计数法：给对象加一个引用计数器，被引用+1，引用失效-1，无法解决循环引用问题。2.可达性分析法：GC Root作为起始点，从它们向下搜索，走过的路径叫做引用链，一个对象与所有GC Root都不相连，需要被回收。</p>
+</li>
+<li><p>可达性分析中的两次标记：可达性分析中不可达的对象，并不是非死不可，而是缓刑，需要两次标记。一次标记筛选是否需要执行finalize方法，需要进入下一次标记。第二次标记查看对象finalize方法中对象是否被其他存活的对象引用，如果是那么该对象将变成可达的。finalize用来做外部资源清理，被try finally取代。</p>
+</li>
+<li><p>垃圾收集算法：1⃣️标记清除：标记要回收的对象，然后统一回收。会产生不连续的内存碎片。2⃣️标记复制：young使用，内存分为两块儿，一块儿使用完后，将存活的复制到另一块儿，然后清除。内存压缩一半，复制效率低。3⃣️标记整理：old使用，把存活对象向一端移动，然后清除边界外的内存。解决不连续内存碎片，但是移动存活对象并更新引用负担大。停顿时间长。4⃣️分代：新生代：每次存活对象较少，复制操作少，用标记复制，新生代分为较大的eden和两个较小的survivor，每次使用eden和一块儿survivor，回收时将存活对象复制到另一块儿survivor。回收时不用中断应用程序执行，避免碎片化问题。老年代存活率较高，没有额外空间分配担保，选用标记清除&#x2F;标记整理。</p>
+</li>
+<li><p>eden、survivor、old分配顺序：对象优先在eden区分配，大对象和长期存活的对象进入老年代。一次minor gc之后存活在survivor中的对象1岁，此后每在survivor中熬过一次minor gc就+1岁，达到阈值或一半超过同一年龄就晋升老年代。</p>
+</li>
+<li><p>空间分配担保：在minor gc之前，虚拟机检查老年代的最大可用连续空间是否大于新生代所有对象总空间，如果成立，minor gc安全。如果不成立，看虚拟机是否允许担保失败，允许的话检查之前历次晋升老年代对象的平均大小，如果大于则尝试minor gc。如果小于或不允许担保失败直接full gc。</p>
+</li>
+<li><p>几个gc：1⃣️minor gc：也叫young gc，在新生代空间不足时触发。2⃣️major gc：老年代空间不足时触发，通常涉及整个堆的回收。CMS中不会停止所有线程。3⃣️full gc：停止应用程序执行，整个堆和方法区的垃圾收集。老年代不足、元空间不足、显示调用System.gc、担保失败。</p>
+</li>
+<li><p>垃圾收集器CMS：Concurrent Mark Sweep，jdk8的，关注最短垃圾回收停顿时间，老年代使用多线程的标记清除算法。第一次实现垃圾收集与用户线程同时工作，第一款真正意义上的并发收集器。新生代使用标记复制ParNew 垃圾收集器，Serial收集器的多线程版本。1⃣️初始标记：暂停所有其他线程，标记所有直接与GC Roots相连的对象，速度很快。2⃣️并发标记：从根对象开始，遍历对象图，标记所有存活的对象。3⃣️重新标记：修正并发标记期间发生变动的对象引用，停顿。4⃣️并发清除：对未标记的对象进行清除。优点：并发、低停顿。缺点：对CPU资源敏感、无法处理浮动垃圾、产生内存碎片。</p>
+</li>
+<li><p>垃圾收集器G1：Garbage-First，jdk9的，精准控制停顿时间，G1整体来看是标记整理，局部来看是标记复制。保留分代的概念，把堆分为若干固定大小的region，每个region扮演eden、survivor、old，维护优先级列表，每次根据允许的收集时间，优先选择垃圾最多的区域回收。不再固定收集某个区域，而是灵活组成回收集。1⃣️初始标记：暂停工作线程，标记从GC Roots直接可达的对象。2⃣️并发标记：遍历对象图，标记所有存活的对象。3⃣️最终标记：修正在并发标记阶段由于应用程序继续运行导致标记信息变化的部分。4⃣️筛选回收：制定回收计划，构成回收集，把存活对象复制到空的region中，再清理旧的region。涉及到存活对象移动，需要暂停工作线程。这里多条收集器线程并行完成。</p>
+</li>
+<li><p>CMS和G1：1.专注不同：CMS专注于并发清除低延迟，只需处理老年代到新生代的引用，会内存碎片。G1指定最大停顿时间，分Region的内存布局，按收益动态确定回收集，不会产生内存碎片。2.小内存CMS占优，大内存G1占优，分界线6-8G。3.CMS分配大对象空间不足时full gc，G1期望停顿时间设置很小，垃圾回收赶不上分配时full gc。</p>
+</li>
+<li><p>垃圾收集器ZGC：jdk11的，低延迟垃圾收集。基于Region内存布局，不设分代，使用读屏障、染色指针，实现并发标记整理。着色笔：在对象头中增加额外内存，加快标记过程。读屏障：解决垃圾回收和应用程序同时进行时，应用程序读取到被回收的对象。在对象头部增加标识位表示对象是否正在被垃圾收集器访问。</p>
+</li>
+<li><p>java对象引用：1.强引用：传统的引用，只要强引用关系还存在，垃圾收集器就永远不会回收掉被引用的对象。2.软引用：用于维护一些可有可无的对象。只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常。3.弱引用：拥有更短的生命周期，当 JVM 进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。4.虚引用：一种形同虚设的引用，它主要用来跟踪对象被垃圾回收的活动。</p>
+</li>
+<li><p>jvm调优从哪里入手：1⃣️堆内存设置，-Xms设置初始堆大小，-Xmx设置最大堆大小，过小导致频繁的垃圾回收和OOM，过大导致长时间的垃圾回收停顿。2⃣️垃圾收集器选择，串行、并行、CMS、G1回收器，衡量指标：内存占用、吞吐量、延迟。监控GC活动：使用监控工具：jstat、VisualVM、YourKit和GC日志。3⃣️线程堆栈大小：-Xss调整，影响栈深度。4⃣️调优代码、调整元空间的大小，排查内存泄漏风险、系统级优化（CPU、内存、磁盘IO）。</p>
+</li>
+</ul>
+<h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><ul>
+<li>jvm排查线程cpu问题：1.ps -ef|grep java 或者 jps 查找出进程id。2.top -Hp 进程id 查找出最耗cpu的线程id。 top -c看进程的。3.printf “%x\n” 线程id ，转换为16进制的id。4.使用jstack 进程id | grep 16进制线程id 查找出堆栈信息，分析。另外，arthas也可以打印出前多少个线程及占有cpu情况thread -n 5。</li>
+<li>jvm性能监控工具：1⃣️jps：输出jvm中运行的进程状态信息。2⃣️jstack：生成 Java 进程的线程堆栈信息，用于分析线程状态和死锁等问题。jstack 进程id | grep 16进制线程id。3⃣️jstat：JVM统计监测工具，排查gc，jstat -gc 进程id 250 4。4⃣️jmap和jhat：生成 Java 内存快照，分析内存使用和内存泄漏。用jmap把进程内存使用情况dump到文件中，再用jhat分析查看。</li>
+<li>机器慢了怎么排查：CPU、内存、磁盘、磁盘IO、网络IO。</li>
+<li>排查工具：1.df -h查看磁盘使用情况。2.free -h &#x2F; vmstat显示系统内存使用情况。3.mpstat命令查看cpu使用情况，输出各种cpu时间百分比。4.netstat -s查看网络状态，显示各种网络协议的统计信息，接收发送数据包数等。5.iostat -x查看IO统计信息。6.top命令实时显示Linux系统中进程的动态运行信息，包括CPU和内存的使用情况。top -Hp $pid用于显示特定进程的线程信息。</li>
+<li>OOM排查：除了程序计数器，其他内存存储都可能OOM。原因：1.内存泄漏：程序未能释放不再使用的内存。2.Java堆分配空间不足导致内存溢出。排查：使用jmap -dump命令dump文件，在内存分析工具如VisualVM、MAT中观察对象引用关系、对象数量大小。可能未正确释放资源、关闭文件流、断开网络连接、销毁对象引用。定位到代码排查。</li>
+<li>jvm调优：分配jvm内存需要考虑应用需求，是否处理大量数据。考虑垃圾收集器。16g机器将JVM最大堆内存设置为12G（Xms12G -Xmx12G），使用G1垃圾收集器。元空间存储类的元数据，设置初始值256M，最大值512M。线程堆栈大小，几百KB到1MB，取决于有没有深层递归（-Xss256k）。</li>
+</ul>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
+</li>
+<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
+</li>
+<li><p>队列：Queue接口是FIFO队列，Deque扩展Queue是双端队列接口。ArrayDeque是Deque的实现，双端队列。LinkedList也是Deque的实现，可以做双端队列。Stack栈，继承自Vector。Vector是同步集合，使用synchronized。</p>
+</li>
+<li><p>HashMap：数组+链表+红黑树。链表长度&gt;8数组长度&gt;64时变红黑树。链表解决哈希冲突，bucket。键和值都允许为空。</p>
+</li>
+<li><p>HashMap为什么使用红黑树：哈希函数质量不高&#x2F;存储大量数据，链表变长，影响搜索效率。所以jdk8之后，链表长度超过8时，链表变红黑树，自平衡的二叉查找树，搜索元素时间复杂度O(logn)，提高搜索效率。</p>
+</li>
+<li><p>HashMap扩容底层数组为什么扩为两倍保持2的幂次：1.方便利用位运算替代取模运算来计算元素索引位置。2.减少冲突：二进制位增加一位，只看最高位要么移动要么不变，确保分布均匀。 </p>
+</li>
+<li><p>ConcurrentHashMap：线程安全的HashMap，jdk7使用分段锁，分16段，一段一把锁。jdk8使用synchronized和CAS保证线程安全。</p>
+</li>
+<li><p>如何提高链表查询效率：1.使用双向链表。2.使用跳表，在链表上增加多级索引。3.元素存到哈希表进行映射。</p>
+</li>
+<li><p>B+树：索引数据记录在叶子结点，形成有序链表，方便范围查询。极端退化形成链表。具有更低的树高，降低磁盘寻址次数，减少IO次数。</p>
+</li>
+<li><p>跳表：skip list，分层结构多级链表，随机化的数据结构，用于存储有序元素。提供对数时间复杂度。每一层都是下一层的快照，只包含部分元素，每层元素通过指针相连。查找先从顶层查找，从而快速跨越多个不必要元素。应用：redis中zset使用hash+跳表。</p>
+</li>
+<li><p>大顶堆小顶堆：基于完全二叉树（除最底层外每一层都是满的，最底层从左向右填充），层序遍历用数组表示，用来实现优先队列。大顶堆中父节点大于子节点，根节点最大，同层没有顺序。</p>
+</li>
+<li><p>LRU：最近最久未使用。实现：1.链表，头部是要淘汰的，每次页面访问将页面移动到链表尾部。2.哈希表+双向链表，哈希表用来快速查找页面对应的链表节点。3.时间戳：每个页面分配时间戳，被访问时更新时间戳。</p>
+</li>
+<li><p>操作系统的页面淘汰算法：1.FIFO先进先出，使用队列。2.LFU最不常用，使用计数器跟踪每个页面访问次数，每次淘汰访问次数最少的，不考虑时间局部性。3.LRU最近最久未使用。4.时钟算法clock，LRU近似实现，维护循环列表。</p>
+</li>
+<li><p>八种基本数据类型及封装类：byte有符号整数（8bit，-128-127）、short有符号16bit整数、int有符号32bit整数、long有符号64bit整数、float32bit单精度浮点数、double64bit双精度浮点数、char16bit的unicode字符、boolean</p>
+</li>
+<li><p>装箱和拆箱：装箱：基本数据类型自动转换为对应封装类对象（编译器转换为Integer.valueOf）。拆箱：封装类对象自动转换为基本数据类型（编译器转换为o.intValue()）。</p>
+</li>
+<li><p>String、StringBuilder、StringBuffer：1⃣️String是不可变的，每次修改都是创建一个新的对象，性能较低。2⃣️StringBuilder可变，内部维护一个自动扩容的字符串数组，不是线程安全的。3⃣️StringBuffer可变，线程安全的，synchronized。</p>
+</li>
+<li><p>String不可变的设计原理：1⃣️内部使用私有的final字符数组存储字符串数据，创建之后引用不会指向另一个数组。2⃣️虽然数组本身可变，但是String没有提供方法修改数组内容。3⃣️虚拟机维护字符串池，相同内容的字符串可共享同一内存地址。创建时首先检查字符串池是否有相同内容字符串对象，有则返回引用。</p>
+</li>
+<li><p>String不可变的好处：1⃣️安全性：防止被恶意修改导致的安全漏洞。2⃣️线程安全：String对象本身线程安全。指向String对象的引用变量不是。3⃣️实现字符串常量池成为可能，重用字符串，节省内存开销。4⃣️创建字符串的哈希码缓存：字符串不可变，哈希码也不会变，适合作为键使用在哈希表中HashMap。</p>
+</li>
+<li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
+</li>
+<li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
+</li>
+<li><p>ArrayList 和 LinkedList怎么线程安全：1⃣️使用Collections.synchronizedList(list)将任何List转换为线程安全的List。（所有操作都使用相同的对象锁进行同步）。2⃣️使用显式的同步块，每次访问操作时加相同的锁。3⃣️使用concurrent包中的并发集合，CopyOnWriteArrayList，写时复制，适用于遍历操作远多于修改操作。ConcurrentHashMap、ConcurrentLinkedQueue。</p>
+</li>
+<li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
+</li>
+</ul>
+<h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
+<li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
+</ul>
+<h2 id="变量修饰"><a href="#变量修饰" class="headerlink" title="变量修饰"></a>变量修饰</h2><ul>
+<li><p>static：静态</p>
+<ul>
+<li>应用于变量：静态变量或类变量，变量属于类而不是对象，所有该类的对象共享同一个静态变量。</li>
+<li>应用于方法：静态方法，表示该方法属于类，可以不依赖于对象实例被调用。只能访问static变量和方法。</li>
+<li>定义静态代码块：在类被加载到JVM时仅执行一次，常用于初始化静态变量。</li>
+<li>应用于类：只能用来修饰内部类，可以不依赖于外部类的实例被创建和使用，可以访问外部类的所有静态成员和静态方法。</li>
+</ul>
+</li>
+<li><p>final：常量，用于创建不可变对象、防止方法或类被更改</p>
+<ul>
+<li>修饰变量：表示该变量一旦被初始化后就不能被修改，对于基本数据类型，变量的值不能改变，对于引用类型，变量不能再指向另一个对象，但所指向的对象内容本身可以变化。</li>
+<li>当final应用于方法时，该方法不能被子类覆盖（重写）。</li>
+<li>当final应用于类时，它表明该类不能被继承。</li>
+</ul>
+</li>
+<li><p>类加载机制：运行时动态加载，类加载器（ClassLoader）负责将类的字节码Class文件从不同的来源（例如文件系统、网络等）加载到Java虚拟机中。1⃣️加载阶段：类加载器读取二进制数据（.class文件）并生成对应的java.lang.Class对象。2⃣️验证：确保加载的类的字节码是合法的，检查字节码的格式、语法、数据流、符号引用等。3⃣️准备：为类变量分配内存并初始化为默认值，方法区中分配。4⃣️解析：将常量池内的符号引用转换为直接引用的过程。5⃣️初始化：执行静态变量的赋值操作和静态代码块内的代码。</p>
+</li>
+<li><p>符号引用和直接引用：符号引用就是一组符号来描述所引用的目标，直接引用就是直接指向目标的指针、相对偏移量或一个能间接定位到目标的句柄。</p>
+</li>
+<li><p>java编译阶段和运行阶段：编译阶段是源代码（.java文件）被编译器转换成字节码（.class文件）的过程，由Java编译器（ javac）负责。运行阶段是将.class 文件加载到JVM并执行的过程。类加载在运行阶段，支持运行时绑定（或晚期绑定），是Java动态链接和多态的基础。</p>
+</li>
+<li><p>常量池：运行时常量池位于方法区。它是类文件中每个类或接口的常量池表的运行时表示，用于存储编译器生成的字面量和符号引用。字符串常量池最初位于方法区，在Java 7以后被移到堆内存。它是一种特殊的常量池，用于存储字符串字面量和引用，目的是避免重复创建相同内容的字符串对象，以节省内存和提升性能。</p>
+</li>
+<li><p>双亲委派模型：JVM中的双亲委派是一种类加载机制，通过一层一层的父子关系将类的加载工作委派给上层的ClassLoader。这种机制的目的是为了避免类的重复加载，保证类的加载安全和类的共享。</p>
+</li>
+<li><p>想加载两个全路径相同的类：1.使用不具有父子关系的类加载器。2.打破双亲委派模型，自定义类加载器，并重写 loadClass() 方法，改变类加载的委派逻辑。</p>
+</li>
+<li><p>java接口中可以有非抽象方法吗：非抽象方法即具体实现的方法，java8之前只能包含抽象方法。java8引入了默认方法和静态方法。默认方法：default修饰。静态方法：static修饰，可以通过接口名直接调用。java9还提供了private私有方法。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/" rel="prev" title="西瓜书">
+      <i class="fa fa-chevron-left"></i> 西瓜书
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">锁、并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">4.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO"><span class="nav-number">5.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">7.</span> <span class="nav-text">故障排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">8.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">9.</span> <span class="nav-text">异常体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0"><span class="nav-number">10.</span> <span class="nav-text">变量修饰</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
