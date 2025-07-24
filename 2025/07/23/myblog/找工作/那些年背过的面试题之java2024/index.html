@@ -23,17 +23,17 @@
   <meta name="description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之java2024">
-<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/index.html">
+<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-07-22T16:50:21.162Z">
+<meta property="article:modified_time" content="2025-07-24T14:22:18.899Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/">
+<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/">
 
 
 <script id="page-configurations">
@@ -189,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java-2024/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.gif">
@@ -211,10 +211,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-07-23 00:44:10 / Modified: 00:50:21" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
+              <time title="Created: 2025-07-23 00:44:10" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-24 22:22:18" itemprop="dateModified" datetime="2025-07-24T22:22:18+08:00">2025-07-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -458,7 +464,10 @@
     <a href="/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/" rel="prev" title="西瓜书">
       <i class="fa fa-chevron-left"></i> 西瓜书
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" rel="next" title="那些年背过的面试题之redis&musql">
+      那些年背过的面试题之redis&musql <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -532,7 +541,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

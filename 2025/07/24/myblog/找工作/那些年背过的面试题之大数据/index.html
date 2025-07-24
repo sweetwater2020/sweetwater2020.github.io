@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="谷歌的“三架马车”：谷歌文件系统GFS（2003），MapReduce（2004）和Big Table（2006），奠定了大数据时代的基础。 离线计算：Hadoop（Mapreduce）、Hive、Spark 2006年实现了由HDFS分布式文件系统和MapReduce计算框架组成的Hadoop，成为了离线数据处理的核心。 HDFS：Hadoop的存储部分，一个分布式文件系统，将数据文件分块存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之大数据">
+<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="谷歌的“三架马车”：谷歌文件系统GFS（2003），MapReduce（2004）和Big Table（2006），奠定了大数据时代的基础。 离线计算：Hadoop（Mapreduce）、Hive、Spark 2006年实现了由HDFS分布式文件系统和MapReduce计算框架组成的Hadoop，成为了离线数据处理的核心。 HDFS：Hadoop的存储部分，一个分布式文件系统，将数据文件分块存储">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-24T14:27:03.787Z">
+<meta property="article:modified_time" content="2025-07-24T14:29:54.176Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之大数据 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之大数据
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-24 22:27:03 / Modified: 22:29:54" itemprop="dateCreated datePublished" datetime="2025-07-24T22:27:03+08:00">2025-07-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>谷歌的“三架马车”：谷歌文件系统GFS（2003），MapReduce（2004）和Big Table（2006），奠定了大数据时代的基础。</li>
+<li>离线计算：Hadoop（Mapreduce）、Hive、Spark</li>
+<li>2006年实现了由HDFS分布式文件系统和MapReduce计算框架组成的Hadoop，成为了离线数据处理的核心。</li>
+<li>HDFS：Hadoop的存储部分，一个分布式文件系统，将数据文件分块存储在集群的节点上。HDFS可以实现在整个集群上高效地存储和访问数据。</li>
+<li>MapReduce：大数据处理技术，属于离线计算的一种。将数据处理任务分成两个阶段：Map阶段，数据被切分成小块，并在计算机集群的各个节点上进行并行处理。Reduce阶段，将Map阶段的结果进行合并和汇总，生成最终的输出结果。</li>
+<li>2007年Hive：起源于FaceBook，是基于Hadoop的一个数据仓库工具，用来进行数据提取、转化、加载ETL，一种可以存储、查询和分析存储在Hadoop中的大规模数据的机制。能将结构化的数据文件映射为一张数据库表，并提供SQL查询功能，能将SQL语句转变成MapReduce任务来执行。</li>
+<li>2010年Spark：Hadoop缺点：MapReduce框架在每个计算阶段都需进行磁盘读写导致较高的磁盘IO开销、对于迭代计算效率低下。Spark是加州大学伯克利分校开源的类Hadoop MapReduce的通用并行框架，与MapReduce不同：中间输出结果可以保存在内存中，从而不再需要读写HDFS，避免大部分磁盘IO开销，提高计算性能。同时Spark能更好的适用于数据挖掘与机器学习等需要迭代的MapReduce的算法。Spark通过使用RDD（弹性分布式数据集）、DAG切分的多阶段计算过程来实现高效的数据并行处理，支持大规模数据集的分布式计算和分析任务，是离线计算（批处理）领域的主流技术栈。</li>
+<li>Spark拥有一个丰富的生态系统：Spark SQL（用于SQL查询）、Spark Streaming（用于实时流处理）、MLlib（用于机器学习）、GraphX（用于图计算）等。是一个强大且灵活的分布式计算框架，它通过内存计算和统一的编程模型，为大规模数据处理提供了高效的解决方案，适用于各种数据处理任务和应用场景。</li>
+<li>实时计算：Storm、Spark Streaming、Flink</li>
+<li>实时计算：在早期，基于Hadoop的数据处理主要采用批处理方式，也就是离线计算的方式：数据会先存储在分布式文件系统中，然后通过批处理作业进行处理和分析，数据处理的延迟较高，需要等待一段时间才能获取结果。</li>
+<li>离线&#x3D;批处理，实时&#x3D;流式处理。流式处理技术将数据分成小的批次进行处理，在数据到达时立即进行处理和分析，流式处理技术又分为两种：原生流、微批拟流（Spark Streaming）</li>
+<li>Storm是一个免费开源、分布式、高容错的实时计算系统。Storm最早于2011年诞生于Twitter。早期Storm用于实时计算，Hadoop用于离线计算。已不推荐使用。在Storm中，先要设计一个用于实时计算的图状拓扑（Topology），一个Topology是由多个Spout（数据输入处理模块）和Bolt（输出处理模块）通过Stream连接起来的有向无环图。</li>
+<li>Spark Streaming：2013年Spark 2.0推出了Spark Streaming。但由于不是原生流处理技术栈，认为流是批的特例，将输入数据切分成一个个小的切片，存在时延，且高级功能不如Flink，已不是主流技术栈，不推荐使用。</li>
+<li>Flink最初是由德国柏林工业大学开发。Apache Flink是分布式流式处理引擎，用于无界和有界数据流的有状态计算。Flink创造性地统一了流处理和批处理，作为流处理看待时输入数据流是无界的，而批处理被作为一种特殊的流处理，只是它的输入数据流被定义为有界的。</li>
+<li>分布式存储HBase：一个分布式的、面向列的开源数据库，建立在 HDFS 之上。HBase 的计算和存储能力取决于 Hadoop 集群。它介于NoSql和RDBMS之间，仅能通过主键(row key)和主键的range来检索数据，仅支持单行事务。</li>
+<li>OLAP 和 OLTP：OLTP（联机事务处理）对数据库的增删改。OLAP（联机分析处理）对数据的查询。</li>
+<li>OLAP的分类：ROLAP（关系型联机分析处理）、MOLAP（多维联机分析处理）、HOLAP（混合型OLAP）。ROLAP：传统关系型数据库、MPP分布式数据库以及Hadoop的Spark。实时根据用户提出的需求对数据进行计算后返回给用户。使用灵活，可以随意选择维度组合进行实时计算。有性能问题。MOLAP：将客户的需求计算好以结果的形式存下来，提出需求后，找到对应的结果返回即可。需要的磁盘存储空间大。</li>
+<li>MPP（Massive Parallel Processing,海量并行处理）：是一种基于共享磁盘的并行数据库处理架构，通过将数据分布到多个节点上进行并行处理，从而实现对大规模数据的快速分析和查询。只负责计算，不负责存储。</li>
+<li>MapReduce和MPP架构：都是分布式并行处理，将任务并行的分散到多个服务器节点上，在每个节点上计算完成后，将各自部分的结果汇总到一起。不同的是，MapReduce任务的tasks会动态的分配在空闲的Executor上，执行慢的Executor会分配到更少的task。缺点是MapReduce将一个任务分解成有依赖关系的tasks（DAG），task是异步执行的，因此必须通过写入中间数据共享内存来解决数据的依赖，性能有所损耗。MPP每个处理数据的task被绑定在持有该数据切片的指定Executor上，单一的Executor只处理单一的task，不需要将中间数据写入磁盘，直接将数据Stream到下一个执行阶段，性能好。缺点是如果某个Executor执行过慢或者故障，整个集群的性能就会受限于这个异常节点，所以MPP架构的集群节点不宜过多。</li>
+<li>Lambda架构：一种用于数据处理的架构设计模式，结合了实时计算和批处理两种方法，以满足不同的数据分析需求。L由三个层级组成：批处理层、速度层和服务层。批处理层负责离线处理大量数据，通常通过批处理系统（如Hadoop、Spark等）处理数据，并将结果存储在数据仓库中。速度层用于处理实时数据流，通常采用流式处理技术（如Storm、Spark Streaming等），以快速处理数据并产生实时结果。服务层负责将批处理层和速度层的结果整合，并为用户提供统一的数据查询和分析接口。优点：可扩展性强、能够处理大规模数据、满足实时和离线数据处理需求。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/" rel="prev" title="那些年背过的面试题之Spring">
+      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之Spring
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

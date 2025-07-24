@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之Spring">
+<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-24T14:25:25.599Z">
+<meta property="article:modified_time" content="2025-07-24T14:26:41.070Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之Spring | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之Spring
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-24 22:25:25 / Modified: 22:26:41" itemprop="dateCreated datePublished" datetime="2025-07-24T22:25:25+08:00">2025-07-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h2><ul>
+<li><p>Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。</p>
+</li>
+<li><p>spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加载bean定义：读取xml文件、java注解、java配置类，为每个声明的Bean创建一个BeanDefinition对象，包含bean的所有定义信息。 3⃣️实例化bean：调用构造函数、依赖注入、BeanPostProcessor 的前处理。4⃣️初始化bean：调用bean的初始化方法：@PostConstruct注解的方法、指定的init-method、InitializingBean的afterPropertiesSet方法。5⃣️使用bean。6⃣️销毁：容器关闭后，如果Bean实现了DisposableBean接口，则会回调该接口的destroy方法。</p>
+</li>
+<li><p>spring IOC：控制反转，通过spring来管理对象的创建、配置、生命周期，把控制权交给spring。提供BeanFactory和ApplicationContext两种IOC容器，实现对bean的管理。实现原理：依赖注入DI、Bean生命周期管理。</p>
+</li>
+<li><p>spring AOP：面向切面编程，一种编程范式，代码前后做增强操作，提高代码模块性。实现：基于动态代理，实现接口用JDK动态代理，否则CGLIB动态代理。@Aspect注解和@Around切入点实现切面。</p>
+</li>
+<li><p>JDK和CGLIB动态代理：JDK动态代理针对类实现某个接口，基于反射生成实现同样接口的代理类。CGLIB底层基于asm第三方框架，通过修改字节码生成一个子类。</p>
+</li>
+<li><p>Spring AOP和AspectJ AOP：Spring AOP 基于动态代理实现，只能在运行时织入，性能比AspectJ编译织入慢。AspectJ只支持编译前后和类加载时织入，性能更好，功能更加强大。</p>
+</li>
+<li><p>java反射：对于任何一个类，都能知道这个类所有的属性和方法；对于任何一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为Java语言的反射机制。getField(属性名字)和getDeclaredField（忽略访问控制）获取属性Field。getMethod获取方法Method。invoke执行。</p>
+</li>
+<li><p>BeanFactory和ApplicationContext：都是Spring中管理Bean的容器。BeanFactory是Spring IoC容器的基础接口，ApplicationContext实现BeanFactory，提供更丰富功能：国际化、事件发布、注解支持。BeanFactory 采用懒加载（延迟初始化）策略，只有在请求获取 Bean 时才会创建和初始化该 Bean。ApplicationContext采用即时加载策略，容器启动时会预先创建和初始化所有 Singleton Bean。</p>
+</li>
+<li><p>FactoryBean和BeanFactory：BeanFactory是IOC容器，负责生产和管理Bean对象：读取bean配置、加载bean、依赖注入、bean生命周期管理。FactoryBean是工厂Bean，可以实现该接口来自定义Bean的创建过程。重写getObject方法控制Bean的创建，getBean获取Bean实例。</p>
+</li>
+<li><p>Spring事务的传播机制：用来定义业务方法之间事务处理方式的机制，根据给定的事务规则来创建和控制事务的边界和范围，保证数据一致性。@Transactional注解的propagation属性指定。例如银行转账操作中有个审计方法，这个方法异常不想影响转账事务的回滚，就用REQUIRES_NEW创建新事务。一共有七种：1.REQUIRED：默认的，存在就加入该事务，没有事务就创建新的。2.REQUIRES_NEW：无论存不存在都创建新的。3.NOT_SUPPORTED：非事务方式执行，存在事务则挂起。4.SUPPORTS：存在则加入事务，不存在则非事务。5.NESTED：如果存在事务，则在嵌套事务（可独立提交，外部事务回滚它也得回滚）内执行。如果没有事务，则按REQUIRED属性执行。6.NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。7.MANDATORY：支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。</p>
+</li>
+<li><p>@Autowired和@Resource：都是用来实现依赖注入的注解。@Autowired是spring的注解，默认根据类型注入，多个类型相同则进一步根据名称。如果按照类型匹配接口不同实现类需要结合@Qualifier。提供required属性允许找不到bean时是否抛出异常。@Resource是j2ee的注解，默认按byName自动注入，不能用于构造函数。</p>
+</li>
+<li><p>Spring核心注解：@SpringBootApplication：组合注解，用于启动Spring Boot应用，包含@Configuration、@EnableAutoConfiguration和@ComponentScan。@Component：标注一个类为需要Spring管理的bean。@Configuration：表明该类是用于定义Bean的配置类，配合@Bean来在容器中注册自定义的Bean，方法返回对象被容器管理。@Transactional：用于声明一个方法或类需要事务管理。</p>
+</li>
+<li><p>Spring依赖注入注解：@Autowired、@Qualifier、@Resource、@Value：注入普通类型的属性。</p>
+</li>
+<li><p>Spring组件扫描注解：@Service：用于Service层的组件。@Repository：用于DAO层的组件。@Controller：用于标记控制层组件。</p>
+</li>
+<li><p>spring bean生命周期：1.创建bean的实例，在堆中开辟一块内存空间给这个对象，生成实例对象。2.填充bean的成员属性。3.调用initializeBean方法初始化bean（调用@PostConstruct、实现Aware接口的方法、before…方法、init-method方法、afterPropertiesSet方法）。</p>
+</li>
+<li><p>spring的三级缓存：用来解决单例bean循环依赖问题，提前拿到未初始化完全的对象。第一级缓存：用来保存实例化、初始化都完成的对象。第二级缓存：用来保存实例化完成但是未初始化完成的对象。第三级缓存：保存创建早期bean的工厂ObjectFactory，getObject()创建一个对该bean的早期引用，这个引用可以被二级缓存使用，确保bean可以按需要的代理和增强创建出来。原理：实例化和初始化流程分开，在Bean完全初始化之前，可以暴露一个早期的bean引用，从而打破循环依赖。</p>
+</li>
+<li><p>二级缓存行不行：当涉及AOP或其他代理增强时，仅凭二级缓存不够，因为要在返回代理对象前确保执行所有增强的逻辑。所以，如果一个bean需要被代理，它首先应该通过三级缓存的ObjectFactory被创建，该工厂负责处理所有的代理相关逻辑。一旦经过这个步骤得到的bean被放入二级缓存中，它就可以被其他bean使用了。</p>
+</li>
+<li><p>spring解决循环依赖的具体流程：1.单例bean首先检查一级缓存，存在则直接返回。2.不存在则实例化对象，还未属性注入和初始化。3.创建好bean实例后，将ObjectFactory放入三级缓存。4.属性注入，请求创建依赖的bean，如果有循环依赖，通过三级缓存创建一个早期的bean引用，并放到二级缓存，同时删除三级缓存。5.完成注入及初始化，bean创建成功。6.bean放入一级缓存，并从二级和三级缓存中移除。</p>
+</li>
+<li><p>spring bean：根据作用域，Singleton：默认的作用域，整个容器中只有一个实例，适用于配置类、工具类、服务类。Prototype：原型bean，每次请求都会创建一个新的实例。spring容器仅负责实例化，不管生命周期。Request：每个HTTP请求都会创建一个Bean，仅适用于web应用。Session：每个HTTP Session都会创建一个Bean，仅适用于web应用。</p>
+</li>
+<li><p>@PostConstruct：Java EE 5引入的注解，在Bean的实例化和依赖注入完成后被自动调用。用来执行必要的初始化代码，例如资源分配，加载数据。通过容器来控制初始化。修饰无参数无返回值方法，每个类只能有一个该方法。InitializingBean接口的afterPropertiesSet和配置bean时的init-method也有类似功能。@PostConstruct先于他俩。</p>
+</li>
+<li><p>InitializingBean：接口，定义了afterPropertiesSet方法，这个方法会在bean的所有属性都设置好之后执行，用于在依赖注入后执行某些初始化操作。</p>
+</li>
+<li><p>ApplicationContextAware：用于方便获取ApplicationContext，spring会自动调用setApplicationContext(ApplicationContext applicationContext)方法，可将ApplicationContext实例注入到bean中，用于获取其他bean、访问资源文件、发布事件。</p>
+</li>
+<li><p>spring事务的实现原理：两种事务的实现方式：编程式（通过代码控制事务处理逻辑）、声明式（@Transactional注解实现）。事务的操作本由数据库自动控制，为方便业务逻辑操作，由spring框架控制。spring事务的实现原理是通过AOP实现，生成代理对象，代理会在方法执行前后织入事务管理的相关操作：事务开始，先把事务的自动提交给关闭、提交事务、异常回滚。可以设置事务的传播行为、隔离级别、超时设置。总之，Spring AOP 提供了声明式事务管理的基础，使得事务管理逻辑能够以切面的形式，织入到业务逻辑中。</p>
+</li>
+<li><p>a方法加了@Transactional，b方法没加，b内部调用a，会有事务产生吗：@Transactional声明式事务，事务的传播行为决定事务如何传播和边界所在。由于spring的事务管理是基于AOP，通过代理实现的，分两种情况：第一种，如果方法在同一个类中，自调用，a方法的调用不会通过spring生成的代理对象调用，不会开始新的事务。第二种，在不同的类中，a方法通过spring的代理对象调用，开始一个新事务。</p>
+</li>
+</ul>
+<h2 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h2><ul>
+<li>什么是springboot：基于spring的开源框架，用于快速创建独立的生产级别的可运行的Spring应用程序。不是Spring功能上的增强，而是提供一种快速开发Spring项目的方式。spring问题：写配置文件繁琐，依赖繁琐，maven坐标版本问题。springboot提供的优点：自动配置、起步依赖、安全。约定优于配置的理念，开发者不需要手动配置大量spring配置文件，而是自动配置。提供一系列的起步依赖starter，快速构建出一些常用的应用程序，整合Junit、redis、mybatis等很方便。帮助管理jar包版本，避免依赖版本不一致的问题。</li>
+<li>Spring、Spring MVC和SpringBoot区别：Spring是Java开发框架，用于创建企业级的java应用程序，提供IOC和AOP等功能。Spring MVC是Spring框架的一个模块，用于创建Web应用程序，使用控制器、视图和模型来实现MVC设计模式。Spring Boot是一个基于Spring框架的快速开发工具，使用自动配置快速创建Spring应用程序。总结：Spring是基础框架，Spring MVC是基于Spring的Web框架，而Spring Boot则是基于Spring的快速开发框架。Spring Boot内嵌了Tomcat、Jetty等Web容器，可以直接运行Web应用程序，而Spring MVC需要部署到Web容器中才能运行。</li>
+<li>springboot自动配置的原理：基于Spring的条件化配置功能实现，Condition接口和@Conditional注解。以及springboot的一系列自动配置类，Spring Boot应用的入口类会使用@SpringBootApplication注解，它包含@SpringBootConfiguration，@EnableAutoConfiguration和@ComponentScan注解，@EnableAutoConfiguration是自动配置的核心。@EnableAutoConfiguration利用Spring的@Import注解来加载配置类，META-INF&#x2F;spring.factories配置文件中定义了大量的配置类，springboot应用启动时会自动加载这些配置类。并且在配置类中使用Condition来加载满足条件的bean，如DataSource、JdbcTemplate等。（总结：1.条件注解 2.@EnableAutoConfiguration）</li>
+<li>springboot核心注解：@SpringBootApplication：复合注解，标识springboot应用的主类。@Configuration表明该类是java配置类。@ EnableAutoConfiguration开启自动配置功能。@ComponentScan用于自动扫描和注册bean。</li>
+<li>spring boot starter：是预配置的依赖管理器，将一组库&#x2F;依赖捆绑在一起，便于开发特定类型的应用程序。简化依赖管理，提供开箱即用的配置，是约定优于配置的应用，集成常用技术和库。spring-boot-starter-web：开发Web应用，包含Spring MVC、Tomcat容器等。spring-boot-starter-data-jpa：使用JPA的Starter，包含Hibernate、Spring Data JPA、Spring ORM等依赖。spring-boot-starter-data-redis：使用Redis的Starter，包含Jedis客户端和Spring Data Redis等依赖。spring-boot-starter-test：适用于测试的Starter，包含JUnit、Mockito、Spring Test等依赖。spring-boot-starter-actuator：监视器，适用于监控和管理Spring Boot应用程序的Starter，包含Spring Boot Actuator等依赖。</li>
+<li>spring-boot-starter-parent：springboot官方提供的一个Maven父工程，是springboot项目的父工程，parent元素设置为它，继承一些常用依赖和插件，减少手动配置。统一管理springboot中的常用依赖版本号，确保版本兼容性。</li>
+<li>如何自定义spring boot starter：在项目的src&#x2F;main&#x2F;resources目录下创建META-INF&#x2F;spring.factories文件，内容如下：org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;com.example.my_starter.MyAutoConfiguration，告诉springboot启动时自动加载配置类。创建MyAutoConfiguration配置类，并在类上加上@Configuration注解，在其中定义需要自动配置的Bean。然后打包上传Maven仓库。</li>
+<li>spring-boot-maven-plugin：用于将SpringBoot应用，以及依赖项和配置文件打包成可执行的Jar包或War包，包含嵌入式的Tomcat容器或Jetty容器。方便部署和运行。</li>
+<li>springboot打成的jar包和普通jar包区别：1⃣️springboot的jar包是可执行的jar包，包含了内嵌的Tomcat、Jetty等Web服务器，可直接运行。普通jar包纸包含类、资源等，需要在外部环境中手动配置Web服务器运行。2⃣️springboot打的jar包中包含了启动类的main方法，可直接运行。普通jar包需要指定启动类。3⃣️springboot的jar包中包含一些默认的配置文件，如application.properties，用于配置属性、数据源等。普通jar包不包含。</li>
+<li>springboot实现热部署：使用Spring DevTools工具，支持应用程序代码修改后自动重新加载应用程序上下文和服务器。spring loaded也行，避免反复构建和部署。</li>
+<li>springboot可以兼容老spring项目吗：可以使用@ImportResource注解来加载老的xml配置文件，用于@Configuration或@SpringBootApplication类上。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="prev" title="那些年背过的面试题之中间件">
+      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之中间件
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="next" title="那些年背过的面试题之大数据">
+      那些年背过的面试题之大数据 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spring"><span class="nav-number">1.</span> <span class="nav-text">spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot"><span class="nav-number">2.</span> <span class="nav-text">springboot</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
