@@ -183,6 +183,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E5%81%9A%E8%BF%87%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A2%98%E4%B9%8BLetcode100/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E5%81%9A%E8%BF%87%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A2%98%E4%B9%8BLetcode100/" class="post-title-link" itemprop="url">那些年做过的编程题之Letcode100</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-27 17:07:02 / Modified: 19:16:00" itemprop="dateCreated datePublished" datetime="2025-07-27T17:07:02+08:00">2025-07-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">题目 通用：数组初始化后填充某个数：Arrays.fill(arr, 0);    数组排序：Arrays.sort(names, Collections.reverseOrder());  数组装箱：Integer[] boxedNums = Arrays.stream(nums).boxed().toArray(Integer[]::new);  反转数组：需要先变为List，List list = Arrays.asList(arr);   Collections.reverse(list);    arr = list.toArray(new Integer[0]); (变为Integer[]) 或者 resList.stream().mapToInt(Integer::intValue).toArray();  (变为int[]) 小顶堆：PriorityQueue minHeap = new PriorityQueue&lt;&gt;();   PriorityQueue&lt;Map.Entry&lt;Integer, Integer&gt;&gt; minHeap =          new PriorityQueue&lt;&gt;(Comparator.comparingInt(Map.Entry::getValue)); 大顶堆：PriorityQueue maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());    heap.offer插入 poll删除元素 堆顶元素peek。 s.substring(startIndex, endIndex) 左闭右开 int sum = Arrays.stream(nums).sum(); 求和 回文链表：先把元素遍历出来到数组list，然后前后双指针进行对比。还可以使用递归，使用递归反向迭代节点，同时使用递归函数外的变量向前迭代。 环形链表：方法一：使用HashSet记录走过的节点，如果之前走过，则环形链表。方法二：快慢指针，有换一定会遇到，遇到后，一个指针从起始节点出发，一个指针从相遇节点出发，相同速度移动，撞见就是环形相交节点。 合并两个有序链表：双指针，while条件里可以是两个其中之一不为null，也可以是两个都不为null，然后next直接指向剩余的那个ListNode。注意ListNode a = new Listnode(1);  然后ListNode b = a; a/b再变，另一个是不跟着变得，因为不是ab指向的对象发生了变化，而是b指向了别的东西。 两数相加：while循环中求当前数和进位数，最后判断进位是否为0，也就是是否要加一个数。 删除链表的倒数第N个结点：双指针，得模拟一下，快指针移动几步（n步），然后慢指针停止的条件是什么（fast!=null）。考虑只有一个结点的情况，得用preHead。 两两交换链表中的节点（不能改节点的值）：跟链表翻转类似，遍历过程中模拟翻转的过程，需要定义哪些临时节点进行记录。注意要用preHead。链表翻转就不用preHead。 k个一组翻转链表：是翻转链表的复杂版本，不光要翻转，翻转之后连接分段，所以要在遍历过程中记录头节点和尾节点。首先判断分段是否够，顺便遍历到tail节点。子函数进行分段翻转，传入preHead和k，遍历用k，提前定义pre和cur，循环中1保存next，2箭头翻转，3移动pre和cur。然后连线，再移动。 排序链表：二分，归并排序（递归）先用快慢指针找到链表中点，分割进行递归，终止条件是只有一个节点。递归排序后进行merge，双指针法进行合并，得用preHead。 合并k个升序链表：优先级队列PriorityQueue，因为数组里的列表都是排好序的，所以先把数组中每个列表的头节点加进去，然后取队列里最小的，然后把取到的节点的next加入优先级队列，直到优先级队列为空了 LinkedHashMap：LinkedHashMap继承自HashMap，在 HashMap 的基础上增加了对元素顺序的维护能力，既可以按照插入顺序排序，也可以按照访问顺序排序。底层实现：HashMap（实现O(1) 时间复杂度的插入、删除和查找操作）+ 双向链表（用于记录键值对的顺序，链表的头节点表示最早插入或最久未访问的元素，尾节点表示最近插入或最近访问的元素。当哈希表需要扩容时，LinkedHashMap 会重新分配桶中的节点，但不会影响双向链表的顺序。扩容时机：当哈希表中的元素数量超过 容量 × 负载因子（默认0.75） 时，触发扩容操作。扩容为原数组容量的两倍。LinkedHashMap默认不移除元素，重写removeEldestEntry方法进行移除来实现LRU。 为什么LRU得是双向链表：涉及到找到节点，然后把节点移动到链表尾部，双向链表实现该操作只需要O1时间复杂度，单向链表无法获取上一个节点，是On复杂度。 实现LRU缓存：存放的是key-value对，自定义双向链表，节点内维护key和value，HashMap是用来快速找到节点的，所以key就是key，value是Node节点。需要自定义双向链表类，get方法中，首先判断在不在map中，如果在则移动节点到尾部。put方法中，首先判断容量是否达到上限，如果达到则移除头部节点（伴随改变size和map），然后添加节点到尾节点（伴随改变size和map）。注意前后都要哨兵节点，并且相连。 层序遍历：用队列来实现。每次访问一层，并把下一层加入到队列中。 栈： Stack 类由于继承自 Vector 导致的性能问题，不推荐使用。Deque（双端队列）接口提供了更灵活和高效的栈实现方法。ArrayDeque 和 LinkedList 是最常用的 Deque 实现类。 Deque stack = new ArrayDeque&lt;&gt;(); stack.pop()、 stack.peek()、 stack.push(num) 队列：使用Queue 队列：Queue queue = new ArrayDeque&lt;&gt;(); queue.offer(num)、queue.poll()、queue.peek() Queue 是一个接口，表示队列（FIFO，先进先出）的数据结构。 单向队列，offer()、poll() 和 peek() Deque 是一个接口，表示双端队列的数据结构。 addFirst()、addLast()、pollFirst()、pollLast()、用作栈，通过 push() 、 pop() 、peek() Deque 继承了 Queue 接口。 ArrayDeque 和 LinkedList 都实现了 Deque 接口，因此它们都可以用作双端队列或普通队列。 ArrayDeque：基于动态数组实现。不支持存储 null 元素。不是线程安全的。 LinkedList：基于双向链表实现。支持存储 null 元素。不是线程安全的。 前/中/后序遍历：方法一：递归法，递归的时候隐式地维护了一个栈。方法二：迭代法，显式地将这个栈模拟出来。前序遍历先把root节点压进去，然后遍历中pop加到res里，再右左节点压进去。后序遍历，先把root节点压进去，然后左右节点，这样是前右左顺序，再Collections.reverse(result)一下。中序遍历先一直压左边的，压到头了，再加到res，再压右节点，注意while里的条件是栈不空或root不为null，pop后，压pop节点的右节点。 广度优先搜索：一种逐层遍历的方式，从根节点开始，先访问当前层的所有节点，然后再访问下一层的所有节点。使用队列Queue来实现。 深度优先搜索：一种沿着树的深度方向尽可能深入访问节点的方式，直到到达叶子节点后再回溯。使用递归或者栈。 二叉树的最大深度：深度优先搜索，递归，终止条件是null节点返回0，不然看左右谁大。也可以用广度优先搜索，类似层序遍历，看有多少层。 翻转二叉树：深度优先搜索，递归，终止条件是null，返回null，然后左右节点递归，然后左右节点互换。 对称二叉树：递归，输入两个节点，一左一右，比较。 二叉树的直径：树中任意两个节点之间最长路径的长度。其实跟左子树深度和右子树深度(节点数)有关。但是需要注意，最大直径不一定需要经过根节点！!因此在递归中需要记录结果。递归返回节点数，边就在节点数基础上 - 1。 将有序数组转换为二叉搜索树：高度平衡的二叉树，不能选择中点之后直接做一支右一支，用递归，左边右边分别再递归。其实就是根据中序遍历恢复二叉树，只不过指定中点。 验证二叉树：使用递归，但是不能单纯地只判断左子树和右子树，递归输入中还得传最大值和最小值，不能只比父节点，父节点的父节点也得比，就传一个max一个min。 二叉搜索树中第k小的元素：中序遍历是顺序数列，先中序遍历再找数。拓展：如果一个数要频繁地找第k小，怎么优化，每个节点记录以该节点为根的节点数，然后再找。 二叉树的右视图：类似层序遍历，但是只记录每层的最后一个数。用队列。 二叉树展开为链表：先序遍历的方式，右指针是next。可以先先序遍历，然后再展开为列表。方法二是同时进行，但是要用迭代方式的前序遍历，用栈把右子树节点记录下来。 从前序与中序遍历序列构造二叉树：递归，前提条件是遍历中没有重复元素。前序遍历第一个节点是根节点，再从中序遍历中拆出左子树的中序遍历和右子树的中序遍历。 在中序遍历中找节点，用一个hash来快速找，通过数来找索引 路径总和：用递归解决，但是要注意从根节点到叶子结点，叶子结点得是left和right都为null的 路径总和2：需要找出从根节点到叶子结点的符合要求的所有路径。注意1:添加结果时需要添加结果的拷贝，因为是引用传递。注意2:需要回溯，就是在返回上一层前list去掉该节点。 路径总和3：不限制从根节点到叶子结点，但是需要从上到下，也就是从父节点到叶子结点。 解法1:暴力法，每个节点都走一遍递归。dfs函数，计算的是以root为开始，不管谁为结束的符合要求的数量，会存在整数溢出的问题，把dfs函数的targetSum参数类型变为long就行了。解法2: 用前缀和，就是用一个Map记录之前路径上从根节点到某节点的和对应的数量，这样只需要用从根节点到当前节点的和来解决问题了。dfs递归过程中记录根节点到目前的总和。dfs表示以当前节点为尾节点。依然要用Long解决溢出问题。 二叉树的最近公共祖先：用递归，递归函数的输出的是最近公共祖先，退出条件是如果当前节点是 p 或 q 或 空，则直接返回当前节点。在左右子树中分别递归查找 p 和 q：如果左子树返回非空结果且右子树返回非空结果，则当前节点就是最近公共祖先。如果只有左子树返回非空结果，则返回左子树的结果。如果只有右子树返回非空结果，则返回右子树的结果。脑子里模拟一下这个过程，一个函数就解决。 二叉树中的最大路径和：用递归，不限制父节点到子节点，所以，当前节点路径=当前节点+左路径+右路径，对比全局最大。注意，递归函数是包含root节点的单边的。 岛屿数量：递归dfs，递归使相邻的置为0。也可以使用并查集，并查集的核心思想是通过树形结构维护集合关系，并通过路径压缩优化查找效率。第一步初始化父节点和深度节点列表，然后合并，合并过程中寻找root节点是否相同，不相同则需要合并，find的过程中递归。深度小的往深度大的合并，提高查找根结点的效率。将rank较小的根节点指向rank较大的根节点，以保持树的平衡。如果两个根节点的rank相同，则可以将其中一个根节点作为另一个根节点的子节点，并将rank增加1。 腐烂的橘子：广度优先搜索，用到队列，将最开始腐烂的橘子加入到队列中，然后一层层往外遍历。注意，while判断里，除了queue不为空，还需要新鲜橘子数量大于0. 课程表：判断图中有没有环。用邻接表来表示图，维护节点状态：未访问、正在访问、已访问，用深度优先搜索，遍历所有节点，递归遍历后序节点（反个方向是不是也行？）。其实就是判断图中有没有环。首先，构建邻接表，放的是节点的后置节点。其次，创建初始状态，0未访问，1访问中，2已访问。然后进行DFS。 List转换为Integer[]：list.toArray(new Integer[list.size()]) List转换为int[]：res.stream().mapToInt(Integer :: intValue).toArray() 课程表输出顺序：注意，应该在递归回溯的时候再往结果里放入，如果遍历的是后序节点，还应该Collections.reverse(list)。 全排列：给的元素无重复，同一个元素不能重复使用。用递归DFS，但是需要记录哪些元素已经使用过了。在回溯的时候需要移除List和移除记录使用元素的Set。拷贝一个list：new ArrayList&lt;&gt;(list)。 子集：给的元素无重复，返回所有子集，不能包含重复的子集。不是看排列了，而是看子集了。使用递归DFS，但是不用记录使用set了，需要记录开始递归位置start。 电话号码的字母组合：递归DFS，带start，初始化map，new HashMap&lt;&gt;()&#123;&#123;put(1,&quot;a&quot;); put...)&#125;&#125;，注意得是两个大括号。遍历字符串中的字符：for(char c : s.toCharArray())。s.substring(start, end)。 组合总和：给的是无重复的数组，返回和为target的组合方案，一个数可以使用多次。用DFS，先给数组排个序，DFS中如果大于target就False，后面就不遍历了。为了避免重复，应该用start来限制开始遍历的数字。注意：1.写入结果传副本。2.先排序，大了就不用往后走了。3.回溯后移除节点。4.传start避免结果重复。 括号生成：给出一个n，返回可能的括号组合。DFS中两种情况：放左括号和放右括号。 单词搜索：深度优先搜索，不能光遍历四周，遍历过的还不能再遍历了，不然一直在dfs。用set维护路径。最开始的想法：从头开始DFS，用Set记录走过的路径防止重复遍历。但是比较字符串需要比较结尾。改进方法：DFS，dfs起点：每个点；dfs需要携带的：匹配上的字符长度；dfs出口：字符不一样/字符长度达到。已经用过的字母不能再用：向下一个递归之前变为其他字符，递归完之后再变回来 分割回文串：给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文串。返回 s 所有可能的分割方案。 解法：DFS+回溯，要传start记录切割位置，for横向遍历，dfs纵向遍历。把一个字符串分割成若干个回文串，DFS，目标是挨个遍历，遍历到回文串存一个，然后继续向后遍历，出递归的条件是遍历到了末尾。要用start记录遍历到了哪里，注意单个字符也算回文。 N皇后：输入n，求得所有可能的排布。使用回溯，用什么表示：用一个数组，数组表示index行的皇后放在value列。什么时候记录：所有行都完备了添加。需要有检查排布是否可以的方法。用StringBuilder，s.setCharAt(track[i], &#x27;Q&#x27;); 二分查找：mid = l + (r - l) /2; 要注意while里的条件是l&lt;=r。l要更新为mid-1。r要更新为r+1。 搜索二维矩阵：先用一遍二分找在哪个行，注意所在行是最后的l-1。再用二分找在哪个列。 在排序数组中查找元素的第一个和最后一个位置：先二分查找找到目标，再前后移动找位置. 寻找旋转排序数组中的最小值：直接遍历虽然能解，但是复杂度要求达不到，要用二分。画张图举个例子好理解，中间节点和两边节点判断可过滤不可能的，注意和传统二分区别：while里条件l&lt;r。 寻找两个正序数组的中位数：限制时间负责度logm+n，所以双指针前后遍历是不行的，得二分。思路：扩展到获取第k大的数，分别获取两个数组k/2的位置，小的左边就能淘汰。第一步：出递归条件：如果一个数组已经被淘汰没了，则直接从另一个获取。第二步：递归：获取每个数组的第k/2位置数做比较，可能越界，所以得判断。注意得是index=s1+k/2-1，然后淘汰index及之前的。先要看k是不是等于1，等于1则可以直接判断。 有效的括号：构件一个map和左括号list，用栈，为空或者为左括号则加入，为右括号则pop出来看是否匹配，最后返回栈是否为空。Map&lt;Character, Character&gt; map = new HashMap&lt;&gt;()&#123;&#123;put(&#x27;)&#x27;, &#x27;(&#x27;);   List left = Arrays.asList(&#x27;(&#x27;, &#x27;&#123;&#x27;, &#x27;[&#x27;);  Deque stack = new ArrayDeque&lt;&gt;();   遍历string：char c : s.toCharArray() 字符串解码：重复次数可能是多位的，开始使用一个栈记录重复次数和字符串，有点乱。使用两个栈分别记录。使用两个栈：一个存重复次数，一个存之前的解码结果。注意3[a2[c]这种，左括号的时候进行压栈，右括号的时候pop栈，这时候需要重复的是currentStr，栈里pop出的是需要在前面的，重复完之后要更新currentStr。判断一个char为数字的两种办法：Character.isDigit()、c - &#x27;0&#x27;&lt;=9。 每日温度：一个数组表示温度，返回数组表示对于i天，下一个更高温度出现在几天后，如果不会升高则0。使用栈，纠结于如何记录结果，其实栈中存放的元素不是温度，而是索引。栈里的元素应该是从大到小的，遍历过程中，元素大于栈顶就pop。注意，栈里放的是索引，不是实际温度。 柱状图中最大的矩形：一个数组表示柱状图的高度，返回能勾勒出矩形的最大面积。思考暴力情况下如何解决：对每一个柱子，向左向右扩展，直到遇到比它矮的，那么以当前柱子高度为高的矩形的宽度就确认出来，这样再全局比较。所以，关键点在于找左边第一个比它小的位置和右边第一个比它小的位置。用单调栈，栈中依然保存索引。每当遇到一个比栈顶元素小的高度时，说明找到了栈顶元素的右边界；弹出栈顶元素，此时它的左边是前一个栈顶元素（即左边界）。注意，获取左边界时stack为空，则left=-1可以。还需要管最后一个元素的结果，所以for循环边界是heights.length，搞个最后的0作为哨兵节点。 数组中的第k个最大元素：使用最小堆，优先级队列。如果堆大小为k，则需要对比堆顶元素和当前元素哪个更大。其实不用，先插入，大于k则弹出堆顶元素即可。 前k个高频元素：先用Map记录频率，然后用小顶堆记录k个Map.Entry，表示键值对项，其他和k个最大元素一样。 买卖股票的最佳时机：贪心，遍历过程中记录历史最低点，同时记录最大收益。 跳跃游戏：判断是否能到达最后一个下标。遍历过程中记录最远能跳到哪里，如果当前索引小于maxReach则直接返回false。 跳跃游戏2：返回最少跳跃数。最少跳跃数，两种方法：一种用动态规划记录最少跳跃数，然后双层遍历外层遍历数组，内层遍历该位置跳跃范围。另一种是贪心，双层循环，外层while从后往前遍历能跳到的位置，内层从前往后找最少跳跃位置。前提是一定能跳到，不然会死循环，所以pos &gt; 0。 划分字母区间：同一个字母最多出现在一个片段中，返回表示每个字符串片段长度的列表。用一个map记录每个字符最后出现的位置，然后遍历字符串进行切分，记录start和end，遍历过程中更新end，如果i==end则表示可以切分。 爬楼梯：每次爬1或2阶，总共有多少种爬台阶的方法。动态规划，dp[n+1]，初始化0和1，然后遍历。 杨辉三角：动态规划，List创建时初始化：List list = Arrays.asList(&quot;apple&quot;)。List获取get(index). 打家劫舍：不能偷窃相邻的房屋，动态规划，dp[i]表示偷到i的最大收益，初始化前两个。 完全平方数：返回和为n的完全平方数的最少数量，可重复使用的。动态规划，一个一维数组初始化比较大的值。双层遍历，外层遍历1-n/2的平方数，内层遍历dp数组。如果大于平方数，则更新。 零钱兑换：给定一个可用零钱面值数组和总金额，返回需要的最少硬币数量，都是可重复使用的，思路和完全平方数一样。注意初始化用Integer.MAX_VALUE-1。 单词拆分：给一个字符串，一个字符串列表，判断能否用列表中的字符串拼接出该字符串，可重复使用。是背包问题。完全平方数是先遍历平方数，再遍历数。这里需要先遍历字符串再遍历物品列表。因为这里对物品顺序是有要求的。dp[i]表示以字符串i-1索引结尾的结果。// 检查以i-1结尾的字符往前倒的字符串，和wordDict[j]是不是一样。 最长递增子序列：子序列是顺序不能变，可以删掉部分元素组成。动态规划dp[i]表示以i结尾的最长递增子序列，双层遍历。 乘积最大子数组：得是连续的最大子数组。用动态规划，两维数组记录i-j的连续乘积，要双层遍历，感觉不是最优。正解：关键点：因为负数的存在，最大和最小可能一下反转。记录阶段最大值和阶段最小值（也就是以上一个数为尾部的最大值最小值）。因为负数存在，当遍历到负数时，最大数和最小数要做交换。遍历过程中记录最大的阶段最大值。 分割等和子集：给一个数组，能否分成两个和相等的子集，不要求连续。是一个背包问题，维护dp[i][j]，i表示考虑0-i的物品，j表示容量为j，dp值表示背包最大能放的重量。初始化i=0的时候，j为多少能放下改物品。不需要提前排序的。遍历时候双层循环，外层物品，内层重量。内层也得从1开始遍历。两种选择：一种不放这个，一种放这个。 最长有效括号：只包含()的字符串，找出最长有效的连续字串长度。用栈保存左括号的索引，初始化时，栈先压入 -1，表示“有效括号子串起点前的位置”。遇到右括号则弹出栈顶，如果弹出后栈空了，说明遇到不能配对的右括号，把当前位置下标入栈（新起点）。否则，当前有效括号长度为i - 栈顶下标，更新最大长度。这里记录不是遇到不有效再记录，而是每次遇到有效时记录。 不同路径：多维动态规划，简单。 最小路径和：依然多维路径规划，初始化左边和上边，直接在原数组上操作。 最长回文子串：多维数组表示i-j的子串是否是回文子串，推演关系决定遍历顺序，ij依赖i+1,j-1，所以从左下角开始遍历。如果ij字符相等，相差&lt;=1，或者dp[i+1][j-1]为true，则为回文，记录结果 最长公共子序列：两位数组表示text1的i-1结尾和text2的j-1结尾的最长公共子序列长度。注意字符不等于的时候，Math.max(dp[i - 1][j], dp[i][j - 1]). 编辑距离：插入、删除、替换。思路：二维动态数组，长度len1+1*len2+1，表示i-1结尾和j-1结尾的。为什么数组长度要+1，因为0的位置需要遍历，初始化不好初始化，只能用-1的初始化，初始化为对应的ij。状态转移：字符相等则等于dp[i-1][j-1]，不想等则删除：dp[i-1][j], dp[i][j-1]，修改：dp[i-1][j-1]，其中取最小然后+1。 只出现一次的数字：遍历，用map可以，但是最好的是用异或运算，^，相同异或为0，与0异或为自己。 多数元素：使用投票机制，记录一个结果数和一个数量，如果数量等于0则换数，否则看当前数是否等于结果数，决定投票+1/-1。 颜色分类：三色国旗问题，双指针，都从0开始遍历，一个指针用来换1，一个指针用来换0，但是换0需要注意，可能把1换出去了，所以换完0之后如果p0&lt;p1就得交换i和p1。 下一个排列：举个例子123654，124653，先要从后往前找到第一个升序的，然后从后往前找到第一个比升序对第一个数大的，然后交换，变成了124653，然后反转i+1到末尾这段。 </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="下一个排列"><a href="#下一个排列" class="headerlink" title="下一个排列"></a>下一个排列</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">整数数组的一个 排列  就是将其所有成员以序列或线性顺序排列。</span><br><span class="line"></span><br><span class="line">例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。</span><br><span class="line">整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。更正式地，如果数组的所有排列根据其字典顺序从小到大排列在一个容器中，那么数组的 下一个排列 就是在这个有序容器中排在它后面的那个排列。如果不存在下一个更大的排列，那么这个数组必须重排为字典序最小的排列（即，其元素按升序排列）。</span><br><span class="line"></span><br><span class="line">例如，arr = [1,2,3] 的下一个排列是 [1,3,2] 。</span><br><span class="line">类似地，arr = [2,3,1] 的下一个排列是 [3,1,2] 。</span><br><span class="line">而 arr = [3,2,1] 的下一个排列是 [1,2,3] ，因为 [3,2,1] 不存在一个字典序更大的排列。</span><br><span class="line">给你一个整数数组 nums ，找出 nums 的下一个排列。</span><br><span class="line"></span><br><span class="line">必须 原地 修改，只允许使用额外常数空间。</span><br></pre></td></tr></table></figure>
+
+<p><strong>纯找规律，举例：123654，从后往前找到第一个正向升序的，就是36，然后从后往前找第一个比3大的数，就是4，然后交换，交换之后反转i+1到末尾这段。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">nextPermutation</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 举例：123654，纯找规律，从后往前找到第一个正向升序的，就是36，然后从后往前找第一个比3大的数，就是4，然后交换，交换之后反转i+1到末尾这段。</span></span><br><span class="line">        <span class="comment">// 1.找第一个正向升序的</span></span><br><span class="line">        <span class="comment">// 没有找到就不做第二步交换，比如321，得反转</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">record</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> nums.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i --) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &lt; nums[i + <span class="number">1</span>]) &#123;</span><br><span class="line">                record = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2.从后向前找比record大的数</span></span><br><span class="line">        <span class="keyword">if</span> (record &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">bigger</span> <span class="operator">=</span> nums.length - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (nums[bigger] &lt;= nums[record] &amp;&amp; bigger &gt; record) &#123;</span><br><span class="line">                bigger --;</span><br><span class="line">            &#125;</span><br><span class="line">            swap(record, bigger, nums);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 3.翻转record+1到末尾的</span></span><br><span class="line">        reverse(record + <span class="number">1</span>, nums.length - <span class="number">1</span>, nums);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> nums[i];</span><br><span class="line">        nums[i] = nums[j];</span><br><span class="line">        nums[j] = pre;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">            swap(i, j, nums);</span><br><span class="line">            i ++;</span><br><span class="line">            j --;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="寻找重复数"><a href="#寻找重复数" class="headerlink" title="寻找重复数"></a>寻找重复数</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">给定一个包含 n + 1 个整数的数组 nums ，其数字都在 [1, n] 范围内（包括 1 和 n），可知至少存在一个重复的整数。</span><br><span class="line">假设 nums 只有 一个重复的整数 ，返回 这个重复的数 。</span><br><span class="line">你设计的解决方案必须 不修改 数组 nums 且只用常量级 O(1) 的额外空间。</span><br><span class="line">示例 1：</span><br><span class="line">输入：nums = [1,3,4,2,2]</span><br><span class="line">输出：2</span><br></pre></td></tr></table></figure>
+
+<p><strong>不能用map、set，数组中如果没有重复的数，那就是一对一的关系，有重复的就是多个下标对应一个数的关系。和环形链表类似，使用快慢指针。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findDuplicate</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 衍生为环形链表问题，用快慢指针找到环的入口。</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">slow</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">fast</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 找到相遇处</span></span><br><span class="line">        slow = nums[slow];</span><br><span class="line">        fast = nums[nums[fast]];</span><br><span class="line">        <span class="keyword">while</span> (slow != fast) &#123;</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            fast = nums[nums[fast]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 慢指针从0出发，快指针从原地出发，都+1行走</span></span><br><span class="line">        slow = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (slow != fast) &#123;</span><br><span class="line">            slow = nums[slow];</span><br><span class="line">            fast = nums[fast];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -703,7 +786,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" class="post-title-link" itemprop="url">那些年背过的面试题之redis&musql</a>
+            <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" class="post-title-link" itemprop="url">那些年背过的面试题之redis&mysql</a>
         </h2>
 
         <div class="post-meta">
@@ -714,7 +797,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2025-07-24 22:22:24 / Modified: 22:24:11" itemprop="dateCreated datePublished" datetime="2025-07-24T22:22:24+08:00">2025-07-24</time>
+              <time title="Created: 2025-07-24 22:22:24 / Modified: 23:12:13" itemprop="dateCreated datePublished" datetime="2025-07-24T22:22:24+08:00">2025-07-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -926,7 +1009,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-24 22:22:18" itemprop="dateModified" datetime="2025-07-24T22:22:18+08:00">2025-07-24</time>
+                <time title="Modified: 2025-07-27 19:12:47" itemprop="dateModified" datetime="2025-07-27T19:12:47+08:00">2025-07-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -967,6 +1050,8 @@
 <li><p>Condition：条件锁，与ReentrantLock结合使用，更精细控制等待唤醒，有选择地唤醒等待中的线程。</p>
 </li>
 <li><p>公平锁和非公平锁：公平锁所有线程都会被阻塞，非公平锁获锁之前不管等待队列，减少唤醒线程上下文切换开销。</p>
+</li>
+<li><p>RentrantLock如何实现公平非公平：子类 <code>FairSync</code> 和 <code>NonfairSync</code>。默认非公平锁，线程尝试直接获取锁，不考虑等待队列中的顺序。新到来的线程如果此时锁恰好可用，则可以直接获取锁，减少了上下文切换，提高了吞吐量。公平锁中，获取锁时会检查同步队列（AQS 队列）中是否有比当前线程等待时间更长的线程。如果有，则当前线程必须等待；如果没有其他线程或自己是队列中最前面的，则可以尝试获取锁。这样保证了最先进入等待状态的线程优先获得锁，遵循先来先服务的原则。</p>
 </li>
 <li><p>信号量Semaphore：控制对有限资源访问的计数器，实现资源池，控制并发数。permit为1时互斥锁。</p>
 </li>
@@ -1010,6 +1095,7 @@
 <li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
 <li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
 <li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
+<li>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</li>
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
@@ -1108,6 +1194,8 @@
 </li>
 <li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
 </li>
+<li><p>重写 <code>equals()</code> 时必须重写 <code>hashCode()</code>：是为了保证 <strong>相等的对象必须有相同的哈希码</strong>，这是 Java 的约定。否则在使用 <code>HashMap</code>、<code>HashSet</code> 等哈希结构时，会导致对象无法正确存取或比较，引发逻辑错误。</p>
+</li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
 <li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
@@ -1143,6 +1231,120 @@
 <li><p>java接口中可以有非抽象方法吗：非抽象方法即具体实现的方法，java8之前只能包含抽象方法。java8引入了默认方法和静态方法。默认方法：default修饰。静态方法：static修饰，可以通过接口名直接调用。java9还提供了private私有方法。</p>
 </li>
 </ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/" class="post-title-link" itemprop="url">那些年背过的面试题之java2025</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-23 00:44:10" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-27 19:09:21" itemprop="dateModified" datetime="2025-07-27T19:09:21+08:00">2025-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Reactor响应式编程和Reactor线程模型"><a href="#Reactor响应式编程和Reactor线程模型" class="headerlink" title="Reactor响应式编程和Reactor线程模型"></a>Reactor响应式编程和Reactor线程模型</h2><p>Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。</p>
+<p><strong>特点</strong>：<br>非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。<br>背压支持：允许消费者控制生产者的速率，防止资源过载。<br>高效性：适合高并发场景，能够更好地利用系统资源。<br>函数式风格：提供丰富的操作符，可以通过链式调用对数据流进行转换和处理。</p>
+<p><strong>适用场景</strong>：响应式系统（如 Spring WebFlux）、数据流处理（如实时日志分析、事件流处理）。</p>
+<p>Reactor 提供了<strong>两个核心类</strong>：<br>Flux：表示可以发射 0到N个元素 的异步数据流。<br>Mono：表示可以发射 0或1个元素 的异步数据流。<br>Flux 是 Reactor 中的一个核心类，用于表示可以发射多个元素的异步数据流。发射 0到N个元素，并最终以完成或错误信号结束。Flux 提供了丰富的操作符，可以轻松地对数据流进行转换、过滤、合并和错误处理。<br>——————————————————————<br>Reactor线程模型：一种经典的IO多路复用设计模式，用于高效处理大量并发连接。核心思想是通过一个或多个线程监听 I&#x2F;O 事件（如读写就绪），并将这些事件分发给相应的处理器进行处理。</p>
+<p><strong>特点</strong>：<br>事件驱动：通过监听 I&#x2F;O 事件（如 select、poll 或 epoll）来避免阻塞等待。<br>单线程或多线程模型：单线程 Reactor 模型：所有事件由一个线程处理。多线程 Reactor 模型：使用多个线程来处理事件，适合高并发场景。<br>非阻塞 I&#x2F;O：避免因等待 I&#x2F;O 操作完成而阻塞线程，从而提高吞吐量。</p>
+<p><strong>典型实现</strong>：Java NIO、Netty 等框架基于 Reactor 模型构建。</p>
+<p><strong>核心组件</strong>：<br>Acceptor：负责接收新的连接请求，并将其注册到事件监听器中。<br>Dispatcher：负责监听 I&#x2F;O 事件并分发给对应的处理器。<br>Handler：处理具体的业务逻辑。</p>
+<p><strong>适用场景</strong>：高并发网络服务（如 Web 服务器、消息队列等）、需要高效处理大量短连接或长连接的场景。<br>——————————————————————<br>Project Reactor和Reactor线程模型的联系：<br>**Project Reactor 提供了更高层次的抽象，专注于业务逻辑的响应式处理，而 Reactor线程模型则更关注底层 I&#x2F;O 事件的分发，处理网络层IO。**都是非阻塞的，都是事件驱动的。</p>
+<h2 id="record关键字"><a href="#record关键字" class="headerlink" title="record关键字"></a>record关键字</h2><p>record：一种用于<strong>定义不可变数据载体类</strong>的特殊类形式，是 Java 14 引入的一个关键字，正式在 Java 16 标准化。</p>
+<p>record 是<strong>一种简化数据类的语法，目的是存储数据而不对这些数据进行复杂的操作或修改的场景。自动生成了包括构造函数，getter、toString、equals、hashCode 等方法。</strong></p>
+<p>它是一种不可变（Immutable）的类，所有字段都是 final，创建后状态不能更改。</p>
+<p><strong>用法</strong>：<br>1、作为独立的类文件<br><code>public record Film(String name, String desc) &#123;&#125;</code></p>
+<p>2、嵌套在其他类中，类似静态内部类<br><code>public static record Film</code></p>
+<p>3、方法内部<br>从 Java 16 开始，record 可以被定义为局部类（即在方法内部定义）。这种用法适合<strong>仅在某个方法中使用的临时数据结构</strong>。直接record Film</p>
+<p>PS：静态内部类和非静态内部类：静态内部类不依赖于外部类的实例，可以直接通过外部类名访问。只能访问外部类的静态成员。非静态内部类依赖于外部类的实例，必须通过外部类的实例来创建。可以访问外部类的所有成员，因为内部类持有一个对外部类实例的隐式引用。</p>
+<h2 id="线上redis机器爆了，如何优化"><a href="#线上redis机器爆了，如何优化" class="headerlink" title="线上redis机器爆了，如何优化"></a>线上redis机器爆了，如何优化</h2><p>如果在生产环境中发现 Redis 出现异常，比如内存爆了或者响应变慢，首先通过 Redis 的 INFO 命令（<strong>redis-cli info</strong>）和监控平台查看当前的资源使用情况，确认是<strong>内存、CPU、连接数还是某个慢查询</strong>引起的。</p>
+<p>如果是** Big Key **（存储的数据体积很大，如一个Hash包含上万个字段）或者热 Key 造成的，我会进行数据结构优化、拆分 Key、引入本地缓存；如果是连接数过高，我会检查连接池配置，适当增加连接池大小或引入连接复用。</p>
+<p>如果是 QPS 过高导致 Redis 成为瓶颈，我会考虑引入<strong>Redis 集群、读写分离、或者对热点数据进行缓存</strong>。</p>
+<p>此外，我也会加强缓存的<strong>失效策略</strong>、防止缓存穿透和击穿，并结合布隆过滤器等手段保护后端数据库。</p>
+<h2 id="spring声明式事务-Transactional"><a href="#spring声明式事务-Transactional" class="headerlink" title="spring声明式事务@Transactional"></a>spring声明式事务@Transactional</h2><p>在Spring中事务管理的方式有两种，编程式事务和声明式事务。编程式事务将业务代码和事务代码耦合到一块，当发生异常的时候还得需要手动回滚事务，不优雅。</p>
+<p>声明式事务：<strong>基于AOP，设置好切点，当我们调用事务方法时，会调用到生成的代理对象，代理对象中加入了事务提交和回滚的逻辑。当方法执行成功时提交事务，当方法发生异常时回滚事务。</strong></p>
+<p>@Transactional可以用在类，方法，接口上：</p>
+<ol>
+<li>用在类上，该类的所有public方法都具有事务</li>
+<li>用在方法上，方法具有事务。当类和方法同时配置事务的时候，方法的属性会覆盖类的属性</li>
+<li>用在接口上，一般不建议这样使用，因为只有基于接口的代理会生效，如果Spring AOP使用cglib来实现动态代理，会导致事务失效（因为注解不能被继承）</li>
+</ol>
+<p><strong>@Transactional失效的场景</strong></p>
+<ol>
+<li>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</li>
+<li>自调用，因为@Transactional是基于动态代理实现的，自调用时，方法执行不会经过代理对象</li>
+<li>异常在代码中被你自己try catch了，不抛异常进入不了回滚的逻辑</li>
+<li>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常，如果抛出任何异常都回滚，可以配置rollbackFor为Exception</li>
+<li>事务传播配置不符合业务逻辑</li>
+</ol>
+<p><strong>为什么只有public方法上的@Transactional注解才会生效？</strong></p>
+<p>首先JDK动态代理肯定只能是public，因为接口的权限修饰符只能是public。cglib代理的方式是可以代理protected方法的（private不行，子类访问不了父类的private方法）如果支持protected，可能会造成当切换代理的实现方式时表现不同，增大出现bug的可能性，所以统一一下。</p>
+<p>Transactional的事务传播行为默认为Propagation.REQUIRED。<strong>「如果当前存在事务，则加入该事务。如果当前没有事务，则创建一个新的事务」</strong></p>
+<p>Propagation.REQUIRES_NEW**「创建一个新事务，如果当前存在事务，则把当前事务挂起」**</p>
+<h2 id="HashMap和HashTable的区别"><a href="#HashMap和HashTable的区别" class="headerlink" title="HashMap和HashTable的区别"></a>HashMap和HashTable的区别</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2132083">https://cloud.tencent.com/developer/article/2132083</a></p>
+<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><h2 id="Redis字典的实现方式和冲突处理"><a href="#Redis字典的实现方式和冲突处理" class="headerlink" title="Redis字典的实现方式和冲突处理"></a>Redis字典的实现方式和冲突处理</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2329632">https://cloud.tencent.com/developer/article/2329632</a></p>
 
       
     </div>
@@ -1704,422 +1906,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/05/myblog/java/Page%E5%88%86%E9%A1%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/05/myblog/java/Page%E5%88%86%E9%A1%B5/" class="post-title-link" itemprop="url">Page分页</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-11-05 12:55:45" itemprop="dateCreated datePublished" datetime="2022-11-05T12:55:45+08:00">2022-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-23 23:09:22" itemprop="dateModified" datetime="2023-02-23T23:09:22+08:00">2023-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="spring整合mybatis"><a href="#spring整合mybatis" class="headerlink" title="spring整合mybatis"></a>spring整合mybatis</h2><p>新建一个子工程web-repository。</p>
-<p>mybatis依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.35&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">--web-repository</span><br><span class="line"> --src</span><br><span class="line">  --main</span><br><span class="line">   --java</span><br><span class="line">     --config</span><br><span class="line">       --SpringConfig.java</span><br><span class="line">     --domain</span><br><span class="line">       --StudentDO.java</span><br><span class="line">     --StudentDao.java</span><br><span class="line">   --resource</span><br><span class="line">     --mapper</span><br><span class="line">  --test</span><br></pre></td></tr></table></figure>
-
-<p>✅spring配置类：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;org.example&quot;&#125;)</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>要引入spring依赖。</p>
-<p>spring配置：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/fengyupinglan/p/14517267.html">https://www.cnblogs.com/fengyupinglan/p/14517267.html</a></p>
-<p>✅spring整合mybatis</p>
-<p>首先，spring配置文件可以是xml文件在resource文件夹下，也可以是注解方式的java文件。先写一个spring配置文件，自动装配搞上去。还有mybatis的一些bean要配置上去。</p>
-<h3 id="xml方式"><a href="#xml方式" class="headerlink" title="xml方式"></a>xml方式</h3><p>xml文件方式，spring-mybatis.xml<br>开启自动扫描和配置bean</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span> <span class="attr">xmlns:tx</span>=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/aop/spring-aop.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/tx</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/tx/spring-tx.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--开启组件扫描,扫描多个包用,隔开--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;org.example&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 开启Aspect生成代理对象 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--加载properties文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">ignore-unresolvable</span>=<span class="string">&#x27;true&#x27;</span> <span class="attr">location</span>=<span class="string">&#x27;classpath:dbconfig.properties&#x27;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 1.配置阿里druid连接池 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 配置数据库基本信息 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.url&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.username&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.password&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClassName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.driverClassName&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxActive&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.maxActive&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;initialSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.initialSize&#125;&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 2.配置spring的数据源，声明事务 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 3.配置 mybatis，扫描mapper.xml文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.1 配置 mybatis config --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mybatis-config.xml&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.2 配置扫描mybatis映射文件路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mapperLocations&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mapper/*.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 4.类似于 jdbcTemplate 帮助类 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionTemplate&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionTemplate&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">&quot;sqlSessionFactory&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 自动扫描了所有的*Mapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mapper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basePackage&quot;</span> <span class="attr">value</span>=<span class="string">&quot;org.example.mysql&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>druid需要依赖包：druid<br>SqlSessionFactoryBean 需要依赖包：spring-jdbc<br>还需要 ibatis-common</p>
-<p>dbconfig.properties:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.url=jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8</span><br><span class="line">db.driverClassName=com.mysql.cj.jdbc.Driver</span><br><span class="line">db.password=jade</span><br><span class="line">db.username=liuxuan</span><br><span class="line">db.maxActive=5</span><br><span class="line">db.initialSize=1</span><br></pre></td></tr></table></figure>
-
-<p>mybatis配置文件，mybatis-config.xml<br>一些configuration setting</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//ybatis.org//DTD SQL Map Config 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;cacheEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;useGeneratedKeys&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;defaultExecutorType&quot;</span> <span class="attr">value</span>=<span class="string">&quot;REUSE&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;STDOUT_LOGGING&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>xml方式spring整合mybatis，mybatis配置项的意义：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45797116/article/details/117105095">https://blog.csdn.net/qq_45797116/article/details/117105095</a></p>
-<p>xml文件中如果想引入其他xml文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;import resource=&quot;.../...xml&quot;/&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h3><p>注解方式，SpringConfig.java</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package org.example.mysql.config;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.ImportResource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;org.example&quot;&#125;)</span><br><span class="line">@ImportResource(&quot;classpath:spring-mybatis.xml&quot;) //导入xml配置项</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里，可以用@Import导入其他注解方式的配置文件，以及用@ImportResource导入xml方式的配置文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Import(CDPlayerConfig.class)  </span><br><span class="line">@ImportResource(&quot;classpath:cons-injec.xml&quot;) //导入xml配置项</span><br></pre></td></tr></table></figure>
-
-<p>注解方式倒入配置文件：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42107384/article/details/116475637">https://blog.csdn.net/weixin_42107384/article/details/116475637</a></p>
-<p>纯注解方式的整合spring和mybatis配置：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44226181/article/details/127343597">https://blog.csdn.net/weixin_44226181/article/details/127343597</a></p>
-<p>还有一个一行代码的基于注解整合的：<br><a target="_blank" rel="noopener" href="https://www.pudn.com/news/62f1dcb95425817ffc22c172.html">https://www.pudn.com/news/62f1dcb95425817ffc22c172.html</a></p>
-<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package org.example;</span><br><span class="line"></span><br><span class="line">public class StudentDaoTest &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testSelectById() &#123;</span><br><span class="line"></span><br><span class="line">        // xml：</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">        UserMapper mapper = (UserMapper) context.getBean(&quot;userMapper&quot;);</span><br><span class="line"></span><br><span class="line">        // 注解：</span><br><span class="line">        ApplicationContext context =new AnnotationConfigApplicationContext(SpringConfig.class);</span><br><span class="line">        StudentDao studentDao = (StudentDao) context.getBean(&quot;studentDao&quot;);</span><br><span class="line"></span><br><span class="line">        StudentDO studentDO = studentDao.selectById(1L);</span><br><span class="line">        System.out.println(studentDO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试验证及xml中配置SqlSessionFactory的bean和扫描的bean：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28082757/article/details/103488364">https://blog.csdn.net/qq_28082757/article/details/103488364</a></p>
-<p>配置数据库连接池有几种方法，上面用的是ali的druid连接池，关于Druid连接池：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chy18883701161/p/12594889.html">https://www.cnblogs.com/chy18883701161/p/12594889.html</a></p>
-<p>注解方式配置JdbcConfig中 PlatformTransactionManager 是事务管理，在spring-jdbc包下。<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/903c01cb2a77">https://www.jianshu.com/p/903c01cb2a77</a></p>
-<p>@Mapper注解，难道是spring-boot才能用的？<br>mybatis支持的映射方式有基于xml的mapper.xml文件、基于java的使用Mapper接口class。<br>从mybatis3.4.0开始加入了@Mapper注解，目的就是为了不再写mapper映射文件。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46369022/article/details/122755858">https://blog.csdn.net/weixin_46369022/article/details/122755858</a><br>需要依赖包：mybatis-spring-boot-starter</p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>✅ @Value里的字段报红</p>
-<p>原因：自动导入了lombok里的@Value，要用的是SpringFramework下的@Value。</p>
-<p>✅ xml配置文件加载不到properties属性问题</p>
-<p>原因：spring中没有成功加载相应的配置文件</p>
-<p>解决：进入File-Project Struccture，进入Facets中进行配置，.在右边的spring目录下，找到对应的爆红问题所在配置文件，选择xml文件，点击修改符合（下图中的小铅笔），在跳出来的弹框中，选择添加（加号），然后选择Additioonal properties files。然后找到需要加载进spring中的配置文件，点击OK，添加成功。</p>
-<p>来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhaogot/article/details/103224088">https://blog.csdn.net/zhaogot/article/details/103224088</a></p>
-<p>✅ xml配置文件中的问题：根元素 “beans” 必须匹配 DOCTYPE 根 “null”</p>
-<p>在<code>&lt;beans&gt;</code>标签那里报出来。</p>
-<p>原因：mybatis在扫描Mapper.xml文件时，扫描到非mapper文件。比如本次报错扫描到了自己。spring.xml的根元素是<code>&lt;beans&gt;&lt;/beans&gt;</code>当然不会有DOCTYPE了。<br>所以当Mybatis扫描到了Spring.xml这个非Mapper.xml文件时，自然找不到DOCTYPE，所以会有“DOCTYPE 根 “null””这个错误。</p>
-<p>粗心：应该扫的是mybatis-config.xml文件，结构写成了自己。</p>
-<p>来自：<a target="_blank" rel="noopener" href="https://www.codeleading.com/article/7746743165/">https://www.codeleading.com/article/7746743165/</a></p>
-<p>✅ org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)</p>
-<p>原因：mapper接口和xml文件没匹配上，有可能是文件名方法名没匹配上，这里是在配置文件里没加扫描接口，加了就好了。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43570367/article/details/103147854">https://blog.csdn.net/weixin_43570367/article/details/103147854</a></p>
-<p>✅ properties文件 java.lang.NumberFormatException</p>
-<p>明明是数字类型，但是说我从String转为int发生异常。</p>
-<p>需要在xml配置文件中加载properties配置文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--加载properties文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">ignore-unresolvable</span>=<span class="string">&#x27;true&#x27;</span> <span class="attr">location</span>=<span class="string">&#x27;classpath:dbconfig.properties&#x27;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>spring加载properties文件的几种方式：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/chuige2013/article/details/121759088">https://blog.csdn.net/chuige2013/article/details/121759088</a></p>
-<p>✅ java.sql.SQLException: com.mysql.cj.jdbc.Driver</p>
-<p>mysql连接驱动依赖的版本不匹配问题，一般出现在使用低版本连接驱动连接高版本mysql情况下，解决方法是在maven中央仓库中下载高版本的mysql连接驱动.</p>
-<p>mysql-connector-java 换8.0.21的包，自动引入没成功，手动下载装到.m2的。</p>
-<p>✅ init datasource error, url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatis?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</p>
-<p>db.url换成：<code>jdbc:mysql://localhost:3306/mysql?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8</code></p>
-<p>✅ Table ‘mysql.student’ doesn’t exist</p>
-<p>上面mysql换成库名。</p>
-<p>😄终于成功了，不容易。</p>
-<h2 id="com-github-pagehelper"><a href="#com-github-pagehelper" class="headerlink" title="com.github.pagehelper"></a>com.github.pagehelper</h2><p>背景：使用Pige时，从数据库中获取到list之后，removeIf筛选，但是分页得到的效果不对，条目总数total是从数据库得到的list size。</p>
-<p>原因：Page与Mybatis强耦合，不是先从数据库获取再分页，而是先获取某页要获取的条目，耦合到sql中查询。</p>
-<p>难道只能是spring-boot用的？ pagehelper-spring-boot-starter 依赖包中。</p>
-<p>PageHelper分页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43958747/article/details/103822761">https://blog.csdn.net/weixin_43958747/article/details/103822761</a></p>
-<p>其中有个参数为CallBack接口。</p>
-<p>⚠️使用中的一个case：<br>Pageed中的list的元素得和数据库dao返回的数据结构一样，得是DO。获取了Paged之后再转为vo，因为分页Page和mybatis是强耦合的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/11/myblog/java/java%20web%E7%9B%B8%E5%85%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/11/myblog/java/java%20web%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">java web相关</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-11 14:46:24" itemprop="dateCreated datePublished" datetime="2022-09-11T14:46:24+08:00">2022-09-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-23 00:15:16" itemprop="dateModified" datetime="2025-07-23T00:15:16+08:00">2025-07-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="网页502"><a href="#网页502" class="headerlink" title="网页502"></a>网页502</h2><p>502 Bad Gateway是指错误网关，无效网关；在互联网中表示一种网络错误。表现在WEB浏览器中给出的页面反馈。</p>
-<p>服务端代码下掉，重新部署的间隙，访问接口会502.</p>
-<h2 id="504错误"><a href="#504错误" class="headerlink" title="504错误"></a>504错误</h2><p>504错误代表网关超时 （Gateway timeout），是指服务器作为网关或代理，但是没有及时从上游服务器收到请求。</p>
-<p>接口504超时，是服务端这边超时断开请求了，需要看一下nginx配置。如果是tomcat，看一下conf中配置的请求超时时间。</p>
-<h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><h3 id="✅nginx是什么？"><a href="#✅nginx是什么？" class="headerlink" title="✅nginx是什么？"></a>✅nginx是什么？</h3><blockquote>
-<p>Nginx是十分轻量级的HTTP服务器。Nginx，它的发音为“engine X”，是一个高性能的HTTP和反向代理服务器，同时也是一个IMAP&#x2F;POP3&#x2F;SMTP 代理服务器。</p>
-<p>Ngnix 是互联网企业使用最为广泛的代理服务器。它可以为后端分布式服务提供负载均衡的功能，它可以将后端多个服务地址聚合为单个地址来对外提供服务。</p>
-<p>Nginx是lgor Sysoev为俄罗斯访问量第二的rambler.ru站点设计开发的。从2004年发布至今，凭借开源的力量，已经接近成熟与完善。<br>Nginx功能丰富，可作为HTTP服务器，也可作为反向代理服务器，邮件服务器。支持FastCGI、SSL、Virtual Host、URL Rewrite、Gzip等功能。并且支持很多第三方的模块扩展。<br>Nginx的稳定性、功能集、示例配置文件和低系统资源的消耗让他后来居上，在全球活跃的网站中有12.18%的使用比率，大约为2220万个网站。</p>
-</blockquote>
-<p>nginx是服务器，代理服务器，负载均衡，反向代理，服务器架构。</p>
-<p>Nginx凭借其稳定性、低资源消耗、简单配置和丰富的功能，从十多年前名不见经传的Web服务器软件，发展到如今能够跟Apache匹敌的地位。</p>
-<p>1、作为Web服务器，Nginx处理静态文件、索引文件，自动索引的效率非常高</p>
-<p>2、作为代理服务器，Nginx可以实现无缓存的反向代理加速，提高网站运行速度</p>
-<p>3、作为负载均衡服务器，Nginx既可以在内部直接支持Rails和PHP，也可以支持HTTP代理服务器对外进行服务，同时还支持简单的容错和利用算法进行负载均衡</p>
-<p>4、在性能方面，Nginx是专门为性能优化而开发的，实现上非常注重效率。它采用内核Poll模型，可以支持更多的并发连接，最大可以支持对5万个并发连接数的响应，而且只占用很低的内存资源</p>
-<p>5、在稳定性方面，Nginx采取了分阶段资源分配技术，使得CPU与内存的占用率非常低。Nginx官方表示，Nginx保持1万个没有活动的连接，而这些连接只占用2.5MB内存，因此，类似DOS这样的攻击对Nginx来说基本上是没有任何作用的</p>
-<p>6、在高可用性方面，Nginx支持热部署，启动速度特别迅速，因此可以在不间断服务的情况下，对软件版本或者配置进行升级，即使运行数月也无需重新启动，几乎可以做到7x24小时不间断地运行<br>————————————————<br>解读nginx：<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60274825/article/details/122101640">https://blog.csdn.net/weixin_60274825/article/details/122101640</a></p>
-<h3 id="✅什么是代理服务器？"><a href="#✅什么是代理服务器？" class="headerlink" title="✅什么是代理服务器？"></a>✅什么是代理服务器？</h3><p>代理服务器是介于客户端和Web服务器之间的另一台服务器，有了它之后，浏览器不是直接到Web服务器去取回网页，而是通过向代理服务器发送请求，信号会先送到代理服务器，由代理服务器来取回浏览器所需要的信息并传送给你的浏览器。</p>
-<p><img src="/images/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.png"></p>
-<p>代理位于Web客户端和Web服务器之间，扮演“中间人”的角色。<br>HTTP的代理服务器既是Web服务器又是Web客户端。</p>
-<h3 id="✅什么是正反向代理"><a href="#✅什么是正反向代理" class="headerlink" title="✅什么是正反向代理"></a>✅什么是正反向代理</h3><p>正向代理是一个位于客户端和原始服务器之间的服务器，为了从原始服务器取的内容，客户端向代理发送一个请求并指定目标（原始服务器），然后代理向原始服务器转交请求并将获得的内容返回给客户端，客户端必须要进行一些特别的设置才能使用正向代理。</p>
-<p>正向代理代理的对象是客户端，正向代理中，proxy和client同属一个LAN，对server透明 （客户端服务端多对一？）</p>
-<p>反向代理服务器：在服务器端接收客户端的请求，然后把请求分发给具体的服务器进行处理，然后再将服务器的响应结果反馈给客户端。Nginx就是其中的一种反向代理服务器软件。</p>
-<p>反向代理代理的对象是服务端，反向代理中，proxy和server同属一个LAN，对client透明  （客户端服务端多对多）</p>
-<p>正向代理客户端必须设置正向代理服务器，当然前提是要知道正向代理服务器的IP地址，还有代理程序的端口。<br>反向代理正好与正向代理相反，对于客户端而言代理服务器就像是原始服务器，并且客户端不需要进行任何特别的设置。客户端向反向代理的命名空间中的内容发送普通请求，接着反向代理将判断向哪个原始服务器转交请求，并将获得的内容返回给客户端。<br>————————————————<br>解读nginx：<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_60274825/article/details/122101640">https://blog.csdn.net/weixin_60274825/article/details/122101640</a></p>
-<h3 id="✅nginx与tomcat什么关系"><a href="#✅nginx与tomcat什么关系" class="headerlink" title="✅nginx与tomcat什么关系"></a>✅nginx与tomcat什么关系</h3><p>nginx是上面做web代理服务器的，而tomcat是上面做真正web服务器的。</p>
-<p>nginx常用做静态内容服务和代理服务器，直面外来请求转发给后面的应用服务（tomcat，django什么的），tomcat更多用来做做一个应用容器，让java web app跑在里面的东西，对应同级别的有jboss,jetty等东西。</p>
-<p>但是事无绝对，nginx也可以通过模块开发来提供应用功能，tomcat也可以直接提供http服务，通常用在内网和不需要流控等小型服务的场景。</p>
-<p>严格的来说，Apache&#x2F;Nginx 应该叫做「HTTP Server」；而 Tomcat 则是一个「Application Server」，或者更准确的来说，是一个「Servlet&#x2F;JSP」应用的容器（Ruby&#x2F;Python 等其他语言开发的应用也无法直接运行在 Tomcat 上）。</p>
-<p>一个 HTTP Server 关心的是 HTTP 协议层面的传输和访问控制，所以在 Apache&#x2F;Nginx 上你可以看到代理、负载均衡等功能。客户端通过 HTTP Server 访问服务器上存储的资源（HTML 文件、图片文件等等）。通过 CGI 技术，也可以将处理过的内容通过 HTTP Server 分发，但是一个 HTTP Server 始终只是把服务器上的文件如实的通过 HTTP 协议传输给客户端。</p>
-<p>而应用服务器，则是一个应用执行的容器。它首先需要支持开发语言的 Runtime（对于 Tomcat 来说，就是 Java），保证应用能够在应用服务器上正常运行。其次，需要支持应用相关的规范，例如类库、安全方面的特性。对于 Tomcat 来说，就是需要提供 JSP&#x2F;Sevlet 运行需要的标准类库、Interface 等。为了方便，应用服务器往往也会集成 HTTP Server 的功能，但是不如专业的 HTTP Server 那么强大，所以应用服务器往往是运行在 HTTP Server 的背后，执行应用，将动态的内容转化为静态的内容之后，通过 HTTP Server 分发到客户端。<br>————————————————<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44517990/article/details/100712182">https://blog.csdn.net/weixin_44517990/article/details/100712182</a></p>
-<h3 id="✅-springboot内置tomcat-和-tomcat"><a href="#✅-springboot内置tomcat-和-tomcat" class="headerlink" title="✅ springboot内置tomcat 和 tomcat"></a>✅ springboot内置tomcat 和 tomcat</h3><p>1.内置的tomcat没有tomcat的主页页面<a target="_blank" rel="noopener" href="http://localhost:9999/%EF%BC%8C%E8%80%8C%E6%88%91%E4%BB%AC%E5%B9%B3%E6%97%B6%E7%94%A8%E7%9A%84%E5%A4%96%E7%BD%AE%E7%9A%84tomcat%E6%98%AF%E6%9C%89%E7%9A%84">http://localhost:9999/，而我们平时用的外置的tomcat是有的</a></p>
-<p>2.内置的tomcat可以用main跑项目，而如果要用外置的tomcat就需要把项目打成war包，然后拷贝到webapp下进行运行</p>
-<p>Tomcat：<br>Tomcat是一个Web应用服务器，也是Servlet容器。它的作用是，解析客户端client发起的request，并组装出HttpRequest、创建HttpResponse，将二者交于内部的HttpServlet处理和填充</p>
-<p>Tomcat映射处理请求的Servlet是通过web.xml做的。</p>
-<p>SpringMVC使用一个DispatcherServlet来接收所有的请求，并把它们分发到不同的controller中来做进一步处理。</p>
-<p>SpringMVC &#x3D; Spring + Web框架，Spring这部分主要是AOP&#x2F;IOC容器。</p>
-<p>SpringBoot是Spring的扩展，简化了Spring的配置，通过starter的方式简化了常用组件依赖的引入，使其更加易用。</p>
-<p>SpringBoot内置了tomcat。</p>
-<h3 id="✅tomcat和spring-mvc"><a href="#✅tomcat和spring-mvc" class="headerlink" title="✅tomcat和spring mvc"></a>✅tomcat和spring mvc</h3><p>tomcat既是Http服务器（不用代理的话，其实是应用服务器），Http服务器与Servlet容器的功能界限是：可以把HTTP服务器想象成前台的接待，负责网络通信和解析请求，Servlet容器是业务部门，负责处理业务请求。</p>
-<p>Tomcat和Servlet作为Web服务器和Servlet容器的结合，可以接受网络http请求解析为Servlet规范的请求对象和响应对象。比如，HttpServletRequest对象是Tomcat提供的，Servlet是规范，Tomcat是实现规范的Servlet容器。tomcat监听了端口，请求过来后，根据url等信息，确定要将请求交给哪个servlet去处理;然后调用那个servlet的service方法，service方法返回一个response对象;<br>tomcat再把这个response返回给客户端。</p>
-<p>SpringMVC是处理Servlet请求的应用，其中DispatcherServlet实现了Servlet接口，Tomcat负责加载和调用DispatcherServlet。同时，DispatcherServlet有自己的容器（SpringMVC）容器，这个容器负责管理SpringMVC相关的bean，比如Controler和ViewResolver等。同时，Spring中还有其他的Bean比如Service和DAO等，这些由全局的Spring IOC容器管理，因此，Spring有两个IOC容器。</p>
-<p>如果只是使用spring(不包含springmvc)，那么是tomcat容器解析xml文件，通过反射实例化对应的类，根据这些servlet规范实现类，触发对应的代码处理逻辑，这个时候tomcat负责http报文的解析和servlet调度的工作。</p>
-<p>如果使用spring mvc，那么tomcat只是解析http报文，然后将其转发给dispatchsetvlet，然后由springmvc根据其配置，实例对应的类，执行对应的逻辑，然后返回结果给dispatchservlet，最后由它转发给tomcat,由tomcat负责构建http报文数据。</p>
-<p>DispatcherServlet：是Spring MVC中的一个类，实现了Servlet接口。所以部署在Tomcat中的Spring项目，对Tomcat来说，都是一个servlet。</p>
-<p>————————————————<br>spring mvc还需要tomcat吗？<br>版权声明：本文为CSDN博主「黄泥川水猴子」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40277163/article/details/124730530">https://blog.csdn.net/qq_40277163/article/details/124730530</a></p>
-<h3 id="✅nginx与域名解析DNS什么关系"><a href="#✅nginx与域名解析DNS什么关系" class="headerlink" title="✅nginx与域名解析DNS什么关系"></a>✅nginx与域名解析DNS什么关系</h3><p>首先，nginx是web服务器和反向代理服务器。 dns是域名解析服务器。nginx不带dns。</p>
-<p>作为将域名和IP地址相互映射的一个分布式数据库，能够使人更方便地访问互联网。访问域名，dns帮忙解析到ip，然后访问这个地址的资源呈现给你。hosts和nginx在后面用到。</p>
-<p>hosts文件：<br>hosts文件是个本地域名解析文件，不管你是windwos还是linux，那都是有的，他里面的有效内容，就是一个个的ip和域名映射关系。<br>windows一般在：C:&#x2F;Windows&#x2F;System32&#x2F;drivers&#x2F;etc&#x2F;hosts<br>Linux的hosts文件路径一般：&#x2F;etc&#x2F;hosts<br>比如：127.0.0.1 localhost<br>这个文件其实也是配置了ip和域名之间的映射关系的数据库，本地要是有这个文件，就优先用这个文件中的配置去解析，如果没有，那就通过dns解析。<br>注意：hosts文件只能配置ip和域名的映射关系，但是不能配置端口号，默认访问80端口</p>
-<p>因为要解决端口问题，这里就得使用反向代理软件nginx，nginx中的每个server就是一个反向代理配置，可以有多个server。</p>
-<p>理解：<em><strong>客户端请求 - dns解析域名 - 解析到nginx服务器的ip - nginx代理到tomcat服务器+端口 - tomcat将请求给servlet - servlet的service处理请求。</strong></em></p>
-<h3 id="✅nginx与CDN内容分发网络什么关系"><a href="#✅nginx与CDN内容分发网络什么关系" class="headerlink" title="✅nginx与CDN内容分发网络什么关系"></a>✅nginx与CDN内容分发网络什么关系</h3><p>cdn是网络，nginx是服务器也是负载均衡。</p>
-<p>cdn：<br>1、CDN的全称是Content Delivery Network，即内容分发网络。<br>2、其基本思路是尽可能避开互联网上有可能影响数据传输速度和稳定性的瓶颈和环节，使内容传输的更快、更稳定。<br>3、通过在网络各处放置节点服务器所构成的在现有的互联网基础之上的一层智能虚拟网络，CDN系统能够实时地根据网络流量和各节点的连接、负载状况以及到用户的距离和响应时间等综合信息将用户的请求重新导向离用户最近的服务节点上。<br>4、其目的是使用户可就近取得所需内容，解决 Internet网络拥挤的状况，提高用户访问网站的响应速度**。<br>5、内容分发网络是建立并覆盖在承载网之上，由分布在不同区域的边缘节点服务器群组成的分布式网络。</p>
-<p>cdn的工作原理：<br>CDN这个技术其实说起来并不复杂，最初的核心理念，就是将内容缓存在终端用户附近。</p>
-<p>内容源不是远么？那么，我们就在靠近用户的地方，建一个缓存服务器，把远端的内容，复制一份，放在这里，不就OK了？</p>
-<p>具体来说，CDN就是采用更多的缓存服务器（CDN边缘节点），布放在用户访问相对集中的地区或网络中。当用户访问网站时，利用全局负载技术，将用户的访问指向距离最近的缓存服务器上，由缓存服务器响应用户请求。（有点像电商的本地仓吧？）</p>
-<p>大家可能觉得，这个不就是“镜像服务器”嘛？其实不一样。镜像服务器是源内容服务器的完整复制。而CDN，是部分内容的缓存，智能程度更高。</p>
-<p><img src="/images/CDN.png"></p>
-<p>借用阿里云官网的例子，来简单介绍CDN的工作原理。</p>
-<p>假设通过CDN加速的域名为 <a href="http://www.a.com，接入CDN网络，开始使用加速服务后，当终端用户（北京）发起HTTP请求时，处理流程如下：">www.a.com，接入CDN网络，开始使用加速服务后，当终端用户（北京）发起HTTP请求时，处理流程如下：</a></p>
-<p>1、当终端用户（北京）向<a target="_blank" rel="noopener" href="http://www.a.com下的指定资源发起请求时,首先向ldns(本地dns)发起域名解析请求./">www.a.com下的指定资源发起请求时，首先向LDNS（本地DNS）发起域名解析请求。</a></p>
-<p>2、LDNS检查缓存中是否有<a target="_blank" rel="noopener" href="http://www.a.com的ip地址记录.如果有,则直接返回给终端用户;如果没有,则向授权dns查询./">www.a.com的IP地址记录。如果有，则直接返回给终端用户；如果没有，则向授权DNS查询。</a></p>
-<p>3、当授权DNS解析<a target="_blank" rel="noopener" href="http://www.a.com时,返回域名cname/">www.a.com时，返回域名CNAME</a> <a target="_blank" rel="noopener" href="http://www.a.tbcdn.com对应ip地址./">www.a.tbcdn.com对应IP地址。</a></p>
-<p>4、域名解析请求发送至阿里云DNS调度系统，并为请求分配最佳节点IP地址。</p>
-<p>5、LDNS获取DNS返回的解析IP地址。</p>
-<p>6、用户获取解析IP地址。</p>
-<p>7、用户向获取的IP地址发起对该资源的访问请求。</p>
-<p>8、如果该IP地址对应的节点已缓存该资源，则会将数据直接返回给用户，例如，图中步骤7和8，请求结束。</p>
-<p>9、如果该IP地址对应的节点未缓存该资源，则节点向源站发起对该资源的请求。获取资源后，结合用户自定义配置的缓存策略，将资源缓存至节点，例如，图中的北京节点，并返回给用户，请求结束。</p>
-<p>所以：<br>（1）CDN的加速资源是跟域名绑定的。<br>（2）通过域名访问资源，首先是通过DNS分查找离用户最近的CDN节点（边缘服务器）的IP<br>（3）通过IP访问实际资源时，如果CDN上并没有缓存资源，则会到源站请求资源，并缓存到CDN节点上，这样，用户下一次访问时，该CDN节点就会有对应资源的缓存了。</p>
-<hr>
-<p>nginx负载均衡：负载均衡实际上就是将大量请求进行分布式处理的策略</p>
-<p>Nginx 作为一个基于 C 实现的高性能 Web 服务器，可以通过系列算法解决上述的负载均衡问题。并且由于它具有高并发、高可靠性、高扩展性、开源等特点，成为开发人员常用的反向代理工具</p>
-<p>1、正向代理</p>
-<p>正向代理（Forward Proxy）最大的特点是，客户端非常明确要访问的服务器地址，它代理客户端，替客户端发出请求。比如：科学上网。</p>
-<p>假设客户端想要访问 Google，它明确知道待访问的服务器地址是 <a target="_blank" rel="noopener" href="https://www.google.com/%EF%BC%8C%E4%BD%86%E7%94%B1%E4%BA%8E%E6%9D%A1%E4%BB%B6%E9%99%90%E5%88%B6%EF%BC%8C%E5%AE%83%E6%89%BE%E6%9D%A5%E4%BA%86%E4%B8%80%E4%B8%AA%E8%83%BD%E5%A4%9F%E8%AE%BF%E9%97%AE%E5%88%B0">https://www.google.com/，但由于条件限制，它找来了一个能够访问到</a> Google 的”朋友”：代理服务器。客户端把请求发给代理服务器，由代理服务器代替它请求 Google，最终再将响应返回给客户端。这便是一次正向代理的过程，该过程中服务器并不知道真正发出请求的是谁。<br>（客户端 - 正向代理 - 服务器）</p>
-<p>2、反向代理</p>
-<p>随着请求量的爆发式增长，服务器觉得自己一个人始终是应付不过来，需要兄弟服务器们帮忙，于是它喊来了自己的兄弟以及代理服务器朋友。此时，来自不同客户端的所有请求实际上都发到了代理服务器处，再由代理服务器按照一定的规则将请求分发给各个服务器。这就是反向代理（Reverse Proxy），反向代理隐藏了服务器的信息，它代理的是服务器端，代其接收请求。换句话说，反向代理的过程中，客户端并不知道具体是哪台服务器处理了自己的请求。如此一来，既提高了访问速度，又为安全性提供了保证<br>（一堆客户端 - 反向代理 - 一堆服务器）</p>
-<p>在这之中，反向代理需要考虑的问题是，如何进行均衡分工，控制流量，避免出现局部节点负载过大的问题。通俗的讲，就是如何为每台服务器合理的分配请求，使其整体具有更高的工作效率和资源利用率。</p>
-<p>3、负载均衡常用算法</p>
-<p>轮询 （round-robin）<br>轮询为负载均衡中较为基础也较为简单的算法，它不需要配置额外参数。假设配置文件中共有 台服务器，该算法遍历服务器节点列表，并按节点次序每轮选择一台服务器处理请求。当所有节点均被调用过一次后，该算法将从第一个节点开始重新一轮遍历。特点：由于该算法中每个请求按时间顺序逐一分配到不同的服务器处理，因此适用于服务器性能相近的集群情况，其中每个服务器承载相同的负载。但对于服务器性能不同的集群而言，该算法容易引发资源分配不合理等问题。</p>
-<p>加权轮询<br>为了避免普通轮询带来的弊端，加权轮询应运而生。在加权轮询中，每个服务器会有各自的 weight。一般情况下，weight 的值越大意味着该服务器的性能越好，可以承载更多的请求。该算法中，客户端的请求按权值比例分配，当一个请求到达时，优先为其分配权值最大的服务器。特点：加权轮询可以应用于服务器性能不等的集群中，使资源分配更加合理化。</p>
-<p>IP 哈希（IP hash）<br>ip_hash 依据发出请求的客户端 IP 的 hash 值来分配服务器，该算法可以保证同 IP 发出的请求映射到同一服务器，或者具有相同 hash 值的不同 IP 映射到同一服务器。特点：该算法在一定程度上解决了集群部署环境下 Session 不共享的问题。</p>
-<p>所以：<br>Nginx 作为一款优秀的反向代理服务器，可以通过不同的负载均衡算法来解决请求量过大情况下的服务器资源分配问题。较为常见的负载均衡算法有轮询、加权轮询、IP 哈希等等，可分别应对不同的请求场景。</p>
-<p>————————————————<br>好文章：从对CDN的理解到Nginx负载均衡<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40409143/article/details/118330238">https://blog.csdn.net/qq_40409143/article/details/118330238</a></p>
-<h3 id="✅nginx与RPC远程过程调用什么关系？"><a href="#✅nginx与RPC远程过程调用什么关系？" class="headerlink" title="✅nginx与RPC远程过程调用什么关系？"></a>✅nginx与RPC远程过程调用什么关系？</h3><p>RPC是远程过程调用，是一种计算机通信思想。</p>
-<p>nginx是代理服务器。它可以为后端分布式服务提供负载均衡的功能，它可以将后端多个服务地址聚合为单个地址来对外提供服务。</p>
-<p>Nginx 和后端服务之间的交互在本质上也可以理解为 RPC 数据交互。也许你会争辩说 Nginx 和后端服务之间使用的是 HTTP 协议，走的是短连接，严格上不能算是 RPC 调用。 Nginx 和后端服务之间还可以走其它的协议，比如 uwsgi 协议、fastcgi 协议等，这两个协议都是采用了比 HTTP 协议更加节省流量的二进制协议。</p>
-<p>讲RPC、RPC与nginx、RPC与HTTP间的关系的好文章：<br><a target="_blank" rel="noopener" href="https://www.kancloud.cn/machh03/server/2096716">https://www.kancloud.cn/machh03/server/2096716</a></p>
-<h3 id="✅与gateway有什么关系？"><a href="#✅与gateway有什么关系？" class="headerlink" title="✅与gateway有什么关系？"></a>✅与gateway有什么关系？</h3><p>网关(Gateway)就是一个网络连接到另一个网络的“关口”。</p>
-<p><img src="/images/gateway.png"></p>
-<p>1、nginx也可以做网关，是用户访问的总入口，也就是前端页面的容器，流量网关。</p>
-<p>流量网关是定义全局性的、跟具体的后端业务应用和服务完全无关的策略网关。<br>流量网关通常只专注于全局的Api管理策略，比如全局流量监控、日志记录、全局限流、黑白名单控制、接入请求到业务系统的负载均衡等，有点类似防火墙。</p>
-<p>2、gateway的定义是针对每一个业务微服务来得，属于业务网关。是介于nignx以及业务应用之间的中间层，主要负责将请求路由到不同的微服务中以及对请求的合法性进行校验。</p>
-<p>业务网关针对具体的业务需要提供特定的流控策略、缓存策略、鉴权认证策略等等。<br>业务网关一般部署在流量网关之后、业务系统之前，比流量网关更靠近业务系统。通常API网指的是业务网关。 有时候我们也会模糊流量网关和业务网关，让一个网关承担所有的工作,所以这两者之间并没有严格的界线。</p>
-<hr>
-<p>网关可以看做系统与外界联通的入口，我们可以在网关进行处理一些非业务逻辑的逻辑，比如权限验证，监控，缓存，请求路由等等。</p>
-<p>1、nginx是用户到 前端工程 的网关，对外网关<br>nginx是用C语言写的<br>nginx做网关，更多的是做总流量入口，反向代理，负载均衡等，还可以用来做web服务器。<br>Nginx在其中扮演的角色是什么？<br>反向代理<br>负载均衡</p>
-<p>2、gateway 是前端工程 到 后台服务器之间的一个 对内网关<br>gateway是java语言的一个框架，可以在框架上进行代码的扩展与控制，例如：安全控制，统一异常处理，XXS,SQL注入等；权限控制，黑白名单，性能监控，日志打印等<br>gateway的主要功能有，路由，断言，过滤器，利用它的这些特性，可以做流控。<br>SpringGateway在其中扮演的角色是什么？<br>统一鉴权</p>
-<p>nginx与gateway：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangbindxj/article/details/125040773">https://blog.csdn.net/yangbindxj/article/details/125040773</a></p>
-<hr>
-<p>网关服务的端口号默认是80或者443.<br>相同点：都是可以实现对api接口的拦截，负载均衡、反向代理、请求过滤等，可以实现和网关一样的效果。<br>Nginx实现负载均衡的原理属于服务器端负载均衡器。<br>Gateway实现负载均衡原理采用本地负载均衡器的形式。</p>
-<h3 id="✅nginx与统一接入有什么关系？"><a href="#✅nginx与统一接入有什么关系？" class="headerlink" title="✅nginx与统一接入有什么关系？"></a>✅nginx与统一接入有什么关系？</h3><p>统一接入层是：指的是设置专属一层，统一接入所有流量，包括 PC 流量、无线流量、IoT 流量。在应用层之上的一层。</p>
-<p>如果没有统一接入层，之前的业务方，例如购物车、商品等都要自己维护一个网关，这就涉及到维护成本和机器成本。例如卸载 HTTPS，如果所有业务方都要申请证书，那造成的应用成本是非常高的。可如果将所有功能全放在这一层进行，好处非常明显：一方面是机器集中管理节省成本；另外一方面，如果遇到新的瓶颈可以在统一接入层集中优化，如请求响应 Body 统一在这一层进行压缩减少带宽消耗，压缩会消耗 CPU，可以在这一层通过硬件加速的方式集中优化等。</p>
-<p>阿里统一接入层：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96510277?hmsr=toutiao.io">https://zhuanlan.zhihu.com/p/96510277?hmsr=toutiao.io</a></p>
-<p>统一接入层方案：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Leo_wl/archive/2012/10/17/2728541.html">https://www.cnblogs.com/Leo_wl/archive/2012/10/17/2728541.html</a></p>
-<p>统一接入层是网关中最前端的服务，统一接入到集群中。<br>所以，统一接入层应该是在web代理服务器nginx前的。</p>
-<h2 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h2><h3 id="nginx配置文件结构"><a href="#nginx配置文件结构" class="headerlink" title="nginx配置文件结构"></a>nginx配置文件结构</h3><p>Main 位于 nginx.conf 配置文件的最高层；<br>Main 层下可以有 Event、HTTP 层；<br>Http 层下面允许有多个 Server 层，用于对不同的网站做不同的配置；<br>Server 层下面允许有多个 Location，用于对不同的路径进行不同模块的配置。</p>
-<p>1、main（最上面）<br>全局配置部分用来配置对整个 server 都有效的参数。主要会设置一些影响 nginx 服务器整体运行的配置指令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以 及配置文件的引入等<br>全局Main配置<br>user nginx;<br>worker_processes 1; #设置值和CPU核心数一致</p>
-<p>error_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log warn; #日志位置和日志级别<br>pid       &#x2F;var&#x2F;run&#x2F;nginx.pid;</p>
-<p>2.event<br>events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 worker process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个 worker process 可以同时支持的最大连接数等。<br>Event配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">    worker_connections 1024;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3、http<br>http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。<br>http配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">  include       /etc/nginx/mime.types;</span><br><span class="line">  default_type application/octet-stream;</span><br><span class="line">  log_format main &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                    &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                    &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line">  access_log /var/log/nginx/access.log main;</span><br><span class="line">  sendfile       on;</span><br><span class="line">  #tcp_nopush     on;</span><br><span class="line">  keepalive_timeout 65;</span><br><span class="line">  #gzip on;</span><br><span class="line">  include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>4、server<br>Server 块也被叫做“虚拟主机”部分，它描述的是一组根据不同 server_name 指令逻辑分割的资源，这些虚拟服务器响应 HTTP 请求，因此都包含在 http 部分。最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或 IP 配置。一个 server 块可以配置多个 location 块。<br>server配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen       80;</span><br><span class="line">  server_name localhost;</span><br><span class="line">  location / &#123;</span><br><span class="line">      root   /usr/share/nginx/html;</span><br><span class="line">      index index.html index.htm;</span><br><span class="line">  &#125;</span><br><span class="line">  error_page   500 502 503 504 /50x.html;</span><br><span class="line">  location = /50x.html &#123;</span><br><span class="line">      root   /usr/share/nginx/html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>nginx配置结构：<a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1729793004418584302&wfr=spider&for=pc">https://baijiahao.baidu.com/s?id=1729793004418584302&amp;wfr=spider&amp;for=pc</a></p>
-<p>菜鸟nginx配置：<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/nginx-setup-intro.html">https://www.runoob.com/w3cnote/nginx-setup-intro.html</a></p>
-<p>nginx配置详细介绍：<a target="_blank" rel="noopener" href="https://blog.51cto.com/u_12218973/2457715">https://blog.51cto.com/u_12218973/2457715</a></p>
-<h3 id="nginx超时配置"><a href="#nginx超时配置" class="headerlink" title="nginx超时配置"></a>nginx超时配置</h3><p>Nginx主要有四类超时设置：客户端超时设置、DNS解析超时设置、代理超时设置，如果使用ngx_lua，则还有lua相关的超时设置。</p>
-<p>1、客户端超时</p>
-<p>客户端超时主要设置有读取请求头超时时间、读取请求体超时时间、发送响应超时时间、长连接超时时间。通过客户端超时设置避免客户端恶意或者网络状况不佳造成连接长期占用，影响服务端的可处理的能力。</p>
-<p><strong>client_header_timeout time</strong>：设置读取客户端请求头超时时间，默认为60s，如果在此超时时间内客户端没有发送完请求头，则响应408（RequestTime-out）状态码给客户端。</p>
-<p><strong>client_body_timeout time</strong>：设置读取客户端内容体超时时间，默认为60s，此超时时间指的是两次成功读操作间隔时间，而不是发送整个请求体的超时时间，如果在此超时时间内客户端没有发送任何请求体，则响应408（RequestTime-out）状态码给客户端。</p>
-<p><strong>send_timeout time</strong>：设置发送响应到客户端的超时时间，默认为60s，此超时时间指的也是两次成功写操作间隔时间，而不是发送整个响应的超时时间。如果在此超时时间内客户端没有接收任何响应，则Nginx关闭此连接。</p>
-<p><strong>keepalive_timeout timeout [header_timeout]</strong>：设置HTTP长连接超时时间，其中，第一个参数timeout是告诉Nginx长连接超时时间是多少，默认为75s。第二个参数header_timeout是用于设置响应头“Keep-Alive: timeout&#x3D;time”，即告知客户端长连接超时时间。如果timeout设置为0，则表示禁用长连接。</p>
-<p>2、DNS解析超时</p>
-<p><strong>resolver_timeout 30s</strong>：设置DNS解析超时时间，默认为30s</p>
-<p>3、代理超时</p>
-<p>主要有三组配置：网络连接&#x2F;读&#x2F;写超时设置、失败重试机制设置、upstream存活超时设置</p>
-<p><strong>proxy_connect_timeout time</strong>：与后端&#x2F;上游服务器建立连接的超时时间，默认为60s，此时间不超过75s。</p>
-<p><strong>proxy_read_timeout time</strong>：设置从后端&#x2F;上游服务器读取响应的超时时间，默认为60s，此超时时间指的是两次成功读操作间隔时间，而不是读取整个响应体的超时时间，如果在此超时时间内上游服务器没有发送任何响应，则Nginx关闭此连接。</p>
-<p><strong>proxy_send_timeout time</strong>：设置往后端&#x2F;上游服务器发送请求的超时时间，默认为60s，此超时时间指的是两次成功写操作间隔时间，而不是发送整个请求的超时时间，如果在此超时时间内上游服务器没有接收任何响应，则Nginx关闭此连接。</p>
-<p><strong>proxy_next_upstream_tries number</strong>：设置重试次数，默认0表示不限制，注意此重试次数指的是所有请求次数（包括第一次和之后的重试次数之和）。</p>
-<p><strong>proxy_next_upstream_timeout time</strong>：设置重试最大超时时间，默认0表示不限制。</p>
-<p>Nginx超时配置：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiao__jia__jia/article/details/124075274">https://blog.csdn.net/xiao__jia__jia/article/details/124075274</a></p>
-<h2 id="PoolingHttpClientConnectionManager"><a href="#PoolingHttpClientConnectionManager" class="headerlink" title="PoolingHttpClientConnectionManager"></a>PoolingHttpClientConnectionManager</h2><p>HttpClien高并发请求连接池 - PoolingHttpClientConnectionManager</p>
-<p>连接池：<br>连接池技术作为创建和管理连接的缓冲池技术，目前已广泛用于诸如数据库连接等长连接的维护和管理中，能够有效减少系统的响应时间，节省服务器资源开销。其优势主要有两个：其一是减少创建连接的资源开销，其二是资源的访问控制。连接池管理的对象是长连接。</p>
-<p>PoolingHttpClientConnectionManager是通过租用连接和收回链接的方式来实现的。解决了http请求的多线程问题。</p>
-<p>依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;httpclient&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>实现http连接池：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34484062/article/details/109470135">https://blog.csdn.net/qq_34484062/article/details/109470135</a></p>
-<h2 id="rpc"><a href="#rpc" class="headerlink" title="rpc"></a>rpc</h2><p>远程过程调用（Remote Procedure Call，缩写为 RPC）允许运行于一台计算机的程序调用另一台计算机的子程序，而程序员无需额外地为这个交互作用编程。 如果涉及的软件采用面向对象编程，那么远程过程调用亦可称作远程调用或远程方法调用，比如 Java RMI。</p>
-<p>远程过程调用是一个分布式计算的客户端-服务器（Client&#x2F;Server）的例子，它简单而又广受欢迎。 远程过程调用总是由客户端对服务器发出一个执行若干过程请求，并用客户端提供的参数。执行结果将返回给客户端。 由于存在各式各样的变体和细节差异，对应地派生了各式远程过程调用协议，而且它们并不互相兼容。</p>
-<p>为了允许不同的客户端均能访问服务器，许多标准化的 RPC 系统应运而生了。其中大部分采用接口描述语言（Interface Description Language，IDL），方便跨平台的远程过程调用。<br>有些实现扩展了远程调用的模型，实现了双向的服务调用，但是不管怎样，调用过程还是由一个客户端发起，服务器端提供响应，基本模型没有变化。</p>
-<p>服务的调用过程为：<br>1、client调用client stub，这是一次本地过程调用<br>2、client stub将参数打包成一个消息，然后发送这个消息。打包过程也叫做 marshalling<br>3、client所在的系统将消息发送给server<br>4、server的的系统将收到的包传给server stub<br>5、server stub解包得到参数。 解包也被称作 unmarshalling<br>6、最后server stub调用服务过程. 返回结果按照相反的步骤传给client</p>
-<hr>
-<p>RPC (Remote Procedure Call)即远程过程调用，是分布式系统常见的一种通信方法，已经有 40 多年历史。当两个物理分离的子系统需要建立逻辑上的关联时，RPC 是牵线搭桥的常见技术手段之一。除 RPC 之外，常见的多系统数据交互方案还有分布式消息队列、HTTP 请求调用、数据库和分布式缓存。</p>
-<p>其中 RPC 和 HTTP 调用是没有经过中间件的，它们是端到端系统的直接数据交互。<strong>HTTP 调用其实也可以看成是一种特殊的 RPC，只不过传统意义上的 RPC 是指长连接数据交互，而 HTTP 一般是指即用即走的短链接。</strong></p>
-<p>RPC 在我们熟知的各种中间件中都有它的身影。Nginx&#x2F;Redis&#x2F;MySQL&#x2F;Dubbo&#x2F;Hadoop&#x2F;Spark&#x2F;Tensorflow 等重量级开源产品都是在 RPC 技术的基础上构建出来的，我们<strong>这里说的 RPC 指的是广义的 RPC，也就是分布式系统的通信技术</strong>。RPC 在技术中的地位好比我们身边的空气，它无处不在，但是又有很多人根本不知道它的存在。</p>
-<p>例如数据库：<br>子系统和数据库之间的交互也是通过 RPC 进行的，只不过这里是三个子系统之间复杂的组合消息交互罢了。如果再深入进去，你会发现，这里的数据库不是那种单机数据库，而是具备主从复制功能的数据库，比如 MySQL。在互联网企业里一般都会使用这种主从读写分离的数据库。一个业务子系统将数据写往主库，主库再将数据同步到从库，然后另一个业务子系统又从从库里将数据取出来。这时又可以进一步将它们看成是四个子系统之间进行的更加复杂的 RPC 数据交互。</p>
-<hr>
-<p>一些分布式场景中RPC的使用：（广义上的RPC）</p>
-<p>✅nginx<br>Ngnix 是互联网企业使用最为广泛的代理服务器。它可以为后端分布式服务提供负载均衡的功能，它可以将后端多个服务地址聚合为单个地址来对外提供服务。Nginx 和后端服务之间的交互在本质上也可以理解为 RPC 数据交互。也许你会争辩说 Nginx 和后端服务之间使用的是 HTTP 协议，走的是短连接，严格上不能算是 RPC 调用。不过 Nginx 和后端服务之间还可以走其它的协议，比如 uwsgi 协议、fastcgi 协议等，这两个协议都是采用了比 HTTP 协议更加节省流量的二进制协议。</p>
-<p>✅Hadoop<br>在大数据技术领域，RPC 也占据了非常重要的地位。大数据领域广泛应用了非常多的分布式技术，分布式意味着节点的物理隔离，隔离意味着需要通信，通信意味着 RPC 的存在。大数据需要通信的量比业务系统更加庞大，所以在数据通信优化上做的更深。比如最常见的 Hadoop 文件系统 hdfs，一般包括一个 NameNode 和多个 DataNode，NameNode 和 DataNode 之间就是通过一种称为 Hadoop RPC 的二进制协议进行通讯。</p>
-<p>✅TensorFlow<br>在人工智能领域，RPC 也很重要，著名的 TensorFlow 框架如果需要处理上亿的数据，就需要依靠分布式计算力，需要集群化，当多个分布式节点需要集体智慧时，就必须引入 RPC 技术进行通讯。Tensorflow Cluster 的 RPC 通讯框架使用了 Google 内部自研的 gRPC 框架。</p>
-<p>转自：<a target="_blank" rel="noopener" href="https://www.kancloud.cn/machh03/server/2096716">https://www.kancloud.cn/machh03/server/2096716</a><br>里面还有实现rpc</p>
-<h2 id="理解http和rpc"><a href="#理解http和rpc" class="headerlink" title="理解http和rpc"></a>理解http和rpc</h2><p>HTTP1.0 协议时，HTTP 调用还只能是短链接调用，一个请求来回之后连接就会关闭。HTTP1.1 在 HTTP1.0 协议的基础上进行了改进，引入了 KeepAlive 特性可以保持 HTTP 连接长时间不断开，以便在同一个连接之上进行多次连续的请求，进一步拉近了 HTTP 和 RPC 之间的距离。</p>
-<p>当 HTTP 协议进化到 2.0 之后，Google 开源了一个建立在 HTTP2.0 协议之上的通信框架直接取名为 gRPC，也就是 Google RPC，这时 HTTP 和 RPC 之间已经没有非常明显的界限了。</p>
-<p>HTTP 与 RPC 的关系就好比普通话与方言的关系。要进行跨企业服务调用时，往往都是通过 HTTP API，也就是普通话，虽然效率不高，但是通用，没有太多沟通的学习成本。但是在企业内部还是 RPC 更加高效，同一个企业公用一套方言进行高效率的交流，要比通用的 HTTP 协议来交流更加节省资源。整个中国有非常多的方言，正如有很多的企业内部服务各有自己的一套交互协议一样。好比开源 RPC 协议中 Protobuf 和 Thrift 一样，它们两应该是 RPC 协议中使用最为广泛的两个。</p>
-<p>rpc基于什么实现网络传输？<br>1.rpc可以基于tcp直接开发自己的协议，这个是可以保持长连接的，tcp的传输效率高，并且可以一直维持链接</p>
-<p>2.自定义协议可以优化数据的传输，例如更大的压缩比。分布式系统中非常有用。</p>
-<p>3.http协议1.x一般情况下一个来回就关闭连接，虽然提供了keep-alive可以保持长连接，但是依然不方便，所以就出现了http2.0， http2.0基本上可以当做tcp协议使用了。所以grpc就会使用http2.0开发。</p>
-<h2 id="rest和restful"><a href="#rest和restful" class="headerlink" title="rest和restful"></a>rest和restful</h2><p>REST，英文全称Representational State Transfer（表述性状态转移），是一组架构约束条件和原则（注意，REST是设计风格而不是标准）。满足这些约束条件和原则的应用程序或设计就是RESTful。可以降低开发的复杂性，提高系统的可伸缩性。体现在Web开发中就是通过HTTP方法中的POST、DELETE、PUT、GET来对资源进行操作。</p>
-<p>一种软件架构风格，设计风格而不是标准，只是提供了一组设计原则和约束条件。它主要用于客户端和服务器交互类的软件。基于这个风格设计的软件可以更简洁，更有层次，更易于实现缓存等机制。</p>
-<p>在 REST 样式的 Web 服务中，每个资源都有一个地址。资源本身都是方法调用的目标，方法列表对所有资源都是一样的。这些方法都是标准方法，包括 HTTP GET、POST、PUT、DELETE，还可能包括 HEADER 和 OPTIONS。</p>
-<p>Representation（表现层）<br>资源的信息载体形式。它可以是文本、XML、JSON或者是一个二进制文件。它的表现形式应该在HTTP请求的头信息中用Accept和Content-Type字段指定描述。</p>
-<p>State Transfer（状态转移）<br>互联网通信协议HTTP协议，是一个无状态协议。这意味着，所有的状态都保存在服务器端。因此，如果客户端想要操作服务器，必须通过某种手段，让服务器端发生”状态转移”。</p>
-<p>在 HTTP 中，我们一般通过四种 HTTP 动词来对应资源的变化：<br>POST（新建资源，也可用于更新资源）<br>DELETE（删除资源）<br>PUT（更新资源）<br>GET（获取资源）</p>
-<p>REST架构原则：<br>对网络上所有资源都有一个资源标识符<br>对资源的操作不会改变标识符<br>同一资源有多种表现形式，如XML、JSON…<br>所有操作都是无状态的（Stateless）</p>
-<p>RESTful，是一种网络应用程序的设计风格和开发方式。RESTful可以通过一套统一的接口为Web，iOS和Android提供服务。比如微博开放平台，微信开放平台等，它们不需要有显式的前端，只需要一套提供服务的接口。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">在使用RESTful风格之前，我们通常是这样操作用户数据:</span><br><span class="line">//创建用户信息</span><br><span class="line">http://localhost:8080/user/createUser</span><br><span class="line">//删除id为1的用户信息</span><br><span class="line">http://localhost:8080/user/deleteUser/1</span><br><span class="line">//修改id为2的用户信息</span><br><span class="line">http://localhost:8080/user/updateUser/2</span><br><span class="line">//获取所有用户信息</span><br><span class="line">http://localhost:8080/user/getUsers</span><br><span class="line"></span><br><span class="line">使用RESTful风格之后:</span><br><span class="line">//创建用户信息</span><br><span class="line">POST http://localhost:8080/user</span><br><span class="line">//删除id为1的用户信息</span><br><span class="line">DELETE http://localhost:8080/user/1</span><br><span class="line">//修改id为2的用户信息</span><br><span class="line">PUT http://localhost:8080/user/2</span><br><span class="line">//获取所有用户信息</span><br><span class="line">GET http://localhost:8080/user获取所有用户信息</span><br><span class="line">通过约定不同的HTTP方法来实现不同的业务，有一个更加直观的了解。</span><br><span class="line">1、看URL就知道要操作什么</span><br><span class="line">2、看HTTP方法就知道要如何操作</span><br><span class="line">3、看HTTP状态码就知道返回结果如何</span><br></pre></td></tr></table></figure>
-
-<p>参考：<br>rest与restful：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44316527/article/details/106276655">https://blog.csdn.net/weixin_44316527/article/details/106276655</a></p>
-<hr>
-<p>rpc与restful：</p>
-<p>RPC（Remote Procedure Call Protocol）就是远程调用。最简单的想法，应该就是把HTTP协议当做RPC来用。比如我们把网址作为一个借口，传入的参数作为函数参数，response的数据作为返回信息。这其实就是一个调用。</p>
-<p>RESTful和RPC最大的区别应该就是面向对象了。<br>从设计上来看，RPC，所谓的远程过程调用 ，是面向方法的 ；<br>REST：所谓的 Representational state transfer ，是面向资源的；<br>除此之外，还有一种叫做 SOA，所谓的面向服务的架构，它是面向消息的。<br>很多人只知道GET和POST，因为现在最常用的就是GET和POST了。虽说这应该是违背了HTTP设计的初衷。</p>
-<p>序列化协议的区别：<br>接口调用通常包含两个部分，序列化和通信协议。<br>通信协议，上面已经提及了，REST 是 基于 HTTP 协议，而 RPC 可以基于 TCP&#x2F;UDP，也可以基于 HTTP 协议进行传输的。<br>常见的序列化协议，有：json、xml、hession、protobuf、thrift、text、bytes等，REST 通常使用的是 JSON或者XML，而 RPC 使用的是 JSON-RPC，或者 XML-RPC。</p>
-<p>什么时候用？<br>REST 接口更加规范，通用适配性要求高，建议对外的接口都统一成 REST。而组件内部的各个模块，可以选择 RPC，一个是不用耗费太多精力去开发和维护多套的HTTP接口，一个RPC的调用性能更高。从性能角度看，由于HTTP本身提供了丰富的状态功能与扩展功能，但也正由于HTTP提供的功能过多，导致在网络传输时，需要携带的信息更多，从性能角度上讲，较为低效。而RPC服务网络传输上仅传输与业务内容相关的数据，传输数据更小，性能更高。</p>
-<p>转自：<br><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/53677">https://developer.aliyun.com/article/53677</a></p>
-<hr>
-<p>restful和http：</p>
-<p>REST 是一种软件架构风格。这种风格的典型应用，就是HTTP。其因为简单、扩展性强的特点而广受开发者的青睐。</p>
-<p>某种意义下，我们说 REST 可以其实就是指代 HTTP 协议。</p>
-<hr>
-<p>总结：rpc、http、rest</p>
-<p>rpc是一种协议还是，还是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的思想？更是后者<br>rpc包含：服务发现、负载、容器、网络传输、序列化等组件。<br>rpc指明了程序如何进行网络传输和序列化。</p>
-<p>关于rpc和http的比较：<br>rpc的网络传输是如何实现的，rpc是连接，http是短连接。<br>http是一种rpc（广义上），还是rpc可以基于http实现？<br>RPC可以基于TCP协议也可以基于HTTP协议。<br>HTTP需要携带的信息更多，低效，RPC仅传输与业务相关的数据，传输数据更小，性能更高</p>
-<p>关于rpc和restful的比较：<br>rpc面向方法，restful面向资源。<br>日常写的接口，更多基于rpc面向方法的，虽然有的是rpc接口，有的是http接口。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2190,7 +1976,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

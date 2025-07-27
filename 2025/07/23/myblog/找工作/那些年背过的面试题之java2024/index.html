@@ -28,7 +28,7 @@
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-07-24T14:22:18.899Z">
+<meta property="article:modified_time" content="2025-07-27T11:12:47.469Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-24 22:22:18" itemprop="dateModified" datetime="2025-07-24T22:22:18+08:00">2025-07-24</time>
+                <time title="Modified: 2025-07-27 19:12:47" itemprop="dateModified" datetime="2025-07-27T19:12:47+08:00">2025-07-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,6 +268,8 @@
 </li>
 <li><p>公平锁和非公平锁：公平锁所有线程都会被阻塞，非公平锁获锁之前不管等待队列，减少唤醒线程上下文切换开销。</p>
 </li>
+<li><p>RentrantLock如何实现公平非公平：子类 <code>FairSync</code> 和 <code>NonfairSync</code>。默认非公平锁，线程尝试直接获取锁，不考虑等待队列中的顺序。新到来的线程如果此时锁恰好可用，则可以直接获取锁，减少了上下文切换，提高了吞吐量。公平锁中，获取锁时会检查同步队列（AQS 队列）中是否有比当前线程等待时间更长的线程。如果有，则当前线程必须等待；如果没有其他线程或自己是队列中最前面的，则可以尝试获取锁。这样保证了最先进入等待状态的线程优先获得锁，遵循先来先服务的原则。</p>
+</li>
 <li><p>信号量Semaphore：控制对有限资源访问的计数器，实现资源池，控制并发数。permit为1时互斥锁。</p>
 </li>
 <li><p>闭锁CountDownLatch：用于等待一组线程都完成之后才继续操作，不可重用。</p>
@@ -310,6 +312,7 @@
 <li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
 <li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
 <li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
+<li>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</li>
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
@@ -408,6 +411,8 @@
 </li>
 <li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
 </li>
+<li><p>重写 <code>equals()</code> 时必须重写 <code>hashCode()</code>：是为了保证 <strong>相等的对象必须有相同的哈希码</strong>，这是 Java 的约定。否则在使用 <code>HashMap</code>、<code>HashSet</code> 等哈希结构时，会导致对象无法正确存取或比较，引发逻辑错误。</p>
+</li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
 <li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
@@ -461,12 +466,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/" rel="prev" title="西瓜书">
-      <i class="fa fa-chevron-left"></i> 西瓜书
+    <a href="/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/" rel="prev" title="那些年背过的面试题之java2025">
+      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之java2025
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" rel="next" title="那些年背过的面试题之redis&musql">
-      那些年背过的面试题之redis&musql <i class="fa fa-chevron-right"></i>
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" rel="next" title="那些年背过的面试题之redis&mysql">
+      那些年背过的面试题之redis&mysql <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -541,7 +546,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

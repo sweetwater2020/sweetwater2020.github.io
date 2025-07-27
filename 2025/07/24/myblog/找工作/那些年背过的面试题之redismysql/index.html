@@ -22,13 +22,13 @@
 
   <meta name="description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="那些年背过的面试题之redis&amp;musql">
+<meta property="og:title" content="那些年背过的面试题之redis&amp;mysql">
 <meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
 <meta property="og:description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:22:24.486Z">
-<meta property="article:modified_time" content="2025-07-24T14:24:11.281Z">
+<meta property="article:modified_time" content="2025-07-24T15:12:13.286Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>那些年背过的面试题之redis&musql | Sweetwater's blog</title>
+  <title>那些年背过的面试题之redis&mysql | Sweetwater's blog</title>
   
 
 
@@ -202,7 +202,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          那些年背过的面试题之redis&musql
+          那些年背过的面试题之redis&mysql
         </h1>
 
         <div class="post-meta">
@@ -213,7 +213,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2025-07-24 22:22:24 / Modified: 22:24:11" itemprop="dateCreated datePublished" datetime="2025-07-24T22:22:24+08:00">2025-07-24</time>
+              <time title="Created: 2025-07-24 22:22:24 / Modified: 23:12:13" itemprop="dateCreated datePublished" datetime="2025-07-24T22:22:24+08:00">2025-07-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -480,7 +480,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

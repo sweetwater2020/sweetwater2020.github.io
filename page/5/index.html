@@ -183,6 +183,196 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/27/myblog/java/%E3%80%8Ajava%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E3%80%8B%E4%B9%8BJDBC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/27/myblog/java/%E3%80%8Ajava%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E3%80%8B%E4%B9%8BJDBC/" class="post-title-link" itemprop="url">《Java基础入门》之JDBC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-11-27 19:20:17 / Modified: 22:39:58" itemprop="dateCreated datePublished" datetime="2021-11-27T19:20:17+08:00">2021-11-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>实际开发中，项目中的数据是存储在数据库中的，Java对数据库的操作提供了一套可以执行SQL语句的API，即JDBC。</p>
+<h2 id="JDBC概念"><a href="#JDBC概念" class="headerlink" title="JDBC概念"></a>JDBC概念</h2><p>JDBC（java database connectivity，Java数据库连接）是一套用于执行SQL语句的Java API。应用程序通过该API连接到关系型数据库，并使用SQL语句来完成对数据库中数据的增删改查。</p>
+<p>JDBC要求各个数据库厂商按照统一的规范来提供数据库驱动，在程序中由JDBC和具体的数据库驱动联系，使得应用程序不必直接与底层数据库交互，使得代码的通用性更强。</p>
+<p>JDBC在应用程序与数据库之间起到一个桥梁作用。当应用程序使用JDBC访问特定的数据库时，只需要通过不同的数据库驱动与其对应的数据库进行连接，连接后即可对该数据库进行相应的操作。</p>
+<h2 id="JDBC常用API"><a href="#JDBC常用API" class="headerlink" title="JDBC常用API"></a>JDBC常用API</h2><p>JDBC的API主要位于java.sql包中，定义了一系列访问数据库的接口和类。</p>
+<h3 id="Driver接口"><a href="#Driver接口" class="headerlink" title="Driver接口"></a>Driver接口</h3><p>是所有JDBC驱动程序必须实现的接口，专门提供给数据库厂商使用。</p>
+<h3 id="DriverManager类"><a href="#DriverManager类" class="headerlink" title="DriverManager类"></a>DriverManager类</h3><p>用于加载JDBC驱动并创建与数据库的连接。在加载数据库驱动时，通常使用Class类的静态方法forName()来实现。参数是数据库驱动类所对应的字符串。</p>
+<h3 id="Connection接口"><a href="#Connection接口" class="headerlink" title="Connection接口"></a>Connection接口</h3><p>代表Java程序和数据库的连接对象，只有获得该连接对象后，才能访问数据库，并操作数据表。</p>
+<h3 id="Statement接口"><a href="#Statement接口" class="headerlink" title="Statement接口"></a>Statement接口</h3><p>用于执行静态的SQL语句，并返回一个结果对象。</p>
+<p>Statement接口对象可以通过Connection实例的createStatement()方法获得，该方法把静态的SQL语句发送到数据库中编译执行，然后返回数据库的处理结果。</p>
+<h3 id="PreparedStatement接口"><a href="#PreparedStatement接口" class="headerlink" title="PreparedStatement接口"></a>PreparedStatement接口</h3><p>使用Statement接口操作SQL语句会过于繁琐，并且存在安全隐患，因此，JDBC提供了扩展的PreparedStatement接口。是Statement的子接口，用于执行预编译的SQL语句，可以使用占位符？来替代参数，然后通过setXXX()方法为SQL语句的参数赋值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String sql=<span class="string">&quot;insert into users(is,name,email) values(?,?,?)&quot;</span>;</span><br><span class="line"><span class="type">PreparedStatement</span> <span class="variable">prestmt</span> <span class="operator">=</span> conn.preparedStatement(sql);</span><br><span class="line">prestmt.setInt(<span class="number">1</span>,<span class="number">1</span>);</span><br><span class="line">prestmt.setString(<span class="number">2</span>,<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">prestmt.setObject(<span class="number">3</span>,<span class="string">&quot;111@1.com&quot;</span>);  <span class="comment">//通用方法？</span></span><br><span class="line">prestmt.executeUpdate();</span><br></pre></td></tr></table></figure>
+
+<h3 id="ResultSet接口"><a href="#ResultSet接口" class="headerlink" title="ResultSet接口"></a>ResultSet接口</h3><p>用于保存JDBC执行查询时返回的结果集，结果集封装在一个逻辑表格中。接口内部有一个指向表格数据行的游标（或指针），ResultSet对象初始化时，游标在第一行之前。调用next()方法，游标移动到下一行，若下一行没有数据，则返回false。</p>
+<p>应用程序中使用next方法作为while循环的条件来迭代ResultSet结果集。</p>
+<p>getXXX方法用于获取指定的数据，可以用索引（从1开始）也可用字段的名称来获取。</p>
+<p>例如第1列字段名为id，字段类型int，可以用getInt(“id”)或getInt(1)获得该列的值。</p>
+<h2 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h2><h3 id="第一步：加载数据库驱动"><a href="#第一步：加载数据库驱动" class="headerlink" title="第一步：加载数据库驱动"></a><em>第一步：加载数据库驱动</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);  <span class="comment">//加载mysql数据库的驱动</span></span><br><span class="line">Class.forName(<span class="string">&quot;oracle.jdbc.driver.OracleDriver&quot;</span>);   <span class="comment">//加载Oracle数据库的驱动</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：获取数据库连接"><a href="#第二步：获取数据库连接" class="headerlink" title="第二步：获取数据库连接"></a><em>第二步：获取数据库连接</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> DriverManager.getConnection(String url, String user, String pwd);</span><br></pre></td></tr></table></figure>
+
+<p>连接数据库的url需要遵循固定写法：</p>
+<p><code>jdbc:mysql://hostname:port/databasename</code></p>
+<p>mysql指MySQL数据库，hostname指主机的名称（如果数据库在本机上，hostname可以为localhost或127.0.0.1。如果在其他机器上，那么hostname为所要连接机器的IP地址。port指端口号，mysql默认端口号为3306，databasename指的是mysql中相应数据库的名字。</p>
+<h3 id="第三步：通过Connection对象获取Statement对象"><a href="#第三步：通过Connection对象获取Statement对象" class="headerlink" title="第三步：通过Connection对象获取Statement对象"></a><em>第三步：通过Connection对象获取Statement对象</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Statement</span> <span class="variable">stmt</span> <span class="operator">=</span> conn.createStatement();</span><br></pre></td></tr></table></figure>
+
+<p>也可以用PreparedStatement。</p>
+<h3 id="第四步：使用Statement执行SQL语句"><a href="#第四步：使用Statement执行SQL语句" class="headerlink" title="第四步：使用Statement执行SQL语句"></a><em>第四步：使用Statement执行SQL语句</em></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">execute(String sql);  用于执行任意sql语句</span><br><span class="line">executeQuery(String sql);   执行查询操作，返回一个ResultSet结果集对象</span><br><span class="line">executeUpdate(String sql);  执行insert、update、delete会返回受sql语句影响的行数，执行create、alter返回<span class="number">0</span></span><br><span class="line"></span><br><span class="line">ResultSet rs=stmt.executeQuery(sql);</span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：操作ResultSet结果集"><a href="#第五步：操作ResultSet结果集" class="headerlink" title="第五步：操作ResultSet结果集"></a><em>第五步：操作ResultSet结果集</em></h3><h3 id="第六步：关闭连接，释放资源"><a href="#第六步：关闭连接，释放资源" class="headerlink" title="第六步：关闭连接，释放资源"></a><em>第六步：关闭连接，释放资源</em></h3><p>顺序为：ResultSet、Statement、Connection。为了保证在异常情况下也能关闭资源，用try…catch的finally代码块统一关闭资源。</p>
+<h2 id="第一个JDBC程序"><a href="#第一个JDBC程序" class="headerlink" title="第一个JDBC程序"></a>第一个JDBC程序</h2><h3 id="数据库建表"><a href="#数据库建表" class="headerlink" title="数据库建表"></a>数据库建表</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">create database jdbc;</span><br><span class="line">show databases;</span><br><span class="line">use jdbc;</span><br><span class="line">create table test_table(</span><br><span class="line">    id int primary key auto_increment,</span><br><span class="line">    name varchar(40),</span><br><span class="line">    sex varchar(2),</span><br><span class="line">    birthday date</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看表结构： desc test_table;</span><br><span class="line">查看建表语句：show create table test_table;</span><br></pre></td></tr></table></figure>
+
+<p>如果出现中文乱码的情况，是因为MySQL数据库默认使用UTF-8编码格式，而命令行窗口默认使用的是GBK编码格式，所以执行带有中文数据的插入语句会出现解析错误。需要执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set character_set_client=gbk;</span><br><span class="line">set character_set_results=gbk;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">insert into test_table(name, sex, birthday)</span><br><span class="line">values(&#x27;jade&#x27;,&#x27;男&#x27;,&#x27;2000-1-1&#x27;),(&#x27;marry&#x27;,&#x27;女&#x27;,&#x27;1999-2-21&#x27;),(&#x27;james&#x27;,&#x27;男&#x27;,&#x27;2010-2-3&#x27;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="新建项目，导入数据库驱动"><a href="#新建项目，导入数据库驱动" class="headerlink" title="新建项目，导入数据库驱动"></a>新建项目，导入数据库驱动</h3><p>IDE下正常创建一个项目，右键新建一个文件夹，取名libs。</p>
+<p>下载Mysql驱动文件：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/connector/j/%EF%BC%8C%E9%80%89%E6%8B%A9platform">https://dev.mysql.com/downloads/connector/j/，选择platform</a> independent，下载 <strong>ZIP Archive</strong>。直接No thanks, just start my download.  复制到libs文件夹下。</p>
+<p>把jar包添加到项目里，类似eclipse的add to build path功能，file – project structure – modules – dependencies – 加号 – 第一项–添加jar包 – apply。</p>
+<h3 id="编写JDBC程序"><a href="#编写JDBC程序" class="headerlink" title="编写JDBC程序"></a>编写JDBC程序</h3><p>src下新建包com.liuxuan.jdbc。创建类Test。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liuxuan.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jdk.nashorn.internal.parser.JSONParser;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: JDBCdemo</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: jdbc</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: liuxuan</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2021-11-27 22:09</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">conn</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">Statement</span> <span class="variable">stmt</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ResultSet</span> <span class="variable">rs</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="comment">//1.加载数据库驱动 com.mysql.jdbc.Driver 多加了cj</span></span><br><span class="line">            Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">            <span class="comment">//2.通过DriverManager获取数据库连接</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;jdbc:mysql://localhost:3306/jdbc&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> <span class="string">&quot;liuxuan&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> <span class="string">&quot;jade&quot;</span>;</span><br><span class="line">            conn = DriverManager.getConnection(url, username, password);</span><br><span class="line">            <span class="comment">//3.通过Connection对象获取Statement对象</span></span><br><span class="line">            stmt = conn.createStatement();</span><br><span class="line">            <span class="comment">//4.使用Statement执行SQL语句</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;select * from test_table&quot;</span>;</span><br><span class="line">            rs = stmt.executeQuery(sql);</span><br><span class="line">            <span class="comment">//5.操作ResultSet结果集</span></span><br><span class="line">            System.out.println(<span class="string">&quot;id  |  name  |  sex  &quot;</span></span><br><span class="line">                            +<span class="string">&quot;  birthday  &quot;</span>);</span><br><span class="line">            <span class="keyword">while</span>(rs.next())&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> rs.getInt(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">                <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> rs.getString(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">                <span class="type">String</span> <span class="variable">sex</span> <span class="operator">=</span> rs.getString(<span class="string">&quot;sex&quot;</span>);</span><br><span class="line">                <span class="type">Date</span> <span class="variable">birthday</span> <span class="operator">=</span> rs.getDate(<span class="string">&quot;birthday&quot;</span>);</span><br><span class="line">                System.out.println(id+<span class="string">&quot;  |  &quot;</span>+name+<span class="string">&quot;  |  &quot;</span></span><br><span class="line">                                +sex+<span class="string">&quot;  |  &quot;</span>+birthday);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">            <span class="comment">//6.关闭连接，释放资源</span></span><br><span class="line">            <span class="keyword">if</span>(rs != <span class="literal">null</span>)&#123;rs.close();&#125;</span><br><span class="line">            <span class="keyword">if</span>(stmt != <span class="literal">null</span>)&#123;stmt.close();&#125;</span><br><span class="line">            <span class="keyword">if</span>(conn != <span class="literal">null</span>)&#123;conn.close();&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/26/myblog/java/%E3%80%8Ajava%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E3%80%8B%E4%B9%8BGUI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/26/myblog/java/%E3%80%8Ajava%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E3%80%8B%E4%B9%8BGUI/" class="post-title-link" itemprop="url">《Java基础入门》之GUI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-11-26 13:47:02 / Modified: 13:48:47" itemprop="dateCreated datePublished" datetime="2021-11-26T13:47:02+08:00">2021-11-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>GUI：Graphical User Interface 图形用户接口。用来提供给用户操作的图像界面的接口。</p>
+<p>java针对GUI设计提供了一些基本的图形用户接口开发工具，如AWT、Swing、JavaFX。</p>
+<p>AWT是sun公司最早推出的一套API，组件种类有限，无法实现GUI设计的全部功能。</p>
+<h2 id="Swing概述"><a href="#Swing概述" class="headerlink" title="Swing概述"></a>Swing概述</h2><p>早期JDK1.0发布时，就为GUI开发提供了一套基础类库（AWT），即抽象窗口工具包。AWT需要牺牲功能来实现平台无关性。因此，Sun公司对AWT进行改进，提出Swing组件，提供更加丰富的组件和功能，来满足GUI设计的一切需求。</p>
+<p>Swing是一组轻量级组件，由Java语言开发，同时底层以AWT为基础。Swing并不是AWT的替代品，而是在原有的AWT的基础上进行补充和改进。</p>
+<p>Swing组件的所有类都继承自Container类，然后根据GUI开发的功能扩展了两个主要分支：容器分支（Window窗口和Panel面板）和组件分支。</p>
+<p>容器分支是为了实现图形用户界面窗口容器而设计的。</p>
+<p>组件分支是为了实现向容器中填充数据、元素以及人机交互组件等功能。</p>
+<p>Swing组件类中常用的顶级容器类包括：JApplet、JFrame和JDialog。常用的组件类：AbstractButton类及其子类就是用来定义按钮常见行为的工具类，JTextComponent类及其子类就是用来定义文本内容编辑区域的工具类。</p>
+<h2 id="JavaFX概述"><a href="#JavaFX概述" class="headerlink" title="JavaFX概述"></a>JavaFX概述</h2><p>JavaFX同Swing一样，都用于处理图形用户界面，是一个强大的图形和多媒体处理工具包集合，允许开发者设计、创建、测试、调试和部署富客户端程序，并且和Java一样具有跨平台特性。</p>
+<p>Sun公司于2008年推出JavaFX，来弥补Java在桌面应用程序的缺陷。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/25/myblog/java/%E3%80%8Ajava%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E3%80%8B%E4%B9%8BIO%E6%B5%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1578,7 +1768,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Reactor响应式编程和Reactor线程模型Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。 特点：非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。背压支持：允许消费者控制生产者的速率，防止资源过载。高效性：适合高并发场景，能够">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之java2025">
+<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="Reactor响应式编程和Reactor线程模型Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。 特点：非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。背压支持：允许消费者控制生产者的速率，防止资源过载。高效性：适合高并发场景，能够">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
+<meta property="article:modified_time" content="2025-07-27T11:09:21.228Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之java2025 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之java2025
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-23 00:44:10" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-27 19:09:21" itemprop="dateModified" datetime="2025-07-27T19:09:21+08:00">2025-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Reactor响应式编程和Reactor线程模型"><a href="#Reactor响应式编程和Reactor线程模型" class="headerlink" title="Reactor响应式编程和Reactor线程模型"></a>Reactor响应式编程和Reactor线程模型</h2><p>Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。</p>
+<p><strong>特点</strong>：<br>非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。<br>背压支持：允许消费者控制生产者的速率，防止资源过载。<br>高效性：适合高并发场景，能够更好地利用系统资源。<br>函数式风格：提供丰富的操作符，可以通过链式调用对数据流进行转换和处理。</p>
+<p><strong>适用场景</strong>：响应式系统（如 Spring WebFlux）、数据流处理（如实时日志分析、事件流处理）。</p>
+<p>Reactor 提供了<strong>两个核心类</strong>：<br>Flux：表示可以发射 0到N个元素 的异步数据流。<br>Mono：表示可以发射 0或1个元素 的异步数据流。<br>Flux 是 Reactor 中的一个核心类，用于表示可以发射多个元素的异步数据流。发射 0到N个元素，并最终以完成或错误信号结束。Flux 提供了丰富的操作符，可以轻松地对数据流进行转换、过滤、合并和错误处理。<br>——————————————————————<br>Reactor线程模型：一种经典的IO多路复用设计模式，用于高效处理大量并发连接。核心思想是通过一个或多个线程监听 I&#x2F;O 事件（如读写就绪），并将这些事件分发给相应的处理器进行处理。</p>
+<p><strong>特点</strong>：<br>事件驱动：通过监听 I&#x2F;O 事件（如 select、poll 或 epoll）来避免阻塞等待。<br>单线程或多线程模型：单线程 Reactor 模型：所有事件由一个线程处理。多线程 Reactor 模型：使用多个线程来处理事件，适合高并发场景。<br>非阻塞 I&#x2F;O：避免因等待 I&#x2F;O 操作完成而阻塞线程，从而提高吞吐量。</p>
+<p><strong>典型实现</strong>：Java NIO、Netty 等框架基于 Reactor 模型构建。</p>
+<p><strong>核心组件</strong>：<br>Acceptor：负责接收新的连接请求，并将其注册到事件监听器中。<br>Dispatcher：负责监听 I&#x2F;O 事件并分发给对应的处理器。<br>Handler：处理具体的业务逻辑。</p>
+<p><strong>适用场景</strong>：高并发网络服务（如 Web 服务器、消息队列等）、需要高效处理大量短连接或长连接的场景。<br>——————————————————————<br>Project Reactor和Reactor线程模型的联系：<br>**Project Reactor 提供了更高层次的抽象，专注于业务逻辑的响应式处理，而 Reactor线程模型则更关注底层 I&#x2F;O 事件的分发，处理网络层IO。**都是非阻塞的，都是事件驱动的。</p>
+<h2 id="record关键字"><a href="#record关键字" class="headerlink" title="record关键字"></a>record关键字</h2><p>record：一种用于<strong>定义不可变数据载体类</strong>的特殊类形式，是 Java 14 引入的一个关键字，正式在 Java 16 标准化。</p>
+<p>record 是<strong>一种简化数据类的语法，目的是存储数据而不对这些数据进行复杂的操作或修改的场景。自动生成了包括构造函数，getter、toString、equals、hashCode 等方法。</strong></p>
+<p>它是一种不可变（Immutable）的类，所有字段都是 final，创建后状态不能更改。</p>
+<p><strong>用法</strong>：<br>1、作为独立的类文件<br><code>public record Film(String name, String desc) &#123;&#125;</code></p>
+<p>2、嵌套在其他类中，类似静态内部类<br><code>public static record Film</code></p>
+<p>3、方法内部<br>从 Java 16 开始，record 可以被定义为局部类（即在方法内部定义）。这种用法适合<strong>仅在某个方法中使用的临时数据结构</strong>。直接record Film</p>
+<p>PS：静态内部类和非静态内部类：静态内部类不依赖于外部类的实例，可以直接通过外部类名访问。只能访问外部类的静态成员。非静态内部类依赖于外部类的实例，必须通过外部类的实例来创建。可以访问外部类的所有成员，因为内部类持有一个对外部类实例的隐式引用。</p>
+<h2 id="线上redis机器爆了，如何优化"><a href="#线上redis机器爆了，如何优化" class="headerlink" title="线上redis机器爆了，如何优化"></a>线上redis机器爆了，如何优化</h2><p>如果在生产环境中发现 Redis 出现异常，比如内存爆了或者响应变慢，首先通过 Redis 的 INFO 命令（<strong>redis-cli info</strong>）和监控平台查看当前的资源使用情况，确认是<strong>内存、CPU、连接数还是某个慢查询</strong>引起的。</p>
+<p>如果是** Big Key **（存储的数据体积很大，如一个Hash包含上万个字段）或者热 Key 造成的，我会进行数据结构优化、拆分 Key、引入本地缓存；如果是连接数过高，我会检查连接池配置，适当增加连接池大小或引入连接复用。</p>
+<p>如果是 QPS 过高导致 Redis 成为瓶颈，我会考虑引入<strong>Redis 集群、读写分离、或者对热点数据进行缓存</strong>。</p>
+<p>此外，我也会加强缓存的<strong>失效策略</strong>、防止缓存穿透和击穿，并结合布隆过滤器等手段保护后端数据库。</p>
+<h2 id="spring声明式事务-Transactional"><a href="#spring声明式事务-Transactional" class="headerlink" title="spring声明式事务@Transactional"></a>spring声明式事务@Transactional</h2><p>在Spring中事务管理的方式有两种，编程式事务和声明式事务。编程式事务将业务代码和事务代码耦合到一块，当发生异常的时候还得需要手动回滚事务，不优雅。</p>
+<p>声明式事务：<strong>基于AOP，设置好切点，当我们调用事务方法时，会调用到生成的代理对象，代理对象中加入了事务提交和回滚的逻辑。当方法执行成功时提交事务，当方法发生异常时回滚事务。</strong></p>
+<p>@Transactional可以用在类，方法，接口上：</p>
+<ol>
+<li>用在类上，该类的所有public方法都具有事务</li>
+<li>用在方法上，方法具有事务。当类和方法同时配置事务的时候，方法的属性会覆盖类的属性</li>
+<li>用在接口上，一般不建议这样使用，因为只有基于接口的代理会生效，如果Spring AOP使用cglib来实现动态代理，会导致事务失效（因为注解不能被继承）</li>
+</ol>
+<p><strong>@Transactional失效的场景</strong></p>
+<ol>
+<li>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</li>
+<li>自调用，因为@Transactional是基于动态代理实现的，自调用时，方法执行不会经过代理对象</li>
+<li>异常在代码中被你自己try catch了，不抛异常进入不了回滚的逻辑</li>
+<li>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常，如果抛出任何异常都回滚，可以配置rollbackFor为Exception</li>
+<li>事务传播配置不符合业务逻辑</li>
+</ol>
+<p><strong>为什么只有public方法上的@Transactional注解才会生效？</strong></p>
+<p>首先JDK动态代理肯定只能是public，因为接口的权限修饰符只能是public。cglib代理的方式是可以代理protected方法的（private不行，子类访问不了父类的private方法）如果支持protected，可能会造成当切换代理的实现方式时表现不同，增大出现bug的可能性，所以统一一下。</p>
+<p>Transactional的事务传播行为默认为Propagation.REQUIRED。<strong>「如果当前存在事务，则加入该事务。如果当前没有事务，则创建一个新的事务」</strong></p>
+<p>Propagation.REQUIRES_NEW**「创建一个新事务，如果当前存在事务，则把当前事务挂起」**</p>
+<h2 id="HashMap和HashTable的区别"><a href="#HashMap和HashTable的区别" class="headerlink" title="HashMap和HashTable的区别"></a>HashMap和HashTable的区别</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2132083">https://cloud.tencent.com/developer/article/2132083</a></p>
+<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><h2 id="Redis字典的实现方式和冲突处理"><a href="#Redis字典的实现方式和冲突处理" class="headerlink" title="Redis字典的实现方式和冲突处理"></a>Redis字典的实现方式和冲突处理</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2329632">https://cloud.tencent.com/developer/article/2329632</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/" rel="prev" title="西瓜书">
+      <i class="fa fa-chevron-left"></i> 西瓜书
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/" rel="next" title="那些年背过的面试题之java2024">
+      那些年背过的面试题之java2024 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%92%8CReactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Reactor响应式编程和Reactor线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">record关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E4%B8%8Aredis%E6%9C%BA%E5%99%A8%E7%88%86%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">线上redis机器爆了，如何优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1-Transactional"><span class="nav-number">4.</span> <span class="nav-text">spring声明式事务@Transactional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E5%92%8CHashTable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">HashMap和HashTable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">6.</span> <span class="nav-text">什么是零拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%92%8C%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">Redis字典的实现方式和冲突处理</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
