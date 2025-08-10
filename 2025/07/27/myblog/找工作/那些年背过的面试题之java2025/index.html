@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Reactor响应式编程和Reactor线程模型Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。 特点：非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。背压支持：允许消费者控制生产者的速率，防止资源过载。高效性：适合高并发场景，能够">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之java2025">
+<meta property="og:url" content="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="Reactor响应式编程和Reactor线程模型Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。 特点：非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。背压支持：允许消费者控制生产者的速率，防止资源过载。高效性：适合高并发场景，能够">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-07-27T11:18:28.830Z">
+<meta property="article:modified_time" content="2025-08-10T01:36:58.023Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之java2025 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之java2025
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-27 19:18:28" itemprop="dateCreated datePublished" datetime="2025-07-27T19:18:28+08:00">2025-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-10 09:36:58" itemprop="dateModified" datetime="2025-08-10T09:36:58+08:00">2025-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Reactor响应式编程和Reactor线程模型"><a href="#Reactor响应式编程和Reactor线程模型" class="headerlink" title="Reactor响应式编程和Reactor线程模型"></a>Reactor响应式编程和Reactor线程模型</h2><p>Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。</p>
+<p><strong>特点</strong>：<br>非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。<br>背压支持：允许消费者控制生产者的速率，防止资源过载。<br>高效性：适合高并发场景，能够更好地利用系统资源。<br>函数式风格：提供丰富的操作符，可以通过链式调用对数据流进行转换和处理。</p>
+<p><strong>适用场景</strong>：响应式系统（如 Spring WebFlux）、数据流处理（如实时日志分析、事件流处理）。</p>
+<p>Reactor 提供了<strong>两个核心类</strong>：<br>Flux：表示可以发射 0到N个元素 的异步数据流。<br>Mono：表示可以发射 0或1个元素 的异步数据流。<br>Flux 是 Reactor 中的一个核心类，用于表示可以发射多个元素的异步数据流。发射 0到N个元素，并最终以完成或错误信号结束。Flux 提供了丰富的操作符，可以轻松地对数据流进行转换、过滤、合并和错误处理。<br>——————————————————————<br>Reactor线程模型：一种经典的IO多路复用设计模式，用于高效处理大量并发连接。核心思想是通过一个或多个线程监听 I&#x2F;O 事件（如读写就绪），并将这些事件分发给相应的处理器进行处理。</p>
+<p><strong>特点</strong>：<br>事件驱动：通过监听 I&#x2F;O 事件（如 select、poll 或 epoll）来避免阻塞等待。<br>单线程或多线程模型：单线程 Reactor 模型：所有事件由一个线程处理。多线程 Reactor 模型：使用多个线程来处理事件，适合高并发场景。<br>非阻塞 I&#x2F;O：避免因等待 I&#x2F;O 操作完成而阻塞线程，从而提高吞吐量。</p>
+<p><strong>典型实现</strong>：Java NIO、Netty 等框架基于 Reactor 模型构建。</p>
+<p><strong>核心组件</strong>：<br>Acceptor：负责接收新的连接请求，并将其注册到事件监听器中。<br>Dispatcher：负责监听 I&#x2F;O 事件并分发给对应的处理器。<br>Handler：处理具体的业务逻辑。</p>
+<p><strong>适用场景</strong>：高并发网络服务（如 Web 服务器、消息队列等）、需要高效处理大量短连接或长连接的场景。<br>——————————————————————<br>Project Reactor和Reactor线程模型的联系：<br>**Project Reactor 提供了更高层次的抽象，专注于业务逻辑的响应式处理，而 Reactor线程模型则更关注底层 I&#x2F;O 事件的分发，处理网络层IO。**都是非阻塞的，都是事件驱动的。</p>
+<h2 id="record关键字"><a href="#record关键字" class="headerlink" title="record关键字"></a>record关键字</h2><p>record：一种用于<strong>定义不可变数据载体类</strong>的特殊类形式，是 Java 14 引入的一个关键字，正式在 Java 16 标准化。</p>
+<p>record 是<strong>一种简化数据类的语法，目的是存储数据而不对这些数据进行复杂的操作或修改的场景。自动生成了包括构造函数，getter、toString、equals、hashCode 等方法。</strong></p>
+<p>它是一种不可变（Immutable）的类，所有字段都是 final，创建后状态不能更改。</p>
+<p><strong>用法</strong>：<br>1、作为独立的类文件<br><code>public record Film(String name, String desc) &#123;&#125;</code></p>
+<p>2、嵌套在其他类中，类似静态内部类<br><code>public static record Film</code></p>
+<p>3、方法内部<br>从 Java 16 开始，record 可以被定义为局部类（即在方法内部定义）。这种用法适合<strong>仅在某个方法中使用的临时数据结构</strong>。直接record Film</p>
+<p>PS：静态内部类和非静态内部类：静态内部类不依赖于外部类的实例，可以直接通过外部类名访问。只能访问外部类的静态成员。非静态内部类依赖于外部类的实例，必须通过外部类的实例来创建。可以访问外部类的所有成员，因为内部类持有一个对外部类实例的隐式引用。</p>
+<h2 id="线上redis机器爆了，如何优化"><a href="#线上redis机器爆了，如何优化" class="headerlink" title="线上redis机器爆了，如何优化"></a>线上redis机器爆了，如何优化</h2><p>如果在生产环境中发现 Redis 出现异常，比如内存爆了或者响应变慢，首先通过 Redis 的 INFO 命令（<strong>redis-cli info</strong>）和监控平台查看当前的资源使用情况，确认是<strong>内存、CPU、连接数还是某个慢查询</strong>引起的。</p>
+<p>如果是** Big Key **（存储的数据体积很大，如一个Hash包含上万个字段）或者热 Key 造成的，我会进行数据结构优化、拆分 Key、引入本地缓存；如果是连接数过高，我会检查连接池配置，适当增加连接池大小或引入连接复用。</p>
+<p>如果是 QPS 过高导致 Redis 成为瓶颈，我会考虑引入<strong>Redis 集群、读写分离、或者对热点数据进行缓存</strong>。</p>
+<p>此外，我也会加强缓存的<strong>失效策略</strong>、防止缓存穿透和击穿，并结合布隆过滤器等手段保护后端数据库。</p>
+<h2 id="spring声明式事务-Transactional"><a href="#spring声明式事务-Transactional" class="headerlink" title="spring声明式事务@Transactional"></a>spring声明式事务@Transactional</h2><p>在Spring中事务管理的方式有两种，编程式事务和声明式事务。编程式事务将业务代码和事务代码耦合到一块，当发生异常的时候还得需要手动回滚事务，不优雅。</p>
+<p>声明式事务：<strong>基于AOP，设置好切点，当我们调用事务方法时，会调用到生成的代理对象，代理对象中加入了事务提交和回滚的逻辑。当方法执行成功时提交事务，当方法发生异常时回滚事务。</strong></p>
+<p>@Transactional可以用在类，方法，接口上：</p>
+<ol>
+<li>用在类上，该类的所有public方法都具有事务</li>
+<li>用在方法上，方法具有事务。当类和方法同时配置事务的时候，方法的属性会覆盖类的属性</li>
+<li>用在接口上，一般不建议这样使用，因为只有基于接口的代理会生效，如果Spring AOP使用cglib来实现动态代理，会导致事务失效（因为注解不能被继承）</li>
+</ol>
+<p><strong>@Transactional失效的场景</strong></p>
+<ol>
+<li>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</li>
+<li>自调用，因为@Transactional是基于动态代理实现的，自调用时，方法执行不会经过代理对象</li>
+<li>异常在代码中被你自己try catch了，不抛异常进入不了回滚的逻辑</li>
+<li>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常，如果抛出任何异常都回滚，可以配置rollbackFor为Exception</li>
+<li>事务传播配置不符合业务逻辑</li>
+</ol>
+<p><strong>为什么只有public方法上的@Transactional注解才会生效？</strong></p>
+<p>首先JDK动态代理肯定只能是public，因为接口的权限修饰符只能是public。cglib代理的方式是可以代理protected方法的（private不行，子类访问不了父类的private方法）如果支持protected，可能会造成当切换代理的实现方式时表现不同，增大出现bug的可能性，所以统一一下。</p>
+<p>Transactional的事务传播行为默认为Propagation.REQUIRED。<strong>「如果当前存在事务，则加入该事务。如果当前没有事务，则创建一个新的事务」</strong></p>
+<p>Propagation.REQUIRES_NEW**「创建一个新事务，如果当前存在事务，则把当前事务挂起」**</p>
+<h2 id="HashMap和HashTable的区别"><a href="#HashMap和HashTable的区别" class="headerlink" title="HashMap和HashTable的区别"></a>HashMap和HashTable的区别</h2><ul>
+<li><p><strong>继承类不同</strong>：HashTable继承Dictionary类，HashMap继承AbstractMap类</p>
+</li>
+<li><p><strong>线程安全级别不同</strong>：HashTable是线程安全的类，每个public方法都有Synchronized修饰，HashMap不是线程安全的</p>
+</li>
+<li><p><strong>是否允许null的要求不同</strong>：HashTable：key不允许为null，value不允许为null。HashMap：key允许为null，value允许为null。</p>
+</li>
+<li><p><strong>底层数据结构不同</strong>：在JDK1.8以后，HashMap的底层数据结构改成了数组+链表+红黑树的实现，在链表的节点大于TREEIFY_THRESHOLD&#x3D;8时，链表转为红黑树，在树节点小于UNTREEIFY_THRESHOLD&#x3D;6时，红黑树转变为链表。（之所以有8和6两个阈值是为了避免某个链表在临界点频繁插入删除，导致转换频繁降低性能）。而Hashtable的底层实现就是数组+链表，而没有红黑树，因此各种操作都要简单很多。</p>
+</li>
+<li><p><strong>容量和扩容不同</strong>：Hashtable的容量是直接使用用户输入的容量initialCapacity。HashMap在用户输入的基础上，强制将容量转换为大于输入容量的最小2的幂次方数值。扩容方面，<code>HashMap</code> 自动扩容为 2 的幂，利于位运算提升性能，而 <code>Hashtable</code> 扩容为原容量的 2 倍加 1。</p>
+</li>
+<li><p><strong>索引计算上</strong>，<code>HashMap</code> 使用 <code>hash &amp; (length - 1)</code>，比 <code>Hashtable</code> 的取模运算更高效。</p>
+</li>
+<li><p><code>HashMap</code> 的迭代器为 fail-fast 类型，当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出并行修改异常，但迭代器本身的remove()方法移除元素则不会抛出。而 <code>Hashtable</code> 的 <code>Enumerator</code> 不是。</p>
+</li>
+</ul>
+<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><p>零拷贝（Zero-Copy）是一种高效的I&#x2F;O操作技术，旨在<strong>减少数据在内核空间与用户空间之间不必要的复制</strong>，从而提升数据传输性能。传统I&#x2F;O操作中，数据通常需从磁盘读取到内核缓冲区，再复制到用户缓冲区，处理后再写回内核缓冲区并发送到网络，涉及多次上下文切换和数据拷贝。零拷贝通过系统调用（如Linux的<code>sendfile</code>、<code>splice</code>或<code>mmap</code>），让<strong>数据直接在内核内部从文件系统缓冲区传输到网络协议栈</strong>，避免了用户空间的中转。这不仅<strong>减少了CPU的拷贝开销，也降低了上下文切换次数</strong>，显著提高了大文件传输、网络服务等场景的效率，是高性能系统设计中的关键技术。</p>
+<p>例如Netty：使用堆外直接内存进行Socket读写，不需要进行字节缓冲区的二次拷贝，避免了 JVM 堆内存与系统内存之间的数据拷贝。Netty的Zero-copy完全是在用户态（Java应用层）的，偏向于优化数据操作。OS层面的Zero-copy通常是避免在用户态和内核态之间的拷贝数据。</p>
+<p>例如RocketMQ：在消息存储与传输过程中，RocketMQ 利用零拷贝技术优化消息的发送性能。当消费者拉取消息时，通过 <code>mmap</code> 将消息文件映射到内存，或使用 <code>transferTo</code> 调用实现数据从文件通道直接传输到网络通道，避免内核与用户空间的多次拷贝。这不仅减少了内存占用，也加快了消息传输速度，支持高吞吐量的消息处理。</p>
+<h2 id="Redis字典的实现方式和冲突处理"><a href="#Redis字典的实现方式和冲突处理" class="headerlink" title="Redis字典的实现方式和冲突处理"></a>Redis字典的实现方式和冲突处理</h2><p>Redis字典基于哈希表实现，其核心结构是一个数组，每个元素是指向<code>dictEntry</code>链表的指针。每个<code>dictEntry</code>存储键值对及下一个节点的指针，通过**链地址法（拉链法）**处理哈希冲突：当多个键映射到同一槽位时，它们被链接在同一链表中。</p>
+<p>Redis使用MurmurHash2算法计算键的哈希值，再通过<code>hash &amp; (size-1)</code>确定索引位置，确保分布均匀。</p>
+<p>为应对数据增长，Redis支持动态扩容与缩容。当负载因子过高（如超过1）或过低时，会触发rehash。Redis采用<strong>渐进式rehash</strong>机制：分配新哈希表，每次访问字典时顺带迁移部分数据，直至全部完成。这避免了集中迁移带来的性能阻塞。也就是说，Redis字典内部维护两个哈希表（ht[0]和ht[1]），在rehash期间两者并存，查找、删除操作会兼顾访问两个表，确保数据一致性。插入操作仅作用于ht[1]。rehash完成后，ht[1]成为主表，ht[0]被清空。 </p>
+<p>此外，Redis在哈希表扩容时，新表大小为大于当前容量的最小2的幂，确保位运算高效定位。</p>
+<h2 id="介绍MVC机制"><a href="#介绍MVC机制" class="headerlink" title="介绍MVC机制"></a>介绍MVC机制</h2><p>MVC（Model-View-Controller，模型-视图-控制器）是一种软件架构模式，用于分离应用程序的逻辑与界面。</p>
+<p>模型（Model）代表数据和业务逻辑，处理核心的数据管理和规则定义，并在数据发生变化时通知视图（View）。</p>
+<p>视图（View）负责展示信息给用户，它从模型获取数据显示给用户，但不直接与模型交互，而是通过控制器（Controller）。</p>
+<p>控制器接收用户的输入，解释这些输入并将它们转换为对模型或视图的操作命令，如更新数据或请求视图刷新。</p>
+<p>这种分离使得代码更加模块化、易于维护和扩展，特别适合于开发复杂用户界面的应用程序，同时提高了灵活性和可重用性。MVC广泛应用于Web应用框架中，如Django（<strong>一个高级的Python Web框架，遵循模型-模板-视图（Model-Template-View, MTV）架构模式，模型（Model）定义数据结构；模板（Template）控制页面展示逻辑；视图（View）则是业务逻辑层，决定了哪些数据被呈现。</strong>）、Ruby on Rails等。</p>
+<h2 id="Flink和Spark的区别"><a href="#Flink和Spark的区别" class="headerlink" title="Flink和Spark的区别"></a>Flink和Spark的区别</h2><p>Apache Flink 和 Apache Spark 都是分布式计算框架，Flink流处理，Spark批处理。</p>
+<p>处理模型</p>
+<ul>
+<li><strong>Flink</strong> 主要支持流处理，并以流处理为基础扩展到批处理。这意味着它首先被设计用于实时数据处理，能够提供低延迟的数据处理能力，适用于需要即时响应的应用场景。</li>
+<li><strong>Spark</strong> 最初是作为一个批处理框架而设计的，后来通过Spark Streaming增加了对流处理的支持。Spark Streaming采用微批处理的方式（mini-batch），即把流数据按时间窗口分割成一系列小批次来处理，这使得它的延迟比Flink稍高一些。</li>
+</ul>
+<p>吞吐量</p>
+<p>关于吞吐量，两者都有很高的处理效率，但在不同场景下表现各异：</p>
+<ul>
+<li><strong>Flink</strong> 由于其原生的流处理架构，在处理持续不断的数据流时具有更高的吞吐量和更低的延迟。对于要求严格实时性的应用，比如欺诈检测、在线推荐系统等，Flink通常是更好的选择。</li>
+<li><strong>Spark</strong> 在批处理任务上表现出色，尤其是在处理大规模静态数据集时。尽管Spark Streaming可以通过增加批次大小来提高吞吐量，但这样做会增加处理延迟。因此，对于那些可以容忍一定延迟的大规模数据分析任务，Spark可能更为合适。</li>
+</ul>
+<h2 id="介绍JVM"><a href="#介绍JVM" class="headerlink" title="介绍JVM"></a>介绍JVM</h2><p>JVM（Java虚拟机）是运行Java应用程序的虚拟机，它使得Java程序具有“一次编写，到处运行”的能力。JVM的主要任务是将编写的Java字节码（.class文件）转换成本地计算机的机器码并执行。通过提供一个跨平台的运行环境，JVM隐藏了底层操作系统的差异，确保了Java程序可以在任何安装有相应JVM的设备上运行。</p>
+<p>JVM包含类加载器、运行时数据区（包括方法区、堆、栈等）、执行引擎等关键组件。类加载器负责加载程序所需的类文件；运行时数据区为程序执行提供内存空间；执行引擎则负责解释或即时编译字节码为机器码执行。此外，JVM还包含了垃圾回收机制，自动管理内存，释放不再使用的对象所占用的空间。JVM不仅支持Java语言，还支持其他可以编译成Java字节码的语言，如Kotlin和Scala。</p>
+<h2 id="JVM调优经验"><a href="#JVM调优经验" class="headerlink" title="JVM调优经验"></a>JVM调优经验</h2><p>主要目标是优化内存使用、减少GC停顿时间以及提高系统吞吐量。</p>
+<ol>
+<li><strong>合理设置堆大小</strong>：根据应用的实际需求和服务器资源，合理配置<code>-Xms</code>（初始堆大小）和<code>-Xmx</code>（最大堆大小），避免频繁的GC。通常建议将初始堆和最大堆设置为相同值，以减少动态扩展带来的开销。16G机器设置12G。</li>
+<li><strong>选择合适的垃圾回收器</strong>：<ul>
+<li>对于低延迟要求的应用，可以选择G1或ZGC等低延迟回收器。</li>
+<li>对于高吞吐量要求的批处理任务，可以使用CMS并发清除。</li>
+</ul>
+</li>
+<li><strong>监控与分析GC日志</strong>：通过启用GC日志，结合工具如<code>GCViewer</code>或<code>GCEasy</code>分析GC行为，识别是否存在频繁的Full GC或长时间的停顿。jstat监控GC。</li>
+<li><strong>优化新生代比例</strong>：通过<code>-XX:NewRatio</code>和<code>-XX:SurvivorRatio</code>调整新生代与老年代的比例，确保大多数对象在Minor GC中被回收，减少晋升到老年代的对象数量。</li>
+<li><strong>合理使用元空间</strong>：JDK 8以后，永久代被元空间取代，使用本地内存存储类信息。可通过<code>-XX:MetaspaceSize</code>和<code>-XX:MaxMetaspaceSize</code>控制其大小，防止因加载过多类导致内存溢出。</li>
+<li><strong>线程栈大小调整</strong>：对于线程数较多的应用，适当减小<code>-Xss</code>（线程栈大小）可节省内存，但需确保不会导致栈溢出。</li>
+</ol>
+<h2 id="JVM的堆分为哪几部分"><a href="#JVM的堆分为哪几部分" class="headerlink" title="JVM的堆分为哪几部分"></a>JVM的堆分为哪几部分</h2><p>JVM的堆是内存管理的核心区域，用于存放对象实例，主要分为三部分：</p>
+<ol>
+<li><strong>新生代（Young Generation）</strong>：新创建的对象首先分配在此。它又分为Eden区、From Survivor区和To Survivor区。大多数对象在Eden区分配，经过几次垃圾回收后仍存活的对象将被移到Survivor区。</li>
+<li><strong>老年代（Old Generation）</strong>：存放从新生代晋升过来的长期存活对象。当对象经历多次GC未被回收，或占用空间较大时，会被移入老年代。</li>
+<li><strong>永久代&#x2F;元空间（PermGen&#x2F;Metaspace）</strong>：方法区，JDK 8之前为永久代，用于存储类信息、常量、静态变量等；JDK 8及以后改为元空间，使用本地内存管理，避免了永久代的内存溢出问题。</li>
+</ol>
+<p>堆由垃圾回收器统一管理，是GC的主要区域。</p>
+<h2 id="数据仓库和传统数据库有什么区别"><a href="#数据仓库和传统数据库有什么区别" class="headerlink" title="数据仓库和传统数据库有什么区别"></a>数据仓库和传统数据库有什么区别</h2><p>用途：传统数据库主要用于OLTP（on-line transaction processing）翻译为联机事务处理，即即时的系统交互，数据仓库主要用于OLAP（On-Line Analytical Processing）翻译为联机分析处理，从字面上来看OLTP是做事务处理，OLAP是做分析处理。从对数据库操作来看，OLTP主要是对数据的增删改，OLAP是对数据的查询。</p>
+<p>建模：传统数据库主要使用范式建模，数据仓库可以根据需要采用范式建模或者现在互联网普遍使用的星形模型等。</p>
+<p>使用技术：传统数据库一般使用mysql等关系型数据库，数据仓库目前互联网行业更多的是使用hadoop等大数据技术，也有使用mysql等，可以根据实际情况搭建。 </p>
+<p>存储的数据：传统数据库只存储当前状态的数据，数据仓库需要存储历史状态的数据，用户对历史数据的回溯分析。  </p>
+<p>ODPS设计用于大规模数据存储、处理和分析，支持包括批处理、流计算、交互式查询在内的多种计算模式，更接近于数仓。</p>
+<h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO多路复用是一种允许单个进程监视多个文件描述符的技术，使得系统在单线程的情况下可以同时处理多个客户端请求。一旦某个描述符就绪（通常是读就绪或写就绪），就能进行相应的IO系统调用。其核心机制依赖于操作系统提供的系统调用，如select、poll和epoll（Linux）。通过这些调用，程序可以一次性监听多个socket或其他IO资源的状态，避免了为每个连接创建独立线程或进程的开销。</p>
+<p>epoll相对于select的改进：</p>
+<p>1.select单进程打开的最大的fd是有限制的，默认是1024个，对于需要支持上万TCP连接的服务器来说太少。epoll没有这个限制，支持的最大fd上限是操作系统最大文件句柄数。1G内存的机器大约是10万个句柄。</p>
+<p>2.IO效率不会随着FD增加而线性下降。select和poll缺点是当有很大的socket集合时，任意时刻只有少部分的socket是活跃的，select和poll每次调用都会扫描全部集合，导致效率下降。epoll以空间换时间，更高效的事件通知机制。</p>
+<p>3.epoll通过mmap（内存映射）技术将内核空间中的事件就绪列表映射到用户空间，从而让应用程序可以直接访问这个列表，减少了内核与用户空间之间的数据复制和上下文切换的开销，加速了消息传递过程。这种方式提高了处理大量并发连接时的效率和性能。</p>
+<h2 id="Java和Python的区别"><a href="#Java和Python的区别" class="headerlink" title="Java和Python的区别"></a>Java和Python的区别</h2><p><strong>语法与开发效率</strong>：Python 语法简洁直观，适合快速开发；Java 语法较严谨，代码量通常更多。</p>
+<p><strong>类型系统</strong>：Python 是动态类型语言，变量类型在运行时确定；Java 是静态类型语言，需在编译时声明类型，类型安全更强。</p>
+<p><strong>执行方式</strong>：Python 是解释型语言，通过解释器执行；Java 是编译型语言，先编译成字节码，再由 JVM 解释或 JIT 编译执行。</p>
+<p><strong>性能</strong>：Java 通常性能更高，得益于 JVM 的优化；Python 在计算密集型任务中相对较慢。</p>
+<p><strong>应用场景</strong>：Java 常用于大型企业级应用、Android 开发；Python 广泛应用于数据科学、AI、脚本和Web开发。</p>
+<h2 id="Seata分布式事务解决方案"><a href="#Seata分布式事务解决方案" class="headerlink" title="Seata分布式事务解决方案"></a>Seata分布式事务解决方案</h2><p>Seata是蚂蚁金服和阿里巴巴共同开源的分布式事务解决方案。致力于提供高性能和简单易用的分布式事务服务，为用户打造一站式的分布式解决方案。</p>
+<p><strong>分布式事务</strong>：是指在分布式系统中，一次操作需要跨多个节点、服务或数据库协调完成，要求这些操作要么全部成功，要么全部失败，以保证数据的一致性。</p>
+<p>其中三个重要角色： <strong>TC</strong> **事务协调者：**维护全局和分支事务的状态，协调全局事务提交或回滚。  **TM ** **事务管理器：**定义全局事务的范围、开始全局事务、提交或回滚全局事务。  **RM ** **资源管理器：**管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</p>
+<p>四种不同的分布式事务解决方案：</p>
+<ul>
+<li>XA模式：强一致性分阶段事务模式，牺牲了一定的可用性，无业务侵入 </li>
+<li>TCC模式：最终一致的分阶段事务模式，通过业务层面定义尝试、确认和取消操作，实现灵活的补偿型事务。（柔性事务）</li>
+<li>AT模式：最终一致的分阶段事务模式，无业务侵入，也是Seata的默认模式 </li>
+<li>SAGA模式：将长事务拆分为多个本地事务，每个步骤执行后记录状态，出错时通过补偿操作回滚前面已完成的步骤。（柔性事务）</li>
+</ul>
+<h2 id="Redis实现防超卖"><a href="#Redis实现防超卖" class="headerlink" title="Redis实现防超卖"></a>Redis实现防超卖</h2><p>使用Redis可以有效地管理库存并保证数据一致性。</p>
+<p>一种常见的做法是利用Redis的<code>WATCH</code>机制结合事务来确保库存扣减操作的原子性和一致性。首先，将商品库存存储在Redis中。当有购买请求时，客户端先通过<code>WATCH</code>命令监控库存键的状态。然后，在事务中尝试执行库存检查和扣减操作（如<code>DECR</code>）。如果在这期间没有其他客户端修改该库存键，则<code>EXEC</code>命令会成功执行事务；如果有其他客户端在此期间修改了库存值，则当前事务会被放弃，需要重新尝试整个过程。</p>
+<p><strong>为什么只用INCR&#x2F;DECR不行</strong>：虽然Redis的<code>INCR</code>和<code>DECR</code>命令本身是原子性的，可以直接用于增加或减少数值，但在并发环境下仅依赖这些命令无法完全避免超卖问题。这是因为：</p>
+<ul>
+<li><strong>缺乏前置条件判断</strong>：直接使用<code>DECR</code>可能会导致库存变为负数，即超过实际库存数量的商品被卖出。</li>
+<li><strong>无回滚机制</strong>：一旦后续业务逻辑失败（例如订单创建失败），无法自动恢复已扣减的库存，造成数据不一致。</li>
+</ul>
+<p><strong>使用WATCH和事务：</strong></p>
+<ul>
+<li><strong>确保数据一致性</strong>：通过<code>WATCH</code>监控关键资源，在并发情况下只有在资源未被其他进程修改的前提下才执行事务，保证了多个步骤作为一个整体执行，避免了竞态条件。</li>
+<li><strong>提供乐观锁功能</strong>：<code>WATCH</code>机制是一种实现乐观锁的方式。它允许客户端在执行事务前监视一个或多个键，如果在事务执行前这些键被其他客户端修改过，则事务将失败不会执行任何操作。这种机制非常适合读多写少的场景。一种无锁机制来解决并发问题。</li>
+</ul>
+<h2 id="高并发项目中的限流和熔断"><a href="#高并发项目中的限流和熔断" class="headerlink" title="高并发项目中的限流和熔断"></a>高并发项目中的限流和熔断</h2><p><strong>限流</strong>：目的是控制请求量，防止系统过载。常用算法包括令牌桶和漏桶算法。通过设定速率阈值，如每秒处理请求数（RPS），超过限制的请求将被拒绝或排队。例如，使用Guava的RateLimiter类实现平滑限流。阿里巴巴的Sentinel，实现对特定资源的精准限流，确保系统在高并发场景下的稳定性和可靠性。</p>
+<p><strong>熔断</strong>：用于避免故障扩散。当服务调用失败率超过阈值时（如50%请求失败），启动熔断器，快速失败而不是尝试执行可能耗时的操作。一段时间后，允许部分请求通过进行试探性恢复。Hystrix是一个流行的熔断库，它提供了开箱即用的熔断、降级等功能。</p>
+<h2 id="优化多节点流程编排，优化工作流引擎性能"><a href="#优化多节点流程编排，优化工作流引擎性能" class="headerlink" title="优化多节点流程编排，优化工作流引擎性能"></a>优化多节点流程编排，优化工作流引擎性能</h2><p><strong>多节点流程编排优化：</strong></p>
+<ol>
+<li><strong>并行执行</strong>：识别可以并行处理的任务，通过合理的任务调度机制（如DAG调度）最大化并发度，减少整体执行时间。</li>
+<li><strong>减少节点间通信开销</strong>：尽量减少跨节点的数据传输量，使用高效的序列化&#x2F;反序列化格式（如Protocol Buffers或Avro），并对数据进行压缩。</li>
+<li><strong>智能路由与负载均衡</strong>：根据各节点当前的负载情况动态分配任务，避免某些节点过载而其他节点闲置。</li>
+<li><strong>缓存中间结果</strong>：对于重复计算的部分，可以在适当的位置增加缓存机制，存储中间结果以供后续步骤直接使用。</li>
+<li><strong>重试机制</strong>：为可能失败的操作设置合理的重试策略，包括指数退避算法等，以提高系统的容错能力。</li>
+</ol>
+<p><strong>工作流引擎性能优化：</strong></p>
+<ol>
+<li><strong>异步处理</strong>：尽可能采用异步调用代替同步等待，降低请求间的耦合度，加快响应速度。</li>
+<li><strong>数据库优化</strong>：使用索引加速查询。对于频繁读写的表，考虑分库分表策略。</li>
+<li><strong>批处理</strong>：对于大批量的数据操作，应采用批量提交而非逐条处理的方式，减少IO次数。</li>
+<li><strong>资源池管理</strong>：有效管理连接池、线程池等资源，防止因资源耗尽导致的服务不可用。</li>
+</ol>
+<h2 id="双写一致性问题"><a href="#双写一致性问题" class="headerlink" title="双写一致性问题"></a>双写一致性问题</h2><p>双写一致性问题主要出现在使用缓存与数据库共同存储数据的场景中，两个独立的数据存储系统，在并发更新时难以保证操作的原子性和顺序性。当应用同时写入缓存和数据库时，由于网络延迟、系统故障或并发读写，可能导致两者数据不一致。</p>
+<p>例如，如果<strong>先更新数据库再更新缓存</strong>，在这期间若有其他请求读取了旧的缓存数据，则会导致短暂的数据不一致。缓存更新失败也会导致不一致。同样，若<strong>先更新缓存再更新数据库</strong>，而此时数据库更新失败或出现网络问题，也会造成缓存与数据库数据的差异。此外，并发操作加剧了这一问题，多个客户端可能同时对同一数据进行读写操作，如果没有适当的同步机制，很容易导致部分客户端读取到未更新或错误的数据版本。<strong>先删缓存再更新数据库</strong>存在并发窗口期，可能使旧数据重新加载进缓存。</p>
+<p><strong>如何解决</strong>：</p>
+<p><strong>先更新数据库，再删除缓存</strong>，结合延迟双删或消息队列异步补偿，确保最终一致。</p>
+<ol>
+<li><strong>先更新数据库，后删除缓存</strong>：最常用。当需要更新数据时，首先更新数据库，然后立即删除对应的缓存项。下次查询时会从数据库加载最新数据到缓存中。在更新数据库之后和删除缓存之前，有短暂的不一致窗口。但是降低了因并发引起的复杂性和潜在的数据不一致风险。</li>
+<li><strong>延迟双删策略</strong>：在更新数据库之后，不仅立即删除缓存，还会设置一个小延迟（如50ms），再次删除同一缓存项。因为当一个线程正在更新数据库并删除缓存时，另一个并发线程可能已经从旧缓存中读取了数据，并在更新操作完成之前将其重新写入缓存，导致缓存中的数据比数据库还旧，这是缓存重建行为。</li>
+<li><strong>消息队列同步</strong>：利用消息队列确保操作顺序执行。将所有对数据库的修改通过消息队列进行异步处理，确保每个操作按序到达并更新缓存和数据库，适用于对一致性要求较高的场景。</li>
+<li><strong>使用分布式事务或Saga模式</strong>：对于复杂的业务逻辑，可以采用分布式事务或者Saga模式来管理跨服务的数据一致性，但这通常增加了系统的复杂度。</li>
+</ol>
+<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>CAP理论帮助开发者理解分布式系统的取舍。CAP理论指出，在分布式系统中，<strong>一致性（Consistency）</strong>、<strong>可用性（Availability）</strong> 和 <strong>分区容错性（Partition tolerance）</strong> 三者不可兼得，最多只能同时满足其中两项。</p>
+<ul>
+<li><strong>一致性</strong>：所有节点在同一时间看到的数据是相同的。</li>
+<li><strong>可用性</strong>：每个请求都能在合理时间内收到成功或失败的响应，不保证数据最新。</li>
+<li><strong>分区容错性</strong>：系统在部分节点间通信中断（网络分区）时仍能继续运行。</li>
+</ul>
+<p>由于网络故障难以避免，分区容错性通常是必须保证的。因此，系统设计通常在 <strong>CP（如ZooKeeper）</strong> 和 <strong>AP（缓存系统，一般会追求AP可用，并通过一些手段尽可能保证弱一致性和最终一致性）</strong> 之间权衡：CP系统在分区发生时保证数据一致但可能拒绝服务；AP系统保持可用，但允许数据暂时不一致。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E5%81%9A%E8%BF%87%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A2%98%E4%B9%8BLetcode100/" rel="prev" title="那些年做过的编程题之Letcode100">
+      <i class="fa fa-chevron-left"></i> 那些年做过的编程题之Letcode100
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="next" title="python之零碎知识点">
+      python之零碎知识点 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%92%8CReactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Reactor响应式编程和Reactor线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">record关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E4%B8%8Aredis%E6%9C%BA%E5%99%A8%E7%88%86%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">线上redis机器爆了，如何优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1-Transactional"><span class="nav-number">4.</span> <span class="nav-text">spring声明式事务@Transactional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E5%92%8CHashTable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">HashMap和HashTable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">6.</span> <span class="nav-text">什么是零拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%92%8C%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">Redis字典的实现方式和冲突处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DMVC%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">介绍MVC机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink%E5%92%8CSpark%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">Flink和Spark的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DJVM"><span class="nav-number">10.</span> <span class="nav-text">介绍JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E8%B0%83%E4%BC%98%E7%BB%8F%E9%AA%8C"><span class="nav-number">11.</span> <span class="nav-text">JVM调优经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E7%9A%84%E5%A0%86%E5%88%86%E4%B8%BA%E5%93%AA%E5%87%A0%E9%83%A8%E5%88%86"><span class="nav-number">12.</span> <span class="nav-text">JVM的堆分为哪几部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%92%8C%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">数据仓库和传统数据库有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">IO多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%92%8CPython%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">Java和Python的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seata%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">16.</span> <span class="nav-text">Seata分布式事务解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AE%9E%E7%8E%B0%E9%98%B2%E8%B6%85%E5%8D%96"><span class="nav-number">17.</span> <span class="nav-text">Redis实现防超卖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%99%90%E6%B5%81%E5%92%8C%E7%86%94%E6%96%AD"><span class="nav-number">18.</span> <span class="nav-text">高并发项目中的限流和熔断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%81%E7%A8%8B%E7%BC%96%E6%8E%92%EF%BC%8C%E4%BC%98%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E%E6%80%A7%E8%83%BD"><span class="nav-number">19.</span> <span class="nav-text">优化多节点流程编排，优化工作流引擎性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">20.</span> <span class="nav-text">双写一致性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP%E7%90%86%E8%AE%BA"><span class="nav-number">21.</span> <span class="nav-text">CAP理论</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

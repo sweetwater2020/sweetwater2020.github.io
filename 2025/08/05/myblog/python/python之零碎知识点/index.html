@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="python通过执行命令获取参数1、sys.argv：获取脚本运行时的命令行参数，是一个列表，第一个元素是脚本名称  1234import sys print(&quot;Script name:&quot;, sys.argv[0])  # 脚本名称 print(&quot;Arguments:&quot;, sys.argv[1:])  # 参数列表 运行命令：python script.py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python之零碎知识点">
+<meta property="og:url" content="http://example.com/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="python通过执行命令获取参数1、sys.argv：获取脚本运行时的命令行参数，是一个列表，第一个元素是脚本名称  1234import sys print(&quot;Script name:&quot;, sys.argv[0])  # 脚本名称 print(&quot;Arguments:&quot;, sys.argv[1:])  # 参数列表 运行命令：python script.py">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-04T16:00:31.035Z">
+<meta property="article:modified_time" content="2025-08-06T00:46:59.084Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>python之零碎知识点 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python之零碎知识点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-05 00:00:31" itemprop="dateCreated datePublished" datetime="2025-08-05T00:00:31+08:00">2025-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:46:59" itemprop="dateModified" datetime="2025-08-06T08:46:59+08:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">python语言</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="python通过执行命令获取参数"><a href="#python通过执行命令获取参数" class="headerlink" title="python通过执行命令获取参数"></a>python通过执行命令获取参数</h2><p>1、sys.argv：获取脚本运行时的命令行参数，是一个列表，第一个元素是脚本名称 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Script name:&quot;</span>, sys.argv[<span class="number">0</span>])  <span class="comment"># 脚本名称 </span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Arguments:&quot;</span>, sys.argv[<span class="number">1</span>:])  <span class="comment"># 参数列表 </span></span><br><span class="line">运行命令：python script.py arg1 arg2 arg3</span><br></pre></td></tr></table></figure>
+
+<p>2、argparse：高级命令行参数解析 </p>
+<p>首先使用argparse.ArgumentParser创建解析器。然后定义参数（如位置参数、可选参数等）。最后解析参数并访问其值。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建解析器 </span></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">&quot;A simple argument parser example.&quot;</span>) </span><br><span class="line"><span class="comment"># 添加参数 </span></span><br><span class="line">parser.add_argument(<span class="string">&quot;name&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;User&#x27;s name&quot;</span>) </span><br><span class="line">parser.add_argument(<span class="string">&quot;--age&quot;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, <span class="built_in">help</span>=<span class="string">&quot;User&#x27;s age&quot;</span>, default=<span class="number">18</span>) </span><br><span class="line">parser.add_argument(<span class="string">&quot;--verbose&quot;</span>, action=<span class="string">&quot;store_true&quot;</span>, <span class="built_in">help</span>=<span class="string">&quot;Enable verbose mode&quot;</span>) </span><br><span class="line"><span class="comment"># 解析参数 </span></span><br><span class="line">args = parser.parse_args() </span><br><span class="line"><span class="comment"># 访问参数 </span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Hello, <span class="subst">&#123;args.name&#125;</span>!&quot;</span>) </span><br><span class="line"><span class="comment"># 一个可选参数。只要它出现在命令行中，args.verbose 的值就会被设置为 True。</span></span><br><span class="line"><span class="keyword">if</span> args.verbose: </span><br><span class="line">运行命令：python script.py Alice --age <span class="number">25</span> --verbose</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态加载模块"><a href="#动态加载模块" class="headerlink" title="动态加载模块"></a>动态加载模块</h2><p>importlib: 用于动态加载模块。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">importlib.import_module <span class="comment"># 在运行时根据条件或配置导入不同模块 </span></span><br><span class="line">module = import_module(<span class="string">&#x27;math&#x27;</span>) </span><br><span class="line"><span class="built_in">print</span>(module.sqrt(<span class="number">4</span>)) </span><br></pre></td></tr></table></figure>
+
+<p>pkgutil.iter_modules：用于动态地列出指定包或路径中的所有模块 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> module_info <span class="keyword">in</span> pkgutil.iter_modules():    </span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;Name: <span class="subst">&#123;module_info.name&#125;</span>, Is Package: <span class="subst">&#123;module_info.ispkg&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>inspect.getmembers ：用于获取对象（模块、类、实例等）的所有成员属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">methods = inspect.getmembers(MyClass, predicate=inspect.isfunction) </span><br><span class="line">inspect.ismethod	实例方法 </span><br><span class="line">inspect.isfunction	普通函数 </span><br><span class="line">inspect.isclass	类对象 </span><br><span class="line">inspect.isdatadescriptor	数据描述符（如<span class="built_in">property</span>） </span><br><span class="line">inspect.isgenerator	生成器对象</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="OutputNamedTuple"><a href="#OutputNamedTuple" class="headerlink" title="OutputNamedTuple"></a>OutputNamedTuple</h2><p>命名元组，命名元组是由 <code>collections.namedtuple()</code> 函数创建的数据类型。命名元组本质上是一个类的实例，这个类是从内置的元组类型继承而来的，但与普通元组不同的是，它的元素可以通过名字来访问，而不仅仅是通过索引位置。</p>
+<p>特性：<strong>可命名性</strong>、<strong>不可变性</strong>、<strong>轻量级对象</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个命名元组类型 &#x27;Person&#x27;</span></span><br><span class="line">Person = namedtuple(<span class="string">&#x27;Person&#x27;</span>, [<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>, <span class="string">&#x27;gender&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 Person 实例</span></span><br><span class="line">person = Person(name=<span class="string">&#x27;Alice&#x27;</span>, age=<span class="number">30</span>, gender=<span class="string">&#x27;female&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过名称访问字段</span></span><br><span class="line"><span class="built_in">print</span>(person.name)   <span class="comment"># 输出: Alice</span></span><br><span class="line"><span class="built_in">print</span>(person.age)    <span class="comment"># 输出: 30</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同样也可以通过索引访问</span></span><br><span class="line"><span class="built_in">print</span>(person[<span class="number">0</span>])     <span class="comment"># 输出: Alice</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包操作</span></span><br><span class="line">name, age, gender = person</span><br><span class="line"><span class="built_in">print</span>(gender)        <span class="comment"># 输出: female</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换为字典</span></span><br><span class="line">person_dict = person._asdict()</span><br><span class="line"><span class="built_in">print</span>(person_dict)   <span class="comment"># 输出: OrderedDict([(&#x27;name&#x27;, &#x27;Alice&#x27;), (&#x27;age&#x27;, 30), (&#x27;gender&#x27;, &#x27;female&#x27;)])</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="元组和字典"><a href="#元组和字典" class="headerlink" title="元组和字典"></a>元组和字典</h2><p><strong>元组</strong>：是一个有序的、不可变的数据集合。元组中的元素通过索引来访问，支持重复值。<br>一旦创建后，其内容不能被修改。这被称为“不可变性”，意味着你不能添加、删除或更改元组中的元素。<br>使用场景：多返回值函数、固定集合等。此外，元组占用的空间相对较小，适合用于存储少量但固定的项目。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tuple_example = (<span class="number">1</span>, <span class="string">&#x27;apple&#x27;</span>, <span class="number">3.14</span>)</span><br><span class="line"><span class="built_in">print</span>(tuple_example[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong>字典</strong>：是一个无序的键值对集合，键必须是唯一的且不可变（如字符串、数字或元组），而值可以是任何类型的数据。字典通过键来访问对应的值。<br>是可变的，你可以随时添加、删除或更新字典中的键值对。<br>使用场景：适用于需要频繁查找、插入和删除操作的场合，尤其是在键值对应关系明显时特别有效。但是，字典会消耗更多的内存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dict_example = &#123;<span class="string">&#x27;id&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;price&#x27;</span>: <span class="number">3.14</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(dict_example[<span class="string">&#x27;name&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="抽象基类"><a href="#抽象基类" class="headerlink" title="抽象基类"></a>抽象基类</h2><p><code>class BaseClass(metaclass=abc.ABCMeta)</code> 这行代码定义了一个<strong>抽象基类</strong>（Abstract Base Class）。</p>
+<p><strong><code>metaclass=abc.ABCMeta</code></strong>：</p>
+<ul>
+<li><code>metaclass</code>（元类）是创建类的“类”。它控制着类的创建过程。</li>
+<li><code>abc.ABCMeta</code> 是 Python <code>abc</code> (Abstract Base Classes) 模块提供的一个特殊元类。</li>
+<li>通过将 <code>BaseClass</code> 的元类指定为 <code>abc.ABCMeta</code>，我们告诉 Python <code>BaseClass</code> 应该被当作一个<strong>抽象基类</strong>来处理。</li>
+</ul>
+<p><strong>抽象基类的核心特点和作用：</strong></p>
+<ul>
+<li><strong>不能直接实例化</strong>：你不能直接创建 <code>BaseClass</code> 的实例（例如 <code>obj = BaseClass()</code> 会抛出错误）。</li>
+<li><strong>定义接口（契约）</strong>：它的主要目的是定义一组方法（称为抽象方法），这些方法<strong>必须</strong>由它的子类（继承它的类）来实现。</li>
+<li><strong>强制子类实现</strong>：如果一个子类继承了 <code>BaseClass</code>，但没有实现其所有的抽象方法，那么尝试创建这个子类的实例时，Python 会抛出 <code>TypeError</code> 错误。</li>
+<li><strong>如何定义抽象方法</strong>：在 <code>BaseClass</code> 内部，使用 <code>@abstractmethod</code> 装饰器来标记哪些方法是抽象的。</li>
+<li><strong>非抽象方法</strong>：这些方法在抽象基类中提供了具体的实现。子类<strong>可以</strong>直接继承并使用这些方法，也可以根据需要选择**重写（覆盖）**它们。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> abc</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BaseClass</span>(metaclass=abc.ABCMeta):</span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_something</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;这是一个抽象方法，子类必须实现它。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_another_thing</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;这是另一个抽象方法。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment"># 这是一个非抽象方法（具体方法）</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">common_function</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;这是一个非抽象方法，子类可以直接继承使用。&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This is a common function provided by the base class.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误：不能实例化抽象基类</span></span><br><span class="line"><span class="comment"># instance = BaseClass()  # TypeError!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConcreteClass</span>(<span class="title class_ inherited__">BaseClass</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_something</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Doing something!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 注意：这里没有实现 do_another_thing</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误：ConcreteClass 没有实现所有抽象方法，不能实例化</span></span><br><span class="line"><span class="comment"># obj = ConcreteClass()  # TypeError!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FullyImplementedClass</span>(<span class="title class_ inherited__">BaseClass</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_something</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Doing something!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_another_thing</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Doing another thing!&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确：可以实例化，因为所有抽象方法都被实现了</span></span><br><span class="line">obj = FullyImplementedClass()</span><br><span class="line">obj.do_something()  <span class="comment"># 输出: Doing something!</span></span><br><span class="line">obj.do_another_thing()  <span class="comment"># 输出: Doing another thing!</span></span><br></pre></td></tr></table></figure>
+
+<p>现代 Python 更推荐使用 <code>abc.ABC</code> 作为基类，效果相同，但写法更简洁</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> abc</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BaseClass</span>(abc.ABC):</span><br><span class="line"><span class="meta">    @abc.abstractmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_something</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/" rel="prev" title="那些年背过的面试题之java2025">
+      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之java2025
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E7%AE%97%E6%B3%95/" rel="next" title="那些年背过的面试题之算法">
+      那些年背过的面试题之算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E9%80%9A%E8%BF%87%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">python通过执行命令获取参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">动态加载模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OutputNamedTuple"><span class="nav-number">3.</span> <span class="nav-text">OutputNamedTuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%BB%84%E5%92%8C%E5%AD%97%E5%85%B8"><span class="nav-number">4.</span> <span class="nav-text">元组和字典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">抽象基类</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
