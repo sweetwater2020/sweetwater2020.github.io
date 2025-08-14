@@ -183,6 +183,616 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" class="post-title-link" itemprop="url">那些年背过的面试题之redis&mysql</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-24 22:22:24 / Modified: 23:12:13" itemprop="dateCreated datePublished" datetime="2025-07-24T22:22:24+08:00">2025-07-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ul>
+<li><p>redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。</p>
+</li>
+<li><p>redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点负责多个哈希槽。2⃣️无中心架构：节点对等，无中心节点。3⃣️主从复制：一个节点可以有多个从节点，实现故障恢复、数据冗余、读写分离。</p>
+</li>
+<li><p>redis两种同步策略：全量RDB文件、增量同步AOF</p>
+</li>
+<li><p>redis持久化：redis数据存在内存中，持久化机制将数据存储到磁盘文件。RDB快照是某个时间点数据的二进制全量备份。AOF日志是修改内存数据的指令记录。</p>
+</li>
+<li><p>redis的RDB：redis是单线程的，为了不阻塞请求响应，fork子线程进行快照持久化，持久化期间，两线程共享一份实体资源，只有在写操作发生时，共享的内存页会被复制，副本供写操作使用（写时复制），最小化对主进程影响。</p>
+</li>
+<li><p>redis的AOF：使用fsync命令将指令记录存入AOF文件，每1s执行一次</p>
+</li>
+<li><p>redis重启使用哪种持久化：都开启的话使用AOF持久化，因为包含更完整的操作历史记录。</p>
+</li>
+<li><p>redis哨兵机制：保证高可用，实现集群监控故障转移。多个sentinel节点。1⃣️监控：sential节点与其他master&#x2F;slave&#x2F;sentinel节点发送PING做心跳检测，交换信息监控主从拓扑。2⃣️主观客观下线：主观一台认为，客观大多数认为。3⃣️哨兵选举：sentinel选出一个leader做故障转移，raft算法，1.节点认为主管下线就申请成为leader，2.其他节点没有答应别人就答应他，3.票数达标就成为leader。4⃣️故障转移：根据从节点优先级选择新的master节点，sentinel leader向其他节点发送命令，并关注原master。</p>
+</li>
+<li><p>redis双写一致性：更新操作同时写入数据库和缓存，因为分布式系统中网络延迟、系统故障等原因，导致两者数据不一致，解决：1.先写数据库再删缓存：高并发可能会多次缓存穿透，增加数据库压力。2.先写数据库再更新缓存：不会缓存穿透，但是更新缓存操作需要并发控制防止竞争。更高级：消息队列保障顺序、分布式锁。</p>
+</li>
+<li><p>redis延时双删：在删除数据时，防止删除不能完全同步，首先删除数据库记录，再第一次删除缓存记录，延时短暂时间后，再删一次缓存。避免缓存网络抖动未删除。如果之间又写入，缓存穿透一次读到数据库。</p>
+</li>
+<li><p>redis缓存击穿：单个key访问并发过高，过期时请求直接打在DB上，数据库压力大。解决：加锁，缓存没有就对key加锁查库后更新缓存、将过期时间也写在value中，异步刷新过期时间、接口限流降级熔断。</p>
+</li>
+<li><p>redis缓存穿透：查询在缓存和DB不存在的数据时，都打到DB，就像缓存不存在。解决：在请求缓存前加布隆过滤器，筛掉一定不存在的数据。</p>
+</li>
+<li><p>redis缓存雪崩：大批量数据同时过期，大量请求直接打到DB。解决：缓存数据过期时间设置随机，热点数据均匀分布在不同缓存数据库。</p>
+</li>
+<li><p>布隆过滤器：快读判断一个元素是否在集合中，可能误判不会漏判。实现：长度m的位数组、k个哈希函数得到k个位置，将对应位置为1。查找时看是不是所有哈希函数得到的位都是1.</p>
+</li>
+<li><p>RDBMS和NoSQL：关系型数据库（组织化结构，行列格式）、Not only sql（数据存储没有固定格式，可横向扩展）。RDBMS：固定查询语言、事务一致性ACID。NoSQL：无固定查询语言、键值redis、列存储HBase、文档MongoDB、图形存储Neo4j、最终一致性BASE。</p>
+</li>
+<li><p>redis：远程字典服务，键值对，数据缓存在内存，周期性持久化到磁盘、主从同步、哨兵机制高可用。应用：高速缓存、计数器。</p>
+</li>
+<li><p>redis数据结构：1⃣️String：最大512M，实现：未使用C语言字符串，自己实现简单动态字符串SDS，带长度信息，embstr编码和raw编码，字符串修改时检查字符串长度避免缓冲区溢出，减少内存重新分配次数。2⃣️列表List：双向链表型数据结构，可两端插入弹出，可指定下标&#x2F;范围获取。实现消息队列、分页。实现：quikList，外层是双向链表linkedList，每个节点是zipList压缩列表，将多个元素序列化存储在一块连续内存中。3⃣️Set集合：不允许重复，没有顺序，支持多集合间并集交集差集操作。实现：如果元素都整数且数量较少，使用intset整数集合压缩数据结构。否则使用hashTable。4⃣️zset有序集合：给每个元素多设置一个分数，作为排序的依据。实现：hashTable存储元素到分数的映射，快速查询和更新分数。跳跃表skiplist维护元素的有序性，并提供高效范围查询。5⃣️hash：存储key-value记录。实现：当字段和值数量不多时，使用压缩列表zipList。否则使用哈希表hashtable，每项都包含指向键的指针和指向值的指针。</p>
+</li>
+<li><p>redis为什么快：1.完全基于内存 2.单线程无上下文切换成本 3.基于C语言，优化过的数据结构 4.基于非阻塞的IO多路复用和事件驱动模型，使用Seletor监视所有注册的通道，IO事件发生时进行通知。单线程高效处理大量并发连接。</p>
+</li>
+<li><p>redis6.0改用多线程：依然使用单线程处理客户端请求，只是多线程处理数据读写和协议解析。redis性能瓶颈在网络IO而非CPU。</p>
+</li>
+<li><p>redis热key问题：某个key大量并发打到一台服务器，达到网卡上线，宕机。缓存雪崩。解决：热key打散在不同服务器。提前加载热key到内存，内存做二级缓存。</p>
+</li>
+<li><p>redis设置过期时间：expire key seconds；set key value EX seconds；底层采用过期字典存储键的过期时间。</p>
+</li>
+<li><p>redis过期策略：1⃣️惰性删除：查询key时才对过期时间检测，已过期删除。2⃣️定期删除：定期执行过期键的扫描和删除，避免消耗过多计算资源，使用采样的过程随机抽取，如果过期的多就再抽样。3⃣️都没删除的：等redis内存淘汰机制。</p>
+</li>
+<li><p>redis内存淘汰：LRU最近最久未使用，淘汰最长时间没有访问的。链表&#x2F;哈希表+双向链表。redis中使用近似的LRU，随机抽取一些键，检查最后访问时间戳，淘汰最久未访问的。</p>
+</li>
+<li><p>redis高可用：主从架构、哨兵、持久化</p>
+</li>
+<li><p>redis事务：1⃣️事务是一组命令的集合，数据库事务通过ACID保证，undo log撤销日志。2⃣️redis中事务机制：通过MULTI、EXEC、WATCH 和 DISCARD 四个命令提供。MULTI开启事务，输入多个命令，不会立即执行而是放入一个队列，调用EXEC命令才会将队列中命令原子执行。3⃣️事务监控：WATCH命令设置监控的键，在事务操作之前就监控，如果EXEC之前键被其他客户端修改，则不执行DISCARD。是一种CAS乐观锁的机制。</p>
+</li>
+<li><p>redis操作一个命令最耗时的地方：网络IO延迟：尽可能使用长连接或连接池。数据持久化延迟：合理配置RDB快照和AOF Rewrite时机（每秒？每条指令？），避免频繁的fork带来的延迟。数据淘汰引发的延迟：避免同一时间大量key过期。</p>
+</li>
+</ul>
+<h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ul>
+<li><p>RDBMS和NoSQL：RDBMS关系型数据库（组织化结构，表格行列格式，Mysql、Oracle、PostgreSQL）、Not only sql非关系型数据库（数据存储没有固定格式，可横向扩展）。1⃣️数据结构：结构化与非结构化，键值redis、列存储HBase、文档MongoDB、图形存储Neo4j。2⃣️数据关联：sql中多张表可关联，nosql数据之间无关联。3⃣️查询语言：sql固定查询语言，nosql不固定查询语言。4⃣️事务一致性：sql提供强一致性和完整事务支持，nosql提供BASE基本可用、软状态、最终一致性。5⃣️存储方式：sql存在磁盘，nosql存在内存。6⃣️扩展性：sql垂直扩展，升级单个服务器的内存cpu存储空间。nosql可水平扩展，分布式存储。</p>
+</li>
+<li><p>数据库事务：一条&#x2F;多条语句组成，要么全部执行要么全部不执行的执行单元。1⃣️原子性：最小执行单元，操作失败时undo log来回滚。2⃣️一致性：事务执行前后数据保持一致。3⃣️隔离性：并发执行的事务之间不会互相干扰，MVCC、锁机制实现不同隔离级别。4⃣️持久性：事务一旦提交对数据库的修改是永久的，系统崩溃时使用redo日志来恢复。</p>
+</li>
+<li><p>redo日志和undo日志：1⃣️redo log：重做日志，保障持久性，系统崩溃时恢复数据。物理日志，记录数据页的物理修改操作。更新先写入redo log，再空闲时更新到磁盘，预写式技术减少IO频率。2⃣️undo log：撤销日志，保障原子性，回滚时恢复数据。逻辑日志，记录数据操作的逆向操作。还提供一致性读，即使数据被修改也能从undo log访问到修改前的数据。</p>
+</li>
+<li><p>事务的隔离级别：事务隔离级别定义了一个事务可能受其他事务影响的程度。1⃣️读未提交：可能脏读（读到其他事务未提交的修改）。2⃣️读已提交：不可重复度（事务内两次读到数据不一致）。3⃣️可重复度：默认的，幻读（可能读到第一次读没有的新纪录，行数不一致）。4⃣️串行化：事务串行执行，强制锁定事务访问的数据，锁竞争。（表级锁）</p>
+</li>
+<li><p>解决不可重复度：MVCC多版本并发控制，同一时刻不同事务读取到不同版本的数据。实现：隐藏列、undo log、版本链。每行数据多个隐藏列（版本号、删除时间、指向undo log的指针），undo log通过回滚指针把一个数据行所有快照连接起来形成一个版本链，使用事务版本号比较来控制数据版本。优点：避免加锁，允许读写操作并发执行。</p>
+</li>
+<li><p>mysql的锁：表锁、行锁（Innodb有，通过给索引项加锁实现，如果没有索引相当于表锁）。共享锁、排他锁。insert、update、delete操作innodb会自动给涉及到的数据加排他锁。select for update加排他锁。select lock in share mode加共享锁。</p>
+</li>
+<li><p>间隙锁：Innodb中的，用于锁定一个范围，不是固定的行数据。Innodb中可重复读及更高级别使用的锁机制。可以避免幻读，避免其他事务在该范围内插入。</p>
+</li>
+<li><p>意向锁：Innodb中的锁机制，用来事务获行锁之前表明锁定意图，分为意向共享锁和意向排他锁。意向锁是表级锁，获行锁之前先获取对应意向锁，不需要检查每行的锁状态，通过意向锁了解表的锁使用情况。意向共享锁不阻塞其他意向共享锁，意向排他锁不阻塞其他意向排他锁。意向共享锁（IS）或意向排他锁（IX）会阻塞整个表的排他锁。</p>
+</li>
+<li><p>快照读和当前读：快照读：执行普通的select查询，Innodb使用MVCC进行快照读，不加行锁，不会阻塞其他事务的读写操作，提供一致性的非阻塞读取。当前读：显式加锁select、update、delete，会对对应数据行加排他锁，获取数据的最新版本。</p>
+</li>
+<li><p>Innodp和Myisam：InnoDB支持事务处理、行级锁定和外键约束，适合于高并发和需要强数据完整性的应用。MyISAM拥有较高的读取速度和全文索引支持，但不支持事务处理，只有表级锁定。</p>
+</li>
+<li><p>Mysql索引：数据库表中一个特殊的数据结构，帮助提高数据检索速率。使用B树和B+树作为索引的数据结构。Innodb中主键索引使用聚簇索引，B+树叶子结点存储表的实际行数据。非主键索引使用B+树，叶子结点存储对应行主键而不是行数据本身。Myisam中都是非聚簇索引，B+树叶子结点存储行数据的指针。</p>
+</li>
+<li><p>Mysql索引缺点：空间成本、维护成本（数据插入删除更新时索引也需要更新，导致更新操作变慢）。索引通常以索引文件的形式存储在磁盘。</p>
+</li>
+<li><p>Mysql中有哪些索引：主键索引、唯一索引、普通索引、全文索引、空间索引、组合索引、外键索引</p>
+</li>
+<li><p>B树和B+树区别：都是多路搜索树，自平衡。B+树所有的值存储在叶子结点，并且形成有序链表，适合范围查询，内部节点存储键和指向叶子结点的指针。更胖更低，IO效率高。B树每个节点都存储键和值，对于点查询更为高效。</p>
+</li>
+<li><p>哈希索引：Memory存储引擎使用，基于内存。散列算法使用哈希表很快O(1)，适合等值比较查询，不适合范围查询。如果重复的键会哈希冲突。Innodb中自适应哈希索引。</p>
+</li>
+<li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
+</li>
+<li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
+</li>
+<li><p>最左前缀匹配：联合索引中，查询时使用的where子句中的条件必须包含联合索引中最左边的列索引才能生效，如果跳过或使用范围查询，则后面列不能有效使用索引。因为B+树是有序的。</p>
+</li>
+<li><p>sql语句执行过程：1.建立连接 2.mysql8.0查看是否开启缓存 3.解析器进行语法解析，生成解析树，检查语法正确 4.优化器生成执行计划，查看是否可优化。5.执行引擎执行sql。</p>
+</li>
+<li><p>数据库三范式：1.列不可分割 2.所有非主键字段都依赖于主键 3.所有非主键字段直接依赖于主键。</p>
+</li>
+<li><p>回表查询和覆盖索引：回表查询是普通索引，先定位主键，再定位行记录，扫描两遍索引树。覆盖索引是索引中包含了查询所需的所有字段，直接从索引中获取数据，不需要回表查询，减少磁盘IO。</p>
+</li>
+<li><p>explain：展示如何执行select语句：如何使用索引、表连接顺序、估计扫描行数。</p>
+</li>
+<li><p>数据库优化：1.建索引，where order by group by涉及的列建立索引。2.索引优化，最左匹配原则，不使用like “%abc”。3.建立分区，如时间字段4.利用缓存redis，缓存热数据5.查询限定数据范围，如查询一个月内的6.读写分离7.分库分表，垂直拆分水平拆分8.数据异构到es9.冷热数据分离10.升级OceanBase</p>
+</li>
+<li><p>无法使用索引：!&#x3D;、is null、or、&gt;&lt;、in、not in</p>
+</li>
+<li><p>mysql中char和varchar的区别：char是固定长度的字符串，即使存储数据短于设计长度，会用空格填充，所以可以快速查询。varchar可变长度的字符串，只占用必要空间加一个额外的长度字节，节省空间但影响查询性能。</p>
+</li>
+<li><p>delete和truncate：delete删除表时会增加大量undo日志和redo日志，truncate会立即删除表中所有数据，不能回滚，快速释放占用的空间。</p>
+</li>
+<li><p>mysql主从复制：主服务器将变更记录到二进制日志（binary log）文件，从服务器连接到主服务器后，请求从上次停止的位置开始传送日志，存到中继日志relay log，开线程重放。数据冗余、读写分离、高可用性。</p>
+</li>
+<li><p>主从复制的数据一致性问题：主从复制有延时，可能造成读到不一致的数据。根据数据复制到从服务器对主服务器事务提交的影响，分为：1.异步复制（写入二进制日志之后确认事务提交，从服务器落后于主服务器，不一致风险高）2.半同步复制（等待至少一个从服务器收到二进制日志，主服务器故障时可以找到这个从服务器成为主）3.同步复制（等待所有从服务器，较高的数据一致性）</p>
+</li>
+<li><p>mysql集群架构：1⃣️一主多从架构：写操作都主库，从库负责读。2⃣️多级复制架构：一主和多从之间增加一个master2主库，表都是空表，仅负责转发binlog。减轻主库负担。3⃣️双主架构：master1和master2互为主从。</p>
+</li>
+<li><p>mysql分库分表：将数据分散在多个数据库和表中。垂直拆分：按照表的列来进行拆分，将一个表分割成多个表。水平拆分：按照表的行进行拆分，用某个id做哈希取余进行分散。挑战：数据一致性、跨库或跨表的事务处理、数据迁移和重新分片等问题。解决：两阶段提交会锁定资源。XA协议。事务补偿。</p>
+</li>
+<li><p>跨库事务：tddl不支持跨库事务提交，强一致性需要使用切面事务实现。最终一致性可以用状态机+定时任务实现。</p>
+</li>
+<li><p>自增id：1.redis提供incr命令，单线程。2.雪花id：41位时间戳（毫秒，能用70年），10位机器标识，12位序列号。</p>
+</li>
+<li><p>分库分表之主键id：需要一个全局唯一的分布式id：1⃣️数据库自增长id，根据表的数量设置步长，但是不能扩表了。2⃣️redis incr&#x2F;incrby命令生成自增长id。数据存在内存，实例宕机可能丢数据。3⃣️uuid：本地生产不占用网络资源，缺点是太长，不具备有序性。适合用于编号。4⃣️雪花算法：有序增长，全局唯一。每秒可生成四百多万id。分三段：时间毫秒级、集群+机器id、序列号。可灵活分配比特位。缺点：强依赖机器时钟，可能导致发号重复。美团Leaf分布式id中，引入zookeeper，服务向zookeeper获取机器id，zookeeper检测时间是否正确。</p>
+</li>
+<li><p>mysql和Oracle的区别：1⃣️oracle数据库是一个重量级对象关系数据库管理系统（ORDBMS），收费的。mysql是一个轻量级开源的关系数据库管理系统（RDBMS），开源的免费的。2⃣️安全性上：oracle验证用户的参数有很多，有着较强的安全性，mysql验证用户的参数只有三个（用户名、密码、位置），安全性较弱。3⃣️对事务的支持：MySQL在innodb存储引擎的行级锁的情况下才可支持事务，而Oracle则完全支持事务。4⃣️mysql的诊断调优方法较少，主要有慢查询日志。Oracle有各种成熟的性能诊断调优工具。5⃣️并发性：mysql虽然InnoDB引擎的表可用行级锁，但行级锁机制依赖于表的索引，如果表没有索引，或者sql语句没有使用索引，将使用表级锁。Oracle使用行级锁，对资源锁定粒度更小，不依赖于索引。6⃣️应用：Oracle应用于大型复杂的企业级应用，性能、可伸缩性、可靠性更强大。mysql应用于中小型应用。</p>
+</li>
+<li><p>mysql当前读和快照读：1⃣️快照读是指读取数据不需要等待其他事务对数据锁的释放，通过MVCC允许读取数据的历史版本，提供一致性视图，实现了非阻塞的读。普通的select操作就是快照读，RR可重复读和RC读已提交下的select是快照读。2⃣️当前读：读取数据的最新版本，并对读取的数据加锁（行锁或间隙锁）。常用于需要修改数据的场景，例如update、delete、select for update。在串行化隔离级别下，即使普通select也是当前读。</p>
+</li>
+<li><p>索引优化：建立合适的联合索引，达到覆盖索引，尽量保持区分度高的在最左</p>
+</li>
+<li><p>mysql的delete文件大小不变：Innodb采用延迟空间回收，删除数据仅做标记，不立即回收磁盘空间，避免频繁磁盘操作。数据文件以数据页为单位组织。而且delete会记录redo和undo日志，消耗IO资源和存储空间。使用：Truncate table删除表的所有数据并初始化。drop重建表，删除后重建。</p>
+</li>
+<li><p>drop、delete、truncate：delete可回滚，会触发表上的触发器。truncate删除表中所有数据，不能回滚，更快，占用空间小。drop删除表，触发器不会触发。</p>
+</li>
+<li><p>适合&#x2F;不适合建立索引：适合：频繁使用的、用来缩小查询范围的、需要排列的。不适合：查询中很少涉及的、重复值比较多的、特殊的数据类型如text的。</p>
+</li>
+<li><p>mybatis是否支持延迟加载：延迟加载是用到数据时才进行加载，避免一次性加载大量关联数据，提高查询效率。配置文件中可以设置延迟加载，按需取材。底层使用CGLIB动态代理实现，创建目标对象的代理对象，目标对象是开启延迟加载的mapper所映射的实体类。通过字节码技术运行时生成代理类，调用目标方法时，进入拦截器的invoke方法，执行sql查询以获取关联数据，注入到对象属性中。</p>
+</li>
+</ul>
+<h2 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h2><ul>
+<li>Mybatis保证跨库数据一致性？：Mybatis是一个持久层框架，不直接提供跨库调用数据一致性的解决方案。需要借助外部分布式事务解决方案：分布式事务框架、两阶段提交、最终一致性、分布式事务中间件XA协议。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/" class="post-title-link" itemprop="url">那些年背过的面试题之java2024</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-23 00:44:10" itemprop="dateCreated datePublished" datetime="2025-07-23T00:44:10+08:00">2025-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-07-27 19:12:47" itemprop="dateModified" datetime="2025-07-27T19:12:47+08:00">2025-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><ul>
+<li>jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针）</li>
+<li>jmm内存模型：多线程环境下对共享变量的同步，保证多线程环境下的可见性、有序性。主内存和工作内存，可见性volatile线程更改了工作内存中的共享变量其他线程能够立马看到，有序性volatile禁止指令重排synchronized锁，原子性synchronized和CAS无锁的原子操作</li>
+</ul>
+<h2 id="锁、并发编程"><a href="#锁、并发编程" class="headerlink" title="锁、并发编程"></a>锁、并发编程</h2><ul>
+<li><p>java有哪些锁：内置锁synchronized、重入锁ReentrantLock、读写锁ReadWriteLock、条件锁Condition</p>
+</li>
+<li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
+</li>
+<li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>CAS：无锁的原子操作，用来在并发编程中实现无锁同步。非阻塞的，减少锁开销。ABA问题，导致自旋，消耗CPU，只能一个变量的原子操作。</p>
+</li>
+<li><p>ReentrantLock：可重入的互斥锁，可重入、API层面锁、可响应中断、可公平不公平、Condition分离对象的等待集合。原理：队列同步器AQS，中volatile变量state记录锁的状态和重入次数，CAS操作更新状态变量和加入等待队列和更新队列头节点，FIFO队列管理等待锁的线程。</p>
+</li>
+<li><p>Condition：条件锁，与ReentrantLock结合使用，更精细控制等待唤醒，有选择地唤醒等待中的线程。</p>
+</li>
+<li><p>公平锁和非公平锁：公平锁所有线程都会被阻塞，非公平锁获锁之前不管等待队列，减少唤醒线程上下文切换开销。</p>
+</li>
+<li><p>RentrantLock如何实现公平非公平：子类 <code>FairSync</code> 和 <code>NonfairSync</code>。默认非公平锁，线程尝试直接获取锁，不考虑等待队列中的顺序。新到来的线程如果此时锁恰好可用，则可以直接获取锁，减少了上下文切换，提高了吞吐量。公平锁中，获取锁时会检查同步队列（AQS 队列）中是否有比当前线程等待时间更长的线程。如果有，则当前线程必须等待；如果没有其他线程或自己是队列中最前面的，则可以尝试获取锁。这样保证了最先进入等待状态的线程优先获得锁，遵循先来先服务的原则。</p>
+</li>
+<li><p>信号量Semaphore：控制对有限资源访问的计数器，实现资源池，控制并发数。permit为1时互斥锁。</p>
+</li>
+<li><p>闭锁CountDownLatch：用于等待一组线程都完成之后才继续操作，不可重用。</p>
+</li>
+<li><p>栅栏CyclicBarrier：一组线程互相等待都达到某个屏障点再继续执行，可重用。</p>
+</li>
+<li><p>读写锁ReadWriteLock：可同时读，写操作互斥，原理AQS，状态变量按位切割记录多个线程状态。锁降级：在释放写锁之前先获取读锁，避免在释放写锁和获取读锁之间其他线程修改变量，保证可见性。因为同一线程，所以允许获取读锁。</p>
+</li>
+<li><p>AQS：AbstractQueuedSynchronizer队列同步器，基于FIFO等待队列的同步框架，volatile和CAS实现同步状态管理，内置FIFO队列实现线程排队等待机制。构建各种阻塞性质的同步器。</p>
+</li>
+<li><p>锁优化：1.减小锁粒度：大锁变为不同的小锁来减少锁竞争提高并发，例如ConcurrentHashMap的分段锁。2.锁分离：读写分离ReadWriteLock读锁共享写锁独占。3.锁消除：不必要的不加锁，减少锁持有时间。4.锁粗化：短时间重复获取同一锁，将锁范围扩大，减少锁开销。5.使用无锁数据结构：CopyOnWriteArrayList，atomic下的原子类，volatile+cas，实现无锁的线程安全操作。</p>
+</li>
+<li><p>CopyOnWriteArrayList：线程安全的ArrayList。写时复制。读取的时候在当前数组进行，修改的时候，复制当前列表，在新列表上修改，然后将原列表引用指向新的列表。这个更新操作是原子性的，使用volatile 变量来存储底层数组的引用，写操作在读操作之前完成。</p>
+</li>
+<li><p>悲观锁和乐观锁：悲观锁认为冲突普遍存在，阻止并发访问保证一致性。乐观锁通过数据版本号来检测冲突，冲突之后撤销或重试。</p>
+</li>
+<li><p>死锁：多线程互相持有和等待对方的资源，形成循环等待。互斥条件、请求与保持条件、不可剥夺条件、循环等待条件。CAS破坏互斥条件，银行家算法分配资源之前先检查是否会死锁，破坏循环等待。</p>
+</li>
+<li><p>线程池：管理一系列线程的资源池，避免线程频繁创建销毁开销，提高响应速度。1.ThreadPoolExecutor构造函数创建（核心线程数、最大线程数、阻塞队列、最大线程存活时间、threadFactory、饱和策略）2.Executors工具类创建（不推荐，使用无界阻塞队列OOM，CachedThreadPool使用同步队列创建线程数无限制OOM）</p>
+</li>
+<li><p>线程池饱和策略：AbortPolicy抛出异常来拒绝、CallerRunsPolicy调用线程中运行、DiscardPolicy直接丢弃、DiscardOldestPolicy丢弃最早未处理的。</p>
+</li>
+<li><p>线程池阻塞队列：ArrayBlockingQueue基于数组结构的有界阻塞队列FIFO、LinkedBlockingQueue基于链表的无界阻塞队列、SynchronousQueue同步队列无容量、DelayQueue延迟无界阻塞队列，延迟期满时从队列取出、PriorityBlockingQueue支持优先级排序的无界阻塞队列。</p>
+</li>
+<li><p>线程池处理顺序：核心线程、任务队列、最大线程、饱和策略</p>
+</li>
+<li><p>ThreadPoolExecutor的execute和submit：1.execute是Executor方法，submit是ExecutorService方法。2.execute只接收Runnable，出现异常原地抛出。submit接收Runnable和Callable，返回Future，捕获异常在future.get方法中抛出。</p>
+</li>
+<li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
+</li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</li>
+<li>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</li>
+<li>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</li>
+<li>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</li>
+<li>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</li>
+<li>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</li>
+<li>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</li>
+<li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
+<li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
+<li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
+<li>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</li>
+</ul>
+<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
+<li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
+</ul>
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
+<li>IO：涉及到数据的存储、交换，都用IO，文件IO、网络IO</li>
+<li>BIO：同步阻塞IO，每来一个新连接就需要创建一个线程，数据的读取写入都需要阻塞在线程中。浪费线程资源，不适合单机过多连接。</li>
+<li>NIO：同步非阻塞IO，线程发起IO操作，如果数据还没准备好，可立即返回执行其他任务。数据写入读取不再阻塞，但是需要等待IO操作完成，可同时处理多个Socket请求。适用连接多且比较短的。</li>
+<li>NIO多路复用：背景：应用程序询问数据是否就绪需要系统调用。因此为了解决频繁系统调用，一次向内核传递多个需要询问的Socket是否就绪（Seletor）。select、poll实现多路复用的机制，监控多个网络连接的IO事件，poll没有最大连接数限制。epoll提供了更高效的事件通知机制，在内核态开辟了两个集合，空间换时间，不需要每次传入整个Socket集合，减少拷贝，不需要主动地对所有文件描述符进行轮询。（单线程监控多个网络通道，轮询通道是否准备好，epoll通道准备好时得到通知）</li>
+<li>epoll：1⃣️epoll_create:在内核申请一块内存区域用于存储需要监控的fd，红黑树存储。2⃣️epoll_ctl:将需要监控的fd添加到创建的集合中。3⃣️epoll_wait:调用epoll_wait以等待事件发生，这个调用会阻塞直到有事件发生，或者超时。返回就绪的fd集合，链表存储。开发者只需要遍历这个列表并处理每个事件。</li>
+<li>IO多路复用的多线程版本：一个线程监听新连接的接入。若干个线程负责多个Socket的读写。</li>
+<li>AIO：异步非阻塞IO，jdk1.7升级，发起IO请求后立即继续执行后续代码，不需要等待IO操作完成。完成通过回调事件通知来告知调用者。windows中操作系统实现，Linux中使用自建线程池实现。</li>
+<li>Socket；网络通信基本概念，两程序连接进行数据交换</li>
+<li>Channel：能进行读写操作的IO通道。</li>
+<li>Selector：可以监视多个Channel的IO事件。Channel注册在Selector上，允许单线程管理多个网络连接。</li>
+<li>FD：Linux中一切皆文件。无论文件、Socket、设备文件。File Descriptor文件描述符，看作文件的id。进程级别的资源句柄，提供访问文件的抽象层。</li>
+<li>Linux系统分三层：User、Kernel、Hardware</li>
+<li>用户态和内核态：内核态是控制计算机硬件资源，例如协调CPU分配内存空间。用户态是提供应用程序运行的空间。内核提供的一组通用的访问内核管理资源的接口是系统调用。系统调用需要内核态和用户态的切换，涉及到CPU中断、堆栈切换、寄存器保存。</li>
+</ul>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><ul>
+<li><p>死亡对象判断方法：1.引用计数法：给对象加一个引用计数器，被引用+1，引用失效-1，无法解决循环引用问题。2.可达性分析法：GC Root作为起始点，从它们向下搜索，走过的路径叫做引用链，一个对象与所有GC Root都不相连，需要被回收。</p>
+</li>
+<li><p>可达性分析中的两次标记：可达性分析中不可达的对象，并不是非死不可，而是缓刑，需要两次标记。一次标记筛选是否需要执行finalize方法，需要进入下一次标记。第二次标记查看对象finalize方法中对象是否被其他存活的对象引用，如果是那么该对象将变成可达的。finalize用来做外部资源清理，被try finally取代。</p>
+</li>
+<li><p>垃圾收集算法：1⃣️标记清除：标记要回收的对象，然后统一回收。会产生不连续的内存碎片。2⃣️标记复制：young使用，内存分为两块儿，一块儿使用完后，将存活的复制到另一块儿，然后清除。内存压缩一半，复制效率低。3⃣️标记整理：old使用，把存活对象向一端移动，然后清除边界外的内存。解决不连续内存碎片，但是移动存活对象并更新引用负担大。停顿时间长。4⃣️分代：新生代：每次存活对象较少，复制操作少，用标记复制，新生代分为较大的eden和两个较小的survivor，每次使用eden和一块儿survivor，回收时将存活对象复制到另一块儿survivor。回收时不用中断应用程序执行，避免碎片化问题。老年代存活率较高，没有额外空间分配担保，选用标记清除&#x2F;标记整理。</p>
+</li>
+<li><p>eden、survivor、old分配顺序：对象优先在eden区分配，大对象和长期存活的对象进入老年代。一次minor gc之后存活在survivor中的对象1岁，此后每在survivor中熬过一次minor gc就+1岁，达到阈值或一半超过同一年龄就晋升老年代。</p>
+</li>
+<li><p>空间分配担保：在minor gc之前，虚拟机检查老年代的最大可用连续空间是否大于新生代所有对象总空间，如果成立，minor gc安全。如果不成立，看虚拟机是否允许担保失败，允许的话检查之前历次晋升老年代对象的平均大小，如果大于则尝试minor gc。如果小于或不允许担保失败直接full gc。</p>
+</li>
+<li><p>几个gc：1⃣️minor gc：也叫young gc，在新生代空间不足时触发。2⃣️major gc：老年代空间不足时触发，通常涉及整个堆的回收。CMS中不会停止所有线程。3⃣️full gc：停止应用程序执行，整个堆和方法区的垃圾收集。老年代不足、元空间不足、显示调用System.gc、担保失败。</p>
+</li>
+<li><p>垃圾收集器CMS：Concurrent Mark Sweep，jdk8的，关注最短垃圾回收停顿时间，老年代使用多线程的标记清除算法。第一次实现垃圾收集与用户线程同时工作，第一款真正意义上的并发收集器。新生代使用标记复制ParNew 垃圾收集器，Serial收集器的多线程版本。1⃣️初始标记：暂停所有其他线程，标记所有直接与GC Roots相连的对象，速度很快。2⃣️并发标记：从根对象开始，遍历对象图，标记所有存活的对象。3⃣️重新标记：修正并发标记期间发生变动的对象引用，停顿。4⃣️并发清除：对未标记的对象进行清除。优点：并发、低停顿。缺点：对CPU资源敏感、无法处理浮动垃圾、产生内存碎片。</p>
+</li>
+<li><p>垃圾收集器G1：Garbage-First，jdk9的，精准控制停顿时间，G1整体来看是标记整理，局部来看是标记复制。保留分代的概念，把堆分为若干固定大小的region，每个region扮演eden、survivor、old，维护优先级列表，每次根据允许的收集时间，优先选择垃圾最多的区域回收。不再固定收集某个区域，而是灵活组成回收集。1⃣️初始标记：暂停工作线程，标记从GC Roots直接可达的对象。2⃣️并发标记：遍历对象图，标记所有存活的对象。3⃣️最终标记：修正在并发标记阶段由于应用程序继续运行导致标记信息变化的部分。4⃣️筛选回收：制定回收计划，构成回收集，把存活对象复制到空的region中，再清理旧的region。涉及到存活对象移动，需要暂停工作线程。这里多条收集器线程并行完成。</p>
+</li>
+<li><p>CMS和G1：1.专注不同：CMS专注于并发清除低延迟，只需处理老年代到新生代的引用，会内存碎片。G1指定最大停顿时间，分Region的内存布局，按收益动态确定回收集，不会产生内存碎片。2.小内存CMS占优，大内存G1占优，分界线6-8G。3.CMS分配大对象空间不足时full gc，G1期望停顿时间设置很小，垃圾回收赶不上分配时full gc。</p>
+</li>
+<li><p>垃圾收集器ZGC：jdk11的，低延迟垃圾收集。基于Region内存布局，不设分代，使用读屏障、染色指针，实现并发标记整理。着色笔：在对象头中增加额外内存，加快标记过程。读屏障：解决垃圾回收和应用程序同时进行时，应用程序读取到被回收的对象。在对象头部增加标识位表示对象是否正在被垃圾收集器访问。</p>
+</li>
+<li><p>java对象引用：1.强引用：传统的引用，只要强引用关系还存在，垃圾收集器就永远不会回收掉被引用的对象。2.软引用：用于维护一些可有可无的对象。只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常。3.弱引用：拥有更短的生命周期，当 JVM 进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。4.虚引用：一种形同虚设的引用，它主要用来跟踪对象被垃圾回收的活动。</p>
+</li>
+<li><p>jvm调优从哪里入手：1⃣️堆内存设置，-Xms设置初始堆大小，-Xmx设置最大堆大小，过小导致频繁的垃圾回收和OOM，过大导致长时间的垃圾回收停顿。2⃣️垃圾收集器选择，串行、并行、CMS、G1回收器，衡量指标：内存占用、吞吐量、延迟。监控GC活动：使用监控工具：jstat、VisualVM、YourKit和GC日志。3⃣️线程堆栈大小：-Xss调整，影响栈深度。4⃣️调优代码、调整元空间的大小，排查内存泄漏风险、系统级优化（CPU、内存、磁盘IO）。</p>
+</li>
+</ul>
+<h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><ul>
+<li>jvm排查线程cpu问题：1.ps -ef|grep java 或者 jps 查找出进程id。2.top -Hp 进程id 查找出最耗cpu的线程id。 top -c看进程的。3.printf “%x\n” 线程id ，转换为16进制的id。4.使用jstack 进程id | grep 16进制线程id 查找出堆栈信息，分析。另外，arthas也可以打印出前多少个线程及占有cpu情况thread -n 5。</li>
+<li>jvm性能监控工具：1⃣️jps：输出jvm中运行的进程状态信息。2⃣️jstack：生成 Java 进程的线程堆栈信息，用于分析线程状态和死锁等问题。jstack 进程id | grep 16进制线程id。3⃣️jstat：JVM统计监测工具，排查gc，jstat -gc 进程id 250 4。4⃣️jmap和jhat：生成 Java 内存快照，分析内存使用和内存泄漏。用jmap把进程内存使用情况dump到文件中，再用jhat分析查看。</li>
+<li>机器慢了怎么排查：CPU、内存、磁盘、磁盘IO、网络IO。</li>
+<li>排查工具：1.df -h查看磁盘使用情况。2.free -h &#x2F; vmstat显示系统内存使用情况。3.mpstat命令查看cpu使用情况，输出各种cpu时间百分比。4.netstat -s查看网络状态，显示各种网络协议的统计信息，接收发送数据包数等。5.iostat -x查看IO统计信息。6.top命令实时显示Linux系统中进程的动态运行信息，包括CPU和内存的使用情况。top -Hp $pid用于显示特定进程的线程信息。</li>
+<li>OOM排查：除了程序计数器，其他内存存储都可能OOM。原因：1.内存泄漏：程序未能释放不再使用的内存。2.Java堆分配空间不足导致内存溢出。排查：使用jmap -dump命令dump文件，在内存分析工具如VisualVM、MAT中观察对象引用关系、对象数量大小。可能未正确释放资源、关闭文件流、断开网络连接、销毁对象引用。定位到代码排查。</li>
+<li>jvm调优：分配jvm内存需要考虑应用需求，是否处理大量数据。考虑垃圾收集器。16g机器将JVM最大堆内存设置为12G（Xms12G -Xmx12G），使用G1垃圾收集器。元空间存储类的元数据，设置初始值256M，最大值512M。线程堆栈大小，几百KB到1MB，取决于有没有深层递归（-Xss256k）。</li>
+</ul>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
+</li>
+<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
+</li>
+<li><p>队列：Queue接口是FIFO队列，Deque扩展Queue是双端队列接口。ArrayDeque是Deque的实现，双端队列。LinkedList也是Deque的实现，可以做双端队列。Stack栈，继承自Vector。Vector是同步集合，使用synchronized。</p>
+</li>
+<li><p>HashMap：数组+链表+红黑树。链表长度&gt;8数组长度&gt;64时变红黑树。链表解决哈希冲突，bucket。键和值都允许为空。</p>
+</li>
+<li><p>HashMap为什么使用红黑树：哈希函数质量不高&#x2F;存储大量数据，链表变长，影响搜索效率。所以jdk8之后，链表长度超过8时，链表变红黑树，自平衡的二叉查找树，搜索元素时间复杂度O(logn)，提高搜索效率。</p>
+</li>
+<li><p>HashMap扩容底层数组为什么扩为两倍保持2的幂次：1.方便利用位运算替代取模运算来计算元素索引位置。2.减少冲突：二进制位增加一位，只看最高位要么移动要么不变，确保分布均匀。 </p>
+</li>
+<li><p>ConcurrentHashMap：线程安全的HashMap，jdk7使用分段锁，分16段，一段一把锁。jdk8使用synchronized和CAS保证线程安全。</p>
+</li>
+<li><p>如何提高链表查询效率：1.使用双向链表。2.使用跳表，在链表上增加多级索引。3.元素存到哈希表进行映射。</p>
+</li>
+<li><p>B+树：索引数据记录在叶子结点，形成有序链表，方便范围查询。极端退化形成链表。具有更低的树高，降低磁盘寻址次数，减少IO次数。</p>
+</li>
+<li><p>跳表：skip list，分层结构多级链表，随机化的数据结构，用于存储有序元素。提供对数时间复杂度。每一层都是下一层的快照，只包含部分元素，每层元素通过指针相连。查找先从顶层查找，从而快速跨越多个不必要元素。应用：redis中zset使用hash+跳表。</p>
+</li>
+<li><p>大顶堆小顶堆：基于完全二叉树（除最底层外每一层都是满的，最底层从左向右填充），层序遍历用数组表示，用来实现优先队列。大顶堆中父节点大于子节点，根节点最大，同层没有顺序。</p>
+</li>
+<li><p>LRU：最近最久未使用。实现：1.链表，头部是要淘汰的，每次页面访问将页面移动到链表尾部。2.哈希表+双向链表，哈希表用来快速查找页面对应的链表节点。3.时间戳：每个页面分配时间戳，被访问时更新时间戳。</p>
+</li>
+<li><p>操作系统的页面淘汰算法：1.FIFO先进先出，使用队列。2.LFU最不常用，使用计数器跟踪每个页面访问次数，每次淘汰访问次数最少的，不考虑时间局部性。3.LRU最近最久未使用。4.时钟算法clock，LRU近似实现，维护循环列表。</p>
+</li>
+<li><p>八种基本数据类型及封装类：byte有符号整数（8bit，-128-127）、short有符号16bit整数、int有符号32bit整数、long有符号64bit整数、float32bit单精度浮点数、double64bit双精度浮点数、char16bit的unicode字符、boolean</p>
+</li>
+<li><p>装箱和拆箱：装箱：基本数据类型自动转换为对应封装类对象（编译器转换为Integer.valueOf）。拆箱：封装类对象自动转换为基本数据类型（编译器转换为o.intValue()）。</p>
+</li>
+<li><p>String、StringBuilder、StringBuffer：1⃣️String是不可变的，每次修改都是创建一个新的对象，性能较低。2⃣️StringBuilder可变，内部维护一个自动扩容的字符串数组，不是线程安全的。3⃣️StringBuffer可变，线程安全的，synchronized。</p>
+</li>
+<li><p>String不可变的设计原理：1⃣️内部使用私有的final字符数组存储字符串数据，创建之后引用不会指向另一个数组。2⃣️虽然数组本身可变，但是String没有提供方法修改数组内容。3⃣️虚拟机维护字符串池，相同内容的字符串可共享同一内存地址。创建时首先检查字符串池是否有相同内容字符串对象，有则返回引用。</p>
+</li>
+<li><p>String不可变的好处：1⃣️安全性：防止被恶意修改导致的安全漏洞。2⃣️线程安全：String对象本身线程安全。指向String对象的引用变量不是。3⃣️实现字符串常量池成为可能，重用字符串，节省内存开销。4⃣️创建字符串的哈希码缓存：字符串不可变，哈希码也不会变，适合作为键使用在哈希表中HashMap。</p>
+</li>
+<li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
+</li>
+<li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
+</li>
+<li><p>ArrayList 和 LinkedList怎么线程安全：1⃣️使用Collections.synchronizedList(list)将任何List转换为线程安全的List。（所有操作都使用相同的对象锁进行同步）。2⃣️使用显式的同步块，每次访问操作时加相同的锁。3⃣️使用concurrent包中的并发集合，CopyOnWriteArrayList，写时复制，适用于遍历操作远多于修改操作。ConcurrentHashMap、ConcurrentLinkedQueue。</p>
+</li>
+<li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
+</li>
+<li><p>重写 <code>equals()</code> 时必须重写 <code>hashCode()</code>：是为了保证 <strong>相等的对象必须有相同的哈希码</strong>，这是 Java 的约定。否则在使用 <code>HashMap</code>、<code>HashSet</code> 等哈希结构时，会导致对象无法正确存取或比较，引发逻辑错误。</p>
+</li>
+</ul>
+<h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
+<li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
+</ul>
+<h2 id="变量修饰"><a href="#变量修饰" class="headerlink" title="变量修饰"></a>变量修饰</h2><ul>
+<li><p>static：静态</p>
+<ul>
+<li>应用于变量：静态变量或类变量，变量属于类而不是对象，所有该类的对象共享同一个静态变量。</li>
+<li>应用于方法：静态方法，表示该方法属于类，可以不依赖于对象实例被调用。只能访问static变量和方法。</li>
+<li>定义静态代码块：在类被加载到JVM时仅执行一次，常用于初始化静态变量。</li>
+<li>应用于类：只能用来修饰内部类，可以不依赖于外部类的实例被创建和使用，可以访问外部类的所有静态成员和静态方法。</li>
+</ul>
+</li>
+<li><p>final：常量，用于创建不可变对象、防止方法或类被更改</p>
+<ul>
+<li>修饰变量：表示该变量一旦被初始化后就不能被修改，对于基本数据类型，变量的值不能改变，对于引用类型，变量不能再指向另一个对象，但所指向的对象内容本身可以变化。</li>
+<li>当final应用于方法时，该方法不能被子类覆盖（重写）。</li>
+<li>当final应用于类时，它表明该类不能被继承。</li>
+</ul>
+</li>
+<li><p>类加载机制：运行时动态加载，类加载器（ClassLoader）负责将类的字节码Class文件从不同的来源（例如文件系统、网络等）加载到Java虚拟机中。1⃣️加载阶段：类加载器读取二进制数据（.class文件）并生成对应的java.lang.Class对象。2⃣️验证：确保加载的类的字节码是合法的，检查字节码的格式、语法、数据流、符号引用等。3⃣️准备：为类变量分配内存并初始化为默认值，方法区中分配。4⃣️解析：将常量池内的符号引用转换为直接引用的过程。5⃣️初始化：执行静态变量的赋值操作和静态代码块内的代码。</p>
+</li>
+<li><p>符号引用和直接引用：符号引用就是一组符号来描述所引用的目标，直接引用就是直接指向目标的指针、相对偏移量或一个能间接定位到目标的句柄。</p>
+</li>
+<li><p>java编译阶段和运行阶段：编译阶段是源代码（.java文件）被编译器转换成字节码（.class文件）的过程，由Java编译器（ javac）负责。运行阶段是将.class 文件加载到JVM并执行的过程。类加载在运行阶段，支持运行时绑定（或晚期绑定），是Java动态链接和多态的基础。</p>
+</li>
+<li><p>常量池：运行时常量池位于方法区。它是类文件中每个类或接口的常量池表的运行时表示，用于存储编译器生成的字面量和符号引用。字符串常量池最初位于方法区，在Java 7以后被移到堆内存。它是一种特殊的常量池，用于存储字符串字面量和引用，目的是避免重复创建相同内容的字符串对象，以节省内存和提升性能。</p>
+</li>
+<li><p>双亲委派模型：JVM中的双亲委派是一种类加载机制，通过一层一层的父子关系将类的加载工作委派给上层的ClassLoader。这种机制的目的是为了避免类的重复加载，保证类的加载安全和类的共享。</p>
+</li>
+<li><p>想加载两个全路径相同的类：1.使用不具有父子关系的类加载器。2.打破双亲委派模型，自定义类加载器，并重写 loadClass() 方法，改变类加载的委派逻辑。</p>
+</li>
+<li><p>java接口中可以有非抽象方法吗：非抽象方法即具体实现的方法，java8之前只能包含抽象方法。java8引入了默认方法和静态方法。默认方法：default修饰。静态方法：static修饰，可以通过接口名直接调用。java9还提供了private私有方法。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/12/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/" class="post-title-link" itemprop="url">西瓜书</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-12 21:55:33 / Modified: 22:01:29" itemprop="dateCreated datePublished" datetime="2025-02-12T21:55:33+08:00">2025-02-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><ul>
+<li>什么是机器学习：在计算机上从数据中产生模型的算法，即学习算法。计算机科学是研究关于算法的学问，机器学习是研究关于学习算法的学问。</li>
+<li>基本术语：样本的集合-数据集，属性张成的空间-属性空间&#x2F;样本空间，一个样本在坐标轴上表示-特征向量，一个样本的特征数-维数。聚类：将样本分簇，学习过程中使用的训练样本无标记信息。训练数据无标记信息-无监督学习：聚类为代表。监督学习：回归分类为代表。模型适用于新样本的能力，适用于整个样本空间-泛化能力。</li>
+<li>归纳：从特殊到一般的泛化过程。演绎：从一般到特殊的特化过程。</li>
+<li>广义的归纳学习相当于从样本中学习，狭义的归纳学习要求从训练数据中学得概念，概念学习。学得泛化性能好又语义明确的概念太困难，常用的技术是产生黑箱模型。从样例中学习就是广义的归纳学习。</li>
+<li>假设空间：指模型可能学习到的所有函数或解的集合。学习过程可以看作在所有假设组成的空间中进行搜索的过程，学习得到的模型对应了假设空间中的一个假设。存在与训练集一致的假设集合，称为版本空间，其中可能多个假设空间。</li>
+<li>机器学习算法在学习过程中对某种类型假设的偏好，称为归纳偏好。任何有效的机器学习算法都有归纳偏好，否则无法产生确定的学习结果。奥卡姆剃刀：选择最简单的。实际上，选择与问题相匹配的归纳偏好，才会起决定性作用。</li>
+<li>人工智能发展历程：推理期（逻辑推理能力） - 知识期（专家系统，人把知识总结再教给计算机）- 机器学习（研究最多的是从样例中学习，广义的归纳学习）。机器学习：符号主义学习（决策树和基于逻辑的学习，决策树学习以信息论为基础，以信息熵最小化为目标，模拟了人类对概念进行判定的树形流程，简单易用。但是逻辑学习表示能力太强，假设空间太大，复杂度高问题规模大）- 基于神经网络的连接主义学习（与符号主义产生明确概念不同，连接主义产生的是黑箱模型，最大的局限性是试错性，参数调节对结果影响很大）- 统计学习（支持向量机SVM和核方法） - 连接主义带着深度学习卷土重来（很多层的神经网络，模型复杂度高，但是下功夫调参，性能就能好）</li>
+<li>数据挖掘是从海量数据中发掘知识，数据库领域为数据挖掘提供数据管理技术，机器学习和统计学的研究为数据挖掘提供数据分许技术。</li>
+<li>萨缪尔，跳棋程序。提出机器学习，是不显式编程地赋予计算机能力的研究。</li>
+</ul>
+<h1 id="第二章-模型评估与选择"><a href="#第二章-模型评估与选择" class="headerlink" title="第二章 模型评估与选择"></a>第二章 模型评估与选择</h1><ul>
+<li>误差：训练误差或经验误差：学习器在训练集上的误差；泛化误差：学习器在新样本上的误差。</li>
+<li>过拟合与欠拟合：过拟合是由于学习能力过于强大,以至于把训练样本所包含的不太一般的特性都学到了（无法完全避免）；欠拟合是由于学习能力低下而造成的（神经网络中增加训练轮次）。</li>
+<li>评估方法：泛化误差无法直接获得，测试集上的测试误差作为泛化误差的近似。1、留出法： 直接将数据划分为两个互斥集合，<strong>一个集合作为训练集，另一个作为互斥集</strong>，若干次随机划分。2、交叉验证法：先将数据集划分为<strong>k</strong>个大小相似的互斥子集，每次用<strong>k-1</strong>个子集的并集作为训练集，余下那个子集作为测试集。k折交叉验证，p次随机划分，p次k折交叉验证。3、自助法：每次从数据集D中挑选一个样本，再将该样本放回初始数据集D中，重复m次，得到包含m个样本的数据集D’。初始数据集D中约有36.8%的样本未出现在D’中。小数据集中有用，但是自助法产生的数据集改变了初始数据集的分布。</li>
+<li>性能度量：查准率：所预测的正例有多少是正确的概率；查全率：在真实正例条件下，有多少正例被预测出来。</li>
+<li>P-R曲线：以查全率为横坐标，查准率为纵坐标。</li>
+<li>出现交点时，引入平衡点(Break-Event Point, BEP)来度量学习器的优劣。是查准率&#x3D;查全率时的取值。P是查准率，R是查全率。调整阈值实现变化的。</li>
+<li>F1度量：调和平均，F1 &#x3D; 2<em>P</em>R&#x2F;(P+R)。为表达对P和R的偏好，引入贝塔，F1度量的一般形式。</li>
+<li>ROC曲线和AUC面积：ROC曲线的纵轴是“真正例率”(True Positive Rate, TPR)，横轴是“假正例率”(False Positive Rate, FPR)。AUC为曲线下的面积。</li>
+<li>代价敏感错误率和代价曲线：分类任务中，不同错误造成的损失不同，也就是非均等代价，所以引入代价矩阵，最小化总体代价。</li>
+<li>t分布：统计学中的概率分布，是一种对称的、钟形的概率分布，其形状与正态分布类似，但尾部更厚。</li>
+<li>偏差与方差：偏差、方差、噪声，是影响模型性能的三个核心概念，它们共同决定了模型的泛化能力。1、偏差是模型预测值的期望（多个训练集训练的多个模型）与真实值之间的差异，反映了模型对数据的拟合能力，高偏差意味着欠拟合，需要使用更复杂的模型和增加特征数量。2、方差是模型预测值的变化程度，反映了模型对训练数据的敏感性。不同训练集训练模型的预测值与真实值的方差。高方差意味着模型过于复杂，过度拟合训练数据中的噪声。低方差意味着模型对训练数据的变化不敏感，泛化能力较强。降低方差需要使用正则化，增加训练数据量。3、噪声是数据中无法被模型捕捉的随机误差，不可避免的，与模型无关。例如图像可能包含模糊或遮挡。</li>
+<li>偏差度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力;方差度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响;噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了学习问题本身的难度。</li>
+<li>偏差-方差分解说明，泛化性能是由学习算法的能力、数据的充分性以及学习任务本身的难度所共同决定的。给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且使方差较小，即使得数据扰动产生的影响小。</li>
+<li>训练不足时，学习器拟合能力不足，偏差主导了泛化误差。训练程度加深，训练数据的扰动能够被学习器学习到，方差主导了泛化误差。</li>
+</ul>
+<h1 id="第三章-线性模型"><a href="#第三章-线性模型" class="headerlink" title="第三章 线性模型"></a>第三章 线性模型</h1><ul>
+<li>线性回归：用于建模因变量与自变量之间的线性关系。非线性模型可在线性模型的基础上引入层次结构和高维映射得到。简单线性回归只有一个因变量属性，多元线性回归有多个。目标：使得模型的预测值与真实值之间的误差最小。 均方误差：差平方的平均，对应欧几里得距离。参数估计方法：最小二乘法【解析法】（基于均方误差最小化来求导进行模型求解，对异常值非常敏感）、梯度下降【迭代法】（通过迭代优化逐步调整回归系数，使损失函数最小化）线性回归优点：简单可解释性强；缺点：无法捕捉非线性关系，对异常值敏感。</li>
+<li>对数线性回归：通过对因变量取对数，将其转换为线性模型的形式，从而利用线性回归的方法进行建模因变量与自变量之间的对数线性关系。通常用于处理因变量是计数数据或频率数据的情况。</li>
+<li>对数几率回归：分类算法，通过将线性回归的输出映射到概率空间，并使用对数几率来建模分类问题。简单高效、可解释性强，应用于二分类问题，但只能建模线性决策边界。实际上是用线性回归模型的预测结果去逼近真实标记的对数几率，对数几率是：log(p&#x2F;1-p)</li>
+<li>sigmoid函数：因其形状类似于字母“S”而得名，核心作用是将任意实数映射到 [0, 1] 区间，常用于表示概率或作为激活函数。σ(z)&#x3D;1&#x2F;1+e−z。输出范围是0-1，具有单调性、非线性、平滑性。应用：对数几率回归中用于将线性回归的输出映射到 [0, 1] 区间，表示概率。在神经网络中，Sigmoid 函数常用于隐藏层或输出层的激活函数，引入非线性能力。缺点：存在梯度消失和计算复杂度较高。</li>
+<li>线性判别分析LDA：核心思想是通过将数据投影到低维空间，使得同类样本尽可能接近，不同类样本尽可能远离，从而实现分类或降维。目标是找到一个投影方向（或超平面），使得在该方向上，类内距离最小化，类间距离最大化。</li>
+<li>拉格朗日乘子法：一种用于求解约束优化问题的数学方法。核心思想是通过引入拉格朗日乘子，将约束条件融入目标函数，从而将约束优化问题转化为无约束优化问题。通过求解拉格朗日函数的极值，可以得到原约束优化问题的解。对因变量和拉格朗日乘子求偏导之后解方程。</li>
+<li>多分类问题：1、直接多分类方法：Softmax 回归，使用 Softmax 函数将线性模型的输出转换为概率分布。神经网络中在输出层使用 Softmax 激活函数，将输出转换为概率分布。2、间接多分类方法：将多分类任务拆为若干个二分类任务求解，一对一（需训练N(N - 1)&#x2F;2个分类器）、一对其余（需训练N 个分类器）。</li>
+<li>类别不平衡问题：指在分类任务中，不同类别的样本数量分布不均衡，其中一个或少数类别的样本数量远远少于其他类别。影响：模型偏向多数类、准确率评价指标失效。解决：数据层面，过采样随机复制少数类样本增加少数类样本的数量，欠采样减少多数类样本的数量，混合采样。算法层面，为不同类别分配不同的误分类代价，使模型更关注少数类。</li>
+</ul>
+<h1 id="第四章-决策树"><a href="#第四章-决策树" class="headerlink" title="第四章 决策树"></a>第四章 决策树</h1><ul>
+<li>决策树：通过一系列规则对数据进行划分，使得每个子集尽可能纯净（即属于同一类别或具有相似的值），构建一棵树形结构。构建过程可以看作是一个递归的“分而治之”过程。</li>
+<li>决策树的构建过程：1、根据某种准则（如信息增益、基尼指数等），选择最优特征进行划分。2、根据最优特征的取值，将数据集划分为多个子集。3、对每个子集递归地重复上述过程，直到满足停止条件（如子集纯净、达到最大深度等）。4、当满足停止条件时，生成叶节点，叶节点的值为该子集中多数类别（分类任务）或平均值（回归任务）。</li>
+<li>决策树用于选择最有划分特征的准则：分类任务：信息增益（表示划分前后信息熵的减少量，信息熵&#x3D;plogp，信息增益越大，就认为用属性a来进行划分所获得的纯度提升最大）、增益率（通过引入固有值对信息增益进行归一化处理，克服了信息增益对取值数目较多的特征的偏好问题）、基尼指数（表示从数据集中随机抽取两个样本，其类别标签不一致的概率。基尼指数越小，数据集的纯度越高）。回归任务：均方误差MSE（选择使均方误差最小的特征进行划分）。</li>
+<li>决策树的剪枝：决策树容易过拟合，因此需要通过剪枝（Pruning）来提高泛化能力。预剪枝：节点划分前先进行估计，计算划分前和划分后的验证集精度，只有划分后精度变大了，才会划分，其他的就直接一刀切不再划分。后剪枝：先生成一颗完整的决策树，从叶节点向上剪枝，通过验证集评估剪枝前后的性能，决定是否保留。</li>
+<li>决策树的连续与缺失值处理：决策树通常用于处理离散特征，如果要处理连续属性：二分法和多分法。需要注意，与连续属性不同，若当前结点划分属性为连续属性，则该属性还可作为其后代节点的划分属性。对于缺失值（样本的某些属性值缺失），通过忽略、填补或单独分支处理缺失值。</li>
+<li>决策树的分类边界：决策树的分类边界有一个明显的特点：轴平行，即它的分类边界由若干个与坐标轴平行的分段组成。每一段划分都直接对应了某个属性取值。</li>
+<li>多变量决策树：非叶节点不再仅对某个属性，而是对属性的线性组合进行划分，实现斜划分，与传统的单变量决策树不同，多变量决策树不是为每个非叶结点寻找一个最优划分属性，而是试图建立一个合适的线性分类器。</li>
+</ul>
+<h1 id="第五章-神经网络"><a href="#第五章-神经网络" class="headerlink" title="第五章 神经网络"></a>第五章 神经网络</h1><ul>
+<li>神经网络：一种模仿生物神经系统结构和功能的计算模型，通过多层神经元的相互连接和权重调整，能够学习复杂的非线性关系。</li>
+<li>神经元：通过加权求和和激活函数处理后输出</li>
+<li>激活函数：引入非线性，使神经网络能够学习复杂模式，Sigmoid、ReLU、SoftMax。</li>
+<li>神经网络的学习过程，就是根据训练数据来调整神经元之间的”连接权”以及每个功能神经元的阈值。输入层神经元仅仅是接受输入，而隐层与输出层则都包含功能神经元（有激活函数）。</li>
+<li>感知器：由两层神经元组成，输入层接受外界输入信号后传递给输出层，输出层是神经元，也叫做“阈值逻辑单元”。局限性：能实现与或非逻辑运算，只能解决线性可分问题（存在一个线性超平面能将它们分开），无法处理非线性分类任务（如异或问题）。</li>
+<li>多层网络：通过堆叠多个感知器层，能够学习复杂的非线性关系。包括：输入层（接收输入数据，每个节点对应一个特征）、隐藏层（通过非线性变换提取特征，可以有多层）、输出层（输出预测结果，节点数取决于任务类型，如分类任务中节点数等于类别数）。神经网络的前一层的每一个神经元都与后一层的所有神经元相连–全连接神经网络。</li>
+<li>多层前馈神经网络：先将输入提供给输入层神经元，然后逐层将信号前传（前向传播），直到产生输出层的结果。然后计算输出层的误差（损失函数，如均方误差、交叉熵），再将误差逆向传播至隐层神经元（误差逆传播算法，使用链式法则逐层传播误差），最后根据隐层神经元的误差来对权值和阈值进行调整（基于梯度下降策略，以目标的负梯度方向对参数进行调整）。该迭代过程循环进行，直到达到某些停止条件为止，例如训练误差己达到一个很小的值。</li>
+<li>累积误差逆向传播：基于累积误差最小化进行更新</li>
+<li>只需包含足够多神经元的隐层，多层前馈网络就能以任意精度逼近任意复杂度的连续函数，通过试错法调整隐层神经元的个数。</li>
+<li>解决过拟合：早停：将数据分成训练集和验证集，训练集用来计算梯度、更新连接权和阈值，验证集用来估计误差，若连续多轮训练集误差降低但验证集误差升高，则停止训练，同时返回具有最小验证集误差的连接权和阈值。正则化：在损失函数中加入额外的惩罚项，限制模型参数的大小或复杂度。</li>
+<li>神经网络类型：前馈神经网络FNN：最简单的神经网络，信息单向传播。卷积神经网络CNN：用于图像处理，通过卷积核提取局部特征。循环神经网络RNN：用于序列数据（如文本、时间序列），具有记忆能力。生成对抗网络GAN：由生成器和判别器组成，用于生成数据。</li>
+<li>如何避免陷入局部最小：从多个不同的初始点开始搜索、动量法通过引入历史梯度信息，加速梯度下降并帮助跳出局部最小值、使用自适应学习率方法动态调整学习率、使用模拟退火，通过引入逐渐降低的“温度”参数，控制搜索过程中的随机性，从而在早期探索更多解空间，后期逐渐收敛到全局最优解、使用SGD随机梯度，通过引入噪声帮助跳出局部最小值。（都是启发式的）</li>
+<li>模拟退火：每一步以一定概率接受比当前解更差的结果，接受次优解的概率随着时间的推移逐渐降低，从而保证算法稳定。</li>
+<li>RBF网络：一种单隐层前馈神经网络，使用径向基函数作为隐层神经元激活函数，输出层则是对隐层神经元输出的线性组合。常用于函数逼近、分类和回归任务，具有结构简单、训练速度快的特点。RBF 径向基函数的核心思想是通过距离度量（通常是欧氏距离）来计算输入数据点与某个中心点之间的相似性。常见的RDF函数有高斯函数，具有径向对称性、平滑性的特点。</li>
+<li>竞争型学习：神经网络中一种常用的无监督学习策略，在使用该策略时，网络的输出神经元相互竞争，每一时刻仅有一个竞争获胜的神经元被激活，其他神经元的状态被抑制。这种机制亦称”胜者通吃” (winner-take-all) 原则。</li>
+<li>ART（自适应共振理论网络）网络：竞争型学习的代表，该网络由比较层、识别层、识别阈值和重置模块构成。在接收到比较层的输入信号后识别层神经元之间相互竞争以产生获胜神经元。竞争的最简单方式是计算输入向量与每个识别层神经元所对应的模式类的代表向量之间的距离，距离最小者胜。获胜神经元将向其他识别层神经元发送信号，抑制其激活。若输入向量与获胜神经元所对应的代表向量之间的相似度大于识别阈值，则当前输入样本将被归为该代表向量所属类别，同时，网络连接权将会更新，使得以后在接收到相似输入样本时该模式类会计算出更大的相似度，从而使该获胜神经元有更大可能获胜。若相似度不大于识别阈值，则重置模块将在识别层增设一个新的神经元，其代表向量就设置为当前输入向量。</li>
+<li>ART网络是一种基于自适应共振理论的无监督学习神经网络，能够动态地学习和分类输入数据，同时保持对之前学习模式的稳定性。可以进行增量学习。它适用于模式识别、数据聚类和异常检测等任务，尽管参数敏感和计算复杂度较高，但在动态学习任务中表现出色。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/20/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%9F%BA%E4%BA%8Etensorflow%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2518,473 +3128,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/04/myblog/java/war%E5%8C%85jar%E5%8C%85%E6%89%93%E5%8C%85tomcat%E9%83%A8%E7%BD%B2servlet%E5%BA%94%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/04/myblog/java/war%E5%8C%85jar%E5%8C%85%E6%89%93%E5%8C%85tomcat%E9%83%A8%E7%BD%B2servlet%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">jar、war、tomcat、servlet</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-06-04 14:47:55" itemprop="dateCreated datePublished" datetime="2022-06-04T14:47:55+08:00">2022-06-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-11-28 23:29:11" itemprop="dateModified" datetime="2022-11-28T23:29:11+08:00">2022-11-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="tomcat与servlet"><a href="#tomcat与servlet" class="headerlink" title="tomcat与servlet"></a>tomcat与servlet</h3><p>1.tomcat就是一个web应用服务器，相当于市存放java程序的容器。以便服务被访问。<br>2.servlet实际上是java类，java语言编写的服务器端程序，它用来处理http协议相关的所有内容，没有main方法，需要在servlet容器中进行管理，可以是tomact。如何使用：继承HttpServlet（tomcat里的jar包支持），它帮助我们完成通信的规则。<br>3.tomcat与servlet关系：tomcat是servlet&#x2F;jsp容器，servlet时web应用开发的组件，tomcat负责处理客户请求，把请求传送给servlet，再将servlet的响应传送回给客户。<br>4.新建web工程时，如果不用maven，java enterprise - web application，再引入jdk、tomcat（tomcat的lib下有servlet包）。如果用maven，就选archetype-webapp。</p>
-<h3 id="war包与jar包"><a href="#war包与jar包" class="headerlink" title="war包与jar包"></a>war包与jar包</h3><p>1.Jar文件（扩展名为. Jar，Java Application Archive）包含Java类的普通库、资源（resources）、辅助文件（auxiliary files）等。<br>2.jar包是java打的包，一般只是包括一些编译后class文件和一些部署文件，在声明了Main_class之后是可以用java命令运行的。<br>3.jar包通常是开发时要引用通用类，打成包便于存放管理。<br>————————————————<br>1.War文件（扩展名为.War,Web Application Archive）包含全部Web应用程序。在这种情形下，一个Web应用程序被定义为单独的一组文件、类和资源，用户可以对war文件进行封装，并把它作为小型服务程序（servlet）来访问。<br>2.war包可以理解为javaweb打的包，是一个web模块，包括写的代码编译成的class文件，依赖的包，配置文件，所有的网站页面，包括html，jsp等等。一个war包可以理解为是一个web项目，里面是项目的所有东西。<br>3.war包需要发布到一个容器里面，拿Tomcat来说,将war文件包放置它的\webapps\目录下，启动Tomcat,这个包可以自动进行解压，也就是你的web目录，相当于发布了。<br>4.WAR是Sun提出的一种Web应用程序格式，与JAR类似，也是许多文件的一个压缩包。这个包中的文件按一定目录结构来组织：通常其根目录下包含有Html和Jsp文件或者包含这两种文件的目录，另外还会有一个WEB-INF目录，这个目录很重要。通常在WEB-INF目录下有一个web.xml文件和一个classes目录，web.xml是这个应用的配置文件，而classes目录下则包含编译好的Servlet类和Jsp或Servlet所依赖的其它类（JavaBean）。另外还有META-INF目录，里面有MANIFEST.MF文件。存储了项目的元信息。其中文件manifest.mf仅此一份，描述了程序的基本信息、Main-Class的入口、jar依赖路径Class-Path。<br>————————————————</p>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Sunny5319/article/details/90933532">https://blog.csdn.net/Sunny5319/article/details/90933532</a></p>
-<p>jar包和war包都是为了项目的部署和发布，通常在打包部署的时候，会在里面加上部署的相关信息。这个打包实际上就是把代码和依赖的东西压缩在一起，变成后缀名为.jar和.war的文件</p>
-<hr>
-<p>什么时候用jar、war?<br>当你的项目在没有完全完成的时候，不适合使用war文件，因为你的类会由于调试之类的经常改，这样来回删除、创建war文件很不方便，来回修改，来回打包，最好是你的项目已经完成了，不做修改的时候，那就打个war包，这个时候一个war文件就相当于一个web应用程序；而jar文件就是把类和一些相关的资源封装到一个包中，便于程序中引用。</p>
-<h3 id="jar包打包"><a href="#jar包打包" class="headerlink" title="jar包打包"></a>jar包打包</h3><p>安装好JDK之后,jar.exe就已经安装好了。在命令行中键入jar命令之后，会有详细的用法介绍。</p>
-<h4 id="✅单个文件打包"><a href="#✅单个文件打包" class="headerlink" title="✅单个文件打包"></a>✅单个文件打包</h4><p>将一个单独的java文件打包：<br><code>jar cvf /Users/liuxuan/MyProject/java/test.jar /Users/liuxuan/MyProject/java/jartest/hello.java</code><br>使用<code>java -jar test.jar</code> 提示没有主清单属性。</p>
-<p>所以增加清单配置文件：MANIFEST.MF</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Main-Class: hello</span><br><span class="line"></span><br><span class="line">//注意：1. 冒号后面加一个空格，2. 最后必须回车到新的空行</span><br></pre></td></tr></table></figure>
-<p>再打包：<code>jar cvfm test.jar ./*</code><br>java -jar运行，找不到或无法加载主类 hello。</p>
-<p>所以在打包前先编译：<code>javac hello.java</code>，生成class文件，然后再打包，运行，可以执行。</p>
-<blockquote>
-<p>META-INF文件夹相当于一个信息包，目录中的文件和目录获得Java 2平台的认可与解释，用来配置应用程序、扩展程序、类加载器和服务。这个文件夹和其中的 MANIFEST.MF文件，在用jar打包时自动生成。<br>执行jar文件的时候，这个jar里是需要具备 META-INF&#x2F;MANIFEST.MF的，否则java -jar就找不到main class。</p>
-</blockquote>
-<p>多个文件也可以如此打包，首先应该javac编译，然后增加主清单配置文件，其中可以指示默认入口函数（其中有main方法）。如果打的包中有其他类，java -jar jar包 是运行默认类，运行其他类方法：<code>java -cp test.jar com.test.sum 3 9</code>。<br>main函数可以有输入参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.test;</span><br><span class="line"></span><br><span class="line">public class sum&#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        if(args.length &lt; 2)&#123;</span><br><span class="line">            System.out.println(&quot;Paras: num1 num2&quot;);</span><br><span class="line">            System.exit(-1);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        final int num1 = Integer.valueOf(args[0]);</span><br><span class="line">        System.out.println(&quot;Num1: &quot; + num1);</span><br><span class="line">        final int num2 = Integer.valueOf(args[1]);</span><br><span class="line">        System.out.println(&quot;Num2: &quot; + num2);</span><br><span class="line"></span><br><span class="line">        final int sum = num1 + num2;</span><br><span class="line">        System.out.println(num1 + &quot; + &quot; + num2 + &quot; = &quot; + sum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Xminyang/article/details/108059776">https://blog.csdn.net/Xminyang/article/details/108059776</a></p>
-<h4 id="✅使用idea打包"><a href="#✅使用idea打包" class="headerlink" title="✅使用idea打包"></a>✅使用idea打包</h4><p>🤔不可以java -jar的打包：<br>1.点击intellij idea左上角的“File”菜单 -&gt; Project Structure<br>2.点击”Artifacts” -&gt; 绿色的”+” -&gt; “JAR” -&gt; Empty<br>3. Name栏填入自定义的名字，Output ditectory选择jar包目标目录，Available Elements里双击需要添加到jar包的文件（添加java工程编译文件）<br>4. OK之后，点击菜单中“Build” -&gt; “Build Artifacts”<br>5. 点击弹出框中待生成jar包下面的build即可</p>
-<p>生成了jar包，直接java -jar执行，报<code>Error: Invalid or corrupt jarfile testjar.jar</code>.<br>需要用 -cp 指定类来执行，例如：<code>java -cp testjar.jar leecode.JianPanHang500</code></p>
-<p>🤔可以直接java -jar的打包：<br>如果需要直接java -jar 执行的jar包：<br>1.点击”Artifacts” -&gt; 绿色的”+” -&gt; “JAR” -&gt; from modules…<br>2.选择主类，选择META-INF位置<br>3.OK之后，点击菜单中“Build” -&gt; “Build Artifacts”<br>4.点击弹出框中待生成jar包下面的build即可</p>
-<p>注意：在选择主类时需要全路径，rebuild之后可以重新编译，<code>java -jar lee.jar</code>直接运行主类。</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42239765/article/details/123236019">https://blog.csdn.net/qq_42239765/article/details/123236019</a></p>
-<h4 id="✅使用maven打包"><a href="#✅使用maven打包" class="headerlink" title="✅使用maven打包"></a>✅使用maven打包</h4><p>🤔不包含依赖包，也不指定入口：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;!-- 项目最终打包成的名字 --&gt;</span><br><span class="line">    &lt;finalName&gt;mylogmavenpackage&lt;/finalName&gt;</span><br><span class="line">  &lt;plugins&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;!-- 指定项目编译时的java版本和编码方式 --&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">        &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">        &lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">  &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
-
-<p>🤔指定入口，将依赖的jar包输出到指定目录<br>指定了入口类，可以直接使用java -jar project.jar执行，但是第三方依赖存在一个指定的外部目录下，迁移时需将jar和依赖目录一起迁移。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">  &lt;plugins&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;!-- 指定项目编译时的java版本和编码方式 --&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">        &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">        &lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;archive&gt;</span><br><span class="line">          &lt;manifest&gt;</span><br><span class="line">            &lt;mainClass&gt;com.netty.client.SignalClient&lt;/mainClass&gt; &lt;!-- 指定入口类 --&gt;</span><br><span class="line">            &lt;addClasspath&gt;true&lt;/addClasspath&gt; &lt;!-- 在jar的MF文件中生成classpath属性 --&gt;</span><br><span class="line">            &lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt; &lt;!-- classpath前缀,即依赖jar包的路径 --&gt;</span><br><span class="line">          &lt;/manifest&gt;</span><br><span class="line">        &lt;/archive&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.1.1&lt;/version&gt;</span><br><span class="line">      &lt;executions&gt;</span><br><span class="line">        &lt;execution&gt;</span><br><span class="line">          &lt;id&gt;copy&lt;/id&gt;</span><br><span class="line">          &lt;phase&gt;install&lt;/phase&gt;</span><br><span class="line">          &lt;goals&gt;</span><br><span class="line">            &lt;goal&gt;copy-dependencies&lt;/goal&gt;</span><br><span class="line">          &lt;/goals&gt;</span><br><span class="line">          &lt;configuration&gt;</span><br><span class="line">            &lt;!-- 指定依赖包的输出路径，需与上方的classpathPrefix保持一致 --&gt;</span><br><span class="line">            &lt;outputDirectory&gt;$&#123;project.build.directory&#125;/lib&lt;/outputDirectory&gt;</span><br><span class="line">          &lt;/configuration&gt;</span><br><span class="line">        &lt;/execution&gt;</span><br><span class="line">      &lt;/executions&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">  &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
-
-<p>🤔将项目依赖和项目打成一个jar包（胖包）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">  &lt;plugins&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;!-- 指定项目编译时的java版本和编码方式 --&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.7.0&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;target&gt;1.8&lt;/target&gt;</span><br><span class="line">        &lt;source&gt;1.8&lt;/source&gt;</span><br><span class="line">        &lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.1.0&lt;/version&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;archive&gt;</span><br><span class="line">          &lt;manifest&gt;</span><br><span class="line">            &lt;mainClass&gt;com.netty.client.SignalClient&lt;/mainClass&gt; &lt;!-- 指定入口类路径 --&gt;</span><br><span class="line">          &lt;/manifest&gt;</span><br><span class="line">        &lt;/archive&gt;</span><br><span class="line">        &lt;descriptorRefs&gt;</span><br><span class="line">          &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt; &lt;!-- jar包后缀，生成的jar包形式为：project-1.0-SNAPSHOT-jar-with-dependencies.jar --&gt;</span><br><span class="line">        &lt;/descriptorRefs&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">      &lt;!-- 添加此项后，可直接使用mvn package | mvn install --&gt;</span><br><span class="line">      &lt;!-- 不添加此项，需直接使用mvn package assembly:single --&gt;</span><br><span class="line">      &lt;executions&gt;</span><br><span class="line">        &lt;execution&gt;</span><br><span class="line">          &lt;id&gt;make-assembly&lt;/id&gt;</span><br><span class="line">          &lt;phase&gt;package&lt;/phase&gt;</span><br><span class="line">          &lt;goals&gt;</span><br><span class="line">            &lt;goal&gt;single&lt;/goal&gt;</span><br><span class="line">          &lt;/goals&gt;</span><br><span class="line">        &lt;/execution&gt;</span><br><span class="line">      &lt;/executions&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">  &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="打war包"><a href="#打war包" class="headerlink" title="打war包"></a>打war包</h3><p>上面打jar包，其实都有对应的打war包的方法：</p>
-<p>✅手动打war包<br><code>jar cvf test.war ./*</code></p>
-<p>✅idea打war包<br>artifact中选择web application，explode对于war explode，archive对应war。</p>
-<p>✅maven打war包<br>pom.xml中指示<br><code>&lt;packaging&gt;war&lt;/packaging&gt;</code><br>maven有多种打包方式。</p>
-<h3 id="war包和war-explode包"><a href="#war包和war-explode包" class="headerlink" title="war包和war explode包"></a>war包和war explode包</h3><p>1.war模式<br>这种可以称之为是发布模式，就是先将WEB工程打成war包，然后再将其上传到服务器进行发布 。</p>
-<p>2.war exploded模式<br>是将WEB工程以当前文件夹的位置关系上传到服务器，即直接把文件夹、jsp页面 、classes等等移到Tomcat 部署文件夹里面，进行加载部署。因此这种方式支持热部署，一般在开发的时候也是用这种方式。<br>在平时开发的时候，使用热部署的话，应该对Tomcat进行相应的设置，这样的话修改的jsp界面什么的东西才可以及时的显示出来。<br>（热部署，对于Java应用程序来说，热部署就是在运行时更新Java类文件。）</p>
-<p>问题：<br>idea进行部署，会将war包移到tomcat webapp文件夹下吗？</p>
-<h3 id="java-web工程目录结构"><a href="#java-web工程目录结构" class="headerlink" title="java web工程目录结构"></a>java web工程目录结构</h3><p>1.src文件夹：这是用来存放Java源文件。下面有main文件夹和test文件夹。<br>1.1.src&#x2F;main&#x2F;java：存放相应的Java代码，并根据对应的Java项目继续分层<br>1.2.src&#x2F;main&#x2F;resource：存放一些配置文件，例如application.properties、logback.xml<br>1.3.src&#x2F;main&#x2F;webapp：Web应用的网页，用来放静态资源比如HTML、CSS、图片等文件。WEB-INF目录所在。WEB-INF中存放网站配置文件目录，web.xml等配置信息。</p>
-<p>2..idea文件夹：是存储IntelliJ IDEA项目的配置信息，主要内容有IntelliJ IDEA项目本身的一些编译配置、文件编码信息、jar包的数据源和相关的插件配置信息。一般用git做版本控制的时候会把.idea文件夹排除，因为这个文件下保存的都是个人本地Idea编译器的配置。</p>
-<p>3.target文件夹：是用来存放项目构建后的文件和目录、jar包、war包、编译的class文件，都是maven构建时生成的。存放的是单个module的编译结果。</p>
-<p>4.out文件夹：存放该项目下所有module的编译结果。</p>
-<p>5.pom.xml：项目对象模型</p>
-<h3 id="新建个web工程并部署"><a href="#新建个web工程并部署" class="headerlink" title="新建个web工程并部署"></a>新建个web工程并部署</h3><p>1.new project，选maven，选maven-archetype-webapp<br>2.选择maven setting，新建工程<br>3.简单写个index.jsp，在webapp目录下（主页）<br>4.通过idea部署，生成war_explode包，热部署<br>5.lsof -i:8080 查看端口占用<br>6.target文件夹下有war包了，但是在tomcat-webapp文件夹下并没有该项目。<br>7.关闭idea，web也无法访问了，所以要想一直运行，得打jar包放在webapp目录下？<br>8.并且发现，没用servlet，不用导入servlet包。</p>
-<h3 id="pom-xml结构"><a href="#pom-xml结构" class="headerlink" title="pom.xml结构"></a>pom.xml结构</h3><p>pom.xml 就是 maven 的配置文件，用以描述项目的各种信息。</p>
-<p><code>&lt;project </code>  是 pom.xml 中描述符的根。</p>
-<p><code>&lt;modelVersion&gt;</code> 指定 pom.xml 符合哪个版本的描述符。maven 2 和 3 只能为 4.0.0。</p>
-<p>在 maven 中，根据 groupId、artifactId、version 组合来唯一识别一个 jar 包。<br><code>&lt;groupId&gt;</code> - 团体、组织的标识符。团体标识的约定是，它以创建这个项目的组织名称的逆向域名(reverse domain name)开头。一般对应着 java 的包结构。<br><code>&lt;artifactId&gt;</code> - 单独项目的唯一标识符。例如junit。不要在 artifactId 中包含点号(.)。<br><code>&lt;version&gt;</code> - 一个项目的特定版本。</p>
-<blockquote>
-<p>maven 在版本管理时候可以使用几个特殊的字符串 SNAPSHOT、LATEST、RELEASE。比如 1.0-SNAPSHOT。各个部分的含义和处理逻辑如下说明：<br>SNAPSHOT - 这个版本一般用于开发过程中，表示不稳定的版本。<br>LATEST - 指某个特定构件的最新发布，这个发布可能是一个发布版，也可能是一个 snapshot 版，具体看哪个时间最后。<br>RELEASE ：指最后一个发布版。</p>
-</blockquote>
-<p><code>&lt;packaging&gt;</code> - 项目的类型，描述了项目打包后的输出，默认是 jar。常见的输出类型为：pom, jar, maven-plugin, ejb, war, ear, rar, par。</p>
-<p><code>&lt;name&gt;</code> - 项目名字</p>
-<p><code>&lt;url&gt;</code> - 项目网站</p>
-<p><code>&lt;description&gt;</code> - 项目描述</p>
-<p><code>&lt;parent&gt;</code> - maven 支持继承功能。子 POM 可以使用 parent 指定父 POM ，然后继承其配置。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  &lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;my-parent&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0&lt;/version&gt;</span><br><span class="line">    &lt;relativePath&gt;../my-parent&lt;/relativePath&gt;</span><br><span class="line">  &lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">relativePath ： 在搜索本地和远程存储库之前，它不是必需的，但可以用作 maven 的指示符，以首先搜索给定该项目父级的路径。</span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;modules&gt;</code> - 子模块列表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;modules&gt;</span><br><span class="line">    &lt;module&gt;my-project-api&lt;/module&gt;</span><br><span class="line">    &lt;module&gt;my-project-repository&lt;/module&gt;</span><br><span class="line">&lt;/modules&gt;</span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;properties&gt;</code> - 属性列表。定义的属性可以在 pom.xml 文件中任意处使用。使用方式为 ${propertie} 。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">例子：</span><br><span class="line">	&lt;properties&gt;</span><br><span class="line">		&lt;!-- Test --&gt;</span><br><span class="line">		&lt;junit.version&gt;1.16.1&lt;/junit.version&gt;</span><br><span class="line">	&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;junit&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;junit&lt;/artifactId&gt;</span><br><span class="line">		&lt;version&gt;$&#123;junit.version&#125;&lt;/version&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;dependencies&gt;</code> - 依赖配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">groupId, artifactId, version - 和基本配置中的 groupId、artifactId、version 意义相同。</span><br><span class="line"></span><br><span class="line">type - 对应 packaging 的类型，如果不使用 type 标签，maven 默认为 jar。</span><br><span class="line"></span><br><span class="line">scope - 此元素指的是任务的类路径（编译和运行时，测试等）以及如何限制依赖关系的传递性。有 5 种可用的限定范围：</span><br><span class="line">compile : 如果没有指定 scope 标签，maven 默认为这个范围。编译依赖关系在所有 classpath 中都可用。此外，这些依赖关系被传播到依赖项目。</span><br><span class="line">provided : 与 compile 类似，但是表示您希望 jdk 或容器在运行时提供它。它只适用于编译和测试 classpath，不可传递。</span><br><span class="line">runtime : 此范围表示编译不需要依赖关系，而是用于执行。它是在运行时和测试 classpath，但不是编译 classpath。</span><br><span class="line">test : 此范围表示正常使用应用程序不需要依赖关系，仅适用于测试编译和执行阶段。它不是传递的。</span><br><span class="line">system : 此范围与 provided 类似，除了您必须提供明确包含它的 jar。该 artifact 始终可用，并且不是在仓库中查找。</span><br><span class="line"></span><br><span class="line">systemPath - 仅当依赖范围是系统时才使用。否则，如果设置此元素，构建将失败。该路径必须是绝对路径，因此建议使用 propertie 来指定特定的路径，如\$ &#123;java.home&#125; / lib。由于假定先前安装了系统范围依赖关系，maven 将不会检查项目的仓库，而是检查库文件是否存在。如果没有，maven 将会失败，并建议您手动下载安装。</span><br><span class="line"></span><br><span class="line">optional - optional 让其他项目知道，当您使用此项目时，您不需要这种依赖性才能正常工作。</span><br><span class="line"></span><br><span class="line">exclusions - 包含一个或多个排除元素，每个排除元素都包含一个表示要排除的依赖关系的 groupId 和 artifactId。与可选项不同，可能或可能不会安装和使用，排除主动从依赖关系树中删除自己。</span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;dependencyManagement&gt;</code> - 是在<code>&lt;dependencies&gt;</code>外用的。表示依赖 jar 包的声明。即你在项目中的 dependencyManagement 下声明了依赖，maven 不会加载该依赖，dependencyManagement 声明可以被子 POM 继承。<br>它的一个使用案例是当有父子项目的时候，父项目中可以利用 <code>&lt;dependencyManagement&gt;</code> 声明子项目中需要用到的依赖 jar 包，之后，当某个或者某几个子项目需要加载该依赖的时候，就可以在子项目中 dependencies 节点只配置 groupId 和 artifactId 就可以完成依赖的引用。<br><code>&lt;dependencyManagement&gt;</code> 主要是为了统一管理依赖包的版本，确保所有子项目使用的版本一致，类似的还有plugins和pluginManagement。</p>
-<p><code>&lt;build&gt;</code> - 构建配置。<br><code>&lt;plugins&gt;</code> - 配置插件，在<code>&lt;build&gt;</code>下。<br><code>pluginManagement</code> - 与 dependencyManagement 很相似，在当前 POM 中仅声明插件，而不是实际引入插件。子 POM 中只配置 groupId 和 artifactId 就可以完成插件的引用，且子 POM 有权重写 pluginManagement 定义。<br>它的目的在于统一所有子 POM 的插件版本。<br><code>&lt;extensions&gt;</code> - 扩展配置，扩展是在构建期间激活的 artifacts。扩展不需要实际执行任何操作，也不包含 Mojo。因此，扩展对于指定普通插件接口的多个实现中的一个是非常好的。</p>
-<p>pom.xml解析：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/76874769">https://zhuanlan.zhihu.com/p/76874769</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/02/myblog/java/mybatis%E5%AE%9E%E6%88%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/02/myblog/java/mybatis%E5%AE%9E%E6%88%98/" class="post-title-link" itemprop="url">mybatis实战</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-06-02 21:45:44" itemprop="dateCreated datePublished" datetime="2022-06-02T21:45:44+08:00">2022-06-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-05-01 12:10:50" itemprop="dateModified" datetime="2023-05-01T12:10:50+08:00">2023-05-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="case"><a href="#case" class="headerlink" title="case"></a>case</h3><p>1、mybatis <code>&lt;if&gt;</code> 标签不是必须在<code>&lt;where&gt;</code>标签下。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">select * from table</span><br><span class="line">&lt;where&gt;</span><br><span class="line">    &lt;if test=&quot;uis != null&quot;&gt;</span><br><span class="line">        uid = #&#123;uid&#125;</span><br><span class="line">    &lt;/if&gt;</span><br><span class="line">&lt;/where&gt;</span><br><span class="line"></span><br><span class="line">或者：</span><br><span class="line">where status = 0</span><br><span class="line">&lt;if test=&quot;uis != null&quot;&gt;</span><br><span class="line">    and uid = #&#123;uid&#125;</span><br><span class="line">&lt;/if&gt;</span><br><span class="line"></span><br><span class="line">或者：</span><br><span class="line">&lt;if test=&quot;uis != null&quot;&gt;</span><br><span class="line">    where uid = #&#123;uid&#125;</span><br><span class="line">&lt;/if&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2、mybatis中，<code>select * from in &lt;foreach&gt; #&#123;list&#125;</code>，中的list不能是空，不能为null，会报错。</p>
-<p>3、mybatis查出的结果是list，如果结果是一条都没有，那么返回的是空list，而不是null。</p>
-<p>4、mybatis sum 如果没有记录，返回的是null，所以要注意mybatis返回结果都用包装类型来接。</p>
-<p>5.mybatis查出的Date类型，是毫秒时间戳，可以用String接Date类型，只不过是：2023-01-01 11:11:11.1，所以得用.substring(0,19)，注意该方法string是null不行，位数不够也会报错。</p>
-<p>6.mybatis来select，in一个list，如果传入的list是null或者空会报错。<br>null会报错：org.mybatis.spring.MybatisSystemException<br>空list会error sql<br>如果加了<code>&lt;where&gt;</code>标签和<code>&lt;if&gt;</code>标签，会导出所有的。<br><code>&lt;if test=&quot;list != null and list.size() &gt; 0&quot;&gt;</code></p>
-<h3 id="mybatis-error"><a href="#mybatis-error" class="headerlink" title="mybatis error"></a>mybatis error</h3><h4 id="✅Mybatis-Exception-Translator-translateExceptionIfPossible"><a href="#✅Mybatis-Exception-Translator-translateExceptionIfPossible" class="headerlink" title="✅Mybatis Exception Translator.translateExceptionIfPossible"></a>✅Mybatis Exception Translator.translateExceptionIfPossible</h4><p>原因：插入时找不到参数，批量插入时传的list为空也会报此问题。</p>
-<h3 id="resultMap和resultType"><a href="#resultMap和resultType" class="headerlink" title="resultMap和resultType"></a>resultMap和resultType</h3><p>ResultType和ResultMap都是执行查询语句时返回的结果集。<br>ResultType相对与ResultMap而言更简单一点。只有满足ORM（Object Relational Mapping，对象关系映射）时，即数据库表中的字段名和实体类中的属性完全一致时，才能使用，否则会出现数据不显示的情况。<br>ResultMap和ResultType的功能类似，但是ResultMap更强大一点，ResultMap可以实现将查询结果映射为复杂类型的pojo。</p>
-<h4 id="resultType"><a href="#resultType" class="headerlink" title="resultType"></a>resultType</h4><p>1.java的基础类型及其包装类int,double和java.lang.Integer,java.lang.Double等</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">返回值为int，resultType为int ,java.lang.Integer也可以--&gt;</span><br><span class="line">&lt;select id=&quot;countUser&quot; resultType=&quot;int&quot;&gt;</span><br><span class="line">    select count(*) from user</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2.自己定义的实体类,实体类和数据库字段需要一致，如果不一致需要使用resulMap自定义map，也可以直接使用map。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">返回值为实体类，resultType为User--&gt;</span><br><span class="line">&lt;select id=&quot;getUser&quot; resultType=&quot;com.entity.User&quot;&gt;</span><br><span class="line">   select * from User where id=#&#123;id&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>3.map类型，Dao层的返回类型为<code>Map&lt;String, Object&gt;</code>，key是对应的column值，value是数据中的数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> 返回值为Map&lt;String,Object&gt;，resultType为map--&gt;</span><br><span class="line">&lt;select id=&quot;getUserSelective&quot; resultType=&quot;map&quot;&gt;</span><br><span class="line">    select name,address,salary from User where id=#&#123;id&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>4.List集合，其中该集合的类型可以为1,2,3中提到的类型。Dao层的返回类型为<code>List&lt;User&gt;</code>，这里只展示了实体类集合</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">返回值为List&lt;User&gt;，resultType为User--&gt;</span><br><span class="line">&lt;select id=&quot;getUserList&quot; resultType=&quot;User&quot;&gt;</span><br><span class="line">    select * from user</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<h4 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h4><p>结果集的映射是 MyBatis 最强大的特性,通过使用resultMap或resultType可以解决复杂映射问题。基础简单的使用resultType就可以了，但是如果出现table中列和实体类中的属性不一致或者多表级联。那么这时resultMap就可以发挥作用了。</p>
-<p>TestDao.xml:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;mapper namespace=&quot;com.repository.TestDao&quot;&gt;</span><br><span class="line">    //定义映射</span><br><span class="line">    &lt;resultMap id=&quot;TestResultMap&quot; type=&quot;com.entity.TestDO&quot;&gt;</span><br><span class="line">        &lt;result column=&quot;id&quot; property=&quot;id&quot; jdbcType=&quot;INTEGER&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;name&quot; property=&quot;name&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line">    //定义返回栏目</span><br><span class="line">    &lt;sql id=&quot;all_colum_without_id&quot;&gt;</span><br><span class="line">        name</span><br><span class="line">    &lt;/sql&gt;</span><br><span class="line"></span><br><span class="line">    &lt;sql id=&quot;all_colum&quot;&gt;</span><br><span class="line">        name,&lt;include refid=&quot;all_colum_without_id&quot;/&gt;</span><br><span class="line">    &lt;/sql&gt;</span><br><span class="line"></span><br><span class="line">    //插入语句</span><br><span class="line">    &lt;insert id=&quot;insertOne&quot; parameterType=&quot;com.entity.TestDO&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;&gt;</span><br><span class="line">        insert into table (&lt;include refid=&quot;all_colum_without_id&quot;/&gt;)</span><br><span class="line">        values (#&#123;name&#125;)</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line"></span><br><span class="line">    //批量插入</span><br><span class="line">    &lt;insert id=&quot;insertBatch&quot; parameterType=&quot;com.entity.TestDO&quot;&gt;</span><br><span class="line">        insert into table (&lt;include refid=&quot;all_colum_without_id&quot;/&gt;)</span><br><span class="line">        values</span><br><span class="line">        &lt;foreach collection=&quot;testDOList&quot; separator=&quot;,&quot; item=&quot;item&quot; index=&quot;index&quot;&gt;</span><br><span class="line">            (#&#123;item.name&#125;,</span><br><span class="line">            #&#123;item.age&#125;)</span><br><span class="line">            &lt;/foreach&gt;</span><br><span class="line">    &lt;/insert&gt;</span><br><span class="line"></span><br><span class="line">    //查询</span><br><span class="line">    &lt;select id=&quot;findById&quot; resultMap=&quot;TestResultMap&quot;&gt;</span><br><span class="line">        select &lt;include refid=&quot;all_colum&quot;/&gt; from table where id=#&#123;id&#125;</span><br><span class="line">        &lt;if test=&quot;age != null&quot;&gt;</span><br><span class="line">            and age=#&#123;age&#125;</span><br><span class="line">        &lt;if&gt;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
-
-<p>TestDao.java接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Mapper</span><br><span class="line">public interface TestDao &#123;</span><br><span class="line">    //插入</span><br><span class="line">    Integer insertOne(TestDO testDO);</span><br><span class="line">    //批量插入</span><br><span class="line">    Integer insertBatch(List&lt;TestDO&gt; testDOList);</span><br><span class="line">    //查询</span><br><span class="line">    TestDO findById(Long id, Integer age);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>jdbcType告诉框架如何解析这个属性（对应数据库中的类型），column是数据库中table的列名，property是实体类中对应的属性名字，type是对应的实体类，id&#x3D;”TestResultMap”是这个resultMap的一个引用标志。</p>
-<p>这样使用resultMap就像用resultType对应实体类，在select出来的语句中直接对字段就行as，as为实体类属性名，或驼峰形式就行。</p>
-<p>resultMap更复杂的用法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wobuaizhi/article/details/83104464">https://blog.csdn.net/wobuaizhi/article/details/83104464</a></p>
-<h3 id="返回映射下划线转驼峰"><a href="#返回映射下划线转驼峰" class="headerlink" title="返回映射下划线转驼峰"></a>返回映射下划线转驼峰</h3><p>意思是返回值对应到对象，mysql返回的字段名（app_id），直接映射到对象属性名（appId）。</p>
-<p>第一种 Spring Boot</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis.configuration.map-underscore-to-camel-case=true</span><br></pre></td></tr></table></figure>
-
-<p>第二种 mybatis-config.xml配置中加</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 全局配置 --&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">    </span><br><span class="line">       &lt;!-- 是否开启自动驼峰命名规则映射</span><br><span class="line">        &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">    &lt;/settings&gt;</span><br><span class="line">&lt;/configuration&gt; </span><br></pre></td></tr></table></figure>
-
-<h3 id="mybatis-useGeneratedKeys-keyProperty"><a href="#mybatis-useGeneratedKeys-keyProperty" class="headerlink" title="mybatis useGeneratedKeys keyProperty"></a>mybatis useGeneratedKeys keyProperty</h3><p>useGeneratedKeys （仅适用于 insert 和 update）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系型数据库管理系统的自动递增字段），默认值：false。</p>
-<p>首先，如果你的数据库支持自动生成主键的字段（比如 MySQL 和 SQL Server），那么你可以设置 useGeneratedKeys&#x3D;”true”，然后再把 keyProperty 设置为目标属性就 OK 了。</p>
-<p>作用：在inset时，可以不用管主键插入多少，而且插入后，还能直接用对象里的值，因为自动返回了。建表时必须设置主键自增。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=&quot;insertAuthor&quot; useGeneratedKeys=&quot;true&quot;</span><br><span class="line">    keyProperty=&quot;id&quot;&gt;</span><br><span class="line">  insert into Author (username,password,email,bio)</span><br><span class="line">  values (#&#123;username&#125;,#&#123;password&#125;,#&#123;email&#125;,#&#123;bio&#125;)</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="DUPLICATE"><a href="#DUPLICATE" class="headerlink" title="DUPLICATE"></a>DUPLICATE</h3><p>duplicate在mybatis中的使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;insert id=&quot;insertOne&quot; parameterType=&quot;com.entity.TestDO&quot;&gt;</span><br><span class="line">    insert into table (id, &lt;include refid=&quot;all_colum_without_id&quot;/&gt;)</span><br><span class="line">    values (0, #&#123;name&#125;)</span><br><span class="line">    ON DUPLICATE KEY UPDATE name=values(name), age=values(age)</span><br><span class="line">&lt;/insert&gt;</span><br><span class="line"></span><br><span class="line">values后面就是插入要查哪些。</span><br><span class="line">update后面是更新要更新哪些</span><br><span class="line">什么时候更新要看表的主键索引和唯一索引</span><br><span class="line">id可选，加了id，就传0</span><br></pre></td></tr></table></figure>
-
-<p>因为更新的时候是不会返回id的，所以要去掉：<code>useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;</code><br>如果不去掉，会报<code>executorexception: error getting generated key or setting result to parameter object</code></p>
-<h3 id="xml里面foreach标签里面的属性separator"><a href="#xml里面foreach标签里面的属性separator" class="headerlink" title="xml里面foreach标签里面的属性separator"></a>xml里面foreach标签里面的属性separator</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> &lt;if test=&quot;myList != null&quot;&gt;</span><br><span class="line">    AND dm in</span><br><span class="line">    &lt;foreach collection=&quot;myList &quot; item=&quot;item&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot;&gt;</span><br><span class="line">        #&#123;item , jdbcType=VARCHAR &#125;</span><br><span class="line">    &lt;/foreach&gt;</span><br><span class="line">&lt;/if&gt;</span><br></pre></td></tr></table></figure>
-<p>渲染为sql：<code>AND dm in ( &#39;03&#39; , &#39;04&#39;)</code></p>
-<p>如果separator属性为or，渲染为：<code>AND ( dm  = &#39;01&#39;or dm   = &#39;02&#39; or dm   = &#39;03&#39;) </code></p>
-<h3 id="where标签的作用"><a href="#where标签的作用" class="headerlink" title="where标签的作用"></a>where标签的作用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;select&quot; resultType=&quot;DO&quot;&gt;</span><br><span class="line"> SELECT * FROM hdc</span><br><span class="line"> WHERE</span><br><span class="line"> &lt;if test=&quot;state != null&quot;&gt;</span><br><span class="line"> state = #&#123;state&#125;</span><br><span class="line"> &lt;/if&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果state参数为空时，最终生成SQL语句为<br>SELECT * FROM hdc WHERE<br>执行会出错，可以在where 后加一个1&#x3D;1，但是累赘</p>
-<p>用<code>&lt;where&gt;...&lt;/where&gt;</code>标签就好。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selectOne&quot; resultType=&quot;DO&quot;&gt;</span><br><span class="line"> SELECT * FROM hdc</span><br><span class="line"> &lt;where&gt;</span><br><span class="line">  &lt;if test=&quot;state != null&quot;&gt;</span><br><span class="line">    state = #&#123;state&#125;</span><br><span class="line">  &lt;/if&gt;</span><br><span class="line"> &lt;/where&gt;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>总结：<code>&lt;where&gt;</code>标签，1、在后面if null都是空时，可以自动删除where。2、在后面多个if null，第一个为null时，会自动删掉后面有的and。</p>
-<h3 id="trim实现动态sql"><a href="#trim实现动态sql" class="headerlink" title="trim实现动态sql"></a>trim实现动态sql</h3><p>场景：想使用having，having后面用if null标签，如果后面的if null都是null，having会留着，导致出错。</p>
-<p>trim 在英语中有“点缀物”，修剪的意思。可以把‘’标签为一个装饰sql的标签。trim标签常用于动态生成sql的场景下。</p>
-<p>基本格式：<br><code>&lt;trim prefix=&quot;&quot; suffix=&quot;&quot; suffixOverrides=&quot;&quot; prefixOverrides=&quot;&quot;&gt;&lt;/trim&gt;</code><br>prefix：<br>表示在trim包裹的SQL语句前面添加的指定内容。<br>suffix：<br>表示在trim包裹的SQL末尾添加指定内容<br>prefixOverrides：<br>表示去掉（覆盖）trim包裹的SQL的指定首部内容<br>suffixOverrides：<br>表示去掉（覆盖）trim包裹的SQL的指定尾部内容</p>
-<p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/425922768">https://zhuanlan.zhihu.com/p/425922768</a></p>
-<p>例子(查输入的list的元素是不是在查处的一个list字段里有)：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">group by id</span><br><span class="line">&lt;trim prefix=&quot;having&quot; prefixOverrides=&quot;and&quot;&gt;</span><br><span class="line">    &lt;if test=&quot;nameList != null and nameList.size() &gt; 0&quot;&gt;</span><br><span class="line">        &lt;foreach collection=&quot;nameList&quot; open=&quot;(&quot; close=&quot;)&quot; item=&quot;name&quot; index=&quot;index&quot; separator=&quot;or&quot;&gt;</span><br><span class="line">            find_in_set(#&#123;name&#125;, names) &gt; 0</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">    &lt;/if&gt;</span><br><span class="line"></span><br><span class="line">    &lt;if test=&quot;nameList != null and nameList.size() &gt; 0&quot;&gt;</span><br><span class="line">        and</span><br><span class="line">        &lt;foreach collection=&quot;nameList&quot; open=&quot;(&quot; close=&quot;)&quot; item=&quot;name&quot; index=&quot;index&quot; separator=&quot;or&quot;&gt;</span><br><span class="line">            find_in_set(#&#123;name&#125;, names) &gt; 0</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">    &lt;/if&gt;</span><br><span class="line">&lt;/trim&gt;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="条件构造器QueryWrapper"><a href="#条件构造器QueryWrapper" class="headerlink" title="条件构造器QueryWrapper"></a>条件构造器QueryWrapper</h3><p>QueryWrapper是在使用Mybatis-plus中用到的一种技术，也叫作构造器，能简化sql的操作。MyBatisPlus 依赖：mybatis-plus-boot-starter</p>
-<p>首先，Mapper接口需要继承<code>BaseMapper&lt;T&gt;</code>抽象类，加@Mapper注解。</p>
-<p>LambdaQueryWrapper和QueryWrapper查询是一样的，但是使用Lambda语法更加方便，更容易理解。</p>
-<p>LambdaQueryWrapper和QueryWrapper的区别：<br>首先它们都是Mybatis-plus提供的查询构造器，用于构建查询条件。<br>1、LambdaQueryWrapper支持Lambda表达式作为查询条件，而QuerryWrapper不支持。<br>2、LambdaQueryWrapper可以避免手写错误的字段名，因为它会在编译期间进行类型检查。而QueryWrapper只能在运行时才发现错误。<br>3、LambdaQueryWrapper可以链式调用，更加优雅简洁。而QueryWrapper需要每次重新创建一个实例来添加新的查询条件。</p>
-<p>用法：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@GetMapping(&quot;/list&quot;)</span><br><span class="line">public List&lt;Student&gt; list(Student student)&#123;</span><br><span class="line">    LambdaQueryWrapper&lt;Student&gt; lqw = new LambdaQueryWrapper&lt;Student&gt;();</span><br><span class="line">    lqw.eq(Student::getName, student.getName()); </span><br><span class="line">    //也可以：lqw.eq(&quot;name&quot;, student.getName());</span><br><span class="line">    lqw.like(Student::getClass,student.getClass());</span><br><span class="line">    lqw.between(&quot;age&quot;,student.getAge1(),student.getAge2());</span><br><span class="line">    lqw.orderByAsc(&quot;age&quot;);</span><br><span class="line">    List&lt;Student&gt; list = studentDao.list(lqw);</span><br><span class="line">    return list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>以上代码对应sql：<code>select * from student where name = &#39;?&#39; and class like &#39;%?%&#39; and age between &#39;?&#39; and &#39;?&#39; order by &#39;?&#39; asc</code></p>
-<p>QueryWrapper其实可以理解成一个放查询条件的盒子，我们把查询条件放在里面，他就会自动按照对应的条件进行查询数据。</p>
-<p>根据不同的查询要求，有不同的用法，常用到的比如：eq（相等）、like、and、or、isNull、isNotNull、ne（不相等）、likeRight、between、gt（大于）、lt（小于）等</p>
-<hr>
-<p>使用QueryWrapper来更新：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;user&gt; qw = new QueryWrapper&lt;&gt;();</span><br><span class="line">qw.eq(&quot;id&quot;, 1);</span><br><span class="line">User user = new User();</span><br><span class="line">user.setName(&quot;liu&quot;);</span><br><span class="line">int rows = userMapper.update(user, qw);</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用Map接收mybatis结果"><a href="#使用Map接收mybatis结果" class="headerlink" title="使用Map接收mybatis结果"></a>使用Map接收mybatis结果</h3><p>ResultSet是一个表示数据库结果集的接口，在java中用于表示从数据库查询的结果，允许通过行和列的方式访问数据，从而从数据库中检索和操作数据。</p>
-<p>但是Mybatis不支持直接用ResultSet接收查询结果。因为Mybatis采用的是物理映射技术，而ResultSet只能获取行列数据，得不到物理映射的结果。</p>
-<p>那么除了定义DO，还可以用什么接收mybatis返回的数据呢？ 用Map。</p>
-<p>dao接口怎么写：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@MapKey(&quot;某字段名&quot;)</span><br><span class="line">Map&lt;String, Object&gt; selectAll();</span><br></pre></td></tr></table></figure>
-
-<p>xml怎么写：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;select&quot; resultType=&quot;java.util.Map&quot;&gt;</span><br><span class="line"> SELECT * FROM hdc</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-
-<p>@MapKey 是MyBatis框架的注解，作用是将List结果集转换成key-value形式的Map结果集，方便快速从结果集中查询指定结果。</p>
-<p>@MapKey(value&#x3D;””) 是mybatis的注解，用来映射Map类型的联合查询结果。作用是指定从查询结果的某个字段映射到Map的Key，这个注解是必须的，必须指定一个字段为key。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class UserMapper()&#123;</span><br><span class="line"> </span><br><span class="line">    //使用list接收</span><br><span class="line">    //[&#123;id:1111,name:&quot;foo&quot;&#125;,&#123;id:2222,name:&quot;bar&quot;&#125;]</span><br><span class="line">    public List&lt;User&gt; useList();</span><br><span class="line"> </span><br><span class="line">    //使用带有@Mapkey(&quot;id&quot;)的Map&lt;Integer,User&gt;接收</span><br><span class="line">    //&#123;1111:&#123;id:1111,name:&quot;foo&quot;&#125;,2222:&#123;id:2222,name:&quot;bar&quot;&#125;&#125;</span><br><span class="line">    @Mapkey(&quot;id&quot;)</span><br><span class="line">    public Map&lt;Integer,User&gt; useMap();</span><br><span class="line"></span><br><span class="line">    //不想定义DO，直接用List&lt;Map&lt;String, Object&gt;&gt;接收</span><br><span class="line">    //返回的结果Map是字段名：值，跟@MapKey里的value没啥关系</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>但是不能用<code>List&lt;Object&gt;</code>接结果。<br>如果@MapKey中的value是null，会展示一个key为null的map。</p>
-<hr>
-<p>MyBatis中的动态SQL以及@ResultMap,@MapKey和@Options的使用：<br><a target="_blank" rel="noopener" href="https://www.freesion.com/article/2930425356/">https://www.freesion.com/article/2930425356/</a></p>
-<h3 id="ResultHandler"><a href="#ResultHandler" class="headerlink" title="ResultHandler"></a>ResultHandler</h3><p>ResultHandler，顾名思义，对返回的结果进行处理，最终得到自己想要的数据格式或类型。也就是说，可以自定义返回类型。可以迭代查询结果集，将其存储在集合中，或执行自定义处理。它是mybatis的一个接口，用来处理结果集，从而获取特定的数据或者操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface ResultHandler&lt;T&gt; &#123;</span><br><span class="line">    void handleResult(ResultContext&lt;? extends T&gt; var1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Mapper接口：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface GoodsDao &#123;</span><br><span class="line">    public void selectGoods(ResultHandler resultHandler); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>映射文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;   </span><br><span class="line">&lt;!DOCTYPE mapper   </span><br><span class="line">PUBLIC &quot;-//ibatis.apache.org//DTD Mapper 3.0//EN&quot;  </span><br><span class="line">&quot;http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd&quot;&gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.yht.mybatisTest.dao.GoodsDao&quot;&gt;</span><br><span class="line">   </span><br><span class="line">    &lt;select id=&quot;selectGoods&quot; resultType=&quot;map&quot;&gt;  </span><br><span class="line">        select price,name from goods</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">                                                        </span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
-
-<p>selectGoods方法的查询结果是<code>List&lt;Map&gt;</code>，假如现在有这么一个需求：想统计价格低于50的书籍有哪些，价格高于50的书籍有哪些，该怎么处理呢？这个时候就用到了ResultHandler，我们创建一个SelectGoodsResultHandler。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class SelectGoodsResultHandler implements ResultHandler&#123;</span><br><span class="line"></span><br><span class="line">    private Map&lt;String, List&lt;String&gt;&gt; resultMap = new HashMap&lt;String, List&lt;String&gt;&gt;();</span><br><span class="line">    </span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public void handleResult(ResultContext context) &#123;</span><br><span class="line">        if(resultMap.get(&quot;lowPrice&quot;) == null &amp;&amp; resultMap.get(&quot;highPrice&quot;) == null)&#123;</span><br><span class="line">            List&lt;String&gt; lowList = new ArrayList&lt;String&gt;();</span><br><span class="line">            List&lt;String&gt; highList = new ArrayList&lt;String&gt;();</span><br><span class="line">            resultMap.put(&quot;lowPrice&quot;, lowList);</span><br><span class="line">            resultMap.put(&quot;highPrice&quot;, highList);</span><br><span class="line">        &#125;</span><br><span class="line">        @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">        Map&lt;String,Object&gt; resultObject = (Map&lt;String, Object&gt;)context.getResultObject();</span><br><span class="line">        BigDecimal price = (BigDecimal) resultObject.get(&quot;price&quot;);</span><br><span class="line">        String name = (String) resultObject.get(&quot;name&quot;);</span><br><span class="line">        if(price.intValue() &lt; 50)&#123;</span><br><span class="line">            ((List&lt;String&gt;)resultMap.get(&quot;lowPrice&quot;)).add(name);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            ((List&lt;String&gt;)resultMap.get(&quot;highPrice&quot;)).add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Map&lt;String, List&lt;String&gt;&gt; getResults()&#123;</span><br><span class="line">        return resultMap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class GoodsDaoTest &#123;</span><br><span class="line">    </span><br><span class="line">    private static SqlSessionFactory sqlSessionFactory = null;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void selectGoodsTest()&#123;</span><br><span class="line">        </span><br><span class="line">        SqlSession sqlSession = getSqlSessionFactory().openSession(true);</span><br><span class="line">        GoodsDao goodsMapper = sqlSession.getMapper(GoodsDao.class);</span><br><span class="line">        SelectGoodsResultHandler resultHandler = new SelectGoodsResultHandler();</span><br><span class="line">        goodsMapper.selectGoods(resultHandler);</span><br><span class="line">        System.out.println(resultHandler.getResults().toString());;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static SqlSessionFactory getSqlSessionFactory() &#123;</span><br><span class="line">        String resource = &quot;spring-ibatis.xml&quot;;</span><br><span class="line">        if(sqlSessionFactory == null)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources</span><br><span class="line">                        .getResourceAsReader(resource));</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                // TODO Auto-generated catch block</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return sqlSessionFactory;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>转载自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/51life/p/9633002.html">https://www.cnblogs.com/51life/p/9633002.html</a></p>
-<p>mybatis之ResultHandler如何使用：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8773d0e786d8">https://www.jianshu.com/p/8773d0e786d8</a></p>
-<h3 id="mybatis传表名"><a href="#mybatis传表名" class="headerlink" title="mybatis传表名"></a>mybatis传表名</h3><p>mybatis 怎么传入表名来控制插入哪个表？<br>在 MyBatis 中，我们可以通过动态 SQL 的方式来传入表名，从而控制插入哪个表。</p>
-<p>貝体操作如下：<br>1.在Mapperxml 文件中，使用 parameterType 指定一个参数类型为 string，用于接收要插入的表名。</p>
-<p>2.在插入语句中，使用 ＄{} 操作待将该参数传递到 SQL中。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void insertIntoTable(@Param(&quot;tableName&quot;) String tableName, ...)</span><br><span class="line"></span><br><span class="line">&lt;insert id=&quot;insertIntoTable&quot;&gt;</span><br><span class="line">    INSERT INTO $&#123;tableName&#125; (column, column2) VALUES (#&#123;value1&#125;, #&#123;value2&#125;)</span><br><span class="line">&lt;/insert&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果除了表名参数，另一个参数是对象，在xml文件中加对象名.字段名来调用。</p>
-<p>3.在调用该方法时，传递要插入的表名即可。<br>String tableName &#x3D; user;<br>mapper.insertIntoTable (tableName, value1, value2);<br>注意：使用＄{}操作符传递参数，需要注意 SQL 注入的问题，因此需要进行必要的安全措施，如输入参数的参数校验等。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/01/myblog/java/maven%E5%92%8Cnuxus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/01/myblog/java/maven%E5%92%8Cnuxus/" class="post-title-link" itemprop="url">maven与nexus</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-06-01 22:34:23" itemprop="dateCreated datePublished" datetime="2022-06-01T22:34:23+08:00">2022-06-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-03-26 11:08:59" itemprop="dateModified" datetime="2023-03-26T11:08:59+08:00">2023-03-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h3><ol>
-<li><p>优秀的构建工具<br>通过简单的命令，能够完成清理、编译、测试、打包、部署等一系列过程。同时，不得不提的是，Maven是跨平台的，无论是在Windows、还是在Linux或Mac上，都可以使用同样的命令。</p>
-</li>
-<li><p>依赖管理工具<br>项目依赖的第三方的开源类库，都可以通过依赖的方式引入到项目中来。代替了原来需要首先下载第三方jar，再加入到项目中的方式。从而更好的解决了合作开发中依赖增多、版本不一致、版本冲突、依赖臃肿等问题。<br>具体是怎么实现的呢？Maven通过坐标系统准确的定位每一个构件，即通过坐标找到对应的java类库。</p>
-</li>
-<li><p>项目信息管理工具<br>能够管理项目描述、开发者列表、版本控制系统地址、许可证等一些比较零散的项目信息。除了直接的项目信息，通过Maven自动生成的站点，以及一些已有的插件，还能够轻松获得项目文档、测试报告、静态分析报告、源码版本、日志报告等非常具有价值的项目信息。</p>
-</li>
-</ol>
-<h3 id="maven命令"><a href="#maven命令" class="headerlink" title="maven命令"></a>maven命令</h3><p>✅常见打包命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package -Dmaven.test.skip=true		-- 跳过单测打包</span><br><span class="line">mvn clean install -Dmaven.test.skip=true		-- 跳过单测打包，并把打好的包上传到本地仓库</span><br><span class="line">mvn clean deploy -Dmaven.test.skip=true			-- 跳过单测打包，并把打好的包上传到远程仓库</span><br></pre></td></tr></table></figure>
-
-<p>✅mvn命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">mvn -v //查看版本 </span><br><span class="line">mvn archetype:create //创建 Maven 项目 </span><br><span class="line">mvn compile //编译源代码 </span><br><span class="line">mvn test-compile //编译测试代码 </span><br><span class="line">mvn test //运行应用程序中的单元测试 </span><br><span class="line">mvn site //生成项目相关信息的网站 </span><br><span class="line">mvn package //依据项目生成 jar 文件 </span><br><span class="line">mvn install //在本地 Repository 中安装 jar </span><br><span class="line">mvn -Dmaven.test.skip=true //忽略测试文档编译 </span><br><span class="line">mvn clean //清除目标目录中的生成结果 </span><br><span class="line">mvn clean compile //将.java类编译为.class文件 </span><br><span class="line">mvn clean package //进行打包 </span><br><span class="line">mvn clean test //执行单元测试 </span><br><span class="line">mvn clean deploy //部署到版本仓库 </span><br><span class="line">mvn clean install //使其他项目使用这个jar,会安装到maven本地仓库中 </span><br><span class="line">mvn archetype:generate //创建项目架构 </span><br><span class="line">mvn dependency:list //查看已解析依赖 </span><br><span class="line">mvn dependency:tree com.xx.xxx //看到依赖树 </span><br><span class="line">mvn dependency:analyze //查看依赖的工具 </span><br><span class="line">mvn help:system //从中央仓库下载文件至本地仓库 </span><br><span class="line">mvn help:active-profiles //查看当前激活的profiles </span><br><span class="line">mvn help:all-profiles //查看所有profiles </span><br><span class="line">mvn help:effective -pom //查看完整的pom信息</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h3><p>maven的依赖管理功能，通过在Pom中指定坐标的形式将jar引入到项目中。jar包就存放在仓库中。</p>
-<p>Maven的仓库分为本地仓库和远程仓库。远程仓库分为：中央仓库、私服、其他远程仓库。</p>
-<p>当Maven根据坐标寻找构件时，它首先会查看本地仓库，如果本地仓库存在此构件，则直接使用；如果本地仓库不存在此构件，或者需要查看是否有更新的构件版本，Maven会去远程仓库查找，发现需要的构件之后，下载到本地仓库再使用。</p>
-<p>为什么需要私服？</p>
-<p>1.一些无法从外部仓库下载的构件，例如内部的项目，可以部署到私服上，以便供其他依赖项目使用。</p>
-<p>2.为了节省带宽和时间，在局域网内架设一个私有的仓库服务器，用其代理所有外部的远程仓库。当本地Maven项目需要下载构件时，先去私服请求，如果私服没有，则再去远程仓库请求，从远程仓库下载构件后，把构件缓存在私服上。这样，即使暂时没有Internet链接，由于私服已经缓存了大量构件，整个项目还是可以正常使用的。同时，也降低了中央仓库的负荷。</p>
-<p>如果没有私服，我们所需的所有构件都需要通过maven的中央仓库和第三方的Maven仓库下载到本地，而一个团队中的所有人都重复的从maven仓库下载构件无疑加大了仓库的负载和浪费了外网带宽，如果网速慢的话，还会影响项目的进程。很多情况下项目的开发都是在内网进行的，连接不到maven仓库怎么办呢？开发的公共构件怎么让其它项目使用？这个时候我们不得不为自己的团队搭建属于自己的maven私服，这样既节省了网络带宽也会加速项目搭建的进程，当然前提条件就是你的私服中拥有项目所需的所有构件。<br>————————————————</p>
-<p>总而言之：私服在用户局域网内的特殊远程仓库，私服起到了maven用户与中央仓库的中间作用，私服从中央仓库缓存构件，maven用户从私服下载构件。</p>
-<h3 id="nexus"><a href="#nexus" class="headerlink" title="nexus"></a>nexus</h3><p>nexus就是私服的一种。</p>
-<p>nexus是一个强大的maven仓库管理器,它极大的简化了本地内部仓库的维护和外部仓库的访问.</p>
-<p>nexus提供了强大的仓库管理功能,构件搜索功能,它基于REST,友好的UI是一个extjs的REST客户端,占用较少的内存,基于简单文件系统而非数据库.</p>
-<p>节省外网带宽；加速Maven构建；部署第三方构件；提高稳定性，增强控制；降低中央仓库的负荷；控制和审计；建立本地内部公用仓库。</p>
-<p>转载自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/youngdeng/p/15098442.html">https://www.cnblogs.com/youngdeng/p/15098442.html</a></p>
-<p>如何配置：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5b06b2541336">https://www.jianshu.com/p/5b06b2541336</a></p>
-<h3 id="配置项目遇到的几个问题"><a href="#配置项目遇到的几个问题" class="headerlink" title="配置项目遇到的几个问题"></a>配置项目遇到的几个问题</h3><p>背景：把之前的包想移动到新创建的一个子包里。</p>
-<p>✅父子工程引用的问题</p>
-<p>1、Parent怎么能找到childA和childB呢？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;modules&gt;</span><br><span class="line">   &lt;module&gt;childA&lt;/module&gt;</span><br><span class="line">   &lt;module&gt;childB&lt;/module&gt;</span><br><span class="line">&lt;/modules&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2、pom”继承”的概念</p>
-<p>如果分别去在各自的pom里引用包，就会导致pom文件引入的包重复。<br>父pom写好了，子pom就通过<code>&lt;parent&gt;</code>标签继承父pom的依赖</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">   &lt;groupId&gt;com.sang.main&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;Parent-Moduel&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;1.0.2&lt;/version&gt;</span><br><span class="line">   &lt;relativePath&gt;../pom.xml&lt;/relativePath&gt;  &lt;!--本例中此处是可选的，不是在外层包下的话用--&gt;</span><br><span class="line">&lt;/parent&gt;</span><br></pre></td></tr></table></figure>
-
-<p>子pom中引入<code>&lt;parent&gt;</code>标签后，就会从父pom继承<code>&lt;version&gt;</code>等属性了,主pom中把依赖通过<code>&lt;dependecyManagement&gt;</code>引起来，表示子pom可能会用到的jar包依赖，子包引用的话，可以不加version属性，便于统一管理，加了的话表示子包单独用这个版本。</p>
-<p>摘自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/SunFlowerXT/article/details/105531109">https://blog.csdn.net/SunFlowerXT/article/details/105531109</a></p>
-<p>✅Junit找不到的问题，test放在main里，结构限定scope为test</p>
-<p>✅class notFound 以及 找不到或无法加载主类</p>
-<p>项目结构没有安排明白的原因，点project structure，父包下面的main包和test包下的java包啥的都不作为source和test，resource也不作为reesource。子包下面的模块选好。就可以了。</p>
-<p>✅打包时注意</p>
-<p>打包时注意：</p>
-<p>当mvn仓库里缺少jar包，同时又从中央仓库自动下载不下来的时候，就需要自己下载jar包然后放仓库里了，<br>但是有时候只是简单的把jar和source放仓库的文件夹下，并不管用，这个时候你可以用命令把jar把打进去：<br><code>mvn install:install-file -Dfile=D:\xxx.jar -DgroupId=commons-dbcp -DartifactId= commons-dbcp -Dversion= 1.4 -Dpackaging=jar</code><br>-Dfile 是存在本地磁盘里jar 的路径</p>
-<p>✅jar包冲突</p>
-<p>mvn dependency:tree命令解决jar包冲突<br>当项目出现jar包冲突时,用命令mvn dependency:tree 查看依赖情况<br>mvn dependency:tree 查看依赖树,查看包结构间的依赖<br>mvn dependency:tree &gt;d:&#x2F;tmp 把结果输出到文件，<br>然后再pom.xml文件里排除掉冲突的jar包</p>
-<p>————————————————<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/good_good_xiu/article/details/116740333">https://blog.csdn.net/good_good_xiu/article/details/116740333</a></p>
-<p>⚠️本地启动项目，有包显红，在maven - root - compile一下。<br>maven中的compile命令是用来将源代码编译成可执行的class文件，或者把它打包成jar文件，以便他人使用。</p>
-<p>✅为什么包没有在pom中引入，但是compile编译之后在target文件中却出现了呢。<br>maven会自动寻找依赖并自动加载它们，在某些情况下，即使它们没有在pom文件中显式引入，也会被自动加载到项目中。也有可能其他依赖引入了该包。这些jar包会被编译成class文件，maven把它们放在target目录下，以便正常使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -3051,7 +3198,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
