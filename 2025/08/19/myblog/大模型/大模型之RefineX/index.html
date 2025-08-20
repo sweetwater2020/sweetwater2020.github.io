@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="RefineX: Learning to Refine Pre-training Data at Scale from Expert-Guided Programs 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2507.03253v2 量子位报道：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;1930626783348241375 Refinex：学习从专家指导的程序中大规模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大模型之RefineX">
+<meta property="og:url" content="http://example.com/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="RefineX: Learning to Refine Pre-training Data at Scale from Expert-Guided Programs 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2507.03253v2 量子位报道：https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;1930626783348241375 Refinex：学习从专家指导的程序中大规模">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-19T15:17:10.283Z">
+<meta property="article:modified_time" content="2025-08-19T15:25:23.409Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>大模型之RefineX | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大模型之RefineX
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-08-19 23:17:10 / Modified: 23:25:23" itemprop="dateCreated datePublished" datetime="2025-08-19T23:17:10+08:00">2025-08-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">大模型</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>RefineX: Learning to Refine Pre-training Data at Scale from Expert-Guided Programs</strong></p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2507.03253v2">https://arxiv.org/abs/2507.03253v2</a></p>
+<p>量子位报道：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/1930626783348241375">https://zhuanlan.zhihu.com/p/1930626783348241375</a></p>
+<p><strong>Refinex：学习从专家指导的程序中大规模地提炼预训练数据</strong></p>
+<p>REFINEX的核心优势在于将高质量、专家指导的端到端精炼结果提炼成最小的基于编辑的删除程序。这种高精度的蒸馏管道用于训练一个高效可靠的精炼模型，该模型可以大规模地系统地改进语料库中的每个实例。 我们在多个模型尺度上对REFINEX从头开始的预训练进行了评估，发现它在不同的下游任务中始终优于在原始、过滤或精炼数据上训练的模型。</p>
+<p>REFINEX以高效率和高精度可靠地提高了文本质量，优于之前的方法，如端到端生成和Prox-C。 这些结果使REFINEX成为现代LLM管道中优化预训练数据的可扩展、有效和可靠的解决方案。<br>大语言模型在自然语言理解、问答、复杂推理上能力出众，支撑这些能力的是预训练语料库的质量，它是知识和推理逻辑的基本来源。<br>预训练数据的可扩展细化越来越被视为推动llm性能极限的关键步骤。 特别是，精化必须满足两个关键标准：(1)效率：考虑到预训练语料库的海量数据量，精化必须是可扩展和低成本的。(2)可靠性：它必须保留有价值的信息，并避免引入可能扭曲原始数据本质的模型或人类偏好的额外偏差。<br>同时实现这两个目标是极具挑战性的。 为了确保效率，启发式方法通常通过在文档级别操作而不是细化文档中的特定内容来牺牲粒度。 使用文档过滤器的基于规则的管道或困惑分数只保留了符合严格标准的数据，导致覆盖范围有限，错失了机会。 近期工作采用llm进行过滤，但这些方法仍然是粗粒度的，或者由于其生成性质而产生高计算成本。 因此，他们经常丢弃潜在的有价值的数据，并且无法提高所保留数据的质量。 ProX （的出现提供了一个有希望的方向，它表明小型蒸馏LMs可以用很少的令牌有效地预测精化程序，然后执行这些程序以低成本产生精化文本。 然而，由于其蒸馏过程的复杂性，ProX管道存在可靠性问题。 由专家模型生成的精化程序经常偏离预期的行为，使得最终的精化模型不可靠。<br>受ProX的启发，我们推出了REFINEX，这是一种新型的大规模精炼框架，它建立在高效的基于程序的数据精炼基础上，同时通过精心构建的蒸馏数据显著提高了可靠性。 ProX的关键限制在于直接训练来自专家输出的噪声细化程序，这往往不能反映高质量的细化操作。 相比之下，REFINEX首先利用专家模型生成可靠的端到端精炼文本。 质量评估实验表明，这些端到端输出在文本质量方面取得了最大的改进。 然而，虽然这些代提供了强大的质量收益，但它们的生产成本很高，并且存在过度编辑的风险，因为在生成过程中可能会强加特定于模型的偏好，从而损害原始数据。 为了解决这个问题，REFINEX采用了最小编辑距离算法来确定将原始文本转换为专家精炼输出所需的最小操作序列。 它过滤掉可能会引入特定于模型的首选项的过度编辑，例如插入和替换，并只保留高质量的删除操作，这些操作被封装到预定义的函数中。 总的来说，REFINEX将蒸馏数据的构建分为两个明确的阶段：首先执行端到端精炼，然后通过将精炼后的文本与原始文本进行比较来生成监督程序。 这种分离可以创建更干净、更可靠的蒸馏数据，然后用于训练能够大规模生成高效、可靠的精炼程序的精炼模型。<br>总结：Prox用小模型生成细粒度精华程序，然后执行这些程序来refine文本。问题是存在可靠性问题，过度编辑，可能产生偏离预期的行为。Refinex则增加一步，首先利用专家模型生成可靠的端到端提炼文本，再用最小编辑距离算法过滤掉过度编辑的风险，只保留高质量的删除操作。再生成可靠的refine程序。<br>模型尺寸：350M、750M，训练数据20B。结果：更低的token开销、更高质量的改进。</p>
+<p>预训练数据细化的主要技术范例：包括基于质量的过滤、端到端细化和基于程序的细化。 我们在效率和可靠性方面分析了它们各自的优势和局限性。<br>基于质量的过滤：根据估计的文档质量选择预训练数据，通常使用启发式规则或llm分配的分数。 启发式过滤应用预定义的规则——比如URL比例、乱码比例、文档长度或重复的阈值来有效地删除低质量的数据。 然而，这些规则缺乏对实例级变化的灵活性，并且经常丢弃有用的内容，同时保留仍然需要改进的文本。 基于LLM的方法使用困惑度或模型分配的质量分数，但可能不稳定，有偏见，并且计算成本高。 重要的是，大多数过滤操作在文档或句子级别，缺乏在字符或子跨度级别改进内容所需的细粒度分辨率。 因此，“精炼”文本的可靠性仍然有限。<br>端到端细化：端到端细化直接提示强大的LLM在细化特定的指令下重写给定的文本。 虽然精心设计的提示可以产生高质量的输出，但这种方法在实践中面临两个关键限制：(1)它的成本高得令人望而却步。 由于模型以与输入相同的规模生成文本，因此端到端精化会产生很高的推理成本，使其不适合大规模部署。 (2)可能影响数据的可靠性。 尽管有明确的约束指令，端到端模型还是倾向于通过修改句子结构、过度纠正拼写或应用风格偏好来进行过度编辑。 这些行为会引入模型偏差，降低原始数据的多样性。<br>ProX引入的基于程序的改进：可以共同实现改进的效率和可靠性。 它提示专家模型在种子样本上生成程序化编辑功能，并训练一个经过蒸馏的小模型来预测这种大规模推理和执行的细化程序。 这种方法的有效性在很大程度上取决于蒸馏数据的质量。 然而，促使专家模型直接生成编辑程序往往无法产生可靠的监督。 这是因为它不仅需要模型确定如何细化，而且还需要明确相应的转换逻辑，这会引入建模和监督的复杂性。 这通常会导致经过训练的精炼模型生成幻觉或格式错误的程序，从而导致执行失败或错误的编辑，从而损害数据质量。<br>Refinex：通过提取一个能够有效推断和执行细化程序的小模型来遵循ProX的核心pipeline。与ProX直接提示专家模型生成程序不同，REFINEX首先执行端到端精炼，然后通过将精炼后的输出与原始文本进行比较来构建监督程序。 这两个阶段的过程产生了更可靠的监督，并有效地消除了生成过程中引入的过度编辑风险，最终导致更有效和健壮的精炼模型。</p>
+<p>REFINEX的目标是降低专家模型直接生成refine程序的难度，同时从端到端输出中保留尽可能多的有效refine操作。 为了实现这两个目标，REFINEX首先提示一个专家模型在精心设计的指令下生成高质量的refine文本。它将refine的文本与原始输入进行比较，以基于最小的编辑距离提取可靠的删除操作序列。 这些操作被转换成一组预定义的程序函数，作为可信的监督来训练一个紧凑的refine模型。 经过训练后，该模型通过推理生成可靠的细化程序，然后执行这些程序以有效地跨语料库执行细粒度的细化。<br>refinex框架：1）使用提示词请求专家模型根据指令生成高质量的refine后文本，然后用最小编辑距离提取有效的删除refine文本。然后文本pairs被转换为程序函数python function，使用监督微调出一个可靠的改进refining model。2）推理时，模型为每个文本生成细粒度的refine程序，由python解释器执行生成最终的语料。<br>refine操作定义：重点是在字符级别对单个文本实例进行细粒度细化，而不是在文档或句子级别进行基于质量的过滤。 形式上，给定一个输入文本t，我们应用执行器E将其转换为更高质量的版本t。 在我们的REFINEX中，我们将E限制为仅删除操作，允许我们删除广告、无意义的URL链接、随机代码乱码以及文本中任何地方出现的其他低价值内容。 此外，这种限制有效地防止了模型驱动的风格偏好的引入，这可能会损害原始文本的真实性，正如在端到端refine中观察到的那样。 这也意味着像拼写错误这样的小缺陷是可以保留的，因为它们通常会在大规模的预训练中通过分布式记忆被消除。<br>定义一个删除操作序列为，其中每个dj表示要删除的字符索引的连续跨度。<br>程序函数定义：程序功能设计基于只删除的细化任务，满足两个关键目标：(1)最小和简单的功能集，以减少冗余并减轻过度复杂或模糊指令造成的幻觉风险；(2)高效的程序生成，以避免推理过程中的效率退化。 做法：在程序中为删除指定精确的字符索引。 但是会导致生成的函数指令token长度过长，严重降低生成效率。<br>受ProX启发，REFINEX 设计了三个核心程序功能以提升细化操作的表达能力：remove_lines() 允许通过紧凑的标记方式删除多个连续行，适用于长跨度删除；remove_str() 实现字符级别的细粒度删除，保证操作的高精度，同时通过数据选择和检查机制来降低多子串同行删除时的风险；keep_all() 用于直接指示无需细化，防止空输出或产生歧义。这样兼顾全面性和最小性。可靠又高效。<br>训练小规模语言模型生成refine程序的关键在于获得高质量的蒸馏数据。 然而，直接让LLM生成符合标准的程序化数据是具有挑战性的。尽管ProX使用少量提示和推理后过滤改进了这一过程，但对启发式和固定阈值的依赖会给提取的数据带来严重的可靠性问题。 为了解决这个问题，REFINEX采用了两阶段的方法：首先使用专家模型生成端到端的精炼文本，然后通过将refine输出与原始输入进行比较，得出可靠的监督程序。 该设计提高了用于训练refine模型的数据的一致性和可信度。<br>端到端Refinement：我们不是直接指导专家模型生成refine程序，而是首先指导它生成端到端的refine文本。 具体来说，我们设计了与REFINEX任务一致的指令模板，它提示模型首先判断为什么应该修改给定文本，然后输出精炼版本。 这些提示包含精心构建的规则和示例。 在所有策略中，端到端精化实现了最高的质量增益，这主要归功于它的令牌级粒度和不受约束的重写灵活性。 相对于ProX的重大改进是由于端到端细化消除了函数生成的负担，允许模型只关注于改进文本。<br>利用LLaMA-Factory框架，利用构建的高质量文本监督对和相应的细化程序对qwen3 -0.6 b基模型进行微调。prompt是输入文本，只允许删除，不允许改写，输出为refine文本，以及为什么删除的理由概述。<br>通过最小编辑距离进行函数转换：为了协调可靠性和效率，refinex将端到端输出的有效部分转换为可执行的细化程序，使用最小编辑距离，来计算将原始文本转换为端到端refine文本所需的最少编辑操作，并且只捕获删除操作，以避免过度修改。<br>refine模型的蒸馏和训练：对转换后的程序数据进行额外的后处理。 将长文本分成多个重叠的块，以平衡上下文理解和小规模模型的有限容量。 每个块以12k个token为上限，为了最大化覆盖范围，允许块之间的平均内容重复，以确保充分利用模型的注意力窗口。 执行严格的过滤标准：涉及过长的插入或替换，或非常短的删除的转换将被丢弃，以确保可靠性。 只有高置信度的删除程序被保留用于蒸馏。 为了构建训练语料库，我们对大规模的种子数据进行采样，这些种子数据与现实世界中网络抓取语料库的分布一致。 我们使用Qwen2.5-72B-Instruct 作为专家模型生成端到端的精细化文本，在H800-80G GPU上消耗了大约12480个GPU小时来处理近500万份原始文档。 经过上述的转换和过滤步骤，我们得到了大约200万个高质量蒸馏样本的最终语料库，这些样本用于训练一个0.6B Qwen-3-Base模型（最终的refine模型）。<br>模型训练中的种子数据：<br>PROGRAM EXECUTION AT SCALE 程序的大规模执行：使用高质量的蒸馏数据训练的蒸馏refine模型可以有效地为大规模预训练语料库生成refine程序。 通过根据生成的程序，顺序执行预定义的函数来获得最终的refine文本。 在极少数情况下，同一字符串在一行上出现多次，将跳过相应的remove_str操作，以避免意外删除。 对于在多个块中细化的长文本，我们对每个块程序中的行索引应用偏移量，以使它们与原始文本对齐，从而确保正确地集成到统一的细化中。 REFINEX pipeline生成的refine模型能够对任意文本输入进行可扩展的、可靠的细化。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag"># 大模型</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%8D%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%BA%86%E5%BC%80%E5%A7%8B%E5%88%B7%E9%A2%98/" rel="prev" title="不那些年之开始刷LeetCode">
+      <i class="fa fa-chevron-left"></i> 不那些年之开始刷LeetCode
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

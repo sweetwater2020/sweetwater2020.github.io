@@ -183,6 +183,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/" class="post-title-link" itemprop="url">大模型之RefineX</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-08-19 23:17:10 / Modified: 23:25:23" itemprop="dateCreated datePublished" datetime="2025-08-19T23:17:10+08:00">2025-08-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">大模型</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>RefineX: Learning to Refine Pre-training Data at Scale from Expert-Guided Programs</strong></p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2507.03253v2">https://arxiv.org/abs/2507.03253v2</a></p>
+<p>量子位报道：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/1930626783348241375">https://zhuanlan.zhihu.com/p/1930626783348241375</a></p>
+<p><strong>Refinex：学习从专家指导的程序中大规模地提炼预训练数据</strong></p>
+<p>REFINEX的核心优势在于将高质量、专家指导的端到端精炼结果提炼成最小的基于编辑的删除程序。这种高精度的蒸馏管道用于训练一个高效可靠的精炼模型，该模型可以大规模地系统地改进语料库中的每个实例。 我们在多个模型尺度上对REFINEX从头开始的预训练进行了评估，发现它在不同的下游任务中始终优于在原始、过滤或精炼数据上训练的模型。</p>
+<p>REFINEX以高效率和高精度可靠地提高了文本质量，优于之前的方法，如端到端生成和Prox-C。 这些结果使REFINEX成为现代LLM管道中优化预训练数据的可扩展、有效和可靠的解决方案。<br>大语言模型在自然语言理解、问答、复杂推理上能力出众，支撑这些能力的是预训练语料库的质量，它是知识和推理逻辑的基本来源。<br>预训练数据的可扩展细化越来越被视为推动llm性能极限的关键步骤。 特别是，精化必须满足两个关键标准：(1)效率：考虑到预训练语料库的海量数据量，精化必须是可扩展和低成本的。(2)可靠性：它必须保留有价值的信息，并避免引入可能扭曲原始数据本质的模型或人类偏好的额外偏差。<br>同时实现这两个目标是极具挑战性的。 为了确保效率，启发式方法通常通过在文档级别操作而不是细化文档中的特定内容来牺牲粒度。 使用文档过滤器的基于规则的管道或困惑分数只保留了符合严格标准的数据，导致覆盖范围有限，错失了机会。 近期工作采用llm进行过滤，但这些方法仍然是粗粒度的，或者由于其生成性质而产生高计算成本。 因此，他们经常丢弃潜在的有价值的数据，并且无法提高所保留数据的质量。 ProX （的出现提供了一个有希望的方向，它表明小型蒸馏LMs可以用很少的令牌有效地预测精化程序，然后执行这些程序以低成本产生精化文本。 然而，由于其蒸馏过程的复杂性，ProX管道存在可靠性问题。 由专家模型生成的精化程序经常偏离预期的行为，使得最终的精化模型不可靠。<br>受ProX的启发，我们推出了REFINEX，这是一种新型的大规模精炼框架，它建立在高效的基于程序的数据精炼基础上，同时通过精心构建的蒸馏数据显著提高了可靠性。 ProX的关键限制在于直接训练来自专家输出的噪声细化程序，这往往不能反映高质量的细化操作。 相比之下，REFINEX首先利用专家模型生成可靠的端到端精炼文本。 质量评估实验表明，这些端到端输出在文本质量方面取得了最大的改进。 然而，虽然这些代提供了强大的质量收益，但它们的生产成本很高，并且存在过度编辑的风险，因为在生成过程中可能会强加特定于模型的偏好，从而损害原始数据。 为了解决这个问题，REFINEX采用了最小编辑距离算法来确定将原始文本转换为专家精炼输出所需的最小操作序列。 它过滤掉可能会引入特定于模型的首选项的过度编辑，例如插入和替换，并只保留高质量的删除操作，这些操作被封装到预定义的函数中。 总的来说，REFINEX将蒸馏数据的构建分为两个明确的阶段：首先执行端到端精炼，然后通过将精炼后的文本与原始文本进行比较来生成监督程序。 这种分离可以创建更干净、更可靠的蒸馏数据，然后用于训练能够大规模生成高效、可靠的精炼程序的精炼模型。<br>总结：Prox用小模型生成细粒度精华程序，然后执行这些程序来refine文本。问题是存在可靠性问题，过度编辑，可能产生偏离预期的行为。Refinex则增加一步，首先利用专家模型生成可靠的端到端提炼文本，再用最小编辑距离算法过滤掉过度编辑的风险，只保留高质量的删除操作。再生成可靠的refine程序。<br>模型尺寸：350M、750M，训练数据20B。结果：更低的token开销、更高质量的改进。</p>
+<p>预训练数据细化的主要技术范例：包括基于质量的过滤、端到端细化和基于程序的细化。 我们在效率和可靠性方面分析了它们各自的优势和局限性。<br>基于质量的过滤：根据估计的文档质量选择预训练数据，通常使用启发式规则或llm分配的分数。 启发式过滤应用预定义的规则——比如URL比例、乱码比例、文档长度或重复的阈值来有效地删除低质量的数据。 然而，这些规则缺乏对实例级变化的灵活性，并且经常丢弃有用的内容，同时保留仍然需要改进的文本。 基于LLM的方法使用困惑度或模型分配的质量分数，但可能不稳定，有偏见，并且计算成本高。 重要的是，大多数过滤操作在文档或句子级别，缺乏在字符或子跨度级别改进内容所需的细粒度分辨率。 因此，“精炼”文本的可靠性仍然有限。<br>端到端细化：端到端细化直接提示强大的LLM在细化特定的指令下重写给定的文本。 虽然精心设计的提示可以产生高质量的输出，但这种方法在实践中面临两个关键限制：(1)它的成本高得令人望而却步。 由于模型以与输入相同的规模生成文本，因此端到端精化会产生很高的推理成本，使其不适合大规模部署。 (2)可能影响数据的可靠性。 尽管有明确的约束指令，端到端模型还是倾向于通过修改句子结构、过度纠正拼写或应用风格偏好来进行过度编辑。 这些行为会引入模型偏差，降低原始数据的多样性。<br>ProX引入的基于程序的改进：可以共同实现改进的效率和可靠性。 它提示专家模型在种子样本上生成程序化编辑功能，并训练一个经过蒸馏的小模型来预测这种大规模推理和执行的细化程序。 这种方法的有效性在很大程度上取决于蒸馏数据的质量。 然而，促使专家模型直接生成编辑程序往往无法产生可靠的监督。 这是因为它不仅需要模型确定如何细化，而且还需要明确相应的转换逻辑，这会引入建模和监督的复杂性。 这通常会导致经过训练的精炼模型生成幻觉或格式错误的程序，从而导致执行失败或错误的编辑，从而损害数据质量。<br>Refinex：通过提取一个能够有效推断和执行细化程序的小模型来遵循ProX的核心pipeline。与ProX直接提示专家模型生成程序不同，REFINEX首先执行端到端精炼，然后通过将精炼后的输出与原始文本进行比较来构建监督程序。 这两个阶段的过程产生了更可靠的监督，并有效地消除了生成过程中引入的过度编辑风险，最终导致更有效和健壮的精炼模型。</p>
+<p>REFINEX的目标是降低专家模型直接生成refine程序的难度，同时从端到端输出中保留尽可能多的有效refine操作。 为了实现这两个目标，REFINEX首先提示一个专家模型在精心设计的指令下生成高质量的refine文本。它将refine的文本与原始输入进行比较，以基于最小的编辑距离提取可靠的删除操作序列。 这些操作被转换成一组预定义的程序函数，作为可信的监督来训练一个紧凑的refine模型。 经过训练后，该模型通过推理生成可靠的细化程序，然后执行这些程序以有效地跨语料库执行细粒度的细化。<br>refinex框架：1）使用提示词请求专家模型根据指令生成高质量的refine后文本，然后用最小编辑距离提取有效的删除refine文本。然后文本pairs被转换为程序函数python function，使用监督微调出一个可靠的改进refining model。2）推理时，模型为每个文本生成细粒度的refine程序，由python解释器执行生成最终的语料。<br>refine操作定义：重点是在字符级别对单个文本实例进行细粒度细化，而不是在文档或句子级别进行基于质量的过滤。 形式上，给定一个输入文本t，我们应用执行器E将其转换为更高质量的版本t。 在我们的REFINEX中，我们将E限制为仅删除操作，允许我们删除广告、无意义的URL链接、随机代码乱码以及文本中任何地方出现的其他低价值内容。 此外，这种限制有效地防止了模型驱动的风格偏好的引入，这可能会损害原始文本的真实性，正如在端到端refine中观察到的那样。 这也意味着像拼写错误这样的小缺陷是可以保留的，因为它们通常会在大规模的预训练中通过分布式记忆被消除。<br>定义一个删除操作序列为，其中每个dj表示要删除的字符索引的连续跨度。<br>程序函数定义：程序功能设计基于只删除的细化任务，满足两个关键目标：(1)最小和简单的功能集，以减少冗余并减轻过度复杂或模糊指令造成的幻觉风险；(2)高效的程序生成，以避免推理过程中的效率退化。 做法：在程序中为删除指定精确的字符索引。 但是会导致生成的函数指令token长度过长，严重降低生成效率。<br>受ProX启发，REFINEX 设计了三个核心程序功能以提升细化操作的表达能力：remove_lines() 允许通过紧凑的标记方式删除多个连续行，适用于长跨度删除；remove_str() 实现字符级别的细粒度删除，保证操作的高精度，同时通过数据选择和检查机制来降低多子串同行删除时的风险；keep_all() 用于直接指示无需细化，防止空输出或产生歧义。这样兼顾全面性和最小性。可靠又高效。<br>训练小规模语言模型生成refine程序的关键在于获得高质量的蒸馏数据。 然而，直接让LLM生成符合标准的程序化数据是具有挑战性的。尽管ProX使用少量提示和推理后过滤改进了这一过程，但对启发式和固定阈值的依赖会给提取的数据带来严重的可靠性问题。 为了解决这个问题，REFINEX采用了两阶段的方法：首先使用专家模型生成端到端的精炼文本，然后通过将refine输出与原始输入进行比较，得出可靠的监督程序。 该设计提高了用于训练refine模型的数据的一致性和可信度。<br>端到端Refinement：我们不是直接指导专家模型生成refine程序，而是首先指导它生成端到端的refine文本。 具体来说，我们设计了与REFINEX任务一致的指令模板，它提示模型首先判断为什么应该修改给定文本，然后输出精炼版本。 这些提示包含精心构建的规则和示例。 在所有策略中，端到端精化实现了最高的质量增益，这主要归功于它的令牌级粒度和不受约束的重写灵活性。 相对于ProX的重大改进是由于端到端细化消除了函数生成的负担，允许模型只关注于改进文本。<br>利用LLaMA-Factory框架，利用构建的高质量文本监督对和相应的细化程序对qwen3 -0.6 b基模型进行微调。prompt是输入文本，只允许删除，不允许改写，输出为refine文本，以及为什么删除的理由概述。<br>通过最小编辑距离进行函数转换：为了协调可靠性和效率，refinex将端到端输出的有效部分转换为可执行的细化程序，使用最小编辑距离，来计算将原始文本转换为端到端refine文本所需的最少编辑操作，并且只捕获删除操作，以避免过度修改。<br>refine模型的蒸馏和训练：对转换后的程序数据进行额外的后处理。 将长文本分成多个重叠的块，以平衡上下文理解和小规模模型的有限容量。 每个块以12k个token为上限，为了最大化覆盖范围，允许块之间的平均内容重复，以确保充分利用模型的注意力窗口。 执行严格的过滤标准：涉及过长的插入或替换，或非常短的删除的转换将被丢弃，以确保可靠性。 只有高置信度的删除程序被保留用于蒸馏。 为了构建训练语料库，我们对大规模的种子数据进行采样，这些种子数据与现实世界中网络抓取语料库的分布一致。 我们使用Qwen2.5-72B-Instruct 作为专家模型生成端到端的精细化文本，在H800-80G GPU上消耗了大约12480个GPU小时来处理近500万份原始文档。 经过上述的转换和过滤步骤，我们得到了大约200万个高质量蒸馏样本的最终语料库，这些样本用于训练一个0.6B Qwen-3-Base模型（最终的refine模型）。<br>模型训练中的种子数据：<br>PROGRAM EXECUTION AT SCALE 程序的大规模执行：使用高质量的蒸馏数据训练的蒸馏refine模型可以有效地为大规模预训练语料库生成refine程序。 通过根据生成的程序，顺序执行预定义的函数来获得最终的refine文本。 在极少数情况下，同一字符串在一行上出现多次，将跳过相应的remove_str操作，以避免意外删除。 对于在多个块中细化的长文本，我们对每个块程序中的行索引应用偏移量，以使它们与原始文本对齐，从而确保正确地集成到统一的细化中。 REFINEX pipeline生成的refine模型能够对任意文本输入进行可扩展的、可靠的细化。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%8D%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%BA%86%E5%BC%80%E5%A7%8B%E5%88%B7%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -197,7 +272,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%8D%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%BA%86%E5%BC%80%E5%A7%8B%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">不那些年之开始刷LetCode题米</a>
+            <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%8D%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%BA%86%E5%BC%80%E5%A7%8B%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">不那些年之开始刷LeetCode</a>
         </h2>
 
         <div class="post-meta">
@@ -214,7 +289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-15 00:09:03" itemprop="dateModified" datetime="2025-08-15T00:09:03+08:00">2025-08-15</time>
+                <time title="Modified: 2025-08-19 23:17:20" itemprop="dateModified" datetime="2025-08-19T23:17:20+08:00">2025-08-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,6 +334,59 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minimumTotal</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; triangle)</span> &#123;</span><br><span class="line">        <span class="comment">// 可以用动态规划，n行n列的dp数组表示，双层遍历状态转移，然后从根节点找最小的。</span></span><br><span class="line">        <span class="comment">// 动态规划可进行空间优化，只用两行的数组表示dp。</span></span><br><span class="line">        <span class="comment">// 用一行，行不行，状态转移index依赖index和index-1，所以从左到右遍历不行，得从右到左。</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> triangle.size();</span><br><span class="line">        <span class="type">int</span>[] dp = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">        dp[<span class="number">0</span>] = triangle.get(<span class="number">0</span>).get(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">layer</span> <span class="operator">=</span> <span class="number">1</span>; layer &lt; n; layer ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> layer; index &gt;= <span class="number">0</span>; index --) &#123;</span><br><span class="line">                <span class="comment">// 注意边界，左边的只能index，右边的只能index-1，left表示从左边下来</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> index == layer? Integer.MAX_VALUE : dp[index] + triangle.get(layer).get(index);</span><br><span class="line">                <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> index == <span class="number">0</span>? Integer.MAX_VALUE : dp[index - <span class="number">1</span>] + triangle.get(layer).get(index);</span><br><span class="line">                dp[index] = Math.min(left, right);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Arrays.toString(dp));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i ++) res = Math.min(res, dp[i]);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+
+<h2 id="和为-K-的子数组"><a href="#和为-K-的子数组" class="headerlink" title="和为 K 的子数组"></a>和为 K 的子数组</h2><p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> ，请你统计并返回 <em>该数组中和为 <code>k</code> 的子数组的个数</em> 。</p>
+<p>子数组是数组中元素的连续非空序列。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,1,1], k = 2</span><br><span class="line">输出：2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">subarraySum</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        <span class="comment">// 和为k的子数组：得是连续的，并且子数组可重复的</span></span><br><span class="line">        <span class="comment">// 使用前缀和+HashMap，遍历过程中记录。i+1到j是和为k，则意味着到j的和-到i的和=k</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        map.put(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i ++) &#123;</span><br><span class="line">            sum += nums[i];</span><br><span class="line">            <span class="comment">// 应该先查map，再写map</span></span><br><span class="line">            <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> map.getOrDefault(sum - k, <span class="number">0</span>);</span><br><span class="line">            res += count;</span><br><span class="line">            map.put(sum, map.getOrDefault(sum, -<span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h2><p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] twoSum(<span class="type">int</span>[] nums, <span class="type">int</span> target) &#123;</span><br><span class="line">        HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(target - nums[i])) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i, map.get(target - nums[i])&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三数之和"><a href="#三数之和" class="headerlink" title="三数之和"></a>三数之和</h2><p>给你一个整数数组 <code>nums</code> ，判断是否存在三元组 <code>[nums[i], nums[j], nums[k]]</code> 满足 <code>i != j</code>、<code>i != k</code> 且 <code>j != k</code> ，同时还满足 <code>nums[i] + nums[j] + nums[k] == 0</code> 。请你返回所有和为 <code>0</code> 且不重复的三元组。</p>
+<p>**注意：**答案中不可以包含重复的三元组。</p>
+<p>转变为两数之和子问题来解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">threeSum</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 返回的是数了，不是下标了，可以for循环+两数之和。注意的是，要返回所有的且不能重复，所以需要先排队。</span></span><br><span class="line">        <span class="comment">// 去重是关键，用Set去重，且要先排队保证顺序</span></span><br><span class="line">        <span class="comment">// 减枝也是关键，第一个数&gt;0，后面就不可能了</span></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        Set&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i ++) &#123;</span><br><span class="line">            <span class="comment">// 剪枝</span></span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt; <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i + <span class="number">1</span>; j &lt; nums.length; j ++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (set.contains(<span class="number">0</span> - nums[i] - nums[j])) &#123;</span><br><span class="line">                    <span class="comment">// Collections.sort(Arrays.asList());</span></span><br><span class="line">                    res.add(Arrays.asList(nums[i], <span class="number">0</span> - nums[i] - nums[j], nums[j]));</span><br><span class="line">                &#125;</span><br><span class="line">                set.add(nums[j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用for循环+双指针来解：</p>
+<p>去重：要不用Set，要不就得while循环来移动指针：<code>while(l &lt; r &amp;&amp; nums[r] == nums[--r]);</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">threeSum</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用for循环 + 双指针</span></span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        Set&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &gt; <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span> (i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>]) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> i + <span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> nums.length - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> nums[i] + nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span> (sum == <span class="number">0</span>) &#123;</span><br><span class="line">                    res.add(Arrays.asList(nums[i], nums[left], nums[right]));</span><br><span class="line">                    left ++;</span><br><span class="line">                    right --;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    right --;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    left ++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意List的初始化：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最常用：</span></span><br><span class="line">List&lt;Integer&gt; triplet = Arrays.asList(nums[i], <span class="number">0</span> - nums[i] - nums[j], nums[j]);</span><br><span class="line"><span class="comment">// java9之后，创建List不可变：</span></span><br><span class="line">List&lt;Integer&gt; triplet = List.of(nums[i], <span class="number">0</span> - nums[i] - nums[j], nums[j]);</span><br><span class="line"><span class="comment">// 大括号内初始化：</span></span><br><span class="line">List&lt;Integer&gt; triplet = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;() &#123;&#123;</span><br><span class="line">    add(nums[i]);</span><br><span class="line">    add(<span class="number">0</span> - nums[i] - nums[j]);</span><br><span class="line">    add(nums[j]);</span><br><span class="line">&#125;&#125;;</span><br><span class="line"><span class="comment">// 这里使用了双大括号：外层 &#123;&#125; 创建匿名内部类，内层 &#123;&#125; 是实例初始化块，可以在其中调用 add() 方法。</span></span><br><span class="line"><span class="comment">// 为什么不推荐：这种方式会创建一个匿名内部类的实例，该实例持有一个对外部类的隐式引用（this），可能导致内存泄漏，并且性能稍差。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h2><p>给定两个字符串 <code>text1</code> 和 <code>text2</code>，返回这两个字符串的最长 <strong>公共子序列</strong> 的长度。如果不存在 <strong>公共子序列</strong> ，返回 <code>0</code> 。</p>
+<p>一个字符串的 <strong>子序列</strong> 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。</p>
+<ul>
+<li>例如，<code>&quot;ace&quot;</code> 是 <code>&quot;abcde&quot;</code> 的子序列，但 <code>&quot;aec&quot;</code> 不是 <code>&quot;abcde&quot;</code> 的子序列。</li>
+</ul>
+<p>两个字符串的 <strong>公共子序列</strong> 是这两个字符串所共同拥有的子序列。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestCommonSubsequence</span><span class="params">(String text1, String text2)</span> &#123;</span><br><span class="line">        <span class="comment">// 二维数组动态规划，思考状态转移、初始化，可以多一位，用0表示空字符串的公共子序列</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">len1</span> <span class="operator">=</span> text1.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">len2</span> <span class="operator">=</span> text2.length();</span><br><span class="line">        <span class="type">int</span>[][] dp = <span class="keyword">new</span> <span class="title class_">int</span>[len1 + <span class="number">1</span>][len2 + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= len1; i ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt;= len2; j ++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (text1.charAt(i - <span class="number">1</span>) == text2.charAt(j - <span class="number">1</span>)) &#123;</span><br><span class="line">                    dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i][j] = Math.max(dp[i][j - <span class="number">1</span>], dp[i - <span class="number">1</span>][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len1][len2];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] sortArray(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">        <span class="comment">// 快排的思想：取一个基准数，然后遍历数组，小于基准数的放左边，大于基准数的放右边，通过双指针移动及交换的方式进行。递归进行，直到要排序的只有一个数。</span></span><br><span class="line">        <span class="comment">// 重点：交换的方式：要先移动右指针，left位置变为右数，移动左指针，right位置变为左数。最后left位置放pivot</span></span><br><span class="line">        <span class="comment">// 优化：随机选择基准数，选择后和第一个数交换，然后和之前一样</span></span><br><span class="line">        quickSord(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">quickSord</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="comment">// 注意得是&gt;=</span></span><br><span class="line">        <span class="keyword">if</span> (start &gt;= end) <span class="keyword">return</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">pivot</span> <span class="operator">=</span> nums[start];</span><br><span class="line">        <span class="comment">// 拷贝局部变量</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span>  start;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> end;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="comment">// 先移动右指针</span></span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right] &gt;= pivot) right --;</span><br><span class="line">            nums[left] = nums[right];</span><br><span class="line">            <span class="comment">// 移动左指针</span></span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left] &lt;= pivot) left ++;</span><br><span class="line">            nums[right] = nums[left];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 交换完了，得把基准数放中间</span></span><br><span class="line">        nums[left] = pivot;</span><br><span class="line">        quickSord(nums, start, left - <span class="number">1</span>);</span><br><span class="line">        quickSord(nums, left + <span class="number">1</span>, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">reverseList</span><span class="params">(ListNode head)</span> &#123;</span><br><span class="line">        <span class="comment">// 反转链表：注意不用preNode，就last、head、next解决，循环用head，输出用pre。</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> == head) <span class="keyword">return</span> head;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">last</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">next</span> <span class="operator">=</span> head.next;</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">null</span> != head) &#123;</span><br><span class="line">            head.next = last;</span><br><span class="line">            last = head;</span><br><span class="line">            head = next;</span><br><span class="line">            next = head == <span class="literal">null</span>? <span class="literal">null</span> : head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> last;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="接雨水"><a href="#接雨水" class="headerlink" title="接雨水"></a>接雨水</h2><p>给定 <code>n</code> 个非负整数表示每个宽度为 <code>1</code> 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。</p>
+<p>单调栈</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">trap</span><span class="params">(<span class="type">int</span>[] height)</span> &#123;</span><br><span class="line">        <span class="comment">// 接雨水：单调递减栈，栈内存放索引，索引对应元素是递减的，陆续取出计算面积，一矩形一矩形地累加</span></span><br><span class="line">        <span class="comment">// 关键在于如何取栈元素然后计算面积：取出比当前高度小的栈顶元素，作为底，如果没有左边界了（栈空）就break。</span></span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">// 遍历柱子的过程中，再遍历栈</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; height.length) &#123;</span><br><span class="line">            <span class="comment">// 单调栈就是放之前得把小于当前的都取出来</span></span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; height[stack.peek()] &lt; height[i]) &#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">top</span> <span class="operator">=</span> stack.pop();</span><br><span class="line">                <span class="keyword">if</span> (stack.isEmpty()) <span class="keyword">break</span>;</span><br><span class="line">                <span class="comment">// 因为单调递减栈，不确定哪边更高</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> Math.min(height[stack.peek()], height[i]) - height[top];</span><br><span class="line">                <span class="type">int</span> <span class="variable">wide</span> <span class="operator">=</span> i - stack.peek() - <span class="number">1</span>;</span><br><span class="line">                res += high * wide;</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i);</span><br><span class="line">            i ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
       
     </div>
 
@@ -1216,293 +1344,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">那些年背过的面试题之中间件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-07-24 22:23:55 / Modified: 22:28:31" itemprop="dateCreated datePublished" datetime="2025-07-24T22:23:55+08:00">2025-07-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h2><ul>
-<li><p>微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。</p>
-</li>
-<li><p>微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关</p>
-</li>
-<li><p>微服务间如何通信：http、消息队列、rpc</p>
-</li>
-</ul>
-<h2 id="rpc、HSF"><a href="#rpc、HSF" class="headerlink" title="rpc、HSF"></a>rpc、HSF</h2><ul>
-<li><p>rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制protobuf hessian。</p>
-</li>
-<li><p>自定义报文？http消息头复杂，短链接</p>
-</li>
-<li><p>HSF：高速服务框架，分布式rpc服务框架。统一服务的发布&#x2F;订阅&#x2F;调用方式，解决服务间的高效调用。</p>
-</li>
-<li><p>HSF架构：服务提供者、服务消费者、地址注册中心configServer（注册服务、订阅服务、向消费者推送服务提供者地址）、持久化配置中心diamond（configServer的类型和地址、订阅路由规则等）、元数据存储中心redis（服务上报元数据：方法列表参数结构）、控制台（服务查询治理测试运维）</p>
-</li>
-<li><p>HSF服务发布源码：核心是HSFSpringProviderBean，通过@Import注解引入配置类，配置类实现ImportBeanDefinationRegistrar来创建复杂的bean并注册到spring容器中。HSFSpringProviderBean的afterPropertiesSet()方法中进行服务初始化（初始化调用链，两条链，一是protocolFilterChain: Protocol，它专注于流程编排，在publish()流程顺序执行；一是invocationHandler链，用于后续处理hsf请求调用）、服务发布（使用线程池，Future阻塞等待服务发布成功。使用调用链进行，上报元数据到Redis，启动并监听tcp&#x2F;http端口、分配服务线程池、服务注册。使用Protocol进行流程编排，初始化时编排流程顺序。注册信息：ip&#x2F;port&#x2F;序列化方式&#x2F;路由规则&#x2F;应用名称&#x2F;超时时间。HSFProtocol中开启netty服务，设置tcp相关协议）。</p>
-</li>
-<li><p>HSF消费源码：1.服务初始化，初始化调用链，初始化HSF代理对象jdk。2.服务调用，同样使用调用链，在IO传输层使用netty长连接，使用hessian序列化，在服务提供方使用反射调用（运行时动态获取类的信息）。</p>
-</li>
-<li><p>HSF相比SpringCloud优势：1.HSF使用高性能的异步事件驱动的NIO框架Netty。2.序列化协议hession相比json。3.HSF只需将二方包暴露给用户 4.HSF使用代理机制，将协议封装、选址、远程调用封装，用户只需Spring配置。</p>
-</li>
-<li><p>HSF源码心得：从服务端初始化、服务注册、客户端初始化、调用服务，使用Netty、Hession、ProtocolFilter、InvocationHandler链式调用过程进行流程编排、灵活配置的注册中心、事件监听机制、通过随机数的方式实现随机负载均衡。高内聚低耦合的设计方法。</p>
-</li>
-<li><p>一次完整的HSF调用：服务寻址、网络连接、序列化传输、反射调用</p>
-</li>
-<li><p>一个rpc框架最重要的是什么部分：通信机制（传输协议自定义tcp报文还是http、负载均衡、容错机制）、序列化反序列化协议（网络只能传输字节流，需要将对象转换为字节流），还需要服务发现与注册机制、服务治理机制。</p>
-</li>
-<li><p>shell脚本查询对应错误出现次数：grep “2024-01-01*error” error.log ｜ wc -l</p>
-</li>
-</ul>
-<h2 id="dubbo"><a href="#dubbo" class="headerlink" title="dubbo"></a>dubbo</h2><ul>
-<li><p>dubbo：高性能RPC框架，阿里开源，netty网络框架，异步IO，线程池</p>
-</li>
-<li><p>dubbo框架：服务提供者启动时向注册中心注册服务，服务消费者启动时订阅服务，注册中心Registry向消费者推送服务提供者地址列表，如果发生变化通过长链接推送变更，消费者用负载均衡选择地址，监控中心Monitor，消费者和提供者定时发送统计数据（调用次数调用时间）</p>
-</li>
-<li><p>dubbo负载均衡：随机、轮询、最少活跃调用、一致性哈希、权重</p>
-</li>
-<li><p>dubbo中的Filter：责任链模式的实现，根据配置生成Filter链，实现对Dobbo代码的拦截和扩展，类似于AOP，优雅的代码增强手段，逻辑分层，代码解耦。应用：日志、鉴权、限流、负载均衡。</p>
-</li>
-<li><p>dubbo中的spi扩展：服务扩展机制，可以在运行时动态加载实现类。提供丰富的SPI扩展点，类似java SPI，可以自定义扩展实现，配置方式替换框架中的组件。使用了url总线设计，url参数识别用哪个接口实现。使用@SPI注解指定扩展点名。面向接口编程。</p>
-</li>
-<li><p>dubbo的SPI实现：1.ExtensionLoader单例工厂类，负责加载和管理扩展点实现类。2.不仅通过接口名获取，还有一个key。3.Adaptive自适应扩展，可以在运行时通过传入参数动态选择合适的扩展实现。</p>
-</li>
-<li><p>dubbo的SPI应用：Protocol协议、Cluster集群容错策略、LoadBalance负载均衡策略。都是根据配置动态切换。</p>
-</li>
-<li><p>dubbo中的url总线设计：为了各层解耦，交换参数不用Model，用url参数，方便扩展。底层netty。</p>
-</li>
-<li><p>dubbo启动过程：注册中心（加载配置、启动定时、NettyServer启动netty）提供者（DubboProtocol提供远程服务，RemoteRegistry建立与注册中心连接）消费者（RemoteRegistry，RegistryDirectory订阅服务，创建代理，实际调用InvokerInvocationHandler）</p>
-</li>
-<li><p>dubbo服务治理：负载均衡（请求均匀分配）、集群容错（调用失败时切换机器重试）、服务降级（负载过高时屏蔽部分服务保障核心）、路由策略（选择最优服务提供者）、监控管理（监控报警）</p>
-</li>
-<li><p>dubbo中的设计模式：ExtensionLoader.getExtensionLoader(Protocol.class).getAdaptiveExtension();是工厂模式，Adaptive运行时动态决定调用哪个实现，代理模式。使用调用链Filter责任链模式。ClassLoaderFilter在主功能上添加功能装饰器模式。注册中心向消费者发送notify消息表示服务更新，观察者模式。</p>
-</li>
-<li><p>dubbo总结：Dubbo考虑了框架可扩展性，url总线设计，层次划分。一个调用链路中存在很多Filter拦截，相对HSF性能差，但是可以将自己逻辑整合到调用链中。</p>
-</li>
-<li><p>dubbo限流：服务治理的一种，确保服务提供者不会因为过高请求负载而崩溃。基于令牌桶算法，以恒定速率向桶中添加令牌，每个请求需要从桶中消耗令牌，Guava中RateLimiter实现令牌桶。基于信号量Semaphore，控制同时执行服务的线程数。</p>
-</li>
-<li><p>dubbo序列化有哪些：Hessian2序列化，紧凑且效率高，二进制序列化协议，跨语言，dubbo中默认的。java内置序列化。Fastjson序列化，将对象序列化为json字符串，适合web通信场景。Protobuf序列化，使用.proto文件定义数据结构，生成二进制格式存储数据，跨语言。</p>
-</li>
-<li><p>dubbo比spring cloud优势：1.轻量级和高性能：基于RPC和Netty框架。强调性能。2.灵活的服务治理：路由规则、负载均衡、故障转移、集群支持。3.独立的注册中心：zookeeper等可选，提供分离的服务发现设计。4.支持跨语言的服务调用，gRpc、Hessian集成。5.简单易用，二方包的形式</p>
-</li>
-<li><p>Spring Cloud：基于Spring Boot，一整套微服务解决方案，提供一系列用于构建微服务应用的工具和框架。相对更重。基于REST原则，基于HTTP&#x2F;REST的服务通信。</p>
-</li>
-</ul>
-<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><ul>
-<li>分布式：多台计算机位于不同地理位置，分布式存储处理数据和应用程序。组件之间通过网络连接。</li>
-<li>分布式优点：可扩展性、容错性、地理分散降低延时。</li>
-<li>分布式难点：数据一致性、系统管理（部署、管理、容灾、处理节点故障）、跨节点事务</li>
-<li>分布式事务：事务的操作分布在不同节点，跨库事务，需要确保事务ACID（原子性、一致性、隔离性、持久性）</li>
-<li>分布式事务方法：两阶段提交2PC（准备阶段询问所有参与者是否可提交，根据答复指示所有参与者提交&#x2F;回滚，所有ok才提交）、三阶段提交3PC（增加预提交，参与者将事务操作记录写入日志，即使协调者失去响应，参与者也有足够的信息来完成或回滚事务。减少因协调者故障导致的阻塞，提高容错）、分布式事务框架（XA事务协议）、事务补偿、BASE理论（宽松，基本可用，软状态，最终一致性）</li>
-<li>分布式锁：分布式系统中同步访问共享资源的机制，避免多节点同时修改同一数据的冲突。1⃣️基于数据库锁，select for update对特定行上行级锁。2⃣️基于redis，SETNX命令，expire过期时间。3⃣️基于zookeeper，分布式协调服务，创建一个独特的节点表示获锁。保障原子性和唯一性。</li>
-</ul>
-<h2 id="metaq"><a href="#metaq" class="headerlink" title="metaq"></a>metaq</h2><ul>
-<li>metaq：分布式的，基于队列模型的消息队列中间件，基于发布订阅模式，有push&#x2F;pull两种消费模式。支持严格的消息顺序，亿级别堆积能力，支持消息回溯。延时消息。</li>
-<li>消息队列三大场景：异步、解耦、削峰。</li>
-<li>metaq架构：NameServer（路由注册中心，实例彼此独立，用于服务发现和Topic的注册中心，每个节点维护topic和broker的映射关系）、Broker（实际消息存储的服务器，分master和slave，每个Broker与所有的NameServer建立长连接，定时注册Topic信息到NameServer。主节点读写，从节点提供冗余和故障转移。）、Producer（消息生产者，与NameServer其中一个建立长连接，读取Topic路由信息。与提供Topic服务的Master Broker建立长连接，并定时向其发送心跳）、Consumer（消息消费者，与NameServer其中一个建立长连接，读取Topic路由信息。从Master Broker&#x2F;Slave Broker订阅消息，与Broker建立心跳。可pull可push，可集群可广播）。</li>
-<li>metaq的存储模型：1⃣️CommitLog是物理存储文件，存储所有Topic的消息元数据，是全局的顺序写入的日志文件。2⃣️ConsumerQueue逻辑队列是每个Message Queue的索引文件及存储上的体现，记录CommitLog中的消息地址（偏移量、大小、消息tag的hashcode），每个条目20字节，提供快速访问。类似B+树，CommitLog是叶子结点存储实际数据，ConsumerQueue是中间节点负责索引数据。3⃣️Message Queue是逻辑上的消息队列，是Topic的分区，分散在不同Broker。用于并行发送和接收消息。4⃣️IndexFile用于快速检索消息，维护消息键（消息ID、Key）到物理位置的映射。</li>
-<li>metaq如何保证消息高可用：1⃣️Producer：支持同步异步发送方式，同步消息发送确认、消息重试。使用负载均衡选择Broker进行消息投递。快速失败：调度线程定时检查第一个节点排队时间，超过就立即返回失败，以尽快重试。故障规避机制避开上次失败的Broker。2⃣️Consumer：消息拉取确认、消费失败重试队列、消费进度存储（定期存储消费进度offset，重启或故障后从进度继续消费）、业务层实现幂等消费（重复消费也不影响）。3⃣️Broker：持久化存储机制（存储到CommitLog，顺序写入磁盘）、主从部署（主从同步、主从切换，Master和Slave故障转移）、死信队列（无法成功消费的消息进入死信队列）、使用内存映射文件MappedFile（将磁盘文件映射到内存中，以操作内存方式操作磁盘，减少CPU拷贝）</li>
-<li>同步刷盘和异步刷盘：将内存中数据持久化到磁盘中，同步刷盘是将消息成功写入commitLog中之后再返回给生产者成功，更可靠。异步刷盘是写到内存后直接返回，然后通过另一个后台线程来刷盘，吞吐量更高。</li>
-<li>Broker主从同步：从节点定时向主节点发送同步请求，主节点根据从节点CommitLog最大偏移量返回消息。</li>
-<li>NameServer作用：Broker的动态注册与发现（心跳检测是否存活）、路由信息管理（保存整个Broker集群的路由信息，topic和Broker的映射关系）。每个NameServer有一份完整数据。</li>
-<li>Raft协议和Paxos：分布式系统中用于解决一致性问题的共识算法。例如Zookeeper中的Leader选举。</li>
-<li>RocketMq集群模式：1⃣️单master模式：不能故障转移和高可用。2⃣️多master模式：不能故障转移。3⃣️多maste多slave异步模式：异步复制，实时性高，Master宕机磁盘损坏情况下会丢失少量消息。4⃣️多master多slave同步模式：同步双写，写成功才返回给应用，无单点故障。</li>
-<li>RocketMq顺序消息如何保证：CommitLog的写入是顺序的，消息队列FIFO，对于单个Message Queue而言，是按存储顺序顺序消费的。多个Message Queue是不保证全局顺序的。需要确保消息只分配给一个Message Queue。</li>
-<li>RocketMq负载均衡：Producer负载均衡，轮询方式发送到Message Queue。Consumer负载均衡，集群模式下queue均匀分配给实例，每个queue只分给一个Consumer实例。广播模式下所有consumer分到所有queue。</li>
-<li>死信队列：消息重复消费失败，达到最大重试次数，进入死信队列。一个死信队列对应一个GroupId，不分Topic。</li>
-<li>消息幂等：消费者接收到消息后，根据业务唯一Key（如Message key）做幂等，即使重复消费也没事。</li>
-<li>推拉消息模式：Pull：拉取型，消费者主动定期轮询Broker，请求新消息。Push：消费者注册消息监听器来接收Broker的消息推送，被动消费。但实现上，都是消费端主动拉取的方式，RocketMq的服务端不会主动推送，push模式下还是消费端拉取消息，拉取后调用回调接口，模拟推送。</li>
-<li>任何一台Broker宕机怎么办：Broker采用主从架构，多副本策略。Broker宕机后主从切换，高可用。4.5开始支持Dlegder模式，基于raft分布式一致算法。</li>
-<li>消息被消费后会立即删除吗：不会，消费后只是消息队列的消费进度（offset）更新，消息的删除是通过定期清理过期文件来实现的。</li>
-<li>延时消息实现：是在投递到Topic这一阶段延时的。1⃣️消息投递：提供若干个延时等级。有一个专门的延时Topic，存入对应延时等级的队列中。2⃣️消息调度：Broker启动时，创建ScheduledThreadPoolExecutor线程池，每个延迟队列一个线程扫描，定期检查延时队列中的消息是否到期。3⃣️转移消息：取出消息重新进行CommitLog写入，写入对应Consumer Queue。然后正常消费。</li>
-<li>metaq总结：高性能（吞吐量高并发量高，队列模型、并行消费、基于Netty）、高可靠性（消息丢失可能小，重试机制、故障规避机制、重试、死信队列）、高实时性（低延迟，快速失败、异步刷盘、零拷贝）</li>
-</ul>
-<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
-<li>消息队列：消息队列是一个用于接收消息、存储消息并且转发消息的中间件，异步、削峰、解耦。</li>
-<li>metaq中的nameserver：类似kafka中zookeeper的角色，不直接采用ZooKeeper是因为ZooKeeper有自动选举Master的功能，MetaQ的架构设计上决定了它不需要进行Master选举，而只需要使用一个轻量级的元数据服务器就可以了。</li>
-<li>kafka：一个多分区、多副本且基于 ZooKeeper协调的分布式消息系统。定位为一个分布式流式处理平台，高吞吐、可持久化、可水平扩展、支持流数据处理。</li>
-<li>kafka的架构：zookeeper保存broker集群元数据，对控制器进行选举操作。Producer生产消息并发送到Broker。Consumer从Broker订阅并消费消息。Broker接收生产者的消息，存储消息，为消息设置偏移量。Topic消息的主题。一个Topic细分为多个分区，在存储上看作一个可追加的Log文件。offset是消息在分区中的唯一标识，保证消息在分区的顺序性，不跨分区，也就是kafka只保证分区有序性。Replication副本，保证高可用，同一Partion在多个Broker上存多个副本，主提供读写，主失效的话，zookeeper选举controller，controller选择主。</li>
-<li>kafka高可用：多分区，一个Topic主题分区数据跨越多个broker分布式存储，每个分区有多个副本，主出现故障，可以故障转移。</li>
-<li>kafka一定不会丢失消息吗：只有一个副本情况下会丢失，生产者确认策略是异步的还是同步的，异步的可能在消息到达服务器之前丢失。短暂网络故障、磁盘损坏。</li>
-<li>netty的优点：1⃣️Reactor模型处理并发网络事件：主Reactor线程负责接收新的客户端连接，将连接分配给从Reactor，负责监控和处理IO事件。2⃣️内存管理：池化的内存分配方式，减少内存分配和回收成本。字节缓冲区ByteBuf提供内存读写，较JDK自带的ByteBuffer具有更高的性能，引用计数。3⃣️连接管理：基于事件循环(EventLoop)的模型来管理网络连接。每个EventLoop都维护了它自己的选择器(Selector)和任务队列，能够处理成百上千的连接而不会创建与之对等的线程，降低资源消耗。链式的处理器ChannelHandler来处理网络事件。</li>
-<li>tcp和udp：tcp面向连接，udp无连接。tcp提供可靠传输，流量控制，拥塞控制，udp尽力而为，不保证数据包顺序、完整性、正确性，不会自动重传。tcp点到点的，面向字节流，传输慢，首部开销大20-60字节，适合文件传输、网页。udp一对一多对一多对多一对多，面向报文，传输效率快，不可靠，首部开销小8字节，适合视频通话。</li>
-</ul>
-<h2 id="netty"><a href="#netty" class="headerlink" title="netty"></a>netty</h2><ul>
-<li>Netty是什么：提供异步的基于事件驱动的网络应用程序框架。用来快速开发高性能、高可靠性的网络IO程序，最流行的NIO框架。Elasticsearch、Dubbo、gRpc、Zookeeper、Rocketmq都用Netty。NIO、Seletor选择器、事件驱动、回调异步。</li>
-<li>Netty的事件驱动：事件如连接打开、数据到达、连接关闭均以异步方式处理。提供EventLoop处理IO事件，其中ChannelHandlers响应事件。发起IO后，立即返回ChannelFuture对象，开发者在上面增加监听器ChannelFutureListener，在IO完成时收到通知。回调机制和Future的异步编程模型。</li>
-<li>Reactor模型：事件驱动架构的一种实现方式。一个单线程监听就绪IO事件，并将IO事件分发给回调函数。Acceptor处理新连接，Reactor分派事件分派给Handler，Handler事件处理。NIO就是。</li>
-<li>Netty优点：高并发基于NIO、传输快零拷贝、封装好、内存池设计使用直接内存、高性能序列化协议Protobuf</li>
-<li>Netty应用场景：RPC框架的网络通信工具、实现HTTP服务器、实现即时通讯系统、消息推送系统</li>
-<li>Netty相比原生NIO优势：易用性（封装API）、稳定性（修复了select空转导致CPU100%问题）、高性能（对象池复用和零拷贝技术）、Netty异步基于事件驱动</li>
-<li>Netty和Tomcat区别：Tomcat是用作Servlet容器的Web服务器，Netty是异步事件驱动的网络应用框架。通信协议上，Tomcat基于http，Netty不仅支持http，可以通过编程自定义各种协议。Tomcat需要遵循Servlet规范请求与响应模型，Netty不需要。</li>
-<li>Netty体系结构：1⃣️Channel：Socket的连接依据，创建、注册到EventLoop、连接到远程节点。2⃣️EventLoop：Executor在Netty的线程模型抽象，由EventLoopGroup分配管理。一个EventLoop可以被分配给多个Channel，一个Channel的IO操作由一个线程执行。作用是负载监听网络事件并调用事件处理器进行IO操作。3⃣️EventLoopGroup：线程池，通常两个，一个用于接受新连接，另一个用于处理已接受连接的数据传输IO操作。4⃣️ChannelHandler：处理具体的业务逻辑，用户自定义事件处理逻辑，如连接打开关闭、数据读取写入。5⃣️ChannelPipeline：ChannelHandler实例链，编排Handler事件处理器链式执行。6⃣️Bootstrap：启动类，用于配置整个Netty程序，进程绑定到端口、设置线程模型、事件处理流。分为服务端ServerBootstrap和客户端Bootstrap</li>
-<li>Netty运行总结：Netty的服务端通过Channel处理每次的连接请求，Channel都会注册到EventLoop线程模型中等待排队或立即执行。EventLoop由EventLoopGroup管理和分配。Channel有四种生命状态，ChannaelHandler处理具体的业务逻辑，ChannelPipeline编排所有的Handler顺序执行。Bootstrap用于将这些逻辑成为一个可运行的程序，提供一个运行入口。</li>
-<li>网关：客户端和服务之间的中介，简化网络结构，对外提供统一的访问接口。功能：路由转发、负载均衡、鉴权、限流、监控。Netty可实现网关，实现WebSocketHandler，两个EventLoopGroup，通过ServerBootstrap引导，异步调用的Channel方式，执行ChannelPipeline中的ChannelHandler。</li>
-<li>Netty线程模型：使用事件循环EventLoop处理IO操作，每个EventLoop绑定到一个线程，服务多个Channel，负责调度和执行ChannelPipeline中的ChannelHandler。EventLoopGroup一个接收新连接的boss和负责已连接的worker。实现Reactor模式，每个EventLoop包含一个Selector选择器来监听注册在其上的channel事件。</li>
-<li>Netty服务端启动过程：1.创建主从EventLoopGroup实例 2.初始化服务端启动引导ServerBootstrap实例，配置启动参数  3.设置ChannelPipeline，添加自定义ChannelHandler来处理事件和数据交互 4.ServerBootstrap的bind方法绑定服务器监听的端口，启动服务器来接收客户端连接 5.sync方法阻塞等待直到服务器绑定操作完成，随后进入服务模式</li>
-<li>Netty的无锁化体现在哪：串行无锁化设计，在IO线程内部进行多个Handler串行操作，期间不进行线程切换，避免多线程导致的锁竞争。</li>
-<li>Netty如何解决epoll空轮询的：使用NIO的epoll选择器时遇到无效的文件描述符而无限循环。Netty维护一个计数器监控epoll_wait返回次数，如果没有任何IO事件情况下连续多次返回，认为空轮询，Netty会重建Selector，将原来的Channel重新注册到新的Selector上。</li>
-<li>拆包和粘包：TCP面向流，没有界限的一串数据，会根据TCP缓冲区的实际情况进行包的划分。通过上层应用协议设计来解决：1.消息长度固定 2.特殊分隔符作为结束标志 3.消息头定义消息长度</li>
-<li>Netty解决拆包和粘包：依靠提供的一系列解码器（Decoder），能够根据应用层协议将接收到的字节流重新组合成有意义的数据单元（消息或帧）。</li>
-<li>Netty零拷贝：使用堆外直接内存进行Socket读写，不需要进行字节缓冲区的二次拷贝。Netty的Zero-copy完全是在用户态（Java应用层）的，偏向于优化数据操作。OS层面的Zero-copy通常是避免在用户态和内核态之间的拷贝数据。</li>
-<li>TCP长连接和短连接：TCP的长连接和短连接由应用层面决定。短连接是建立连接读写完成后关闭连接，每次建立连接消耗资源。长连接是读写后不关闭连接，后续继续使用。</li>
-<li>Netty长连接和心跳机制：TCP长连接中可能出现断网异常，因此引入心跳机制，在client和server之间没有数据交互时给对方发送特殊数据包，对方收到后回应一个（PING-PONG交互），表示仍然在线。</li>
-<li>Netty对象池技术：对象池缓存创建好的对象，避免需要时才创建。Netty中buffer是对数据的抽象，数据拷贝时用到，代表可读写的内存区域，通过ByteBuf类实现，Netty会对其进行池化，减少内存分配和垃圾回收开销。</li>
-<li>Netty序列化协议：不强制使用特定的序列化协议。它提供了灵活的编解码器机制，允许开发者根据需要使用不同的序列化协议：json&#x2F;pb。</li>
-</ul>
-<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
-<li>设计模式：23种，为复杂解耦，将一大坨代码拆分成职责单一的模块，满足高内聚低耦合、开闭原则（不改变现有代码的基础上扩展功能）。创建型：创建和使用解耦。结构型：不同的功能代码解耦。行为型：不同的行为代码解耦。</li>
-<li>面向对象的四大特征：封装（封装成对象，隐藏实现细节，private public控制访问权限）、抽象（忽略不同，抽象相同点，继承抽象类is a和实现接口has a）、继承（继承父类的属性和方法，允许重用和扩展）、多态（重载是静态，重写Override是动态）</li>
-<li>创建型模式：封装复杂的创建过程，解耦对象创建和使用。单例模式：创建全局唯一对象。工厂模式：创建不同但相关类型的对象（同一父类&#x2F;接口），给定参数决定对象类型。建造者模式：创建复杂对象，设置不同可选参数定制化对象Builder。原型模式：创建成本大，复制已有对象进行创建。</li>
-<li>单例模式：一个类创建全局唯一实例，提供全局访问点。spring容器一级缓存即单例池，ApplicationContext.getBean获取bean。唯一访问性能高，不适合有状态的。</li>
-<li>单例模式实现：1⃣️饿汉式：类加载时就创建，线程安全，但无法延迟加载。2⃣️懒汉式：第一次使用时才创建，延迟加载，但多线程下需要加锁保证线程安全避免创建多实例。3⃣️静态内部类：在外部类加载时不会被加载，只有第一次使用才加载并创建实例，JVM保证线程安全。4⃣️枚举类：天生单例。5⃣️双重检查锁定：既延迟加载又线程安全，同步外检查一次，同步块内检查一次，volatile+synchronized。</li>
-<li>线程唯一单例怎么实现：ConcurrentHashMap、或ThreadLocal线程局部变量。</li>
-<li>工厂模式：提供工厂类来代替new操作。Executors方法时静态工厂模式。1⃣️简单工厂模式：工厂类方法根据传入参数不同决定生成不同对象。2⃣️工厂方法模式：工厂接口，不同产品创建实现类，开闭原则。3⃣️抽象工厂模式：接口代表一个产品族。不同方法创建不同产品。</li>
-<li>建造者模式：创建复杂对象，@Builder传入参数定制化。</li>
-<li>原型模式：创建对象成本大，直接复制已有对象方式创建。浅拷贝：只对基本数据类型复制，引用数据类型进行引用传递。深拷贝：引用数据类型创建新对象并复制内容。实现：实现Cloneable接口，重写Object的clone方法。或序列化实现。</li>
-<li>代理模式：结构型模式，给某对象提供代理，由代理对象控制对真实对象的访问，直接调用变间接调用，不改变原代码前提下增加功能：鉴权、统计、监控、限流。1⃣️静态代理：在运行前就创建代理类，实现相同接口&#x2F;继承实现类。2⃣️动态代理：运行期间通过反射动态创建代理类，运行前不存在代理类字节码文件。不需要为每个代理类创建代理对象。</li>
-<li>适配器模式：允许不兼容的接口之间交互，创建一个中间层，将一个接口转换为适配的接口。类适配器：继承实现。对象适配器：组合实现。例如Spring MVC中提供不同的HandlerAdapter适配不同的处理器，供DispatchServlet处理HTTP请求。Spring AOP中提供不同的适配器AdvisorAdapter来封装不同类型的通知。</li>
-<li>观察者模式：行为型模式，基于发布订阅，对象发生变化时进行通知。同步阻塞：阻塞消息发布者。异步非阻塞：使用消息队列，非阻塞地通知观察者。</li>
-<li>模版模式：通过定义一个算法的骨架，并将一些步骤的实现延迟到子类。算法结构不变，子类重新定义算法。例如JdbcTemplate。</li>
-<li>策略模式：行为型模式，定义一个算法接口，不同算法实现该接口，上下文类表示使用策略的类，维护一个指向策略接口的引用。可以轻松增加、替换算法。</li>
-<li>责任链模式：多个不同的处理类对象Handler组成一条链，请求在链上传递，链上每个对象处理，返回&#x2F;传递给下一个对象。</li>
-<li>Spring中的设计模式：1⃣️单例模式：Spring容器单例池，bean都是单例的。2⃣️工厂模式：BeanFactory和ApplicationContext创建Bean。3⃣️代理模式：Aop功能使用JDK动态代理和Cglib动态代理。4⃣️模版模式：JdbcTemplate提供一套模板方法来处理数据库的连接、执行 SQL 语句、处理结果集。5⃣️观察者模式：Spring事件驱动模型，ApplicationEvent事件、发布者、监听器。6⃣️适配器模式：Spring MVC中适配不同的处理器Controller。AOP中适配不同的通知Advice。</li>
-<li>工作中用到的设计模式：1⃣️单例模式：数据库连接池、XStream用来进行xml序列化反序列化，反复创建回造成ygc，使用单例模式。2⃣️工厂模式：根据不同业务类型返回对应的业务处理类。实现InitializingBean接口，重写afterPropertiesSet方法，用Map维护不同业务类的引用。3⃣️观察者模式：报警系统，定义事件类继承ApplicationEvent，业务类中使用applicationContext.publishEvent(ApplicationEvent)来发送事件，定义监听器EventListener，监听消息发送报警。4⃣️责任链模式：轨迹处理流程：解析、切分、抽稀、匹配、入库，定义责任链HandlerChain，按照流程处理。</li>
-</ul>
-<h2 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h2><ul>
-<li>zookeeper：分布式协调服务，用来管理hadoop生态圈的。为分布式应用提供一致性服务的软件，功能：配置管理、服务发现、领导者选举、集群管理。</li>
-<li>zookeeper为什么使用集群：1.高可用性，单节点失败仍可运行。2.数据一致性，ZAB协议实现所有节点数据一致性。3.负载均衡，分散负载。4.可伸缩性。</li>
-<li>zooleeper架构：1.Client连接到一台Server，向server获取信息，周期性发送心跳给server，server回复ack，没回复则重定向一台server。2.Server包括一台Leader和多台Follower。3.ensemble表示一组服务器，至少3台。4.Leader，服务启动时进行Leader选举，负责处理写操作，在集群中同步数据。5.Follower跟随者，处理读操作，数据冗余，转发写请求，参与投票。</li>
-<li>zookeeper中数据结构：和Unix文件系统类似，看作一棵树，节点称为Znode，存储1MB数据，通过其路径唯一标识。不能存大数据。create命令创建数据，get命令获取目录的值，用多版本并发控制来解决并发，set修改。</li>
-<li>zookeeper三种目录节点znode类型：1.持久目录：创建之后一直存在，直到显式删除，存储长期有效的配置信息和系统状态信息。2.临时目录：在client活动期间有效，断开自动删除，不能有子目录。常用于锁和服务发现机制，例如标记某个资源正在被使用，或一个实例的注册信息。3.顺序目录：在指定路径后增加一个单调递增的计数器作为后缀，生成唯一的标识符，用于分布式锁中的实现队列顺序。</li>
-<li>zookeeper分布式锁：顺序临时节点+watch监听器。创建一个锁节点&#x2F;locks，请求获锁，需要在该目录下创建一个顺序临时节点，然后判断自己是不是最小节点，是则获取到锁，不是则创建一个监听器监听比自己小一的上一个节点，上一个节点删除（手动删或断开连接自动删除）则该节点获取到锁。</li>
-<li>zookeeper的观察者模式：zookeeper&#x3D;文件系统+通知机制。zookeeper允许客户端设置对znode的监视（watch），典型的发布-订阅模式，节点发生变化时，客户端会被通知。特点：一次性（监视被触发后会被移除），可以对分布式环境中的状态变化快速做出反应。</li>
-<li>zookeeper的leader选举：最小号选举法：每个节点投票给自己，节点之间互相发送自己的投票，节点收到投票后评估选择最小id的节点成为领导者。当一个节点收到超过半数节点支持同一id的投票时，节点认为领导者已选好。考虑节点id和最大的事务id（zxid），确保领导者是数据最新的节点。</li>
-<li>zookeeper的ZAB协议：原子广播协议，保证数据一致性。负责服务之间的数据复制（顺序一致性的）和领导者选举过程中的状态同步。1⃣️消息广播：类似两阶段提交，Leader接收写请求，请求封装成事务，事务zxid保证顺序，发送给所有Follower，超过半数成功响应则执行commit。未响应的随后同步。2⃣️崩溃恢复：选举数据最新的节点作为Leader，与集群中其他节点同步状态。</li>
-<li>zookeeper集群搭建：准备至少三台服务器，安装zookeeper，zoo.cfg配置文件中设置数据目录，设置连接端口，配置服务器列表。启动zookeeper服务。</li>
-<li>zookeeper如何保证hadoop高可用的：1⃣️故障切换和Leader选举：Zookeeper故障转移控制器ZKFC监控和处理NameNode的故障切换，协助备用NameNode成为主节点保障HDFS高可用。ResourceManager也是。2⃣️集群元信息同步：zookeeper提供一致性的分布式数据管理，Hadoop的组件可以利用zookeeper维护和同步系统信息如配置信息、集群状态。3⃣️服务发现：zooKeeper 可以作为一个服务注册表，帮助客户端发现当前可用的服务地址。</li>
-<li>zookeeper的应用：Kafka中zookeeper用于集群管理和协调，包括 Broker 的注册、领导者选举、集群配置管理等。还是Kafka 集群元数据的存储中心。HBase中zookeeper用于领导者选举、存储集群元数据。</li>
-</ul>
-<h2 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h2><ul>
-<li>hadoop：分布式计算框架，用于在分布式服务器集群上存储和处理大数据集的框架，包括底层存储框架HDFS、分布式计算框架MapReduce、资源调度系统YARN。可以分布式运行PB级别数据。Zookeeper提供协调服务，例如HBase中集群协调领导者选举。</li>
-<li>HDFS：分布式文件系统，将文件数据存储在多台机器组成的集群上，每份数据具有多个备份，更可靠。</li>
-<li>HDFS架构：主从结构，一个主节点namenode，多个从节点datanode。1⃣️namenode负责接收用户请求，维护文件目录结构、管理文件和block(文件被分为块)的关系以及block和datanode的关系。2⃣️datanode负责存储文件，文件被分成block存储（128M&#x2F;256M），在不同datanode上有多个副本。文件索引与实际数据分离。对硬件要求不高，可存储超大文件，目标是高数据吞吐量。</li>
-<li>mapreduce：分布式运算程序的编程框架，用于大数据集的并行运算，海量计算任务分而治之。计算任务分摊到各个计算节点并行计算，汇总得到最终结果。分布式的，抽象了并行处理的复杂度，开发者只需要实现Mapper和Reducer。</li>
-<li>mapreduce核心步骤：map拆解（处理输入的键值对，执行定义的Map函数，生成中间键值对）、reduce组合（汇总每个键的值，生成最终结果）。具体可分为：Split、Map、Combiner、Shuffle、Reduce。</li>
-<li>split：将输入文件切割为若干块，每一块由不同节点处理。将文章分为不同句。</li>
-<li>map：将每个节点的原始数据处理为中间数据，输入输出都是kv。</li>
-<li>shuffle：洗牌，因为split是随机的，导致相同key数据处理在不同节点。shuffle将map后的结果重新分组，相同key给到同一reduce节点。</li>
-<li>combiner：减少shuffle需要的网络IO操作，对Map后的结果提前做一次归约，相同key组成一条。</li>
-<li>mapreduce的架构：计算向数据靠拢，使用主从架构，一个JobTracker接收客户端提交的计算任务，把计算任务分给TaskTracker执行，进行调度、监控。多个TaskTracker执行分配的计算任务。</li>
-<li>JobTracker：跟踪任务的执行进度、资源使用量等信息，将这些信息告诉任务调度器TaskScheduler。</li>
-<li>TaskTracker：使用slot划分节点资源（CPU、内存），将slot分配给MapTask和ReduceTask。2.0用YARN来进行资源调度。</li>
-<li>YARN：负责资源管理、任务调度的框架。基于主从模式的分布式架构。一个ResourceManager，多个NodeManager其中包含ApplicationMaster和Container。1⃣️ResourceManager是中控模块，负责整个集群资源的管理和分配。2⃣️NodeManager是每个节点上的资源和任务管理器，启动管理container。3⃣️ApplicationMaster每个应用的调度和协调，向RM申请资源，告诉container做什么。4⃣️Container资源容器，程序执行环境，封装任务所需的资源：cpu、内存。</li>
-<li>自己使用mapreduce：在odps处理大规模数据时，map任务组织数据键值对，定义key和value，key位分组依据adcode，value为数据。reduce中数据已经按照adcode进行了分组，在分组中做数据处理计算。</li>
-<li>MaxCompute：odps，大规模数据计算服务，负责存储和处理大量数据。</li>
-<li>DataWorks：数据开发与管理平台，负责流程设计、调度、管理，提交到 MaxCompute中执行计算任务。</li>
-</ul>
-<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><ul>
-<li>10G文件1G内存怎么排序：外部排序，分隔为小的文件块，对每个小文件放入内存进行排序，排序结果写回磁盘。对多个排序结果进行归并排序，使用优先队列（最小堆），归并过程中，每次从堆中取出的最小元素被挨个写入最终的输出文件中。</li>
-<li>直接选择排序：第一次从arr[0到]arr[n-1]中选取最小值，与arr[0]交换，第二次从arr[1]到arr[n-1]中选取最小值，与arr[1]交换。总共n-1次。</li>
-<li>插入排序：逐渐构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。</li>
-<li>堆排序：通过构建二叉堆，不断移除堆顶元素并重建堆，最终得到一个有序序列。</li>
-<li>归并排序：归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表</li>
-<li>希尔排序：希尔排序又叫缩小增量排序，把所有的数据按照下标间隔进行分组，在每个组内进行插入排序。排完之后缩小分组数，再插入排序。不断缩小组的间距。直到只分一为组。</li>
-<li>排序复杂度：快排时间Onlogn空间Ologn不稳定。冒泡时间On空间O1稳定。</li>
-</ul>
-<h2 id="计算机原理"><a href="#计算机原理" class="headerlink" title="计算机原理"></a>计算机原理</h2><ul>
-<li><p>网络分层：物理层（比特流的透明传输，中继器、集线器）、数据链路层（传送帧MAC、网卡、网桥、交换机）、网络层（选择合适的路由，IP、ICMP、路由器、防火墙）、传输层（TCP、UDP）、应用层（DNS、HTTP、SMTP、FTP）</p>
-</li>
-<li><p>TCP的安全性：三次握手（客户端SYN，服务端ACKSYN，客户端ACK）、四次挥手（客户端FIN、服务端ACK、服务端传输完FIN、客户端ACK）</p>
-</li>
-<li><p>tcp流量控制：避免发送方发送得太快接收方来不及处理，滑动窗口的方式，接收端告诉客户端确认序列号和还能接受多少数据。发送端调整滑动窗口（已发送未确认、为发送可接受）。更新窗口信息可能丢失，设置0窗口探测报文。</p>
-</li>
-<li><p>tcp拥塞控制：防止过多数据注入网络。慢开始（加倍达到慢开始门限）。拥塞避免（拥塞窗口+1），如果拥塞，门限减半，窗口变1，执行慢开始。快重传：接收方收到失序报文发出重复ACK，发送方收到三个重复确认，就重传。快恢复：失序报文后，慢开始门限减半，拥塞窗口设为减半后的门限，执行拥塞避免。</p>
-</li>
-<li><p>tcp不提供加密功能，需要应用层的TSL&#x2F;SSL。两台服务器间可以建立多个tcp连接（socket&#x3D;ip+端口号不同即可）</p>
-</li>
-<li><p>输入url发生什么：1.DNS解析获取ip，浏览器缓存-路由器缓存-DNS缓存。2.根据ip建立TCP连接。3.浏览器向服务器发送http请求。4.服务器响应http请求。5.浏览器进行渲染。</p>
-</li>
-<li><p>tcp&#x2F;ip理解：IP协议是网络层的协议，使用分组交换技术来传输数据，通过路由器进行转发，最终到达目的地。无连接性、无状态性、不保证可靠传输。TCP是传输层协议，主要负责在IP协议提供的基础上实现可靠的、有序的、有连接的和无差错的数据传输。</p>
-</li>
-<li><p>cookie、session、token：1⃣️cookie用来保存一些信息在客户端比如记住密码和推荐显示。2⃣️session用来标识一次会话，记录用户状态，在一次会话期间共享数据。用户首次访问服务器时创建一个session，session id设置为cookie保存在浏览器。3⃣️token用来做密钥快捷登录的。</p>
-</li>
-<li><p>cookie、session、token：生成位置都在服务器，cookie和token保存在客户端，session保存在服务器。鉴权过程：请求携带cookie与服务器记录cookie对比确认用户状态。session用请求中session id提取，恢复用户状态。请求携带token与服务器通过请求信息生成token对比。</p>
-</li>
-<li><p>http状态码：301永久重定向。302临时重定向。400服务端无法理解客户端请求。401未授权，需要用户身份认证。403禁止访问，服务端拒绝。404未找到请求的资源。500服务端内部错误。</p>
-</li>
-<li><p>DNS基于什么协议：DNS域名解析系统，应用层，用于将人类可读的主机名转换为机器可读的IP地址。主要基于UDP进行工作，但当响应数据大小超过报文限制，或者需要更可靠传输时，用TCP。</p>
-</li>
-<li><p>DNS过程：解析域名时，首先检查本地DNS缓存，如果未找到，请求将发送至配置的递归DNS服务器，递归DNS服务器会进行一系列迭代查询，从根服务器开始，逐级向下询问直到找到该域名的权威DNS服务器，获取对应IP地址。沿着查询链路返回给用户的设备。</p>
-</li>
-</ul>
-<h2 id="边缘计算"><a href="#边缘计算" class="headerlink" title="边缘计算"></a>边缘计算</h2><ul>
-<li>边缘计算：一种分布式计算框架，在靠近数据生成的位置（边缘）处理数据的方法。将计算能力下放到网络的边缘，边缘网络基本上由终端设备、边缘设备、边缘服务器等构成。特点：低延迟、节省带宽、提高隐私和安全性、实时数据处理。应用场景：物联网（IoT）、智慧城市、无人超市。</li>
-<li>边缘计算和云计算：边缘计算采用分布式计算架构，将运算分散在靠近数据源的近端设备处理，分担云平台的工作量，不需要把数据回传云端处理，实时性更好、效率更高、延迟最短，没有网络也不妨碍。</li>
-<li>k8s：Kubernetes是一个开源的容器编排系统，用于自动化部署、扩展和管理容器化应用程序。由google设计。</li>
-<li>docker：容器化技术允许将应用程序及其依赖项打包到一个轻量级、可移植的容器中，使得应用程序能够在任何环境中一致地运行。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1573,20 +1414,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
