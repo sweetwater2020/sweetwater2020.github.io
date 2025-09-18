@@ -28,7 +28,7 @@
 <meta property="og:description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:25:25.599Z">
-<meta property="article:modified_time" content="2025-07-24T14:26:41.070Z">
+<meta property="article:modified_time" content="2025-09-18T14:22:01.925Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -211,10 +211,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-07-24 22:25:25 / Modified: 22:26:41" itemprop="dateCreated datePublished" datetime="2025-07-24T22:25:25+08:00">2025-07-24</time>
+              <time title="Created: 2025-07-24 22:25:25" itemprop="dateCreated datePublished" datetime="2025-07-24T22:25:25+08:00">2025-07-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-09-18 22:22:01" itemprop="dateModified" datetime="2025-09-18T22:22:01+08:00">2025-09-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -306,6 +312,12 @@
 <li>springboot实现热部署：使用Spring DevTools工具，支持应用程序代码修改后自动重新加载应用程序上下文和服务器。spring loaded也行，避免反复构建和部署。</li>
 <li>springboot可以兼容老spring项目吗：可以使用@ImportResource注解来加载老的xml配置文件，用于@Configuration或@SpringBootApplication类上。</li>
 </ul>
+<ul>
+<li>SpringBoot 项目启动参数：</li>
+</ul>
+<p>JVM 参数：以 -D 开头，设置系统属性。示例：-Dserver.port&#x3D;8081 —— 设置启动端口。</p>
+<p>Spring Boot 参数：通过 – 传入，优先级更高。示例：–server.port&#x3D;8081、–spring.profiles.active&#x3D;prod —— 指定配置文件环境。</p>
+<p>禁用某些功能：如 –debug 启用调试日志，–spring.main.banner-mode&#x3D;off 关闭启动 banner。</p>
 
     </div>
 
@@ -404,7 +416,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -417,7 +429,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

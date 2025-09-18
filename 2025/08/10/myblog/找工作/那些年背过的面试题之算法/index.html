@@ -28,7 +28,7 @@
 <meta property="og:description" content="MinHash与MinHashLSHMinHash 是一种用于快速估计两个集合（如文档、网页等）之间相似度的算法，特别是在处理高维数据或海量数据时非常高效。主要用于计算 Jaccard 相似度（集合交集与并集的比值）。Jaccard 相似度需要遍历整个集合，耗费时间和内存。 MinHash 提供了一种近似计算的方法，通过构造 “简化签名” 来高效估算集合之间的相似性，而无需直接操作整个集合。  计">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-08-14T00:47:08.750Z">
+<meta property="article:modified_time" content="2025-09-11T14:47:06.539Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-14 08:47:08" itemprop="dateModified" datetime="2025-08-14T08:47:08+08:00">2025-08-14</time>
+                <time title="Modified: 2025-09-11 22:47:06" itemprop="dateModified" datetime="2025-09-11T22:47:06+08:00">2025-09-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,7 +268,8 @@
 <p><strong>Encoder（编码器）</strong>：由多个相同的层堆叠而成，每层包括一个多头自注意力机制（Multi-Head Self-Attention）和一个位置前馈神经网络（Position-wise Feed-Forward Network）。编码器负责将输入序列转换为隐藏表示，这些表示捕捉了序列中元素之间的依赖关系，并且每个位置的信息都能被传递到下一个层次。</p>
 <p><strong>Decoder（解码器）</strong>：同样由多个相同层组成，除了包含与编码器类似的组件外，还增加了一个额外的多头注意力层，称为“编码器-解码器注意力”层。这个层允许解码器关注到编码器的所有输出，帮助生成目标序列。此外，解码器在每个时间步只能访问到当前及之前的时间步信息，以保证预测的正确顺序。</p>
 <p>通过这种结构，Transformer能够高效地并行训练，并显著提升处理长距离依赖问题的能力。</p>
-<h2 id="FastText原理及实践"><a href="#FastText原理及实践" class="headerlink" title="FastText原理及实践"></a>FastText原理及实践</h2>
+<h2 id="FastText原理及实践"><a href="#FastText原理及实践" class="headerlink" title="FastText原理及实践"></a>FastText原理及实践</h2><h2 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h2><p>Cursor是一款由Anysphere开发的AI代码编辑器，定位为“下一代开发者工作台”。基于 VS Code 内核深度优化，集成Claude、DeepSeek、Gemini、GPT等大语言模型，提供自然语言对话式编程、代码自动生成、代码补全、跨文件上下文理解等功能，适用于快速原型开发、代码重构与技术文档编写。</p>
+
     </div>
 
     
@@ -351,7 +352,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastText%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">FastText原理及实践</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastText%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">FastText原理及实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor"><span class="nav-number">4.</span> <span class="nav-text">Cursor</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -366,7 +367,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -379,7 +380,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

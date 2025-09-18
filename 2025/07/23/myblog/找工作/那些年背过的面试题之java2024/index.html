@@ -28,7 +28,7 @@
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-07-27T11:12:47.469Z">
+<meta property="article:modified_time" content="2025-09-18T14:20:05.781Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-07-27 19:12:47" itemprop="dateModified" datetime="2025-07-27T19:12:47+08:00">2025-07-27</time>
+                <time title="Modified: 2025-09-18 22:20:05" itemprop="dateModified" datetime="2025-09-18T22:20:05+08:00">2025-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,6 +253,14 @@
 <li>jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针）</li>
 <li>jmm内存模型：多线程环境下对共享变量的同步，保证多线程环境下的可见性、有序性。主内存和工作内存，可见性volatile线程更改了工作内存中的共享变量其他线程能够立马看到，有序性volatile禁止指令重排synchronized锁，原子性synchronized和CAS无锁的原子操作</li>
 </ul>
+<h2 id="java相关"><a href="#java相关" class="headerlink" title="java相关"></a>java相关</h2><ul>
+<li>jdk新特性：</li>
+</ul>
+<p>JDK 8：引入Lambda表达式、Stream API、Optional类、新的日期时间API（java.time）和接口默认方法。</p>
+<p>JDK 9：集合工厂方法（如List.of()）。</p>
+<p>JDK 11：引入ZGC（低延迟垃圾回收器）、支持运行单文件源码（java Hello.java）、String新增trim、isBlank等方法。</p>
+<p>JDK 17：密封类（sealed classes，限制继承）、switch模式匹配（预览）、废弃安全管理器。</p>
+<p>JDK 21（LTS）：虚拟线程（Virtual Threads，提升并发性能）、结构化并发（预览）、switch模式匹配正式发布。</p>
 <h2 id="锁、并发编程"><a href="#锁、并发编程" class="headerlink" title="锁、并发编程"></a>锁、并发编程</h2><ul>
 <li><p>java有哪些锁：内置锁synchronized、重入锁ReentrantLock、读写锁ReadWriteLock、条件锁Condition</p>
 </li>
@@ -356,6 +364,14 @@
 <li><p>java对象引用：1.强引用：传统的引用，只要强引用关系还存在，垃圾收集器就永远不会回收掉被引用的对象。2.软引用：用于维护一些可有可无的对象。只有在内存不足时，系统则会回收软引用对象，如果回收了软引用对象之后仍然没有足够的内存，才会抛出内存溢出异常。3.弱引用：拥有更短的生命周期，当 JVM 进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。4.虚引用：一种形同虚设的引用，它主要用来跟踪对象被垃圾回收的活动。</p>
 </li>
 <li><p>jvm调优从哪里入手：1⃣️堆内存设置，-Xms设置初始堆大小，-Xmx设置最大堆大小，过小导致频繁的垃圾回收和OOM，过大导致长时间的垃圾回收停顿。2⃣️垃圾收集器选择，串行、并行、CMS、G1回收器，衡量指标：内存占用、吞吐量、延迟。监控GC活动：使用监控工具：jstat、VisualVM、YourKit和GC日志。3⃣️线程堆栈大小：-Xss调整，影响栈深度。4⃣️调优代码、调整元空间的大小，排查内存泄漏风险、系统级优化（CPU、内存、磁盘IO）。</p>
+</li>
+</ul>
+<ul>
+<li><p>了解哪些垃圾收集器：Serial收集器：单线程，适用于小堆内存。ParNew收集器：Serial多线程版，常与CMS配合。Parallel Scavenge收集器（吞吐量优先）：关注高效利用CPU，适合后台处理。CMS收集器：低停顿，老年代主要选择，适用于追求响应速度的场景。G1收集器：可预测停顿，适合大堆内存，JDK9后推荐。ZGC &#x2F; Shenandoah：超低延迟，支持TB级堆，停顿控制在10ms内，适用于高实时性场景。</p>
+</li>
+<li><p>线上频繁Full GC原因：老年代空间不足（对象晋升过快、内存泄漏等）、新生代回收后仍然内存不足，晋升导致老年代爆满、大对象直接进入老年代、元空间&#x2F;永久代空间溢出（如Class元数据过多）、调用System.gc()频繁</p>
+</li>
+<li><p>频繁Full GC解决方案：调整堆&#x2F;老年代的内存大小（如增大Xmx&#x2F;Xms&#x2F;Xmn等参数）、检查和修复内存泄漏、优化代码，减少大对象频繁创建、替换或调整垃圾收集器策略（如用G1替代CMS）、限制频繁的System.gc()调用、监控和分析对象分配和回收情况，优化程序内存使用</p>
 </li>
 </ul>
 <h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><ul>
@@ -531,7 +547,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">锁、并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">4.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO"><span class="nav-number">5.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">7.</span> <span class="nav-text">故障排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">8.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">9.</span> <span class="nav-text">异常体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0"><span class="nav-number">10.</span> <span class="nav-text">变量修饰</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">java相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">锁、并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">5.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO"><span class="nav-number">6.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">7.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">8.</span> <span class="nav-text">故障排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">9.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">10.</span> <span class="nav-text">异常体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0"><span class="nav-number">11.</span> <span class="nav-text">变量修饰</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -546,7 +562,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -559,7 +575,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

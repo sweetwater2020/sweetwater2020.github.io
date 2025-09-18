@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第一章 新建项目新建项目，划分模块：common、model、repository、service、start. pom中：modules、properties、dependencies、dependencyManagement、build。 dependencyManagement 用于版本控制，dependencies 用于实际的依赖引入。这两者多模块项目中结合使用，dependencyMan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AI学习">
+<meta property="og:url" content="http://example.com/2025/09/09/myblog/spring/Spring%C2%A0AI%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="第一章 新建项目新建项目，划分模块：common、model、repository、service、start. pom中：modules、properties、dependencies、dependencyManagement、build。 dependencyManagement 用于版本控制，dependencies 用于实际的依赖引入。这两者多模块项目中结合使用，dependencyMan">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-09T14:25:57.057Z">
+<meta property="article:modified_time" content="2025-09-11T15:05:14.775Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="spring">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/09/09/myblog/spring/Spring%C2%A0AI%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Spring AI学习 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/09/myblog/spring/Spring%C2%A0AI%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring AI学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-09-09 22:25:57" itemprop="dateCreated datePublished" datetime="2025-09-09T22:25:57+08:00">2025-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-09-11 23:05:14" itemprop="dateModified" datetime="2025-09-11T23:05:14+08:00">2025-09-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="第一章-新建项目"><a href="#第一章-新建项目" class="headerlink" title="第一章 新建项目"></a>第一章 新建项目</h3><p>新建项目，划分模块：common、model、repository、service、start.</p>
+<p>pom中：modules、properties、dependencies、dependencyManagement、build。</p>
+<p>dependencyManagement 用于版本控制，dependencies 用于实际的依赖引入。这两者多模块项目中结合使用，dependencyManagement 在父模块中被用作标准的依赖版本管理工具，而 dependencies 在子模块中负责添加具体的依赖到项目中。</p>
+<p>大模型流式输出：通过Reactor框架来实现，它是一个响应式编程库，提供构建异步和非阻塞应用程序的能力。</p>
+<p>OpenAI的API规范，其他厂商也兼容。类似JDBC驱动可以连接不同数据库，Spring AI的客户端也能适配不同AI服务。</p>
+<p>监控：</p>
+<p>添加依赖：spring-boot-starter-actuator、micrometer-registry-prometheus（用于将 Spring Boot 应用的性能指标暴露给 Prometheus）</p>
+<p>启动监控： management.endpoints.web.exposure.include&#x3D;health,metrics,prometheus（用于暴露 Spring Boot Actuator 的管理端点） spring.ai.observability.enabled&#x3D;true（用于启用 Spring AI 的可观测性功能，收集与 AI 相关的性能指标、日志和追踪信息）</p>
+<p>访问&#x2F;actuator&#x2F;prometheus</p>
+<h3 id="第二章-提示词"><a href="#第二章-提示词" class="headerlink" title="第二章 提示词"></a>第二章 提示词</h3><p>三种提示词：Prompt、PromptTemplate中用{}作为占位符，调用render做占位符填充构建、Message做角色扮演，提前约定大模型的功能角色，SystemMessage系统消息设定对话的背景、规则和指令，UserMessage表示用户输入，AssistantMessage表示AI的回复，ToolResponseMessage表示AI调用外部工具后返回工具的执行结果。</p>
+<p>好的提示词：样例法则、分布法则、分隔法则、引导法则。</p>
+<p>提示词管理：统一放在prompts文件夹里，用@Value(“classpath:&#x2F;prompts&#x2F;xx”) Resource.</p>
+<h3 id="第三章-结构化输出转换器"><a href="#第三章-结构化输出转换器" class="headerlink" title="第三章 结构化输出转换器"></a>第三章 结构化输出转换器</h3><p>大模型输出纯文本，需要额外解析正则才能被程序使用，容易出错。Spring AI通过在提示词中添加格式化指令要求大模型按特定格式做内容返回，在拿到大模型输出数据后通过内置转换器的能力做结构化输出。</p>
+<p>BeanOutputConverter beanOutputConverter &#x3D; new BeanOutputConverter&lt;&gt;(new ParameterizedTypeReference() { });</p>
+<p>通过BeanOutputConverter 的泛型约定返回结果的实体对象 </p>
+<p>在提示词后面追加{format}占位符，该占位符对应的值为beanOutputConverter.getFormat() </p>
+<p>调用beanOutputConverter.convert(content)处理大模型返回数据，得到返回实体。</p>
+<p>ParameterizedTypeReference 是 Spring 框架中的一个类，用来保存泛型类型的信息。在 Java 中，由于类型擦除的存在，在运行时通常无法获取泛型类型的信息。例如，List 和 List 在运行时都被擦除为 List，无法区分两者。但有时我们需要区分泛型类型，于是 ParameterizedTypeReference 提供了这种能力。通过匿名类实例创建泛型类型引用，使得在运行时仍然可以获取Film的具体类型。</p>
+<p>优雅的entity()写法：直接在call后面调用entity，把对应的class类型传递进去即可，提示词中也不需要加format。</p>
+<p>.call().entity(Film.class);</p>
+<p>列表输出：ListOutputConverter</p>
+<p>Map输出：MapOutputConverter</p>
+<h3 id="第四章-本地模型部署"><a href="#第四章-本地模型部署" class="headerlink" title="第四章 本地模型部署"></a>第四章 本地模型部署</h3><p>用Ollama（一个开源的本地大语言模型运行工具）在本地部署大模型。使用ollama pull llama3.1:8b 进行模型的下载。</p>
+<p>ollama list查看本地的模型列表</p>
+<p>ollama run llama3.1:8b进入交互界面</p>
+<p>spring ai中集成ollama：导入spring-ai-ollama-spring-boot-starter包，添加配置：</p>
+<p>spring.ai.ollama.chat.model&#x3D;llama3.1:8b spring.ai.ollama.base-url&#x3D; <a target="_blank" rel="noopener" href="http://localhost:11434/">http://localhost:11434</a></p>
+<p>Ollama号称大模型领域的Docker，Docker已推出大模型安装的能力Docker Model Runner。</p>
+<h3 id="第五章-一山不容二虎"><a href="#第五章-一山不容二虎" class="headerlink" title="第五章 一山不容二虎"></a>第五章 一山不容二虎</h3><p>想要一个工程里共存多个大模型的调用实例，只需构建多个ChatClient，每个ChatClient依赖不同大模型的ChatModel。 </p>
+<p>源码分析如何同时导入两个ChatClient（OpenAi的和Ollama的），依赖自动装配。 ChatClient.Builder用来创建ChatClient。 观察ChatClientAutoConfiguration类，@ConditionalOnClass(ChatClient.class)只要ChatClient对应的类存在即生效。在该类中定义ChatClient.Builder，核心就是依赖 ChatModel ,当ChatModel存在时则自然创建ChatClient.Builder实例，ConditionalOnMissingBean自己创建ChatClient.Builder就不会自动创建。 </p>
+<p>总结：ChatClient.builder由自动装配机制申明，本质是DefaultChatClientBuilder，核心依赖ChatModel的注入做实例化。ChatModel也是自动装配的。 </p>
+<p>解决：手动构建多个ChatClient，分别依赖不同的大模型。在BeanConfig中用@Bean创建。 </p>
+<p>遇到问题：pom导入ollama的包总是报错。没法手动创建Ollama的ChatClient Bean。 </p>
+<p>Advisor 机制类似 AOP，可以在调用前后插入逻辑，可以自定义 Advisor 实现日志、缓存、限流等功能。 chatModel.call()最终把请求转发到各个大模型的API调用规范实现上。</p>
+<h3 id="第六章-spring-ai实现聊天记忆、多用户隔离、持久化存储"><a href="#第六章-spring-ai实现聊天记忆、多用户隔离、持久化存储" class="headerlink" title="第六章 spring ai实现聊天记忆、多用户隔离、持久化存储"></a>第六章 spring ai实现聊天记忆、多用户隔离、持久化存储</h3><p>在 Spring AOP 中，Advisor 用于将 切点（Pointcut） 和 通知（Advice） 组合在一起，明确告诉 Spring AOP 框架：“在哪些类&#x2F;方法上应用什么类型的通知”。它是 Spring AOP 实现横切关注点（如日志、事务、安全等）的核心机制。可以通过xml配置实现，也可以通过@AspectJ注解，Spring自动将切面中的通知和切点组合成Advisor，也可以编程式自定义，Advisor advisor &#x3D; new DefaultPointcutAdvisor(pointcut, advice);。 </p>
+<p>spring ai中的advisor：SimpleLoggerAdvisor在大模型执行前后打印日志。</p>
+<p>MessageChatMemoryAdvisor来提供聊天记忆功能，接收ChatMemory对象，内部Map&lt;String, List&gt;的ConcurrentHashMap实现。其中可以设置会话id避免张冠李戴。可以在ChatClient发起调用时设置MessageChatMemoryAdvisor，还可以在ChatClient构建时设置默认的advisors。</p>
+<p>InMemoryChatMemory是内存记忆，应用重启后会发现记忆直接丢失。 如果想要把记忆永久保存下来，可以考虑使用Mysql、Redis等存储。采用Spring集成Docker的方式引入Redis，可以利用Reids的List操作来做一个简易版的记忆能力，获取指定会话的最新 N 条消息。</p>
+<p>springai内置了RedisChatMemory，还有JdbcChatMemory、CassandraChatMemory、Neo4jChatMemory。 做记忆压缩，对长篇大论做总结后记忆、对敏感信息做剔除，不记录用户的隐私信息、性能监控关注Redis的内存使用情况。</p>
+<h3 id="第七章-spring-ai-tool-calling"><a href="#第七章-spring-ai-tool-calling" class="headerlink" title="第七章 spring ai tool calling"></a>第七章 spring ai tool calling</h3><p>大模型的核心架构（如Transformer）依赖自注意力机制分析文本关系，但缺乏与实时数据源的直接交互能力。大模型学习的是海量数据中的统计规律和知识关联。 </p>
+<p>利用@Tool注解申明将一个方法定义为工具，其中description用来对工具进行描述。 .tools(new DateTimeTools()).call() tools方法中传递可调用的工具清单。 </p>
+<p>工具可分为两类：信息检索类工具（数据库访问、搜索引擎交互等）、系统操作类（发送电子邮件、修改数据库等）。 也可以使用编程式定义工具，方法不用加注解，ReflectionUtils.findMethod通过反射获取Method，构建ToolDefinition后生成工具的回调类ToolCallback，在大模型调用时传递ToolCallback即可。 </p>
+<p>前面是Methods as Tools，也可以Functions as Tools，将Function、Supplier等函数式接口定义为工具，首先实现Function接口，然后使用@Configuration和@Bean声明一个Spring Bean，bean名称作为工具名称，@Description作为工具的描述。调用时将bean的名称传递到tools方法中，发起调用。 使用@ToolParam和ToolContext实现工具的输入参数传递。 </p>
+<p>自定义工具执行可以通过ToolCallingManager工具调用管理器来灵活控制工具执行的生命周期，是一个基于大模型交互的工具管理器。</p>
+<h3 id="第八章-spring-ai-mcp"><a href="#第八章-spring-ai-mcp" class="headerlink" title="第八章 spring ai mcp"></a>第八章 spring ai mcp</h3><p>Anthropic发布模型上下文协议MCP，旨在标准化应用程序向大语言模型（LLM）提供上下文的交互方式。 </p>
+<p>MCP（Model Context Protocol）就是一种通用标准协议，让不同的AI模型可以同标准、高效地调用各种各样的封装好工具。</p>
+<p>MCP提供：即插即用集成库、供应商灵活切换、数据安全最佳实践。 </p>
+<p>MCP架构：客户端-服务器架构。MCP宿主为AI工具例如IDE，宿主应用可连接多个服务节点。MCP客户端为协议客户端，维护与服务端1:1连接的通信管道。MCP服务器是轻量化服务程序，通过标准化协议暴露特定能力，包括本地数据源和通过API连接的远程服务。既保证了本地数据的安全性（敏感信息不出域），又实现了云端服务的扩展性。 </p>
+<p>Cline作为集成MCP Client的宿主机，是一个VSCode扩展，可自定义选择LLM进行编程任务。其中有MCP市场，MCP配置文件中，timeout表示超时时间，command表示启动该MCP Server的命令行工具（npx表示用node.js，其他还有python、java），transportType表示客户端与Server的通信方式，stdio表示通过标准输入输出进行通信。 </p>
+<p>如何通过spring ai开发一个mcp server：支持两类（三种）传输机制，标准输入&#x2F;输出（STDIO）、服务端主动向客户端发送事件流SSE（Server-Sent Events），其中SSE可以拆分为基于Spring MVC框架实现的SSE和基于Spring WebFlux响应式编程模型实现的 SSE。基于STDIO形式是将MCP Server当做一个本地的子进程，基于SSE可将MCP Server部署在远端。 </p>
+<p>STDIO的MCP流程：创建工程，依赖model context protocol server，写一个Service，其中方法用@Tool注解，定义ToolCallbackProvider的bean，在application中配置，mvn打jar包，本地Cline中配置使用该MCP，使用标准输入输出传输模式与客户端通信，强制禁用web容器，指定本地构建的jar包。</p>
+<p> SSE的MCP流程：SSE是一种基于HTTP的服务器推送技术，允许服务端主动向客户端发送事件流（如实时数据更新）。是服务端到客户端的单向通信，适合单向数据推送场景。可以用SpringMVC实现（底层依赖Servlet线程模型，手动管理ExecutorService），也可以用WebFlux实现（基于Reactive Streams响应式流，使用Reactor的Flux推送事件，基于netty支持高并发）。 自定义mcp client，通过依赖spring-ai-starter-mcp-client来集成客户端能力，例如集成高德地图mcp。 mcp除了支持Server暴露工具Tools能力外，还支持Resources结构化数据供给，可构建静态资源和动态资源。</p>
+<h3 id="第九章-spring-ai-之-rag"><a href="#第九章-spring-ai-之-rag" class="headerlink" title="第九章 spring ai 之 rag"></a>第九章 spring ai 之 rag</h3><p>检索增强生成（Retrieval-Augmented Generation, RAG）一种结合外部知识库检索与大模型生成能力的问答技术方案。它通过将用户查询与相关文档向量进行语义匹配，把检索到的内容作为上下文输入给大模型，从而提升生成结果的准确性与丰富性。 </p>
+<p>rag流程： 1、文档预处理与向量存储 将生产数据加工为文档，并用嵌入模型转换为向量后存入向量数据库，便于后续语义检索。常用模型有 OpenAI text-embedding、BERT、Sentence-BERT 等。 2、用户查询向量化 用户自然语言查询通过同样的嵌入模型转为向量，保持与文档向量空间一致。 3、语义检索相关文档 计算查询向量与库内文档向量的相似度（如余弦相似度），返回最相近的 Top K 文档作为相关结果。 4、生成增强的 LLM 输入 将用户查询和检索到的相关文档合并，并格式化为 LLM 的输入。 5、大模型生成输出 LLM 基于检索到的文档生成回答，减少幻觉，并对输出进行后处理，返回结构化结果给用户。 </p>
+<p>向量数据库：一种专门用于存储、索引和检索向量数据（Vector Embeddings）的数据库系统，通过高维向量相似度搜索优化，弥补传统关系&#x2F;非关系型数据库不足。支持海量数据下的近似最近邻搜索（ANN），毫秒级返回关联文档及其元数据的相似结果，核心能力包括：数百至数千维向量处理、原始文本与元数据（如来源、时间）关联、大规模数据下的快速相似匹配。</p>
+<h3 id="第十章-spring-ai之agent"><a href="#第十章-spring-ai之agent" class="headerlink" title="第十章 spring ai之agent"></a>第十章 spring ai之agent</h3><p>Agent定义为能够感知环境、决策并执行动作的智能体，包含Brain（大脑）、Perception（感知）、Action（行动）三大模块，工作流程：感知环境→大脑处理→执行动作→反馈循环。 </p>
+<p>Brain（大脑）：以LLM为核心，负责记忆、知识存储、推理和规划。 </p>
+<p>Perception（感知）：扩展多模态输入（文本、视觉、听觉等），增强环境感知能力。 </p>
+<p>Action（行动）：通过工具使用、具身动作（如机器人控制）与环境交互。 </p>
+<p>agent分两类： </p>
+<p>人工流程编排类（Workflow Agent）：通过预定义代码路径协调LLM和工具的系统。 </p>
+<p>自主规划类（Agent）：LLM动态指导自身流程和工具使用、自主控制任务执行方式的系统。（提示链、路由、并行化） </p>
+<p>都是基于通过检索、工具和记忆增强能力的LLM构建的体系。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/spring/" rel="tag"># spring</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/08/19/myblog/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B9%8BRefineX/" rel="prev" title="大模型之RefineX">
+      <i class="fa fa-chevron-left"></i> 大模型之RefineX
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">第一章 新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">2.</span> <span class="nav-text">第二章 提示词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E7%BB%93%E6%9E%84%E5%8C%96%E8%BE%93%E5%87%BA%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">第三章 结构化输出转换器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2"><span class="nav-number">4.</span> <span class="nav-text">第四章 本地模型部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E4%B8%80%E5%B1%B1%E4%B8%8D%E5%AE%B9%E4%BA%8C%E8%99%8E"><span class="nav-number">5.</span> <span class="nav-text">第五章 一山不容二虎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-spring-ai%E5%AE%9E%E7%8E%B0%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BF%86%E3%80%81%E5%A4%9A%E7%94%A8%E6%88%B7%E9%9A%94%E7%A6%BB%E3%80%81%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8"><span class="nav-number">6.</span> <span class="nav-text">第六章 spring ai实现聊天记忆、多用户隔离、持久化存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-spring-ai-tool-calling"><span class="nav-number">7.</span> <span class="nav-text">第七章 spring ai tool calling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-spring-ai-mcp"><span class="nav-number">8.</span> <span class="nav-text">第八章 spring ai mcp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E7%AB%A0-spring-ai-%E4%B9%8B-rag"><span class="nav-number">9.</span> <span class="nav-text">第九章 spring ai 之 rag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E7%AB%A0-spring-ai%E4%B9%8Bagent"><span class="nav-number">10.</span> <span class="nav-text">第十章 spring ai之agent</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
