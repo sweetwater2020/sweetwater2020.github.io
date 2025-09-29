@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。  大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="那些年背过的面试题之大模型">
+<meta property="og:url" content="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。  大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
+<meta property="article:modified_time" content="2025-09-29T14:53:07.132Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>那些年背过的面试题之大模型 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          那些年背过的面试题之大模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-10 08:30:05" itemprop="dateCreated datePublished" datetime="2025-08-10T08:30:05+08:00">2025-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-09-29 22:53:07" itemprop="dateModified" datetime="2025-09-29T22:53:07+08:00">2025-09-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="大模型基础"><a href="#大模型基础" class="headerlink" title="大模型基础"></a>大模型基础</h2><ul>
+<li><p>Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。</p>
+</li>
+<li><p>大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于分类、生成等场景。常用方法有全参数微调和参数高效微调（如 LoRA）。</p>
+</li>
+<li><p>大模型架构：主流大模型多采用 Transformer 架构，分为 Decoder-only（如 GPT）、Encoder-only（如 BERT）和 Encoder-Decoder（如 T5）。结构上包含多层自注意力与前馈网络，规模扩展体现在层数、维度和专家数量上，MoE 成为高效扩展趋势。</p>
+</li>
+<li><p>强化学习：强化学习通过智能体与环境交互，依据奖励信号优化策略。在大模型中，RLHF（基于人类反馈的强化学习）用于对齐语言模型输出与人类偏好，提升回答质量。典型应用如 ChatGPT 的训练后期阶段。</p>
+</li>
+<li><p>大模型Agent：大模型 Agent 是能感知环境、规划决策、执行动作的智能体。它结合 LLM 作为“大脑”，通过工具调用、记忆管理和任务分解完成复杂任务，如自动编程、数据分析。体现从“问答”到“自主行动”的演进。</p>
+</li>
+<li><p>大模型幻觉：幻觉指大模型生成看似合理但错误或虚构的内容。源于训练数据噪声和概率生成本质。影响可信度，尤其在事实敏感场景。缓解方法包括 RAG、微调、提示工程和推理时搜索验证。</p>
+</li>
+<li><p>LangChain：LangChain 是用于构建 LLM 应用的开源框架，支持链式调用、记忆管理、工具集成和数据连接。它简化了 Prompt 工程、RAG 和 Agent 开发流程，广泛应用于对话系统、文档问答等场景，提升开发效率。</p>
+</li>
+<li><p>MCP：MCP 就是一种通用标准协议，让不同的AI模型可以同标准、高效地调用各种各样的封装好工具。</p>
+</li>
+<li><p>RAG：RAG（检索增强生成）通过从外部知识库检索相关信息，辅助大模型生成更准确的回答。有效缓解幻觉问题，适用于动态知识场景。典型流程：用户提问 → 检索 → 拼接上下文 → 生成答案。</p>
+</li>
+<li><p>大模型量化：量化将模型权重从高精度（如 FP32）转为低精度（如 INT8&#x2F;INT4），减少显存占用和计算开销，提升推理速度。常见方法有 PTQ（后训练量化）和 QAT（量化感知训练），是大模型轻量化部署的关键技术。</p>
+</li>
+<li><p>推理大模型和生成大模型：生成大模型注重文本、图片等内容的创作与生成，适合对话场景；推理大模型强调逻辑推断、因果分析和多步思考，适用于复杂问题、数学解题等高阶任务。生成模型侧重预训练大语料，明确上下文的“自然生成”。推理模型在训练&#x2F;微调中强化“Chain of Thought（思维链）”、“Self-Consistency（自洽）”、“Step-by-step（步进式解析）”能力，常在微调数据或搭建特定的推理数据集上提升推理性能。</p>
+</li>
+</ul>
+<h2 id="大模型训练"><a href="#大模型训练" class="headerlink" title="大模型训练"></a>大模型训练</h2><ul>
+<li><p>预训练—后训练—推理的流程：<strong>预训练阶段</strong>，模型通过海量通用数据进行无监督或自监督学习，掌握基础知识和语言能力。<strong>后训练阶段</strong>，利用领域数据或用户任务对模型做微调或指令强化，提升在特定场景下的表现，如RLHF、参数高校微调LoRA。最终进入<strong>推理阶段</strong>，模型被部署，通过高效计算实现实际的输入到输出预测，服务真实应用需求。</p>
+</li>
+<li><p>RLHF和PPO：RLHF（基于人类反馈的强化学习）是大模型对齐人类偏好的核心技术。首先用人工标注数据训练奖励模型（Reward Model），学习对回复打分；然后通过强化学习优化语言模型，使其生成更符合人类喜好的内容。PPO（近端策略优化）是RLHF中常用的算法，它通过限制策略更新的幅度（使用裁剪机制），确保训练过程稳定。具体地，PPO基于新旧策略的概率比构造目标函数，结合优势估计进行优化，避免因更新过大导致性能崩溃。整个流程使模型从“能说”变为“说得更好”，广泛应用于ChatGPT等对话系统，提升输出的相关性、安全性和可读性。尽管效果显著，但RLHF训练复杂、成本高，现已有DPO等更高效方法出现。</p>
+</li>
+<li><p>DPO和PPO：DPO（Direct Preference Optimization）和PPO（Proximal Policy Optimization）都是用于大模型人类反馈对齐的算法，但原理和流程有所不同。</p>
+<p>PPO是一种强化学习策略优化方法，训练过程依赖奖励模型，由人类偏好数据训练出的奖励函数来引导生成模型通过试错方式提升输出质量。每次策略更新时，PPO通过“clip”策略限制模型改变幅度，保证训练稳定。</p>
+<p>DPO则直接基于人类偏好数据进行最优化，不需要先训练奖励模型。DPO将“人类偏好哪一个输出”转化为概率分布，并通过最大化偏好分数来直接优化生成模型，相比PPO结构更简洁，计算开销更低，避免了奖励模型拟合不准的问题。</p>
+<p>总体而言，DPO强化了算法的效率与对偏好数据的直接利用，是近年RLHF的重要替代方案。</p>
+</li>
+<li><p>PPO、GRPO、DPO：大模型人类偏好微调中的三种主流方法，PPO（近端策略优化）是基于强化学习的经典方法，通过奖励模型指导策略更新，但实现复杂且不稳定；DPO（直接偏好优化）摒弃强化学习框架，不用奖励模型，将偏好数据直接转化为损失函数，更简洁高效，正成为主流替代方案；GRPO（生成式奖励优化）近期提出，直接针对奖励模型优化生成结果，简化强化学习流程，提升效率。</p>
+</li>
+<li><p>超长上下文是怎么实现的（例如 Kimi）：超长上下文能力（如Kimi大模型支持百万字级窗口），主要通过升级位置编码和注意力机制实现。首先，采用RoPE（旋转位置编码）等高效编码方法，让模型能准确区分和记忆极长序列中的词汇位置。其次，引入稀疏或分块注意力机制，如滑窗、局部自注意力、Chunk Attention等，避免全量计算带来的爆炸性内存和算力增长，大幅降低资源消耗。部分方案还结合高效缓存、分层处理和分布式计算，优化长文本的推理与存储。</p>
+</li>
+</ul>
+<h2 id="大模型Agent"><a href="#大模型Agent" class="headerlink" title="大模型Agent"></a>大模型Agent</h2><ul>
+<li><p>大模型agent：Agent定义为能够感知环境、决策并执行动作的智能体，包含Brain（大脑）、Perception（感知）、Action（行动）三大模块，工作流程：感知环境→大脑处理→执行动作→反馈循环。</p>
+<p>Brain（大脑）：以LLM为核心，负责记忆、知识存储、推理和规划。</p>
+<p>Perception（感知）：扩展多模态输入（文本、视觉、听觉等），增强环境感知能力。</p>
+<p>Action（行动）：通过工具使用、具身动作（如机器人控制）与环境交互。</p>
+<p>agent分两类：</p>
+<p>人工流程编排类（Workflow Agent）：通过预定义代码路径协调LLM和工具的系统。</p>
+<p>自主规划类（Agent）：LLM动态指导自身流程和工具使用、自主控制任务执行方式的系统。（提示链、路由、并行化）</p>
+<p>都是基于通过检索、工具和记忆增强能力的LLM构建的体系。</p>
+</li>
+<li><p>大模型幻觉如何解决：模型生成了缺乏事实依据、不准确或甚至捏造的信息。引入RAG结合外部知识库或数据库生成内容，提升事实性。进行微调，用事实性强的数据进行监督微调或偏好对齐（如DPO）。优化提示词，不确定时拒绝回答，思维链，输出思考过程。增加后置校验。</p>
+</li>
+<li><p>Agent实现：</p>
+<p>规划模块Planning：负责任务分解与决策，通过 Prompt 工程（如 ReAct、Chain-of-Thought）或微调实现推理能力；</p>
+<p>记忆模块Memory：短期记忆（上下文缓存）和长期记忆（向量数据库）用于存储与检索历史信息；</p>
+<p>工具调用模块Tool Use：集成外部 API（搜索、数据库、代码解释器），通过 Function Calling 实现与环境交互；</p>
+<p>执行引擎Action：控制流程调度，支持单步&#x2F;多步执行、错误重试与循环监控。</p>
+</li>
+<li><p>Agent如何做决策：LLM Agent的决策过程主要依赖大模型的思维链推理和动态任务分解能力。接收到用户需求后，Agent通过预设Prompt引导模型将任务分为多个逻辑步骤，再依据当前上下文判断需要调用哪些工具或API，例如通过Function Calling协议选择具体工具并构造参数。每一步执行后，Agent会收集反馈结果，自主评估是否达成目标，必要时修正方案，实现动态调整。整个流程结合步步规划、状态记录和结果反思，让Agent能够自动完成复杂任务，提高智能自主性和实用性。常见实现结合LangChain、RAG等技术，将大模型推理与现实工具有效衔接。</p>
+</li>
+<li><p>主流的Agent：</p>
+<p>LangChain：提供模块化工具，帮助构建 LLM 驱动的应用。支持链式调用、记忆管理、工具集成和数据连接。</p>
+<p>LlamaIndex（原 GPT Index）：主打数据与知识库检索增强，支持 Agent 调用外部文档、数据库及插件，适合构建知识检索型 Agent。可以与LangChain结合，用于增强 LangChain 的外部数据访问能力。</p>
+<p>OpenManus：一个基于Agent的自动化框架，具备规划、记忆、工具使用和行动能力。它通过多层继承结构实现智能体的核心功能，利用提示词驱动模型进行任务分解与工具调用，支持Web搜索、代码执行等操作。</p>
+</li>
+<li><p>大模型Agent中的ReAct：ReAct是一种结合“推理（Reasoning）”与“行动（Acting）”的大模型Agent框架。让模型在任务执行中交替进行思考和操作。通过生成推理步骤指导下一步动作（如调用工具、查询信息），并根据反馈更新认知，提升决策准确性与可解释性，适用于问答、决策等复杂任务。</p>
+</li>
+<li><p>DeepResearch：深度研究AI智能体，是由 OpenAI 在 2025 年初推出的一种新型 AI “代理”（Agent），旨在自主完成深度研究任务，是 ChatGPT 中的一项强大功能。它基于最新的 o3 模型（GPT-4 系列的升级版），并通过端到端强化学习训练，具备多步骤推理与操作能力。具备自主规划与执行能力。强调“搜索 + 推理”的循环迭代。</p>
+</li>
+<li><p>通义DeepResearch高阶Agent构建方法论：1、基于合成数据的持续预训练和后训练（一阶动作合成数据和高阶动作合成数据）。2、有监督微调（SFT）：使用高质量合成数据进行冷启动。3、强化学习（RL）：基于策略的组相对策略优化（GRPO），结合自动化数据引擎和稳定基础设施实现自我进化。4、推理ReAct模式：基于“思考-行动-观察”循环，无需提示工程即可展现强大能力。</p>
+</li>
+<li><p>DeepResearch Agent：传统聊天机器人缺乏主动探索信息与执行复杂任务的能力。相比之下，自主智能体（Autonomous Agent）则具备理解复杂意图、自主规划行动路径、调用外部工具、动态收集信息并进行深度推理的能力，从而输出更具洞察力与实用性的高质量答案。</p>
+</li>
+</ul>
+<h2 id="MCP"><a href="#MCP" class="headerlink" title="MCP"></a>MCP</h2><ul>
+<li><p>FunctionCall和MCP的区别：Function Calling 是大模型调用外部工具的技术，由模型判断是否调用、生成参数，并通过 API 返回结构化调用指令，需开发者手动集成每个工具的描述和代码，存在跨语言难、复用性差等问题。而 MCP（Model Context Protocol）是一种开放协议，采用客户端-服务器架构，通过标准化接口、数据格式和传输协议，实现工具与 AI 应用的解耦。MCP 支持通过配置自动发现并调用本地或远程工具，解决了 Function Calling 中的冗余开发和维护成本高问题。两者适用场景不同：Function Calling 适合轻量级应用，MCP 更适用于复杂、可扩展的工具生态体系。</p>
+</li>
+<li><p>MCP架构及工作原理：MCP是一种开放协议，旨在标准化AI应用与外部工具、数据源之间的连接方式，可类比为AI领域的USB-C接口。其核心采用客户端-服务器架构：MCPHost（如AI应用）通过MCPClient连接一个或多个MCPServer（提供工具服务的程序）。</p>
+</li>
+<li><p>MCP流程：MCPHost通过MCPClient向MCPServer请求工具列表、MCPServer返回可用工具列表、MCPHost将工具列表传给LLM、LLM判断是否需要调用工具，生成调用指令、MCPHost通过MCPClient向MCPServer执行工具调用、MCPServer执行工具并返回结果、MCPHost将结果传给LLM、LLM生成最终回复。</p>
+</li>
+</ul>
+<h2 id="RAG"><a href="#RAG" class="headerlink" title="RAG"></a>RAG</h2><ul>
+<li><p>Rag中的向量数据库：外部知识库通过数据提取、文本分隔然后Embedding向量化之后，存储到特定的向量数据库中。用户提问时，RAG会利用文本向量化模型将用户问题进行向量化处理，然后再到向量数据库中进行向量查询，通过一定的算法得到Top K个相似结果，最后再结合prompt由大模型生成结果返回给用户。</p>
+</li>
+<li><p>为什么要用RAG：大语言模型中，无法获取私域数据、缺乏特定领域知识、信息的准确性缺少、大模型可能会生成虚假内容。RAG无需针对特定任务重新训练，通过引入外部知识库的方式，解决问题。</p>
+</li>
+<li><p>RAG多路召回：向量检索+基于关键字的全文搜索，将全文检索和向量查询的结果进行融合排序得到Top k个结果。</p>
+</li>
+<li><p>RAG向量检索中的相似性度量：点积用于衡量两个向量的内积，值越大表示越相似；欧式距离反映向量间的绝对数值差异，距离越小越相似；余弦相似度则关注方向上的相对差异，取值范围为[-1, 1]，常用于文本和用户行为分析；而余弦距离是1减去余弦相似度，取值范围[0,2]，归一化后，欧式距离与余弦距离具有单调关系，此时两者检索效果相近。</p>
+</li>
+<li><p>稠密向量和稀疏向量：稠密向量（多数元素非零）用数组或列表表示效率高、稀疏向量（多数元素为零）通过记录非零元素位置及对应值方式表达。</p>
+</li>
+<li><p>RAG向量索引：KNN最近邻算法通过全量计算实现高精度检索，但效率低；而ANN近似最近邻算法通过哈希、树、图等结构提升检索速度，适用于大规模数据。ANNOY基于二叉树划分空间，使用森林和优先队列提升召回率；LSH利用局部敏感哈希将相近向量映射至同一桶中，适合内存受限场景。</p>
+</li>
+<li><p>minhash与LSH：MinHash 用于高效估算大规模集合之间的 Jaccard 相似度。它通过对每个集合引入n个独立哈希函数，并记录每组下最小哈希值，形成n长度的签名向量。使用签名向量快速估算集合间相似度。LSH 局部敏感哈希，是一种空间划分技术，能把“相似”的对象高概率映射到同一个桶，“不相似”的对象落在不同桶，从而在大规模数据中高效查找近似邻居。对集合数据通常会结合 MinHash，把签名拆分分组，组内哈希入桶，快速筛出可能有相似集合的候选，再做精确度量。LSH 不要求精确查找，但大幅降低了高维空间下的检索复杂度。</p>
+</li>
+<li><p>RAG向量数据库：ADB阿里云推出的云原生向量仓库，具备全文与向量融合检索、实时索引构建。Lindorm是多模态云原生数据库，提供向量引擎，支持百亿级向量检索，可以自动完成文档切片和向量化。PGVector 是PostgreSQL的扩展。</p>
+</li>
+</ul>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><ul>
+<li><p>tranformers中的自注意力机制：Transformer 中的自注意力机制，就是让模型在处理每个词时，都能“环顾四周”去关注句子中与之相关的其他词。比如“小明喜欢苹果，因为它脆。”，处理“它”时，模型会自动把注意力集中在“苹果”上，从而理解指代关系。实现：首先，给每个词生成三个角色——Query（我想找谁）、Key（我能被谁找）和 Value（我有什么信息）。然后，用 Query 和所有 Key 匹配，算出一个相关性分数，再通过 softmax 转化为注意力权重，表示该关注谁。接着，按这些权重对所有 Value 加权求和，得到当前词融合上下文后的新表示。为了让模型从不同角度理解语言，还引入“多头注意力”——多个小组同时工作，有的关注语法，有的关注语义，最后把结果合并。整个过程可并行计算，高效且强大，使模型能捕捉长距离依赖和复杂结构。总之，自注意力让模型学会“哪里重要就看哪里”，是 Transformer 理解语言的核心智慧。</p>
+</li>
+<li><p>softmax：将一组数值转换成概率分布（0-1之间），并且所有结果加起来正好等于 1。在 Transformer 的自注意力机制中，Softmax 用来处理“Query 和 Key 的匹配得分”，把它变成注意力权重。</p>
+</li>
+<li><p>Transformer的Encoder和Decoder：Transformer的Encoder用于理解输入序列，通过多层自注意力和前馈网络提取上下文特征，输出隐藏表示。Decoder用于生成输出序列，不仅有自注意力，还通过“交互注意力”利用Encoder的输出，每次生成一个新词，并只能看到已生成内容（自回归）。简言之：Encoder负责编码理解输入，捕捉上下文关系，Decoder负责结合编码结果生成输出。只有 Encoder：用于理解类任务，如文本分类、情感分析（代表：BERT）；只有 Decoder：用于生成类任务，如写文章、聊天（代表：GPT）；Encoder + Decoder：用于“输入→输出”任务，如机器翻译、摘要生成（代表：原始 Transformer、T5）。</p>
+</li>
+<li><p>Transformer的Encoder和Decoder结构差异：1、Encoder全连接自注意力（双向），每个词可以关注前后所有词，Decoder掩码自注意力，只能关注当前及之前的词。2、Decoder额外有一层 Encoder-Decoder Attention，关注 Encoder 输出的 Key&#x2F;Value。</p>
+</li>
+<li><p>Transformer中的FFN前馈神经网络：Encoder和Decoder的关键组成部分，和自注意力机制共同构成模型核心结构。FFN是一个简单的两层全连接神经网络，本质上就是一个“升维 → 激活 → 降维”的小型神经网络，做两次线性变换，先对词向量做一次‘升维扩展’（变大、更有表现力），再通过激活函数比如ReLU（引入非线性，让模型能拟合更复杂的特征），最后再降维（回到原始维度）。FFN(x) &#x3D; Linear2(ReLU(Linear1(x)))。为什么升维：让每个词向量单独获得更多“表达空间”和复杂度。</p>
+</li>
+<li><p>Transformer中FFN的作用：1、引入非线性变换（自注意力主要是加权求和接近线性，FFN引入非线性，让模型能拟合更复杂函数）。2、FFN对注意力聚合后的信息进行深加工，提取更高层语义。3、FFN 对序列中每一个位置的向量单独处理（不跨位置），与“全局关注”的自注意力形成互补。总结：FFN 是 Transformer 中对每个位置进行独立深度处理的“思考模块”，它和“注意力”配合，让模型既能关注上下文，又能深入理解信息。</p>
+</li>
+<li><p>激活函数：引入非线性，让网络能学习和表达复杂的、不是简单加减乘除能描述的规律。如果网络没有激活函数，只是一堆线性运算，不管加多少层，最后都等价于一层线性变换，模型能力很有限，不能拟合曲线。</p>
+</li>
+<li><p>常用激活函数：ReLU：max(0, x)  把负数变0，正数保留 → 快速、常用。Sigmoid：1&#x2F;(1+e^-x)  输出01，适合概率。Tanh双曲正切函数：-11之间S形曲线  更强的归一化。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%85%AB%E8%82%A1/" rel="tag"># 八股</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="python之零碎知识点">
+      <i class="fa fa-chevron-left"></i> python之零碎知识点
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" rel="next" title="那些年背过的面试题之Python">
+      那些年背过的面试题之Python <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">3.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">4.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">5.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">6.</span> <span class="nav-text">Transformer</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

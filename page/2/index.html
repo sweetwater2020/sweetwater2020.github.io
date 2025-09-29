@@ -183,6 +183,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/" class="post-title-link" itemprop="url">那些年背过的面试题之大数据</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-07-24 22:27:03 / Modified: 22:29:54" itemprop="dateCreated datePublished" datetime="2025-07-24T22:27:03+08:00">2025-07-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>谷歌的“三架马车”：谷歌文件系统GFS（2003），MapReduce（2004）和Big Table（2006），奠定了大数据时代的基础。</li>
+<li>离线计算：Hadoop（Mapreduce）、Hive、Spark</li>
+<li>2006年实现了由HDFS分布式文件系统和MapReduce计算框架组成的Hadoop，成为了离线数据处理的核心。</li>
+<li>HDFS：Hadoop的存储部分，一个分布式文件系统，将数据文件分块存储在集群的节点上。HDFS可以实现在整个集群上高效地存储和访问数据。</li>
+<li>MapReduce：大数据处理技术，属于离线计算的一种。将数据处理任务分成两个阶段：Map阶段，数据被切分成小块，并在计算机集群的各个节点上进行并行处理。Reduce阶段，将Map阶段的结果进行合并和汇总，生成最终的输出结果。</li>
+<li>2007年Hive：起源于FaceBook，是基于Hadoop的一个数据仓库工具，用来进行数据提取、转化、加载ETL，一种可以存储、查询和分析存储在Hadoop中的大规模数据的机制。能将结构化的数据文件映射为一张数据库表，并提供SQL查询功能，能将SQL语句转变成MapReduce任务来执行。</li>
+<li>2010年Spark：Hadoop缺点：MapReduce框架在每个计算阶段都需进行磁盘读写导致较高的磁盘IO开销、对于迭代计算效率低下。Spark是加州大学伯克利分校开源的类Hadoop MapReduce的通用并行框架，与MapReduce不同：中间输出结果可以保存在内存中，从而不再需要读写HDFS，避免大部分磁盘IO开销，提高计算性能。同时Spark能更好的适用于数据挖掘与机器学习等需要迭代的MapReduce的算法。Spark通过使用RDD（弹性分布式数据集）、DAG切分的多阶段计算过程来实现高效的数据并行处理，支持大规模数据集的分布式计算和分析任务，是离线计算（批处理）领域的主流技术栈。</li>
+<li>Spark拥有一个丰富的生态系统：Spark SQL（用于SQL查询）、Spark Streaming（用于实时流处理）、MLlib（用于机器学习）、GraphX（用于图计算）等。是一个强大且灵活的分布式计算框架，它通过内存计算和统一的编程模型，为大规模数据处理提供了高效的解决方案，适用于各种数据处理任务和应用场景。</li>
+<li>实时计算：Storm、Spark Streaming、Flink</li>
+<li>实时计算：在早期，基于Hadoop的数据处理主要采用批处理方式，也就是离线计算的方式：数据会先存储在分布式文件系统中，然后通过批处理作业进行处理和分析，数据处理的延迟较高，需要等待一段时间才能获取结果。</li>
+<li>离线&#x3D;批处理，实时&#x3D;流式处理。流式处理技术将数据分成小的批次进行处理，在数据到达时立即进行处理和分析，流式处理技术又分为两种：原生流、微批拟流（Spark Streaming）</li>
+<li>Storm是一个免费开源、分布式、高容错的实时计算系统。Storm最早于2011年诞生于Twitter。早期Storm用于实时计算，Hadoop用于离线计算。已不推荐使用。在Storm中，先要设计一个用于实时计算的图状拓扑（Topology），一个Topology是由多个Spout（数据输入处理模块）和Bolt（输出处理模块）通过Stream连接起来的有向无环图。</li>
+<li>Spark Streaming：2013年Spark 2.0推出了Spark Streaming。但由于不是原生流处理技术栈，认为流是批的特例，将输入数据切分成一个个小的切片，存在时延，且高级功能不如Flink，已不是主流技术栈，不推荐使用。</li>
+<li>Flink最初是由德国柏林工业大学开发。Apache Flink是分布式流式处理引擎，用于无界和有界数据流的有状态计算。Flink创造性地统一了流处理和批处理，作为流处理看待时输入数据流是无界的，而批处理被作为一种特殊的流处理，只是它的输入数据流被定义为有界的。</li>
+<li>分布式存储HBase：一个分布式的、面向列的开源数据库，建立在 HDFS 之上。HBase 的计算和存储能力取决于 Hadoop 集群。它介于NoSql和RDBMS之间，仅能通过主键(row key)和主键的range来检索数据，仅支持单行事务。</li>
+<li>OLAP 和 OLTP：OLTP（联机事务处理）对数据库的增删改。OLAP（联机分析处理）对数据的查询。</li>
+<li>OLAP的分类：ROLAP（关系型联机分析处理）、MOLAP（多维联机分析处理）、HOLAP（混合型OLAP）。ROLAP：传统关系型数据库、MPP分布式数据库以及Hadoop的Spark。实时根据用户提出的需求对数据进行计算后返回给用户。使用灵活，可以随意选择维度组合进行实时计算。有性能问题。MOLAP：将客户的需求计算好以结果的形式存下来，提出需求后，找到对应的结果返回即可。需要的磁盘存储空间大。</li>
+<li>MPP（Massive Parallel Processing,海量并行处理）：是一种基于共享磁盘的并行数据库处理架构，通过将数据分布到多个节点上进行并行处理，从而实现对大规模数据的快速分析和查询。只负责计算，不负责存储。</li>
+<li>MapReduce和MPP架构：都是分布式并行处理，将任务并行的分散到多个服务器节点上，在每个节点上计算完成后，将各自部分的结果汇总到一起。不同的是，MapReduce任务的tasks会动态的分配在空闲的Executor上，执行慢的Executor会分配到更少的task。缺点是MapReduce将一个任务分解成有依赖关系的tasks（DAG），task是异步执行的，因此必须通过写入中间数据共享内存来解决数据的依赖，性能有所损耗。MPP每个处理数据的task被绑定在持有该数据切片的指定Executor上，单一的Executor只处理单一的task，不需要将中间数据写入磁盘，直接将数据Stream到下一个执行阶段，性能好。缺点是如果某个Executor执行过慢或者故障，整个集群的性能就会受限于这个异常节点，所以MPP架构的集群节点不宜过多。</li>
+<li>Lambda架构：一种用于数据处理的架构设计模式，结合了实时计算和批处理两种方法，以满足不同的数据分析需求。L由三个层级组成：批处理层、速度层和服务层。批处理层负责离线处理大量数据，通常通过批处理系统（如Hadoop、Spark等）处理数据，并将结果存储在数据仓库中。速度层用于处理实时数据流，通常采用流式处理技术（如Storm、Spark Streaming等），以快速处理数据并产生实时结果。服务层负责将批处理层和速度层的结果整合，并为用户提供统一的数据查询和分析接口。优点：可扩展性强、能够处理大规模数据、满足实时和离线数据处理需求。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -214,7 +303,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:22:01" itemprop="dateModified" datetime="2025-09-18T22:22:01+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:28:09" itemprop="dateModified" datetime="2025-09-24T22:28:09+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -245,6 +334,8 @@
 <li><p>spring IOC：控制反转，通过spring来管理对象的创建、配置、生命周期，把控制权交给spring。提供BeanFactory和ApplicationContext两种IOC容器，实现对bean的管理。实现原理：依赖注入DI、Bean生命周期管理。</p>
 </li>
 <li><p>spring AOP：面向切面编程，一种编程范式，代码前后做增强操作，提高代码模块性。实现：基于动态代理，实现接口用JDK动态代理，否则CGLIB动态代理。@Aspect注解和@Around切入点实现切面。</p>
+</li>
+<li><p>静态代理和动态代理：静态代理是由程序员手动编写代理类，或者通过工具生成，代理类在编译期间已经确定，方法调用时，代理类调用真实类的方法，可实现在调用前后添加额外逻辑。动态代理则在运行期间动态生成代理类，如JDK动态代理利用反射生成代理对象，无需提前写好代理类，只需实现InvocationHandler接口；CGLIB动态代理是通过字节码技术生成目标类的子类对象。静态代理灵活性差，维护成本高；动态代理可实现通用、高度灵活的AOP等机制。Spring AOP主要用动态代理实现。</p>
 </li>
 <li><p>JDK和CGLIB动态代理：JDK动态代理针对类实现某个接口，基于反射生成实现同样接口的代理类。CGLIB底层基于asm第三方框架，通过修改字节码生成一个子类。</p>
 </li>
@@ -286,9 +377,13 @@
 </li>
 <li><p>a方法加了@Transactional，b方法没加，b内部调用a，会有事务产生吗：@Transactional声明式事务，事务的传播行为决定事务如何传播和边界所在。由于spring的事务管理是基于AOP，通过代理实现的，分两种情况：第一种，如果方法在同一个类中，自调用，a方法的调用不会通过spring生成的代理对象调用，不会开始新的事务。第二种，在不同的类中，a方法通过spring的代理对象调用，开始一个新事务。</p>
 </li>
+<li><p>spring事务失效场景，不加public为何事务失效：Spring事务失效常见场景有：方法不是 public、同类方法调用、异常未抛出、事务注解加在接口上等。Spring事务本质上是通过AOP动态代理实现的，只有 public 方法才能被代理增强。如果事务方法不是 public，Spring AOP无法生成代理，导致事务失效。</p>
+</li>
 </ul>
 <h2 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h2><ul>
 <li>什么是springboot：基于spring的开源框架，用于快速创建独立的生产级别的可运行的Spring应用程序。不是Spring功能上的增强，而是提供一种快速开发Spring项目的方式。spring问题：写配置文件繁琐，依赖繁琐，maven坐标版本问题。springboot提供的优点：自动配置、起步依赖、安全。约定优于配置的理念，开发者不需要手动配置大量spring配置文件，而是自动配置。提供一系列的起步依赖starter，快速构建出一些常用的应用程序，整合Junit、redis、mybatis等很方便。帮助管理jar包版本，避免依赖版本不一致的问题。</li>
+<li>SpringBoot原理：SpringBoot通过自动配置原理，简化了Spring项目的搭建和运行。它利用大量的@EnableAutoConfiguration和条件化装配（如@Conditional），根据项目依赖自动注册相应组件和Bean，减少繁琐的XML配置，使开发者专注于业务逻辑。同时，SpringBoot内嵌Tomcat等容器，支持一键启动和打包。</li>
+<li>SpringCloud原理：SpringCloud是在SpringBoot基础上，集成和封装了微服务领域的常用组件（如注册中心、配置中心、服务网关等），通过一套规范和自动化配置，实现服务注册与发现、负载均衡、分布式配置管理、断路器等核心功能。这样极大提升了微服务系统的开发效率与可扩展性，方便系统的解耦和横向扩展。</li>
 <li>Spring、Spring MVC和SpringBoot区别：Spring是Java开发框架，用于创建企业级的java应用程序，提供IOC和AOP等功能。Spring MVC是Spring框架的一个模块，用于创建Web应用程序，使用控制器、视图和模型来实现MVC设计模式。Spring Boot是一个基于Spring框架的快速开发工具，使用自动配置快速创建Spring应用程序。总结：Spring是基础框架，Spring MVC是基于Spring的Web框架，而Spring Boot则是基于Spring的快速开发框架。Spring Boot内嵌了Tomcat、Jetty等Web容器，可以直接运行Web应用程序，而Spring MVC需要部署到Web容器中才能运行。</li>
 <li>springboot自动配置的原理：基于Spring的条件化配置功能实现，Condition接口和@Conditional注解。以及springboot的一系列自动配置类，Spring Boot应用的入口类会使用@SpringBootApplication注解，它包含@SpringBootConfiguration，@EnableAutoConfiguration和@ComponentScan注解，@EnableAutoConfiguration是自动配置的核心。@EnableAutoConfiguration利用Spring的@Import注解来加载配置类，META-INF&#x2F;spring.factories配置文件中定义了大量的配置类，springboot应用启动时会自动加载这些配置类。并且在配置类中使用Condition来加载满足条件的bean，如DataSource、JdbcTemplate等。（总结：1.条件注解 2.@EnableAutoConfiguration）</li>
 <li>springboot核心注解：@SpringBootApplication：复合注解，标识springboot应用的主类。@Configuration表明该类是java配置类。@ EnableAutoConfiguration开启自动配置功能。@ComponentScan用于自动扫描和注册bean。</li>
@@ -356,7 +451,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:10:50" itemprop="dateModified" datetime="2025-09-18T22:10:50+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:14:26" itemprop="dateModified" datetime="2025-09-24T22:14:26+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -473,6 +568,11 @@
 <li>消息被消费后会立即删除吗：不会，消费后只是消息队列的消费进度（offset）更新，消息的删除是通过定期清理过期文件来实现的。</li>
 <li>延时消息实现：是在投递到Topic这一阶段延时的。1⃣️消息投递：提供若干个延时等级。有一个专门的延时Topic，存入对应延时等级的队列中。2⃣️消息调度：Broker启动时，创建ScheduledThreadPoolExecutor线程池，每个延迟队列一个线程扫描，定期检查延时队列中的消息是否到期。3⃣️转移消息：取出消息重新进行CommitLog写入，写入对应Consumer Queue。然后正常消费。</li>
 <li>metaq总结：高性能（吞吐量高并发量高，队列模型、并行消费、基于Netty）、高可靠性（消息丢失可能小，重试机制、故障规避机制、重试、死信队列）、高实时性（低延迟，快速失败、异步刷盘、零拷贝）</li>
+</ul>
+<ul>
+<li>不同 mq 区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。</li>
+<li>mq路由方式： Kafka：生产者发送消息到指定的Topic，消息根据分区策略（如key哈希或轮询）分配到分区，消费者按分区自动拉取；分区保证消息有序，提升并发。 RocketMQ：支持Topic+Tag路由，消息可通过Tag细分类别。Producer可自定义MessageQueue选择器，根据业务或hash映射到指定队列，消费者可按Tag精准订阅。</li>
+<li>MQ如何保证消息可靠性：Kafka： 消息持久化到磁盘，设置副本数提升高可用； 生产者可配置ack机制，决定写入成功的判定标准（如ack&#x3D;all保证最强一致性）。 RocketMQ： 消息写入Broker后持久化，支持异步&#x2F;同步刷盘，以及主从复制； 提供事务消息机制，以及消息重复、丢失、顺序等保障。</li>
 </ul>
 <h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
 <li>消息队列：消息队列是一个用于接收消息、存储消息并且转发消息的中间件，异步、削峰、解耦。</li>
@@ -608,6 +708,10 @@
 <li>k8s：Kubernetes是一个开源的容器编排系统，用于自动化部署、扩展和管理容器化应用程序。由google设计。</li>
 <li>docker：容器化技术允许将应用程序及其依赖项打包到一个轻量级、可移植的容器中，使得应用程序能够在任何环境中一致地运行。</li>
 </ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
+<li>Linux 如何打印进程号：ps aux | grep 进程名：查看指定进程的 PID。echo $$：打印当前 shell 的进程号。</li>
+<li>Linux 如何搜寻错误日志：grep “error” &#x2F;var&#x2F;log&#x2F;*.log、加-i忽略大小写。</li>
+</ul>
 
       
     </div>
@@ -658,7 +762,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:14:00" itemprop="dateModified" datetime="2025-09-18T22:14:00+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:28:56" itemprop="dateModified" datetime="2025-09-24T22:28:56+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -683,6 +787,8 @@
       
           <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ul>
 <li><p>redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。</p>
+</li>
+<li><p>redis分布式锁的原理：Redis分布式锁基于SETNX+EXPIRE实现，利用Redis单线程原子操作保证互斥。加锁使用SET key value NX EX seconds，key为锁名称，value为唯一标识符，用来标识哪个客户端持有这个锁，防止误删；释放锁通过Lua脚本原子性校验并删除。</p>
 </li>
 <li><p>redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点负责多个哈希槽。2⃣️无中心架构：节点对等，无中心节点。3⃣️主从复制：一个节点可以有多个从节点，实现故障恢复、数据冗余、读写分离。</p>
 </li>
@@ -738,10 +844,14 @@
 <ul>
 <li>Redis 如何使用 Zset 设计延迟队列？</li>
 </ul>
-<p>消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。</p>
-<p>消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。</p>
-<p>处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。</p>
-<p>可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+<p>​	消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。</p>
+<p>​	消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。</p>
+<p>​	处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。</p>
+<p>​	可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+<ul>
+<li>redis如何部署：Redis 部署方式主要有三种：第一，单机部署，可以从官网下载源码编译并启动服务；第二，使用 Docker 快速拉取官方镜像并启动容器；第三，集群部署，配置多个节点并通过命令组建集群用于高可用和分片扩展。</li>
+<li>redis使用场景：缓存热点数据、分布式锁、计数器、排行榜、消息队列。</li>
+</ul>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ul>
 <li><p>RDBMS和NoSQL：RDBMS关系型数据库（组织化结构，表格行列格式，Mysql、Oracle、PostgreSQL）、Not only sql非关系型数据库（数据存储没有固定格式，可横向扩展）。1⃣️数据结构：结构化与非结构化，键值redis、列存储HBase、文档MongoDB、图形存储Neo4j。2⃣️数据关联：sql中多张表可关联，nosql数据之间无关联。3⃣️查询语言：sql固定查询语言，nosql不固定查询语言。4⃣️事务一致性：sql提供强一致性和完整事务支持，nosql提供BASE基本可用、软状态、最终一致性。5⃣️存储方式：sql存在磁盘，nosql存在内存。6⃣️扩展性：sql垂直扩展，升级单个服务器的内存cpu存储空间。nosql可水平扩展，分布式存储。</p>
 </li>
@@ -776,6 +886,13 @@
 <li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
 </li>
 <li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
+</li>
+<li><p>mysql主键索引和非主键索引区别</p>
+<p>主键索引（聚簇索引）：数据页按照主键顺序存储，索引的叶子节点直接存储数据行。通过主键查询效率高，且主键唯一。</p>
+<p>非主键索引（辅助索引）：叶子节点存储主键信息（不是数据本身）。查询时先定位到主键，再回表根据主键查数据（称为回表查询）。可重复。</p>
+<p>总结：主键索引存储方式直接，查询快；非主键索引需多一步回表操作定位数据。</p>
+</li>
+<li><p>mysql建立联合索引，叶子结点和非叶子结点都存什么：联合索引的底层采用 B+树结构，非叶子节点只存索引字段的组合值和指针，用于索引检索，叶子节点真正存储联合索引值及主键或行地址。</p>
 </li>
 <li><p>最左前缀匹配：联合索引中，查询时使用的where子句中的条件必须包含联合索引中最左边的列索引才能生效，如果跳过或使用范围查询，则后面列不能有效使用索引。因为B+树是有序的。</p>
 </li>
@@ -824,6 +941,18 @@
 <li><p>mybatis是否支持延迟加载：延迟加载是用到数据时才进行加载，避免一次性加载大量关联数据，提高查询效率。配置文件中可以设置延迟加载，按需取材。底层使用CGLIB动态代理实现，创建目标对象的代理对象，目标对象是开启延迟加载的mapper所映射的实体类。通过字节码技术运行时生成代理类，调用目标方法时，进入拦截器的invoke方法，执行sql查询以获取关联数据，注入到对象属性中。</p>
 </li>
 <li><p>为什么mysql中不建议过多join： 性能开销大，磁盘IO增加。需要缓存中间结果集，内存占用增加。分库分表后，跨节点JOIN效率低，需应用层处理关联逻辑。 优化：通过冗余设计如宽表减少join、使用缓存预关联结果、对核心查询字段添加覆盖索引。</p>
+</li>
+<li><p>主键和唯一索引的区别： 唯一性约束：主键和唯一索引都保证列值唯一，但主键不允许为NULL，唯一索引允许有多个NULL。 每表只能有一个主键，但可以有多个唯一索引。 主键通常用于表的主标识，自动创建聚簇索引；唯一索引仅用于保证唯一性，未必是聚簇索引。 主键用于关联、外键等场景，唯一索引主要保证业务字段唯一。</p>
+</li>
+<li><p>慢sql分析：查看慢查询日志；使用EXPLAIN分析执行计划，关注扫描类型（type）、可能索引（key）、返回行数（rows）等；检查SQL语句、字段、索引设计是否合理。</p>
+</li>
+<li><p>MySQL索引失效场景：对索引字段使用函数或运算、类型不匹配导致隐式转换、模糊查询左侧为%、未使用联合索引的最左前缀、OR条件中部分字段无索引、使用&lt;&gt;、!&#x3D;、IS NULL、等不等空值查询，以及高重复率低选择性字段。</p>
+</li>
+<li><p>索引什么不要对大字段建立：大字段占用空间大，会导致索引维护和存储开销大，影响插入、更新时的性能。并且大字段检索效率低。</p>
+</li>
+<li><p>mysql底层数据结构：B+树（如InnoDB索引）、哈希表（Memory引擎、自适应哈希索引）以及页式存储（Page）。B+树支持高效检索和范围查询，页结构提升读写性能，事务日志（Redo、Undo Log）则保证数据安全和事务性。</p>
+</li>
+<li><p>sql注入如何解决：SQL注入是一种攻击手段，攻击者通过拼接恶意SQL代码获取或篡改数据。解决SQL注入的关键方法是使用<strong>预编译</strong>或参数化查询，避免直接拼接SQL字符串，使用户输入不会被当作SQL指令解析。加强输入校验与过滤，控制输入的格式和内容，限制特殊字符。使用ORM框架如MyBatis、Hibernate，默认采用安全的参数绑定方式。设置适当的权限，敏感操作需严格验证和监控，从而综合防止SQL注入风险。</p>
 </li>
 </ul>
 <h2 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h2><ul>
@@ -879,7 +1008,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:20:05" itemprop="dateModified" datetime="2025-09-18T22:20:05+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:27:00" itemprop="dateModified" datetime="2025-09-24T22:27:00+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -905,6 +1034,7 @@
           <h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><ul>
 <li>jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针）</li>
 <li>jmm内存模型：多线程环境下对共享变量的同步，保证多线程环境下的可见性、有序性。主内存和工作内存，可见性volatile线程更改了工作内存中的共享变量其他线程能够立马看到，有序性volatile禁止指令重排synchronized锁，原子性synchronized和CAS无锁的原子操作</li>
+<li>JVM组成： 类加载器（ClassLoader）：负责加载类文件到内存。 运行时数据区：包括堆（Heap）、方法区（MetaSpace）、虚拟机栈、程序计数器、本地方法栈。 执行引擎（Execution Engine）：负责执行字节码指令。 本地方法接口（JNI）：与本地代码交互。 垃圾收集器（GC）：负责内存回收。</li>
 </ul>
 <h2 id="java相关"><a href="#java相关" class="headerlink" title="java相关"></a>java相关</h2><ul>
 <li>jdk新特性：</li>
@@ -920,6 +1050,8 @@
 <li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
 </li>
 <li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>voliate 能保证原子性么：volatile 不能保证原子性。它的作用是保证变量的可见性和禁止指令重排，保证原子操作的线程安全，确保当一个线程修改了volatile变量后，其他线程能立即看到最新值。但对于复合操作（如count++），读-改-写三个步骤，volatile无法保证这些步骤的原子执行，仍然会发生竞态条件，导致结果不一致。要实现原子性，需使用同步机制（如synchronized）或原子类（如AtomicInteger），而不能仅依赖volatile。</p>
 </li>
 <li><p>CAS：无锁的原子操作，用来在并发编程中实现无锁同步。非阻塞的，减少锁开销。ABA问题，导致自旋，消耗CPU，只能一个变量的原子操作。</p>
 </li>
@@ -949,11 +1081,38 @@
 </li>
 <li><p>死锁：多线程互相持有和等待对方的资源，形成循环等待。互斥条件、请求与保持条件、不可剥夺条件、循环等待条件。CAS破坏互斥条件，银行家算法分配资源之前先检查是否会死锁，破坏循环等待。</p>
 </li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li><p>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</p>
+</li>
+<li><p>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</p>
+</li>
+<li><p>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</p>
+</li>
+<li><p>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</p>
+</li>
+<li><p>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</p>
+</li>
+<li><p>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</p>
+</li>
+<li><p>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</p>
+</li>
+<li><p>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</p>
+</li>
+<li><p>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</p>
+</li>
+<li><p>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</p>
+</li>
+<li><p>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</p>
+</li>
 <li><p>线程池：管理一系列线程的资源池，避免线程频繁创建销毁开销，提高响应速度。1.ThreadPoolExecutor构造函数创建（核心线程数、最大线程数、阻塞队列、最大线程存活时间、threadFactory、饱和策略）2.Executors工具类创建（不推荐，使用无界阻塞队列OOM，CachedThreadPool使用同步队列创建线程数无限制OOM）</p>
 </li>
 <li><p>线程池饱和策略：AbortPolicy抛出异常来拒绝、CallerRunsPolicy调用线程中运行、DiscardPolicy直接丢弃、DiscardOldestPolicy丢弃最早未处理的。</p>
 </li>
 <li><p>线程池阻塞队列：ArrayBlockingQueue基于数组结构的有界阻塞队列FIFO、LinkedBlockingQueue基于链表的无界阻塞队列、SynchronousQueue同步队列无容量、DelayQueue延迟无界阻塞队列，延迟期满时从队列取出、PriorityBlockingQueue支持优先级排序的无界阻塞队列。</p>
+</li>
+<li><p>如何设计一个有界阻塞队列？</p>
+<p>有界阻塞队列是指定容量的线程安全队列，常用数组或链表实现。设计时需维护队列长度、同步机制以及 put 和 take 操作。通常用锁（如ReentrantLock）和条件变量（Condition）控制并发。当队列已满时，put操作会阻塞，直到有空间可用；如果队列为空，take操作同样会阻塞等待。实现流程是：put时检查是否满，满则等待，使用条件锁的await方法；take时检查是否空，空则等待。队列空间释放后通知等待的线程继续操作，使用条件锁的signal方法。</p>
 </li>
 <li><p>线程池处理顺序：核心线程、任务队列、最大线程、饱和策略</p>
 </li>
@@ -962,18 +1121,11 @@
 <li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
 </li>
 </ul>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
-<li>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</li>
-<li>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</li>
-<li>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</li>
-<li>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</li>
-<li>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</li>
-<li>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</li>
-<li>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</li>
-<li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
-<li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
-<li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
-<li>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</li>
+<ul>
+<li>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</li>
+<li>线程池核心线程数设置：如果是CPU密集型任务，可设置为CPU核数；IO密集型任务可适当增大（如核数2倍）。</li>
+<li>java原生线程池：FixedThreadPool固定数量线程的线程池。CachedThreadPool自动扩展线程数的线程池。SingleThreadExecutor单线程线程池，所有任务按顺序执行。ScheduledThreadPool定时周期执行的线程池。通过Executors工厂类创建。</li>
+<li>如何进行多线程数据同步：wait-notify 机制，基于对象的监视器（即锁），通过调用对象的 wait()、notify()、notifyAll() 方法，让线程在满足条件时等待和唤醒，用于线程间协调。一个线程调用另一个线程的 join() 方法时，会等待该线程执行完毕后再继续执行。子线程执行完后调用 countDown()，主线程调用 await() 阻塞，直到计数为零。线程池提交任务后获得Future对象，主线程通过get()方法等待并获取子任务返回结果。</li>
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
@@ -1074,6 +1226,10 @@
 </li>
 <li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
 </li>
+<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，而Hashtable继承自遗留的Dictionary类。</p>
+</li>
+<li><p>HashMap如何获取元素：首先根据键对象的 hashCode() 计算哈希值，确定该键对应的桶（bucket）位置。随后，通过 equals() 方法在该桶的链表或树中查找与目标键相等的元素，进而获取对应的 value。</p>
+</li>
 <li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
 </li>
 <li><p>ArrayList 和 LinkedList怎么线程安全：1⃣️使用Collections.synchronizedList(list)将任何List转换为线程安全的List。（所有操作都使用相同的对象锁进行同步）。2⃣️使用显式的同步块，每次访问操作时加相同的锁。3⃣️使用concurrent包中的并发集合，CopyOnWriteArrayList，写时复制，适用于遍历操作远多于修改操作。ConcurrentHashMap、ConcurrentLinkedQueue。</p>
@@ -1081,6 +1237,8 @@
 <li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
 </li>
 <li><p>重写 <code>equals()</code> 时必须重写 <code>hashCode()</code>：是为了保证 <strong>相等的对象必须有相同的哈希码</strong>，这是 Java 的约定。否则在使用 <code>HashMap</code>、<code>HashSet</code> 等哈希结构时，会导致对象无法正确存取或比较，引发逻辑错误。</p>
+</li>
+<li><p>java为什么引入泛型：为了解决类型安全和代码复用的问题。在没有泛型之前，集合类等只能存储 Object 类型，取出元素时需要强制类型转换，容易出现运行时的类型转换异常。使用泛型后，数据类型在编译阶段就能确定，避免了类型转换错误，提高了代码的安全性和健壮性。同时，泛型让代码更加通用和易读，提升了开发效率。</p>
 </li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
@@ -2094,299 +2252,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/10/myblog/java/java%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/10/myblog/java/java%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">java诊断</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-09-10 23:39:58" itemprop="dateCreated datePublished" datetime="2022-09-10T23:39:58+08:00">2022-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-18 17:10:54" itemprop="dateModified" datetime="2023-01-18T17:10:54+08:00">2023-01-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="java诊断工具arthas"><a href="#java诊断工具arthas" class="headerlink" title="java诊断工具arthas"></a>java诊断工具arthas</h2><h3 id="✅简介"><a href="#✅简介" class="headerlink" title="✅简介"></a>✅简介</h3><p>Arthas 是Alibaba开源的Java诊断工具。安装在系统所在服务器。可以帮助开发人员或者运维人员查找问题，分析性能，bug追踪。</p>
-<p>解决问题：<br>1、以全局视角来查看系统的运行状况、健康状况。<br>2、反编译源码，查看jvm加载的是否为预期的文件内容。<br>3、查看某个方法的返回值，参数等等。<br>4、方法内调用路径及各方法调用耗时。<br>5、查看jvm运行状况。<br>6、外部.class文件重新加载到jvm里。<br>等等…..</p>
-<p>场景：<br>1）调用接口时，接口返回异常信息，如果该异常信息没有清晰的定位到代码，那么我们通常只能依靠大脑回忆代码，来估计错误发生地了，如果无法估计，一般情况下就会进入测试环境，模拟复现，如果无法复现。<br>2）这个查询，耗时20s，我们想要分析一下到底是哪些代码导致的。但是该方法内部又穿插调用了其它业务功能方法，难道手写System.currentTimeMillis()自己做减运算，还是guava的StopWatch亦或是commons的StopWatch？这几种方式需要我们手动嵌入代码，容易遗漏、费力还费时。<br>等等<br>arthas可以为我们解决上述问题，帮助程序员尽早下班，尽早交代。</p>
-<h3 id="✅安装启动"><a href="#✅安装启动" class="headerlink" title="✅安装启动"></a>✅安装启动</h3><p>下载: wget <a target="_blank" rel="noopener" href="https://alibaba.github.io/arthas/arthas-boot.jar">https://alibaba.github.io/arthas/arthas-boot.jar</a><br>启动: java -jar arthas-boot.jar</p>
-<p>退出arthas<br>quit —— 退出当前 Arthas 客户端，其他 Arthas 客户端不受影响<br>shutdown —— 关闭 Arthas 服务端，所有 Arthas 客户端全部退出 &amp; 重置所有增强过的类，就不用单独调用reset</p>
-<h3 id="✅应用"><a href="#✅应用" class="headerlink" title="✅应用"></a>✅应用</h3><p>1、查看某方法耗时</p>
-<p><code>trace cn.asae.e.contract.web.ContractController getContract</code></p>
-<p>2、显示进程相关信息，仪表盘</p>
-<p><code>dashboard</code></p>
-<p>3、查看类里某个方法的返回值和入参</p>
-<p>命令+类完全限定名+监测方法+表达式<br><code>watch cn.asae.e.contract.web.ContractSubjectController getContractSubjectLogs &quot;&#123;params,returnObj&#125;&quot;</code></p>
-<p>4、时空隧道</p>
-<p>方法执行数据的时空隧道，记录下指定方法每次调用的入参和返回信息，并能对这些不同的时间下调用进行观测</p>
-<p><code>tt -t cn.asae.e.contract.web.ContractSubjectController getContractSubjectLogs</code><br>-t 代表记录下每次方法执行情况</p>
-<p>5、查看JVM已加载的类信息</p>
-<p><code>sc -d cn.asae.e.contract.web.ContractSubjectController</code></p>
-<p>-d 输出当前类的详细信息，包括这个类所加载的原始文件来源、类的声明、加载的ClassLoader等详细信息。<br>如果一个类被多个ClassLoader所加载，则会出现多次</p>
-<p>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jiawen010/p/15513454.html">https://www.cnblogs.com/jiawen010/p/15513454.html</a></p>
-<p>其他：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_37650458/article/details/123561000">https://blog.csdn.net/weixin_37650458/article/details/123561000</a></p>
-<h2 id="fullGC"><a href="#fullGC" class="headerlink" title="fullGC"></a>fullGC</h2><h3 id="✅什么是GC-heap分区"><a href="#✅什么是GC-heap分区" class="headerlink" title="✅什么是GC &amp; heap分区"></a>✅什么是GC &amp; heap分区</h3><p>Java垃圾回收机制，Java通过可达性分析一个对象的引用是否存在，当不存在的时候，将回收堆中的对象。回收无用内存空间</p>
-<p>一般而言，GC主要是针对运行的数据区的。作为程序员要关注的区域主要有5块，分别是方法区(Method Area)，Java栈(Java stack)，本地方法栈(Native Method Stack)，堆(Heap)，程序计数器(Program Counter Register)。实际jvm在管理内存的时候，比这个分的更细致，只不过做应用程序开发，我们只需要关注这5块就可以了。</p>
-<p>“堆”，也就是Heap了，它是Jvm管理的内存中最大的一块。程序的主要数据也都是存放在堆内存中的，也就是说程序所创建的对象基本上都在该区域进行内存分配，这一块区域被所有的线程所共享，通常出现线程安全问题的一般都是这个区域的数据出现的问题。通常我们所说的gc主要是针对java heap这块区域的。</p>
-<p>Heap区在设计上是分代设计的，其划分为了Eden、Survivor 和 Tenured&#x2F;Old ，其中Eden区、Survivor(存活)属于年轻代，Tenured&#x2F;Old区属于老年代或者持久代。</p>
-<p>一般我们将年轻代发生的GC称为Minor GC，对老年代进行GC称为Major GC。</p>
-<p>而FullGC是对整个堆来说的，在最近几个版本的JDK里默认包括了对永生带即方法区的回收(JDK8中无永生带了)，出现Full GC的时候经常伴随至少一次的Minor GC,但非绝对的。Major GC的速度一般会比Minor GC慢10倍以上。</p>
-<hr>
-<p>JVM的堆区对象分配的一般规则：</p>
-<ol>
-<li><p>对象优先在Eden区分配，当eden不够分配时，进行一次minor gc。（java对象大多很快没掉，所以minor gc很频繁）</p>
-</li>
-<li><p>大对象直接进入老年代(-XX:PretenureSizeThreshold&#x3D;3145728 这个参数来定义多大的对象直接进入老年代)</p>
-</li>
-<li><p>长期存活的对象将进入老年代(-XX:MaxTenuringThreshold&#x3D;1设置晋升老年代的年龄阈值)</p>
-</li>
-<li><p>动态对象年龄判定：虚拟机并不会永远地要求对象的年龄都必须达到MaxTenuringThreshold才能晋升老年代，如果Survivor空间中相同年龄的所有对象的大小总和大于Survivor的一半，年龄大于或等于该年龄的对象就可以直接进入老年代</p>
-</li>
-<li><p>空间分配担保：计算新生代minor gc后剩下的对象若survivor无法容纳，是否能通过老年代来担保分配空间，如果不能，需要触发一次full gc。HandlePromotionFailure&#x3D;false设置是否允许老年代担保。</p>
-</li>
-<li><p>只要老年代的连续空间大于(新生代所有对象的总大小或者历次晋升的平均大小)就会进行minor GC，否则会进行full GC。</p>
-</li>
-</ol>
-<h3 id="✅FullGC的触发条件"><a href="#✅FullGC的触发条件" class="headerlink" title="✅FullGC的触发条件"></a>✅FullGC的触发条件</h3><p>FullGC是针对整个Heap区而言的，它将在以下几种情况被触发：</p>
-<p>1、在程序中调用了System.gc()方法。此方法的调用是建议JVM进行Full GC,虽然只是建议而非一定，但很多情况下它会触发 Full GC,从而增加Full GC的频率，也即增加了间歇性停顿的次数。强烈影响系建议能不使用此方法就别使用，让虚拟机自己去管理它的内存，可通过<code>-XX:+ DisableExplicitGC</code>来禁止RMI(Java远程方法调用)调用System.gc。</p>
-<p>2、老年代空间不足。老年代空间只有在新生代对象转入及创建为大对象、大数组时才会出现不足的现象，当执行Full GC后空间仍然不足，则抛出如下错误【java.lang.OutOfMemoryError: Java heap space】，而为避免以上两种状况引起的Full GC，调优时应尽量做到让对象在Minor GC阶段被回收、让对象在新生代多存活一段时间及不要创建过大的对象及数组。</p>
-<p>3、Permanet Generation空间满了。也就是以前所说的方法区，Permanet Generation中存放的为一些class的信息等，当系统中要加载的类、反射的类和调用的方法较多时，Permanet Generation可能会被占满，在未配置为采用CMS GC（concurrent mark sweep 标记清除算法）的情况下会执行Full GC。如果经过Full GC仍然回收不了，那么JVM会抛出错误信息：java.lang.OutOfMemoryError: PermGen space 。为避免Perm Gen占满造成Full GC现象，可采用的方法为增大Perm Gen空间或转为使用CMS GC。</p>
-<p>4、通过Minor GC后进入老年代的平均大小大于老年代的可用内存。如果发现统计数据说之前Minor GC的平均晋升大小比目前old gen剩余的空间大，则不会触发Minor GC而是转为触发full GC。由Eden区、From Space区向To Space区复制时，对象大小大于To Space可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小。分配很大的对象。所谓大对象，是指需要大量连续内存空间的java对象，例如很长的数组，此种对象会直接进入老年代，而老年代虽然有很大的剩余空间，但是无法找到足够大的连续空间来分配给当前对象，此种情况就会触发JVM进行Full GC。为了解决这个问题，CMS垃圾收集器提供了一个可配置的参数，即<code>-XX:+UseCMSCompactAtFullCollection</code>开关参数，用于在“享受”完Full GC服务之后额外免费赠送一个碎片整理的过程，内存整理的过程无法并发的，空间碎片问题没有了，但停顿时间不得不变长了，JVM设计者们还提供了另外一个参数 <code>-XX:CMSFullGCsBeforeCompaction</code>，这个参数用于设置在执行多少次不压缩的Full GC后，跟着来一次带压缩的。</p>
-<h3 id="✅分代收集算法"><a href="#✅分代收集算法" class="headerlink" title="✅分代收集算法"></a>✅分代收集算法</h3><p>针对年轻代和老年代，JVM将使用不同的垃圾收集算法进行收集，达到高效的垃圾回收。</p>
-<p>1、年轻代采用的是标记-复制算法，将需要回收的对象标记，将不需要的对象移动到Survivor空间，然后将标记对象回收，该算法可以实现对大多数会失效的对象进行回收，对少部分不需要回收的对象进行转移，保证eden区拥有连续的内存空间，而且复制的效率高。</p>
-<p>因为在年轻代不需要回收的对象一般是很少的，每次垃圾收集时都有大批对象死去，只有少量存活，选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。</p>
-<p>2、老年代采用的是标记-整理算法，将需要回收的对象标记，将不需要的对象进行移动整理，使不需要回收的对象占用连续的内存空间，再清除回收对象，保证老年代拥有连续的内存空间，而且整理效率高。</p>
-<p>因为在老年代需要回收的对象一般是很少的，其存活率较高、没有额外空间对它进行分配担保。</p>
-<p>3、CMS GC（concurrent mark sweep 标记清除算法）老年代中使用：标记所有需要回收的对象，在标记完后统一回收。缺点：标记清除效率不高，产生碎片多。但是并发收集，低停顿。</p>
-<p>转自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_35291771/article/details/114075710">https://blog.csdn.net/weixin_35291771/article/details/114075710</a></p>
-<p>探秘Java虚拟机——内存管理与垃圾回收：<br><a target="_blank" rel="noopener" href="http://www.blogjava.net/chhbjh/archive/2012/01/28/368936.html">http://www.blogjava.net/chhbjh/archive/2012/01/28/368936.html</a></p>
-<h3 id="✅什么是fullgc"><a href="#✅什么是fullgc" class="headerlink" title="✅什么是fullgc"></a>✅什么是fullgc</h3><p>一些概念：</p>
-<p>GC<br>GC 全称为garbage collection,中文含义为垃圾回收，在jvm中的含义为回收无用内存空间</p>
-<p>Young space<br>中文名为年轻代或者新生代，为JVM 堆的一部分，由分代GC概念划分而来，保存生命周期较短的对象</p>
-<p>Tenured space<br>中文名为老年代或年老代，为JVM 堆的一部分，由分代GC概念划分而来，保存生命周期较长的对象</p>
-<p>Minor GC<br>minor gc指的是发生在年轻代或者说新生代（Young space）中的gc，也有人称其为young gc或者ygc,在下文中我们统一使用minor gc表示</p>
-<p>Major GC<br>major gc指的是发生在老年代（Tenured space）中的gc，也有人称为old gc,o gc,cms gc等，在下文我们统一使用major gc表示</p>
-<p>stop the world<br>指的是用户线程在运行至安全点（safe point）或安全区域（safe region）之后，就自行挂起，进入暂停状态，对外的表现看起来就像是全世界都停止运转了一样,而不论何种gc算法，不论是minor gc还是major gc都会stop the world，区别只在于stop the world的时间长短。</p>
-<p><strong>什么是Full GC</strong></p>
-<p>先说一下结论，Full GC这个概念是没有官方定义的，而且含义还特别混乱，在不同地方表达的含义是不同的，需要就不同的场景分别进行讨论。</p>
-<p>大众认知上：<br>在通常意义上人们口中说的Full GC为一次特殊GC行为的描述，这次GC会回收整个堆的内存，包含老年代，新生代，metaspace等，这个是最常见的一种认知，很多人也就了解到这个程度，因此在遇到一些特殊场景的时候就会发现实际情况和自己的认知会发生冲突</p>
-<p>从GC日志上：<br>在gc.log中会发现在部分gc日志头中也有Full GC这样的字眼，这里表示的含义是在这次GC的全过程中，都是Stop The world的状态，也就是说在这次GC的全过程中所有用户线程都是处于暂停的状态</p>
-<p>阿里老哥总结的：<a target="_blank" rel="noopener" href="https://blog.csdn.net/kep159/article/details/103088438">https://blog.csdn.net/kep159/article/details/103088438</a></p>
-<h3 id="✅jstat查看GC"><a href="#✅jstat查看GC" class="headerlink" title="✅jstat查看GC"></a>✅jstat查看GC</h3><p><strong>使用jstat 查出来的FGC 次数和时间，实际上指的是老年代的收集器发生Stop the world 的次数和持续时间</strong></p>
-<p>1、查询GC使用情况：<br><code>jstat -gcutil 23484 1000 5</code></p>
-<p>1000是间隔时间，5是总共打印5次，可缺省。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">68.75   0.00  62.73   0.17  96.39  90.54      2    0.010     0    0.000    0.010</span><br><span class="line"></span><br><span class="line">S0: 新生代中Survivor space 0区已使用空间的百分比</span><br><span class="line">S1: 新生代中Survivor space 1区已使用空间的百分比</span><br><span class="line">E: 新生代已使用空间的百分比</span><br><span class="line">O: 老年代已使用空间的百分比</span><br><span class="line">M：元数据区使用比例</span><br><span class="line">CCS：压缩使用比例</span><br><span class="line">YGC: 从应用程序启动到当前，发生Yang GC 的次数</span><br><span class="line">YGCT: 从应用程序启动到当前，Yang GC所用的时间【单位秒】</span><br><span class="line">FGC: 从应用程序启动到当前，发生Full GC的次数</span><br><span class="line">FGCT: 从应用程序启动到当前，Full GC所用的时间</span><br><span class="line">GCT: 从应用程序启动到当前，用于垃圾回收的总时间【单位秒】</span><br></pre></td></tr></table></figure>
-
-<p>2、垃圾总体回收统计<br><code>jstat -gc 91185 1000 5</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line"> 68.75   0.00  62.73   0.17  96.39  90.54      2    0.010     0    0.000    0.010</span><br><span class="line"></span><br><span class="line">S0C：第一个幸存区的大小</span><br><span class="line">S1C：第二个幸存区的大小</span><br><span class="line">S0U：第一个幸存区的使用大小</span><br><span class="line">S1U：第二个幸存区的使用大小</span><br><span class="line">EC：伊甸园区的大小</span><br><span class="line">EU：伊甸园区的使用大小</span><br><span class="line">OC：老年代大小</span><br><span class="line">OU：老年代使用大小</span><br><span class="line">MC：方法区大小</span><br><span class="line">MU：方法区使用大小</span><br><span class="line">CCSC:压缩类空间大小</span><br><span class="line">CCSU:压缩类空间使用大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">YGCT：年轻代垃圾回收消耗时间</span><br><span class="line">FGC：老年代垃圾回收次数</span><br><span class="line">FGCT：老年代垃圾回收消耗时间</span><br><span class="line">GCT：垃圾回收消耗总时间</span><br></pre></td></tr></table></figure>
-
-<p>3、新生代垃圾回收统计<br><code>jstat -gcnew 91185 1000 5</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT</span><br><span class="line">5120.0 5120.0 3520.2    0.0  7  15 5120.0  33280.0  20877.8      2    0.010</span><br><span class="line"></span><br><span class="line">S0C：第一个幸存区大小</span><br><span class="line">S1C：第二个幸存区的大小</span><br><span class="line">S0U：第一个幸存区的使用大小</span><br><span class="line">S1U：第二个幸存区的使用大小</span><br><span class="line">TT:对象在新生代存活的次数</span><br><span class="line">MTT:对象在新生代存活的最大次数</span><br><span class="line">DSS:期望的幸存区大小</span><br><span class="line">EC：伊甸园区的大小</span><br><span class="line">EU：伊甸园区的使用大小</span><br><span class="line">YGC：年轻代垃圾回收次数</span><br><span class="line">YGCT：年轻代垃圾回收消耗时间</span><br></pre></td></tr></table></figure>
-
-<p>4、堆内存统计<br><code>jstat -gccapacity 18528 1000 5 //整体统计</code><br><code>jstat -gcnewcapacity 18528 1000 5 //新生代统计</code><br><code>jstat -gcoldcapacity 18528 1000 5 //老年代统计</code></p>
-<h2 id="java堆栈"><a href="#java堆栈" class="headerlink" title="java堆栈"></a>java堆栈</h2><h3 id="✅java内存空间"><a href="#✅java内存空间" class="headerlink" title="✅java内存空间"></a>✅java内存空间</h3><p>JAVA在程序运行时，在内存中划分5片空间进行数据的存储。分别是：1：程序计数器。2：本地方法栈。3：方法区。4：栈。5：堆。<br>堆和栈都是Java用来在RAM中存放数据的地方</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">程序计数器：线程私有，存储当前线程所执行的字节码行号指示器。</span><br><span class="line">循环、跳转、异常处理、线程恢复等基础功能都依赖该计数器。溢出概率极低。</span><br><span class="line"></span><br><span class="line">java虚拟机栈：线程私有。局部变量表的大小在编译器确定。</span><br><span class="line">方法的相关调用信息、变量信息，对象的引用。</span><br><span class="line">会抛出：StackOverflowError和OutOfMemoryError</span><br><span class="line"></span><br><span class="line">本地方法栈：为本地方法所服务</span><br><span class="line"></span><br><span class="line">java堆：线程共享区域，存储对象实例及数组。有可能抛出OutOfMemoryError</span><br><span class="line"></span><br><span class="line">方法区：线程共享区域，存储已被虚拟机加载的类信息、常量、静态变量，即时变异后的代码。</span><br><span class="line">又叫永久代，java8中逐步取消，被metaspace元数据区取代。有可能抛出OutOfMemoryError</span><br><span class="line"></span><br><span class="line">直接内存：NIO机制，使用Native函数库直接分配堆外内存。</span><br></pre></td></tr></table></figure>
-
-<p>1、堆</p>
-<p>可以把堆理解为一家餐厅，里面有200张桌子，也就是最多能同时容纳200桌客人就餐，来一批客人就为他们安排一些桌子，如果某天来的客人特别多，超过200桌了，那就不能再接待超出的客人了。</p>
-<p>当然，进来吃饭的客人不可能是同时的，有的早，有的晚，先吃好的客人，老板会安排给他们结账走人，然后空出来的桌子又能接待新的客人。</p>
-<p>这里，堆就是餐厅，最大容量200桌就是堆内存的大小，老板就相当于GC(垃圾回收)，给客人安排桌子就相当于java创建对象的时候分配堆内存，结账就相当于GC回收对象占用的空间。</p>
-<p>2、栈</p>
-<p>接着把栈比作一口废井，这口井多年不用已经没水了，主人现在把它作为贮存自酿酒的地方，存酒的时候就用绳子勾着酒坛子慢慢放下去，后面再存就一坛一坛堆着放上去，取酒的时候就先取最上面的坛子。</p>
-<h3 id="✅什么时候存到堆Heap里"><a href="#✅什么时候存到堆Heap里" class="headerlink" title="✅什么时候存到堆Heap里"></a>✅什么时候存到堆Heap里</h3><p>存放：存放由new创建的对象和数组。</p>
-<p>在堆中分配的内存，由java虚拟机自动垃圾回收器来管理。在堆中产生了一个数组或者对象后，会在栈中定义一个引用变量，这个变量的取值等于数组或者对象在堆内存中的首地址，引用变量相当于为数组或者对象起的一个别名，或者代号。</p>
-<p>数组＆对象本身在堆中分配，即使程序运行到使用new产生数组和对象的语句所在地代码块之外，数组和对象本身占用的堆内存也不会被释放，数组和对象在没有引用变量指向它的时候，才变成垃圾，不能再被使用，但是仍然占着内存，在随后的一个不确定的时间被垃圾回收器释放掉。这个也是java比较占内存的主要原因，实际上，栈中的变量指向堆内存中的变量，这就是 Java 中的指针!</p>
-<p>堆内存的特点是什么？<br>第一点：堆其实可以类似的看做是管道，或者说是平时去排队买票的情况差不多，所以堆内存的特点就是：先进先出，后进后出，也就是你先排队好，你先买票。<br>第二点：堆可以动态地分配内存大小，生存期也不必事先告诉编译器，因为它是在运行时动态分配内存的，但缺点是，由于要在运行时动态分配内存，存取速度较慢。<br>new对象在堆中如何分配？<br>由Java虚拟机的自动垃圾回收器来管理。</p>
-<h3 id="✅什么时候存到栈Stack里"><a href="#✅什么时候存到栈Stack里" class="headerlink" title="✅什么时候存到栈Stack里"></a>✅什么时候存到栈Stack里</h3><p>存放：在函数中定义的一些基本类型的变量(8种，int, short, long, byte, float, double, boolean, char，不包含String)和对象的引用变量、main方法、方法函数</p>
-<p>当在一段代码块中定义一个变量时，java就在栈中为这个变量分配内存空间，当超过变量的作用域后，java会自动释放掉为该变量分配的内存空间，该内存空间可以立刻被另作他用。</p>
-<p>栈内存的特点<br>第一点：栈内存就好像一个矿泉水瓶，往里面放入东西，那么先放入的沉入底部，所以它的特点是：先进后出，后进先出<br>第二点：存取速度比堆要快，仅次于寄存器。但缺点是，存在栈中的数据大小与生存期必须是确定的，缺乏灵活性。</p>
-<p>栈中主要存放一些基本类型的变量（int, short, long, byte, float, double, boolean, char）和对象句柄。<br>栈内存分配机制<br>栈内存可以称为一级缓存，由垃圾回收器自动回收<br>例子：<br>int a &#x3D; 3;<br>int b &#x3D; 3;</p>
-<h3 id="✅堆栈的区别"><a href="#✅堆栈的区别" class="headerlink" title="✅堆栈的区别"></a>✅堆栈的区别</h3><p>JVM是基于堆栈的虚拟机，JVM为新创建的线程都分配一个堆栈，也就是说，对于一个Java程序来说，它的运行就是通过对堆栈的操作来完成的。堆栈以帧为单位保存线程的状态。JVM对堆栈只进行两种操作：以帧为单位的压栈和出栈操作。</p>
-<p>差异：<br>1). 堆内存用来存放由new创建的对象和数组<br>2). 栈内存用来存放方法或者局部变量等<br>3). 堆是先进先出，后进后出<br>4). 栈是先进后出，后进先出<br>5). 共享性的不同：栈内存是线程私有的，<strong>堆内存是所有线程共有的</strong><br>6). 生存空间不同：栈中数据的生存空间一般在当前scopes内(就是由{…}括起来的区域).</p>
-<p>栈：</p>
-<p>函数中定义的基本类型变量，对象的引用变量都在函数的栈内存中分配。<br>栈内存特点，数数据一执行完毕，变量会立即释放，节约内存空间。<br>栈内存中的数据，没有默认初始化值，需要手动设置。</p>
-<p>堆：</p>
-<p>堆内存用来存放new创建的对象和数组。<br>堆内存中所有的实体都有内存地址值。<br>堆内存中的实体是用来封装数据的，这些数据都有默认初始化值。<br>堆内存中的实体不再被指向时，JVM启动垃圾回收机制，自动清除，这也是JAVA优于C++的表现之一（C++中需要程序员手动清除）</p>
-<h3 id="✅String-str-“abc”的内部工作"><a href="#✅String-str-“abc”的内部工作" class="headerlink" title="✅String str &#x3D; “abc”的内部工作"></a>✅String str &#x3D; “abc”的内部工作</h3><p>(1)先定义一个名为str的对String类的对象引用变量：String str；</p>
-<p>(2)在栈中查找有没有存放值为”abc”的地址（引用），如果没有，则在栈中开辟一个存放字面值为”abc”的地址，接着在堆中创建一个新的String类的对象“abc”，并将该字符串指向这个地址，而且在栈中这个地址旁边记下这个引用的对象“abc”。如果已经有了值为”abc”的地址，则查找对象“abc”，并返回“abc”的地址。</p>
-<p>(3)将str指向对象“abc”的地址。</p>
-<p>值得注意的是，一般String类中字符串值都是直接存值的。但像String str &#x3D; “abc”；这种场合下，其字符串值却是保存了一个指向存在栈中数据的引用！<br><strong>（有点问题，指向的是堆中的字符串常量池里的字符串吧？？）</strong></p>
-<p>例子：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str1 = “abc”;  </span><br><span class="line">String str2 = “abc”;  </span><br><span class="line">System.out.println(str1==str2); //true</span><br></pre></td></tr></table></figure>
-
-<p>str1.equals(str2)；的方式是将比较两个字符串的值是否相等。&#x3D;&#x3D;号，根据JDK的说明，只有在两个引用都指向了同一个对象时才返回真值。而我们在这里要看的是，str1与str2是否都指向了同一个对象。<br>结果说明，JVM创建了两个引用str1和str2，但只创建了一个对象，而且两个引用都指向了这个对象。实现堆中数据的共享。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String str1 = “abc”;  </span><br><span class="line">String str2 = “abc”;  //没创建新对象，创建了一个新引用变量</span><br><span class="line">str1 = “bcd”;   //改变值，只能创建一个新对象，引用变量指向新的对象</span><br><span class="line">System.out.println(str1 + “,” + str2); //bcd, abc  </span><br><span class="line">System.out.println(str1==str2); //false</span><br></pre></td></tr></table></figure>
-
-<p>赋值的变化导致了类对象引用的变化，str1指向了另外一个新对象！而str2仍旧指向原来的对象。上例中，当我们将str1的值改为”bcd”时，JVM发现在栈中没有存放该值的地址，便开辟了这个地址，并创建了一个新的对象，其字符串的值指向这个地址。</p>
-<p>💡原因：事实上，String类被设计成为不可改变(immutable)的类。如果你要改变其值，可以，但JVM在运行时根据新值悄悄创建了一个新对象，然后将这个对象的地址返回给原来类的引用。这个创建过程虽说是完全自动进行的，但它毕竟占用了更多的时间。在对时间要求比较敏感的环境中，会带有一定的不良影响。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str1 = new String(“abc”);</span><br><span class="line">String str2 = “abc”;</span><br><span class="line">System.out.println(str1==str2); //false</span><br></pre></td></tr></table></figure>
-
-<p>💡原因：只要是用new()来新建对象的，都会在堆中创建，而且其字符串是单独存值的，即使与栈中的数据相同，也不会与栈中的数据共享。<br><strong>（与字符串常量池共享吧？）</strong></p>
-<p><strong>意思是：String str &#x3D; “abc” 的创建对象方式，会在栈中保存“abc”。（字符串常量池中吧？）如果多次这样创建一个值的String对象，会先去栈里看有没有，如果有，堆里就不新建对象了，栈里新建一个引用变量指向那个对象，如果没有就新建，但是new方式不会看，都是新建。</strong></p>
-<p>结论：</p>
-<p>(1)我们在使用诸如String str &#x3D; “abc”; 的格式定义类时，总是想当然地认为，我们创建了String类的对象str。担心陷阱！对象可能并没有被创建！唯一可以肯定的是，指向String类的引用被创建了。至于这个引用到底是否指向了一个新的对象，必须根据上下文来考虑，除非你通过new()方法来显要地创建一个新的对象。因此，更为准确的说法是，我们创建了一个指向String类的对象的引用变量str，这个对象引用变量指向了某个值为”abc”的String对象。</p>
-<p>(2)使用String str &#x3D; “abc”; 的方式，可以在一定程度上提高程序的运行速度，因为JVM会自动根据栈中数据的实际情况来决定是否有必要创建新对象。而对于String str &#x3D; new String(“abc”); 的代码，则一概在堆中创建新对象，而不管其字符串值是否相等，是否有必要创建新对象，从而加重了程序的负担。这个思想应该是享元模式的思想，但JDK的内部在这里实现是否应用了这个模式，不得而知。</p>
-<p>(3)当比较包装类里面的数值是否相等时，用equals()方法；当测试两个包装类的引用是否指向同一个对象时，用&#x3D;&#x3D;。</p>
-<p>(4)由于String类的不可改变immutable性质，当String变量需要经常变换其值时，应该考虑使用StringBuffer类，以提高程序效率。</p>
-<p>参考：<br>程序中堆栈空间加载过程：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/229958.htm">https://www.jb51.net/article/229958.htm</a><br>堆栈区别、String创建过程：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/529280783">https://zhuanlan.zhihu.com/p/529280783</a></p>
-<h3 id="String不可变怎么理解"><a href="#String不可变怎么理解" class="headerlink" title="String不可变怎么理解"></a>String不可变怎么理解</h3><p>看了一圈优点模糊，主要几个疑问：<br>1、<code>String s = &quot;abc&quot;;</code>，到底怎么个流程，已有的字符串怎么找到的。<br>2、字符串常量池在哪里存的。初步结论是java8在堆中。<br>3、运行时常量池和字符串常量池？</p>
-<p><strong>看看jvm虚拟机再解惑吧</strong></p>
-<p>string类为什么是不可变的：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuqinhou/article/details/126160186">https://blog.csdn.net/liuqinhou/article/details/126160186</a></p>
-<p>String源码角度分析为什么不可变，通过反射的方法改变：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangjg_blog/article/details/18319521">https://blog.csdn.net/zhangjg_blog/article/details/18319521</a></p>
-<p>浅谈为什么Java里面String类是不可变的：<br><a target="_blank" rel="noopener" href="https://www.jb51.net/article/157814.htm">https://www.jb51.net/article/157814.htm</a></p>
-<p>String是如何实现其对象不可变：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/498718374">https://zhuanlan.zhihu.com/p/498718374</a></p>
-<p>Java 常量池详解（一）字符串常量池：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/Prior_SX/article/details/123463430">https://blog.csdn.net/Prior_SX/article/details/123463430</a></p>
-<p>字符串常量池和运行时常量池是在堆还是在方法区？<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cosmos-wong/p/12925299.html">https://www.cnblogs.com/cosmos-wong/p/12925299.html</a></p>
-<p>Java8中字符串常量池到底是在哪里：<br><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_14234228/2489846">https://blog.51cto.com/u_14234228/2489846</a></p>
-<h3 id="✅堆内存共享性问题"><a href="#✅堆内存共享性问题" class="headerlink" title="✅堆内存共享性问题"></a>✅堆内存共享性问题</h3><p>问题来源：既然各个java进程共享堆内存，那么看fullgc的情况跟哪个进程线程有什么关系呢？</p>
-<p>没错，堆是全局共享的，但是会存在一些问题</p>
-<p>就是多个线程在堆上同时申请空间，如果在并发的场景中，两个线程先后把对象引用指向了同一个堆的内存区域，那可能就会出现问题；为了解决这个问题呢，就得进行同步控制，说到同步控制，就会影响到效率。</p>
-<p>为了解决这个并发问题，对象的内存分配过程就必须进行同步控制。<br>HotSpot虚拟机（HotSpot虚拟机是目前最流行的虚拟机）的方案：<br>每个线程在Java堆中预先分配一小块内存，然后在给对象分配内存的时候，直接在自己这块”私有”内存中分配，当这部分区域用完之后，再分配新的”私有”内存。<br>这种方案被称之为TLAB分配，即Thread Local Allocation Buffer。这部分Buffer是从堆中划分出来的，但是是本地线程独享的。</p>
-<p><strong>TLAB</strong></p>
-<p>TLAB是虚拟机在堆内存的eden划分出来的一块专用空间，是<strong>线程专属</strong>的。在虚拟机的TLAB功能启动的情况下，在线程初始化时，虚拟机会为每个线程分配一块TLAB空间，<strong>只给当前线程使用</strong>，这样<strong>每个线程都单独拥有一个空间</strong>，如果需要分配内存，就在自己的空间上分配，这样就不存在竞争的情况，可以大大提升分配效率。</p>
-<p><strong>所以说，因为有了TLAB技术，堆内存并不是完完全全的线程共享，其eden区域中还是有一部分空间是分配给线程独享的。</strong></p>
-<p>⚠️TLAB是线程独享的，但是只是在“分配”这个动作上是线程独享的，至于在读取、垃圾回收等动作上都是线程共享的。而且在使用上也没有什么区别。也就是说，虽然每个线程在初始化时都会去堆内存中申请一块TLAB，并不是说这个TLAB区域的内存其他线程就完全无法访问了，其他线程的读取还是可以的，只不过无法在这个区域中分配内存而已。并且，在TLAB分配之后，并不影响对象的移动和回收，也就是说，虽然对象刚开始可能通过TLAB分配内存，存放在Eden区，但是还是会被垃圾回收或者被移到Survivor Space、Old Gen等。</p>
-<p>⚠️TLAB带来的问题：<br>TLAB是在eden区分配的，因为eden区域本身就不太大，而且TLAB空间的内存也非常小，默认情况下仅占有整个Eden空间的1%。所以，必然存在一些大对象是无法在TLAB直接分配。<br>遇到TLAB中无法分配的大对象，对象还是可能在eden区或者老年代等进行分配的，但是这种分配就需要进行同步控制，这也是为什么我们经常说：小的对象比大的对象分配起来更加高效。<br>————————————————<br>为了解决这两个方案存在的问题，虚拟机定义了一个refill_waste的值，这个值可以翻译为“最大浪费空间”。</p>
-<p>当请求分配的内存大于refill_waste的时候，会选择在堆内存中分配。若小于refill_waste值，则会废弃当前TLAB，重新创建TLAB进行对象内存分配。</p>
-<p>总结：<br>为了保证对象的内存分配过程中的线程安全性，HotSpot虚拟机提供了一种叫做TLAB(Thread Local Allocation Buffer)的技术。</p>
-<p>在线程初始化时，虚拟机会为每个线程分配一块TLAB空间，只给当前线程使用，当需要分配内存时，就在自己的空间上分配，这样就不存在竞争的情况，可以大大提升分配效率。</p>
-<p>所以，“堆是线程共享的内存区域”这句话并不完全正确，因为TLAB是堆内存的一部分，他在读取上确实是线程共享的，但是在内存分配上，是线程独享的。</p>
-<p>TLAB的空间其实并不大，所以大对象还是可能需要在堆内存中直接分配。那么，对象的内存分配步骤就是先尝试TLAB分配，空间不足之后，再判断是否应该直接进入老年代，然后再确定是再eden分配还是在老年代分配。<br>————————————————<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiey0407/article/details/125190629">https://blog.csdn.net/jiey0407/article/details/125190629</a></p>
-<h2 id="jvm性能监控工具"><a href="#jvm性能监控工具" class="headerlink" title="jvm性能监控工具"></a>jvm性能监控工具</h2><h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>java virtual machine process status tool<br>jps 主要用来输出 JVM 中运行的进程状态信息</p>
-<p>语法格式：<code>jps [options] [hostid]</code><br>如果不指定 hostid 就默认为当前主机或服务器。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-q 不输出类名、Jar名和传入main方法的参数</span><br><span class="line">-m 输出传入main方法的参数</span><br><span class="line">-l 输出main类或Jar的全限名</span><br><span class="line">-v 输出传入JVM的参数</span><br></pre></td></tr></table></figure>
-
-<p>jps命令获取实际的进程id，是去用户的临时目录下去拿进程id的。<br>文件路径：&#x2F;tmp&#x2F;hsperfdata_{userName}&#x2F;，存储了当前用户的进程信息。</p>
-<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>stack trace for java 显示虚拟机的线程快照。<br>jstack 主要用来查看某个 Java 进程内的线程堆栈信息。</p>
-<p>语法格式：<code>jstack [option] pid</code><br>如果是在64位机器上，需要指定选项”-J-d64”</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-l long listings，会打印出额外的锁信息，在发生死锁时可以用jstack -l pid来观察锁持有情况</span><br><span class="line">-m mixed mode，不仅会输出Java堆栈信息，还会输出C/C++堆栈信息（比如Native方法）</span><br></pre></td></tr></table></figure>
-
-<p>jstack 可以定位到线程堆栈，根据堆栈信息我们可以定位到具体代码，所以它在 JVM 性能调优中使用得非常多。例如：找出某个 Java 进程中最耗费 CPU 的 Java 线程并定位堆栈信息。</p>
-<p>第一步先找出 Java 进程 ID<br><code>ps -ef | grep 应用 | grep -v grep</code></p>
-<p>第二步找出该进程内最耗费 CPU 的线程<br>可以使用 <code>ps -Lfp pid </code>或者 <code>ps -mp pid -o THREAD, tid, time</code> 或者 <code>top -Hp pid</code> .【有没有可以输出按时间排序的，且区分daemon的】</p>
-<p>使用<code>printf &quot;%x\n&quot; 线程id</code> 将线程id转换为16进制值。</p>
-<p><code>jstack 进程id | grep 16进制线程id</code><br>从而定位代码，可能是哪里wait时间长了。</p>
-<p><code>jstack -l 进程id 查看进程下所有线程</code></p>
-<hr>
-<p>jstack打印的信息怎么看：<br>dump 文件里，值得关注的线程状态有：<br>死锁，Deadlock（重点关注）<br>执行中，Runnable<br>等待资源，Waiting on condition（重点关注）<br>等待获取监视器，Waiting on monitor entry（重点关注）<br>暂停，Suspended<br>对象等待中，Object.wait() 或 TIMED_WAITING<br>阻塞，Blocked（重点关注）<br>停止，Parked</p>
-<hr>
-<p><strong>实例一：Waiting to lock 和 Blocked</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;RMI TCP Connection(267865)-172.16.5.25&quot; daemon prio=10 tid=0x00007fd508371000 nid=0x55ae waiting for monitor entry [0x00007fd4f8684000]</span><br><span class="line">   java.lang.Thread.State: BLOCKED (on object monitor)</span><br><span class="line">at org.apache.log4j.Category.callAppenders(Category.java:201)</span><br><span class="line">- waiting to lock &lt;0x00000000acf4d0c0&gt; (a org.apache.log4j.Logger)</span><br><span class="line">at org.apache.log4j.Category.forcedLog(Category.java:388)</span><br><span class="line">at org.apache.log4j.Category.log(Category.java:853)</span><br><span class="line">at org.apache.commons.logging.impl.Log4JLogger.warn(Log4JLogger.java:234)</span><br><span class="line">at com.tuan.core.common.lang.cache.remote.SpyMemcachedClient.get(SpyMemcachedClient.java:110)</span><br></pre></td></tr></table></figure>
-
-<p>说明：<br>1）线程状态是 Blocked，阻塞状态。说明线程等待资源超时！<br>2）“ waiting to lock &lt;0x00000000acf4d0c0&gt;”指，线程在等待给这个 0x00000000acf4d0c0 地址上锁（英文可描述为：trying to obtain  0x00000000acf4d0c0 lock）。<br>3）在 dump 日志里查找字符串 0x00000000acf4d0c0，发现有大量线程都在等待给这个地址上锁。如果能在日志里找到谁获得了这个锁（如locked &lt; 0x00000000acf4d0c0 &gt;），就可以顺藤摸瓜了。<br>4）“waiting for monitor entry”说明此线程通过 synchronized(obj) {……} 申请进入了临界区，从而进入了下图1中的“Entry Set”队列，但该 obj 对应的 monitor 被其他线程拥有，所以本线程在 Entry Set 队列中等待。<br>5）第一行里，”RMI TCP Connection(267865)-172.16.5.25”是 Thread Name 。tid指Java Thread id。nid指native线程的id。prio是线程优先级。[0x00007fd4f8684000]是线程栈起始地址。</p>
-<hr>
-<p><strong>实例二：Waiting on condition 和 TIMED_WAITING</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&quot;RMI TCP Connection(idle)&quot; daemon prio=10 tid=0x00007fd50834e800 nid=0x56b2 waiting on condition [0x00007fd4f1a59000]</span><br><span class="line">   java.lang.Thread.State: TIMED_WAITING (parking)</span><br><span class="line">at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">- parking to wait for  &lt;0x00000000acd84de8&gt; (a java.util.concurrent.SynchronousQueue$TransferStack)</span><br><span class="line">at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:198)</span><br><span class="line">at java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:424)</span><br><span class="line">at java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:323)</span><br><span class="line">at java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:874)</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:945)</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:907)</span><br><span class="line">at java.lang.Thread.run(Thread.java:662)</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<p>1）“TIMED_WAITING (parking)”中的 timed_waiting 指等待状态，但这里指定了时间，到达指定的时间后自动退出等待状态；parking指线程处于挂起中。</p>
-<p>2）“waiting on condition”需要与堆栈中的“parking to wait for  &lt;0x00000000acd84de8&gt; (a java.util.concurrent.SynchronousQueue$TransferStack)”结合来看。首先，本线程肯定是在等待某个条件的发生，来把自己唤醒。其次，SynchronousQueue 并不是一个队列，只是线程之间移交信息的机制，当我们把一个元素放入到 SynchronousQueue 中时必须有另一个线程正在等待接受移交的任务，因此这就是本线程在等待的条件。<br>3）别的就看不出来了。</p>
-<hr>
-<p><strong>实例三：in Obejct.wait() 和 TIMED_WAITING</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;RMI RenewClean-[172.16.5.19:28475]&quot; daemon prio=10 tid=0x0000000041428800 nid=0xb09 in Object.wait() [0x00007f34f4bd0000]</span><br><span class="line">   java.lang.Thread.State: TIMED_WAITING (on object monitor)</span><br><span class="line">at java.lang.Object.wait(Native Method)</span><br><span class="line">- waiting on &lt;0x00000000aa672478&gt; (a java.lang.ref.ReferenceQueue$Lock)</span><br><span class="line">at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)</span><br><span class="line">- locked &lt;0x00000000aa672478&gt; (a java.lang.ref.ReferenceQueue$Lock)</span><br><span class="line">at sun.rmi.transport.DGCClient$EndpointEntry$RenewCleanThread.run(DGCClient.java:516)</span><br><span class="line">at java.lang.Thread.run(Thread.java:662)</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<p>1）“TIMED_WAITING (on object monitor)”，对于本例而言，是因为本线程调用了 java.lang.Object.wait(long timeout) 而进入等待状态。</p>
-<p>2）“Wait Set”中等待的线程状态就是“ in Object.wait() ”。当线程获得了 Monitor，进入了临界区之后，如果发现线程继续运行的条件没有满足，它则调用对象（一般就是被 synchronized 的对象）的 wait() 方法，放弃了 Monitor，进入 “Wait Set”队列。只有当别的线程在该对象上调用了 notify() 或者 notifyAll() ，“ Wait Set”队列中线程才得到机会去竞争，但是只有一个线程获得对象的 Monitor，恢复到运行态。</p>
-<p>3）RMI RenewClean 是 DGCClient 的一部分。DGC 指的是 Distributed GC，即分布式垃圾回收。</p>
-<p>4）请注意，是先 locked &lt;0x00000000aa672478&gt;，后 waiting on &lt;0x00000000aa672478&gt;，之所以先锁再等同一个对象，请看下面它的代码实现：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">static private class  Lock &#123; &#125;;</span><br><span class="line">private Lock lock = new Lock();</span><br><span class="line">public Reference&lt;? extends T&gt; remove(long timeout)</span><br><span class="line">&#123;</span><br><span class="line">    synchronized (lock) &#123;</span><br><span class="line">        Reference&lt;? extends T&gt; r = reallyPoll();</span><br><span class="line">        if (r != null) return r;</span><br><span class="line">        for (;;) &#123;</span><br><span class="line">            lock.wait(timeout);</span><br><span class="line">            r = reallyPoll();</span><br><span class="line">            ……</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>即，线程的执行中，先用 synchronized 获得了这个对象的 Monitor（对应于  locked &lt;0x00000000aa672478&gt; ）；当执行到 lock.wait(timeout);，线程就放弃了 Monitor 的所有权，进入“Wait Set”队列（对应于  waiting on &lt;0x00000000aa672478&gt; ）。<br>5）从堆栈信息看，是正在清理 remote references to remote objects ，引用的租约到了，分布式垃圾回收在逐一清理呢。</p>
-<p>转自：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/nexiyi/p/java_thread_jstack.html">https://www.cnblogs.com/nexiyi/p/java_thread_jstack.html</a></p>
-<h3 id="jmap和jhat"><a href="#jmap和jhat" class="headerlink" title="jmap和jhat"></a>jmap和jhat</h3><p>jmap（Memory Map）和jhat（Java Heap Analysis Tool）</p>
-<p>jmap用来查看<strong>堆内存</strong>使用状况，一般结合jhat使用。<br>jmap语法格式：<code>jmap [option] pid</code>  pid为进程id</p>
-<p>打印进程的类加载器和类加载器加载的持久代对象信息，输出：类加载器名称、对象是否存活（不可靠）、对象地址、父类加载器、已加载的类大小等信息</p>
-<p>使用<strong>jmap -heap pid</strong>查看进程堆内存使用情况，包括使用的GC算法、堆配置参数和各代中堆内存使用情况。</p>
-<p>使用<code>jmap -histo pid</code> &#x2F; <code>jmap -histo:live pid</code>查看堆内存中的对象数目、大小统计直方图，如果带上live则只统计活对象.<br>加上<code>| more</code> 按类别统计</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jmap -histo:live 21711 | more </span><br><span class="line">num     #instances         #bytes  class name------------</span><br><span class="line">   1:         38445        5597736  &lt;constMethodKlass&gt;</span><br><span class="line">   2:         38445        5237288  &lt;methodKlass&gt;</span><br><span class="line"></span><br><span class="line">class name是对象类型</span><br></pre></td></tr></table></figure>
-
-<p>还有一个很常用的情况是：用jmap把进程内存使用情况dump到文件中，再用jhat分析查看。jmap进行dump命令格式如下：<code>jmap -dump:format=b,file=dumpFileName pid</code></p>
-<p>例如：<code>jmap -dump:format=b,file=/tmp/dump.dat 进程id</code></p>
-<p>dump.dat文件很大。<br>dump出来的文件可以用MAT、VisualVM等工具查看，这里用jhat查看：<code>jhat -port 9998 /tmp/dump.dat</code><br>然后就可以在浏览器中输入主机地址：9998 查看了。##### ###</p>
-<h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>JVM统计监测工具<br>jvm statistics monitoring tool：用于收集虚拟机各方面的运行数据。</p>
-<p>语法格式：<code>jstat [ generalOption | outputOptions vmid [interval[s|ms] [count]] ]</code></p>
-<p>vmid是Java虚拟机ID，在Linux&#x2F;Unix系统上一般就是进程ID。interval是采样时间间隔。count是采样数目。 例如：<code>jstat -gc 进程id 250 4</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">jstat -gc 21711 250 4 </span><br><span class="line">S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line">192.0  192.0   64.0   0.0    6144.0   1854.9   32000.0     4111.6   55296.0 25472.7    702    0.431   3      0.218    0.649</span><br><span class="line">192.0  192.0   64.0   0.0    6144.0   1972.2   32000.0     4111.6   55296.0 25472.7    702    0.431   3      0.218    0.649</span><br><span class="line"></span><br><span class="line">S0C、S1C、S0U、S1U：Survivor 0/1区容量（Capacity）和使用量（Used）</span><br><span class="line">运行以来，总耗时，单位s</span><br><span class="line">EC、EU：Eden区容量和使用量</span><br><span class="line">OC、OU：年老代容量和使用量</span><br><span class="line">PC、PU：永久代容量和使用量</span><br><span class="line">YGC、YGT：年轻代GC次数和GC耗时</span><br><span class="line">FGC、FGCT：Full GC次数和Full GC耗时</span><br><span class="line">GCT：GC总耗时</span><br></pre></td></tr></table></figure>
-
-<p>JVM堆内存布局：<br>堆内存 &#x3D; 年轻代 + 年老代 + 永久代<br>年轻代 &#x3D; Eden区 + 两个Survivor区（From和To）</p>
-<p><code>jstat -gcutil 23484 1000 5</code> 监视内容基本与gc相同，但输出的主要是已占用的总空间的百分比。</p>
-<p><code>jstat -gccause 23484 1000 5</code> 查询gc的原因。</p>
-<h3 id="hprof"><a href="#hprof" class="headerlink" title="hprof"></a>hprof</h3><p>（Heap&#x2F;CPU Profiling Tool）<br>hprof能够展现CPU使用率，统计堆内存使用情况。</p>
-<p>语法格式：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java -agentlib:hprof[=options] ToBeProfiledClass</span><br><span class="line">java -Xrunprof[:options] ToBeProfiledClass</span><br><span class="line">javac -J-agentlib:hprof[=options] ToBeProfiledClass</span><br></pre></td></tr></table></figure>
-
-<p>例如：<code>java -agentlib:hprof=cpu=samples,interval=20,depth=3 主类</code><br>每隔20毫秒采样CPU消耗信息，堆栈深度为3，生成的profile文件名称是java.hprof.txt，在当前目录。</p>
-<p>例如：<code>javac -J-agentlib:hprof=cpu=times Hello.java</code><br>能够获得更加细粒度的CPU消耗信息，能够细到每个方法调用的开始和结束，它的实现使用了字节码注入技术（BCI）。</p>
-<p>JVM性能调优监控工具jps、jstack、jmap、jhat、jstat、hprof使用详解：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/294950372?utm_medium=social&utm_oi=690843302169178112">https://zhuanlan.zhihu.com/p/294950372?utm_medium=social&amp;utm_oi=690843302169178112</a></p>
-<h3 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h3><p>虚拟机配置信息，<code>jinfo 进程id</code></p>
-<h3 id="图像化界面分析工具"><a href="#图像化界面分析工具" class="headerlink" title="图像化界面分析工具"></a>图像化界面分析工具</h3><p>VisualVM、JProfile、MAT</p>
-<h2 id="几种排查思路"><a href="#几种排查思路" class="headerlink" title="几种排查思路"></a>几种排查思路</h2><h3 id="线程cpu占用高"><a href="#线程cpu占用高" class="headerlink" title="线程cpu占用高"></a>线程cpu占用高</h3><p>1.<code>ps -ef|grep java</code> 或者 jps 查找出进程id<br>2.<code>top -Hp 进程id</code> 查找出最耗cpu的线程id <code>top -c</code>看进程的<br>3.<code>printf &quot;%x\n&quot;</code> 线程id  转换为16进制的id<br>4.使用<code>jstack 进程id | grep 16进制线程id</code>  查找出堆栈信息，分析</p>
-<p>另外，arthas也可以打印出前多少个线程及占有cpu情况<br><code>thread -n 5</code></p>
-<h3 id="OOM"><a href="#OOM" class="headerlink" title="OOM"></a>OOM</h3><p>除了程序计数器，其他内存存储都可能OOM。<br>有可能：数据量大、JVM内存容量参数分配不合理、代码bug死循环无限分配容量<br>1、内存泄露，对象已经死了，无法通过垃圾收集器进行自动回收，通过找出泄露的代码位置和原因，才好确定解决方案；<br>2、内存溢出，内存中的对象都还必须存活着，这说明Java堆分配空间不足，检查堆设置大小（-Xmx与-Xms），检查代码是否存在对象生命周期太长、持有状态时间过长的情况。</p>
-<p>1.先使用jmap看一下堆内存使用情况<br>2.<code>jmap -dump:format=b,file=/tmp/dump.dat 进程id</code> dump文件<br>3.使用MAT工具分析<br>mat工具的使用：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/44641">https://developer.aliyun.com/article/44641</a></p>
-<h3 id="full-gc"><a href="#full-gc" class="headerlink" title="full gc"></a>full gc</h3><p>1.<code>jstat -gcutil 进程id 1000 40</code>查看gc情况，1s一次，40次动态看gc增长<br>2.找到gc.log<br>里面有gc前堆使用空间&gt;gc后堆已使用空间，还有用户态消耗的cpu时间、内核态消耗的cpu时间、操作从开始到结束经过的时间。</p>
-<p>模拟gc看日志：<br><a target="_blank" rel="noopener" href="https://javastack.blog.csdn.net/article/details/109006521">https://javastack.blog.csdn.net/article/details/109006521</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2457,7 +2322,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

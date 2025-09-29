@@ -28,7 +28,7 @@
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-09-18T14:20:05.781Z">
+<meta property="article:modified_time" content="2025-09-24T14:27:00.243Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:20:05" itemprop="dateModified" datetime="2025-09-18T22:20:05+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:27:00" itemprop="dateModified" datetime="2025-09-24T22:27:00+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,6 +252,7 @@
         <h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><ul>
 <li>jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针）</li>
 <li>jmm内存模型：多线程环境下对共享变量的同步，保证多线程环境下的可见性、有序性。主内存和工作内存，可见性volatile线程更改了工作内存中的共享变量其他线程能够立马看到，有序性volatile禁止指令重排synchronized锁，原子性synchronized和CAS无锁的原子操作</li>
+<li>JVM组成： 类加载器（ClassLoader）：负责加载类文件到内存。 运行时数据区：包括堆（Heap）、方法区（MetaSpace）、虚拟机栈、程序计数器、本地方法栈。 执行引擎（Execution Engine）：负责执行字节码指令。 本地方法接口（JNI）：与本地代码交互。 垃圾收集器（GC）：负责内存回收。</li>
 </ul>
 <h2 id="java相关"><a href="#java相关" class="headerlink" title="java相关"></a>java相关</h2><ul>
 <li>jdk新特性：</li>
@@ -267,6 +268,8 @@
 <li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
 </li>
 <li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>voliate 能保证原子性么：volatile 不能保证原子性。它的作用是保证变量的可见性和禁止指令重排，保证原子操作的线程安全，确保当一个线程修改了volatile变量后，其他线程能立即看到最新值。但对于复合操作（如count++），读-改-写三个步骤，volatile无法保证这些步骤的原子执行，仍然会发生竞态条件，导致结果不一致。要实现原子性，需使用同步机制（如synchronized）或原子类（如AtomicInteger），而不能仅依赖volatile。</p>
 </li>
 <li><p>CAS：无锁的原子操作，用来在并发编程中实现无锁同步。非阻塞的，减少锁开销。ABA问题，导致自旋，消耗CPU，只能一个变量的原子操作。</p>
 </li>
@@ -296,11 +299,38 @@
 </li>
 <li><p>死锁：多线程互相持有和等待对方的资源，形成循环等待。互斥条件、请求与保持条件、不可剥夺条件、循环等待条件。CAS破坏互斥条件，银行家算法分配资源之前先检查是否会死锁，破坏循环等待。</p>
 </li>
+</ul>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
+<li><p>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</p>
+</li>
+<li><p>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</p>
+</li>
+<li><p>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</p>
+</li>
+<li><p>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</p>
+</li>
+<li><p>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</p>
+</li>
+<li><p>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</p>
+</li>
+<li><p>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</p>
+</li>
+<li><p>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</p>
+</li>
+<li><p>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</p>
+</li>
+<li><p>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</p>
+</li>
+<li><p>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</p>
+</li>
 <li><p>线程池：管理一系列线程的资源池，避免线程频繁创建销毁开销，提高响应速度。1.ThreadPoolExecutor构造函数创建（核心线程数、最大线程数、阻塞队列、最大线程存活时间、threadFactory、饱和策略）2.Executors工具类创建（不推荐，使用无界阻塞队列OOM，CachedThreadPool使用同步队列创建线程数无限制OOM）</p>
 </li>
 <li><p>线程池饱和策略：AbortPolicy抛出异常来拒绝、CallerRunsPolicy调用线程中运行、DiscardPolicy直接丢弃、DiscardOldestPolicy丢弃最早未处理的。</p>
 </li>
 <li><p>线程池阻塞队列：ArrayBlockingQueue基于数组结构的有界阻塞队列FIFO、LinkedBlockingQueue基于链表的无界阻塞队列、SynchronousQueue同步队列无容量、DelayQueue延迟无界阻塞队列，延迟期满时从队列取出、PriorityBlockingQueue支持优先级排序的无界阻塞队列。</p>
+</li>
+<li><p>如何设计一个有界阻塞队列？</p>
+<p>有界阻塞队列是指定容量的线程安全队列，常用数组或链表实现。设计时需维护队列长度、同步机制以及 put 和 take 操作。通常用锁（如ReentrantLock）和条件变量（Condition）控制并发。当队列已满时，put操作会阻塞，直到有空间可用；如果队列为空，take操作同样会阻塞等待。实现流程是：put时检查是否满，满则等待，使用条件锁的await方法；take时检查是否空，空则等待。队列空间释放后通知等待的线程继续操作，使用条件锁的signal方法。</p>
 </li>
 <li><p>线程池处理顺序：核心线程、任务队列、最大线程、饱和策略</p>
 </li>
@@ -309,18 +339,11 @@
 <li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
 </li>
 </ul>
-<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
-<li>Thread的run方法和start方法：1.new一个Thread，调用start方法，表示启动一个线程，进入就绪状态，等待分配到时间片后运行。是多线程工作。2.直接执行run方法不会以多线程方式执行。</li>
-<li>创建线程方式：1⃣️继承Thread类，重写run方法，创建对象调用start方法。2⃣️实现Runnable接口，重写run方法，创建对象作为参数传递给Thread的构造方法，调用start。或者传递给线程池的submit&#x2F;execute方法。3⃣️实现Callable接口，重写call方法，有返回，创建FutureTask对象，callable对象作为参数传递给FutureTask构造函数。将FutureTask对象作为参数传递给Thread构造函数，调用start。执行futureTask.get()方法获取线程执行的结果。</li>
-<li>Runnable和Thread：1⃣️java单继承，Thread类有局限性。Thread类实现了Runnable接口。2⃣️Runnable更容易可以实现多个线程间的资源共享，提交给Thread同一个Runnable对象，共享其中的private对象。（只是共享，线程安全要加同步）。多个thread对象共享static变量。</li>
-<li>Runnable和Callable：1.方法签名不同，Runnable是run方法，Callable是call方法。2.返回值类型不同，Runnable无返回，Callable的call方法返回指定类型结果，通过Future接口获取执行结果。3.异常处理不同：Runnable异常原地抛出，Callable的call方法通过Future.get方法来捕获异常信息。</li>
-<li>线程状态：创建、就绪、运行、阻塞、等待、定时等待、终止。1⃣️start方法后等待JVM调度，就绪。调度到之后是运行。2⃣️运行到就绪：Thread.yield方法使线程从运行状态变为就绪状态，让出CPU资源给其他线程执行。3⃣️阻塞状态：线程运行过程中，发出I&#x2F;O请求时，该线程进入阻塞状态。当线程运行过程中尝试获取同步锁时，却被另一个线程获取，此时JVM把当前线程存到对象的锁池中，该线程进入阻塞状态。4⃣️阻塞到运行：获取到锁。5⃣️运行到等待：调用o.wait()方法和thread.join()方法（表示等待调用join方法的线程结束，当前线程才继续执行），进入等待状态。6⃣️定时等待：Thread.sleep方法进入等待状态，不释放锁。o.wait方法进入等待状态，释放同步锁，wait方法需要在同步方法&#x2F;代码块中。7⃣️notify方法唤醒在此对象监视器上等待的单个线程，进入就绪状态。</li>
-<li>进程和线程：进程是操作系统资源分配的基本单元。线程是处理器任务调度和执行的基本单元。多个线程共享进程的堆和方法区，不共享栈和程序计数器。</li>
-<li>ThreadLocal：是线程局部变量，线程私有，实现线程之间的数据隔离，避免使用共享变量的线程安全问题。注意在线程池中，线程被复用，需要及时清理，避免内存泄漏。</li>
-<li>ThreadLocal和ThreadLocalMap的关系：ThreadLocalMap是ThreadLocal的内部数据结构，每个Thread对象有一个ThreadLocalMap对象，用于存储线程局部变量的键值对，键是ThreadLoca对象，值是ThreadLocal对象存的局部变量。每个线程可以有多个ThreadLocal对象。</li>
-<li>ThreadLocal为什么内存泄露：每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用）。ThreadLocal对象作为key是弱引用，外部强引用消失后，GC直接回收，但value还被强引用锁死。线程池中的线程反复利用，ThreadLocalMap跟着长寿。Map里的废弃物品（null key + value）越积越多，直到OOM。不调用set&#x2F;get&#x2F;remove，ThreadLocalMap不会自动清理null key的Entry。</li>
-<li>ThreadLocal为什么不用强引用：用强引用→ThreadLocal对象永不回收，泄漏更严重！弱引用至少能回收key，给程序员一个补救机会。所以，用完必须要remove。线程结束会自动清理，但是线程池中的线程永不结束。</li>
-<li>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</li>
+<ul>
+<li>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</li>
+<li>线程池核心线程数设置：如果是CPU密集型任务，可设置为CPU核数；IO密集型任务可适当增大（如核数2倍）。</li>
+<li>java原生线程池：FixedThreadPool固定数量线程的线程池。CachedThreadPool自动扩展线程数的线程池。SingleThreadExecutor单线程线程池，所有任务按顺序执行。ScheduledThreadPool定时周期执行的线程池。通过Executors工厂类创建。</li>
+<li>如何进行多线程数据同步：wait-notify 机制，基于对象的监视器（即锁），通过调用对象的 wait()、notify()、notifyAll() 方法，让线程在满足条件时等待和唤醒，用于线程间协调。一个线程调用另一个线程的 join() 方法时，会等待该线程执行完毕后再继续执行。子线程执行完后调用 countDown()，主线程调用 await() 阻塞，直到计数为零。线程池提交任务后获得Future对象，主线程通过get()方法等待并获取子任务返回结果。</li>
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
@@ -421,6 +444,10 @@
 </li>
 <li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
 </li>
+<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，而Hashtable继承自遗留的Dictionary类。</p>
+</li>
+<li><p>HashMap如何获取元素：首先根据键对象的 hashCode() 计算哈希值，确定该键对应的桶（bucket）位置。随后，通过 equals() 方法在该桶的链表或树中查找与目标键相等的元素，进而获取对应的 value。</p>
+</li>
 <li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
 </li>
 <li><p>ArrayList 和 LinkedList怎么线程安全：1⃣️使用Collections.synchronizedList(list)将任何List转换为线程安全的List。（所有操作都使用相同的对象锁进行同步）。2⃣️使用显式的同步块，每次访问操作时加相同的锁。3⃣️使用concurrent包中的并发集合，CopyOnWriteArrayList，写时复制，适用于遍历操作远多于修改操作。ConcurrentHashMap、ConcurrentLinkedQueue。</p>
@@ -428,6 +455,8 @@
 <li><p>java.util.concurrent包下有哪些：1⃣️Executor：线程调度框架：任务Runnable，Callable、任务执行ExecutorService，ThreadPoolExecutor ScheduledThreadPoolExecutor、异步计算结果Future，FutureTask。2⃣️同步器：CountDownLatch，CyclicBarrier，Semaphore。3⃣️并发集合：ConcurrentHashMap，ConcurrentLinkedQueue，CopyOnWriteArrayList，CopyOnWriteArraySet，以及支持阻塞的线程安全队列ArrayBlockingQueue等。4⃣️原子变量AtomicInteger等。5⃣️锁Lock：ReentrantLock，ReadWriteLock。</p>
 </li>
 <li><p>重写 <code>equals()</code> 时必须重写 <code>hashCode()</code>：是为了保证 <strong>相等的对象必须有相同的哈希码</strong>，这是 Java 的约定。否则在使用 <code>HashMap</code>、<code>HashSet</code> 等哈希结构时，会导致对象无法正确存取或比较，引发逻辑错误。</p>
+</li>
+<li><p>java为什么引入泛型：为了解决类型安全和代码复用的问题。在没有泛型之前，集合类等只能存储 Object 类型，取出元素时需要强制类型转换，容易出现运行时的类型转换异常。使用泛型后，数据类型在编译阶段就能确定，避免了类型转换错误，提高了代码的安全性和健壮性。同时，泛型让代码更加通用和易读，提升了开发效率。</p>
 </li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
@@ -562,7 +591,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

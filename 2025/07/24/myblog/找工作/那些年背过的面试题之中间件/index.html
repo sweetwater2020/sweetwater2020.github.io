@@ -28,7 +28,7 @@
 <meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制proto">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:23:55.444Z">
-<meta property="article:modified_time" content="2025-09-18T14:10:50.189Z">
+<meta property="article:modified_time" content="2025-09-24T14:14:26.086Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:10:50" itemprop="dateModified" datetime="2025-09-18T22:10:50+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:14:26" itemprop="dateModified" datetime="2025-09-24T22:14:26+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -343,6 +343,11 @@
 <li>消息被消费后会立即删除吗：不会，消费后只是消息队列的消费进度（offset）更新，消息的删除是通过定期清理过期文件来实现的。</li>
 <li>延时消息实现：是在投递到Topic这一阶段延时的。1⃣️消息投递：提供若干个延时等级。有一个专门的延时Topic，存入对应延时等级的队列中。2⃣️消息调度：Broker启动时，创建ScheduledThreadPoolExecutor线程池，每个延迟队列一个线程扫描，定期检查延时队列中的消息是否到期。3⃣️转移消息：取出消息重新进行CommitLog写入，写入对应Consumer Queue。然后正常消费。</li>
 <li>metaq总结：高性能（吞吐量高并发量高，队列模型、并行消费、基于Netty）、高可靠性（消息丢失可能小，重试机制、故障规避机制、重试、死信队列）、高实时性（低延迟，快速失败、异步刷盘、零拷贝）</li>
+</ul>
+<ul>
+<li>不同 mq 区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。</li>
+<li>mq路由方式： Kafka：生产者发送消息到指定的Topic，消息根据分区策略（如key哈希或轮询）分配到分区，消费者按分区自动拉取；分区保证消息有序，提升并发。 RocketMQ：支持Topic+Tag路由，消息可通过Tag细分类别。Producer可自定义MessageQueue选择器，根据业务或hash映射到指定队列，消费者可按Tag精准订阅。</li>
+<li>MQ如何保证消息可靠性：Kafka： 消息持久化到磁盘，设置副本数提升高可用； 生产者可配置ack机制，决定写入成功的判定标准（如ack&#x3D;all保证最强一致性）。 RocketMQ： 消息写入Broker后持久化，支持异步&#x2F;同步刷盘，以及主从复制； 提供事务消息机制，以及消息重复、丢失、顺序等保障。</li>
 </ul>
 <h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
 <li>消息队列：消息队列是一个用于接收消息、存储消息并且转发消息的中间件，异步、削峰、解耦。</li>
@@ -478,6 +483,10 @@
 <li>k8s：Kubernetes是一个开源的容器编排系统，用于自动化部署、扩展和管理容器化应用程序。由google设计。</li>
 <li>docker：容器化技术允许将应用程序及其依赖项打包到一个轻量级、可移植的容器中，使得应用程序能够在任何环境中一致地运行。</li>
 </ul>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
+<li>Linux 如何打印进程号：ps aux | grep 进程名：查看指定进程的 PID。echo $$：打印当前 shell 的进程号。</li>
+<li>Linux 如何搜寻错误日志：grep “error” &#x2F;var&#x2F;log&#x2F;*.log、加-i忽略大小写。</li>
+</ul>
 
     </div>
 
@@ -561,7 +570,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">14.</span> <span class="nav-text">Linux</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -576,7 +585,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

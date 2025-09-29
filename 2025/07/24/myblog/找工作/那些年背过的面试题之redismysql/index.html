@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点">
+  <meta name="description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis分布式锁的原理：Redis分布式锁基于SETNX+E">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之redis&amp;mysql">
 <meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
-<meta property="og:description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点">
+<meta property="og:description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis分布式锁的原理：Redis分布式锁基于SETNX+E">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:22:24.486Z">
-<meta property="article:modified_time" content="2025-09-18T14:14:00.971Z">
+<meta property="article:modified_time" content="2025-09-24T14:28:56.742Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-18 22:14:00" itemprop="dateModified" datetime="2025-09-18T22:14:00+08:00">2025-09-18</time>
+                <time title="Modified: 2025-09-24 22:28:56" itemprop="dateModified" datetime="2025-09-24T22:28:56+08:00">2025-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,6 +251,8 @@
       
         <h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><ul>
 <li><p>redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。</p>
+</li>
+<li><p>redis分布式锁的原理：Redis分布式锁基于SETNX+EXPIRE实现，利用Redis单线程原子操作保证互斥。加锁使用SET key value NX EX seconds，key为锁名称，value为唯一标识符，用来标识哪个客户端持有这个锁，防止误删；释放锁通过Lua脚本原子性校验并删除。</p>
 </li>
 <li><p>redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点负责多个哈希槽。2⃣️无中心架构：节点对等，无中心节点。3⃣️主从复制：一个节点可以有多个从节点，实现故障恢复、数据冗余、读写分离。</p>
 </li>
@@ -306,10 +308,14 @@
 <ul>
 <li>Redis 如何使用 Zset 设计延迟队列？</li>
 </ul>
-<p>消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。</p>
-<p>消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。</p>
-<p>处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。</p>
-<p>可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+<p>​	消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。</p>
+<p>​	消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。</p>
+<p>​	处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。</p>
+<p>​	可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+<ul>
+<li>redis如何部署：Redis 部署方式主要有三种：第一，单机部署，可以从官网下载源码编译并启动服务；第二，使用 Docker 快速拉取官方镜像并启动容器；第三，集群部署，配置多个节点并通过命令组建集群用于高可用和分片扩展。</li>
+<li>redis使用场景：缓存热点数据、分布式锁、计数器、排行榜、消息队列。</li>
+</ul>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ul>
 <li><p>RDBMS和NoSQL：RDBMS关系型数据库（组织化结构，表格行列格式，Mysql、Oracle、PostgreSQL）、Not only sql非关系型数据库（数据存储没有固定格式，可横向扩展）。1⃣️数据结构：结构化与非结构化，键值redis、列存储HBase、文档MongoDB、图形存储Neo4j。2⃣️数据关联：sql中多张表可关联，nosql数据之间无关联。3⃣️查询语言：sql固定查询语言，nosql不固定查询语言。4⃣️事务一致性：sql提供强一致性和完整事务支持，nosql提供BASE基本可用、软状态、最终一致性。5⃣️存储方式：sql存在磁盘，nosql存在内存。6⃣️扩展性：sql垂直扩展，升级单个服务器的内存cpu存储空间。nosql可水平扩展，分布式存储。</p>
 </li>
@@ -344,6 +350,13 @@
 <li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
 </li>
 <li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
+</li>
+<li><p>mysql主键索引和非主键索引区别</p>
+<p>主键索引（聚簇索引）：数据页按照主键顺序存储，索引的叶子节点直接存储数据行。通过主键查询效率高，且主键唯一。</p>
+<p>非主键索引（辅助索引）：叶子节点存储主键信息（不是数据本身）。查询时先定位到主键，再回表根据主键查数据（称为回表查询）。可重复。</p>
+<p>总结：主键索引存储方式直接，查询快；非主键索引需多一步回表操作定位数据。</p>
+</li>
+<li><p>mysql建立联合索引，叶子结点和非叶子结点都存什么：联合索引的底层采用 B+树结构，非叶子节点只存索引字段的组合值和指针，用于索引检索，叶子节点真正存储联合索引值及主键或行地址。</p>
 </li>
 <li><p>最左前缀匹配：联合索引中，查询时使用的where子句中的条件必须包含联合索引中最左边的列索引才能生效，如果跳过或使用范围查询，则后面列不能有效使用索引。因为B+树是有序的。</p>
 </li>
@@ -392,6 +405,18 @@
 <li><p>mybatis是否支持延迟加载：延迟加载是用到数据时才进行加载，避免一次性加载大量关联数据，提高查询效率。配置文件中可以设置延迟加载，按需取材。底层使用CGLIB动态代理实现，创建目标对象的代理对象，目标对象是开启延迟加载的mapper所映射的实体类。通过字节码技术运行时生成代理类，调用目标方法时，进入拦截器的invoke方法，执行sql查询以获取关联数据，注入到对象属性中。</p>
 </li>
 <li><p>为什么mysql中不建议过多join： 性能开销大，磁盘IO增加。需要缓存中间结果集，内存占用增加。分库分表后，跨节点JOIN效率低，需应用层处理关联逻辑。 优化：通过冗余设计如宽表减少join、使用缓存预关联结果、对核心查询字段添加覆盖索引。</p>
+</li>
+<li><p>主键和唯一索引的区别： 唯一性约束：主键和唯一索引都保证列值唯一，但主键不允许为NULL，唯一索引允许有多个NULL。 每表只能有一个主键，但可以有多个唯一索引。 主键通常用于表的主标识，自动创建聚簇索引；唯一索引仅用于保证唯一性，未必是聚簇索引。 主键用于关联、外键等场景，唯一索引主要保证业务字段唯一。</p>
+</li>
+<li><p>慢sql分析：查看慢查询日志；使用EXPLAIN分析执行计划，关注扫描类型（type）、可能索引（key）、返回行数（rows）等；检查SQL语句、字段、索引设计是否合理。</p>
+</li>
+<li><p>MySQL索引失效场景：对索引字段使用函数或运算、类型不匹配导致隐式转换、模糊查询左侧为%、未使用联合索引的最左前缀、OR条件中部分字段无索引、使用&lt;&gt;、!&#x3D;、IS NULL、等不等空值查询，以及高重复率低选择性字段。</p>
+</li>
+<li><p>索引什么不要对大字段建立：大字段占用空间大，会导致索引维护和存储开销大，影响插入、更新时的性能。并且大字段检索效率低。</p>
+</li>
+<li><p>mysql底层数据结构：B+树（如InnoDB索引）、哈希表（Memory引擎、自适应哈希索引）以及页式存储（Page）。B+树支持高效检索和范围查询，页结构提升读写性能，事务日志（Redo、Undo Log）则保证数据安全和事务性。</p>
+</li>
+<li><p>sql注入如何解决：SQL注入是一种攻击手段，攻击者通过拼接恶意SQL代码获取或篡改数据。解决SQL注入的关键方法是使用<strong>预编译</strong>或参数化查询，避免直接拼接SQL字符串，使用户输入不会被当作SQL指令解析。加强输入校验与过滤，控制输入的格式和内容，限制特殊字符。使用ORM框架如MyBatis、Hibernate，默认采用安全的参数绑定方式。设置适当的权限，敏感操作需严格验证和监控，从而综合防止SQL注入风险。</p>
 </li>
 </ul>
 <h2 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h2><ul>
@@ -495,7 +520,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
