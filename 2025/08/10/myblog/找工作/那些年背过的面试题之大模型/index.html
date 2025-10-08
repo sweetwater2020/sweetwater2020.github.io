@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。  大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用">
+  <meta name="description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。 大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之大模型">
 <meta property="og:url" content="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
-<meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。  大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用">
+<meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。 大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-09-29T14:53:07.132Z">
+<meta property="article:modified_time" content="2025-10-06T09:20:04.877Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-29 22:53:07" itemprop="dateModified" datetime="2025-09-29T22:53:07+08:00">2025-09-29</time>
+                <time title="Modified: 2025-10-06 17:20:04" itemprop="dateModified" datetime="2025-10-06T17:20:04+08:00">2025-10-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,28 +250,17 @@
 
       
         <h2 id="大模型基础"><a href="#大模型基础" class="headerlink" title="大模型基础"></a>大模型基础</h2><ul>
-<li><p>Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。</p>
-</li>
-<li><p>大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于分类、生成等场景。常用方法有全参数微调和参数高效微调（如 LoRA）。</p>
-</li>
-<li><p>大模型架构：主流大模型多采用 Transformer 架构，分为 Decoder-only（如 GPT）、Encoder-only（如 BERT）和 Encoder-Decoder（如 T5）。结构上包含多层自注意力与前馈网络，规模扩展体现在层数、维度和专家数量上，MoE 成为高效扩展趋势。</p>
-</li>
-<li><p>强化学习：强化学习通过智能体与环境交互，依据奖励信号优化策略。在大模型中，RLHF（基于人类反馈的强化学习）用于对齐语言模型输出与人类偏好，提升回答质量。典型应用如 ChatGPT 的训练后期阶段。</p>
-</li>
-<li><p>大模型Agent：大模型 Agent 是能感知环境、规划决策、执行动作的智能体。它结合 LLM 作为“大脑”，通过工具调用、记忆管理和任务分解完成复杂任务，如自动编程、数据分析。体现从“问答”到“自主行动”的演进。</p>
-</li>
-<li><p>大模型幻觉：幻觉指大模型生成看似合理但错误或虚构的内容。源于训练数据噪声和概率生成本质。影响可信度，尤其在事实敏感场景。缓解方法包括 RAG、微调、提示工程和推理时搜索验证。</p>
-</li>
-<li><p>LangChain：LangChain 是用于构建 LLM 应用的开源框架，支持链式调用、记忆管理、工具集成和数据连接。它简化了 Prompt 工程、RAG 和 Agent 开发流程，广泛应用于对话系统、文档问答等场景，提升开发效率。</p>
-</li>
-<li><p>MCP：MCP 就是一种通用标准协议，让不同的AI模型可以同标准、高效地调用各种各样的封装好工具。</p>
-</li>
-<li><p>RAG：RAG（检索增强生成）通过从外部知识库检索相关信息，辅助大模型生成更准确的回答。有效缓解幻觉问题，适用于动态知识场景。典型流程：用户提问 → 检索 → 拼接上下文 → 生成答案。</p>
-</li>
-<li><p>大模型量化：量化将模型权重从高精度（如 FP32）转为低精度（如 INT8&#x2F;INT4），减少显存占用和计算开销，提升推理速度。常见方法有 PTQ（后训练量化）和 QAT（量化感知训练），是大模型轻量化部署的关键技术。</p>
-</li>
-<li><p>推理大模型和生成大模型：生成大模型注重文本、图片等内容的创作与生成，适合对话场景；推理大模型强调逻辑推断、因果分析和多步思考，适用于复杂问题、数学解题等高阶任务。生成模型侧重预训练大语料，明确上下文的“自然生成”。推理模型在训练&#x2F;微调中强化“Chain of Thought（思维链）”、“Self-Consistency（自洽）”、“Step-by-step（步进式解析）”能力，常在微调数据或搭建特定的推理数据集上提升推理性能。</p>
-</li>
+<li>Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。</li>
+<li>大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于分类、生成等场景。常用方法有全参数微调和参数高效微调（如 LoRA）。</li>
+<li>大模型架构：主流大模型多采用 Transformer 架构，分为 Decoder-only（如 GPT）、Encoder-only（如 BERT）和 Encoder-Decoder（如 T5）。结构上包含多层自注意力与前馈网络，规模扩展体现在层数、维度和专家数量上，MoE 成为高效扩展趋势。</li>
+<li>强化学习：强化学习通过智能体与环境交互，依据奖励信号优化策略。在大模型中，RLHF（基于人类反馈的强化学习）用于对齐语言模型输出与人类偏好，提升回答质量。典型应用如 ChatGPT 的训练后期阶段。</li>
+<li>大模型Agent：大模型 Agent 是能感知环境、规划决策、执行动作的智能体。它结合 LLM 作为“大脑”，通过工具调用、记忆管理和任务分解完成复杂任务，如自动编程、数据分析。体现从“问答”到“自主行动”的演进。</li>
+<li>大模型幻觉：幻觉指大模型生成看似合理但错误或虚构的内容。源于训练数据噪声和概率生成本质。影响可信度，尤其在事实敏感场景。缓解方法包括 RAG、微调、提示工程和推理时搜索验证。</li>
+<li>LangChain：LangChain 是用于构建 LLM 应用的开源框架，支持链式调用、记忆管理、工具集成和数据连接。它简化了 Prompt 工程、RAG 和 Agent 开发流程，广泛应用于对话系统、文档问答等场景，提升开发效率。</li>
+<li>MCP：MCP 就是一种通用标准协议，让不同的AI模型可以同标准、高效地调用各种各样的封装好工具。</li>
+<li>RAG：RAG（检索增强生成）通过从外部知识库检索相关信息，辅助大模型生成更准确的回答。有效缓解幻觉问题，适用于动态知识场景。典型流程：用户提问 → 检索 → 拼接上下文 → 生成答案。</li>
+<li>大模型量化：量化将模型权重从高精度（如 FP32）转为低精度（如 INT8&#x2F;INT4），减少显存占用和计算开销，提升推理速度。常见方法有 PTQ（后训练量化）和 QAT（量化感知训练），是大模型轻量化部署的关键技术。</li>
+<li>推理大模型和生成大模型：生成大模型注重文本、图片等内容的创作与生成，适合对话场景；推理大模型强调逻辑推断、因果分析和多步思考，适用于复杂问题、数学解题等高阶任务。生成模型侧重预训练大语料，明确上下文的“自然生成”。推理模型在训练&#x2F;微调中强化“Chain of Thought（思维链）”、“Self-Consistency（自洽）”、“Step-by-step（步进式解析）”能力，常在微调数据或搭建特定的推理数据集上提升推理性能。</li>
 </ul>
 <h2 id="大模型训练"><a href="#大模型训练" class="headerlink" title="大模型训练"></a>大模型训练</h2><ul>
 <li><p>预训练—后训练—推理的流程：<strong>预训练阶段</strong>，模型通过海量通用数据进行无监督或自监督学习，掌握基础知识和语言能力。<strong>后训练阶段</strong>，利用领域数据或用户任务对模型做微调或指令强化，提升在特定场景下的表现，如RLHF、参数高校微调LoRA。最终进入<strong>推理阶段</strong>，模型被部署，通过高效计算实现实际的输入到输出预测，服务真实应用需求。</p>
@@ -286,6 +275,25 @@
 <li><p>PPO、GRPO、DPO：大模型人类偏好微调中的三种主流方法，PPO（近端策略优化）是基于强化学习的经典方法，通过奖励模型指导策略更新，但实现复杂且不稳定；DPO（直接偏好优化）摒弃强化学习框架，不用奖励模型，将偏好数据直接转化为损失函数，更简洁高效，正成为主流替代方案；GRPO（生成式奖励优化）近期提出，直接针对奖励模型优化生成结果，简化强化学习流程，提升效率。</p>
 </li>
 <li><p>超长上下文是怎么实现的（例如 Kimi）：超长上下文能力（如Kimi大模型支持百万字级窗口），主要通过升级位置编码和注意力机制实现。首先，采用RoPE（旋转位置编码）等高效编码方法，让模型能准确区分和记忆极长序列中的词汇位置。其次，引入稀疏或分块注意力机制，如滑窗、局部自注意力、Chunk Attention等，避免全量计算带来的爆炸性内存和算力增长，大幅降低资源消耗。部分方案还结合高效缓存、分层处理和分布式计算，优化长文本的推理与存储。</p>
+</li>
+<li><p>大模型训练原理</p>
+<ul>
+<li>预训练：数据来源（网页、书籍、新闻和代码等无标签数据）、训练范式（自监督训练，预测下一个词元）、目标（提升模型的语义语法理解和基础知识泛化能力）。</li>
+<li>免训练：进入免训练阶段，数据来源（少量样本和外部知识库）、训练范式（prompt工程（Few-Shot&#x2F;CoT）和RAG）、目标（掌握特定领域知识）。</li>
+<li>后训练阶段：监督微调SFT：数据来源（业务数据、知识问答、人工标注和AI生成的有标签数据）、训练范式（监督微调SFT），目标是（获取特定领域知识）。强化学习：数据（偏好数据集（有标签））、训练范式（DPO&#x2F;PPO算法，奖励、策略、价值和参考机制），使模型输出更符合人类偏好的内容，提升其有用性、安全性和价值观。逻辑推理能力：数据来源是CoT推理链。训练范式涉及CoT知识蒸馏、推理路径搜索和强化学习GRPO算法，目标是增强模型的深度思考能力。</li>
+</ul>
+</li>
+<li><p>prompt工程：明确任务指令，清晰定义任务的角色、背景、执行要求以及期望的输出格式，确保模型准确理解意图。引入示例引导：通过添加 One-Shot或 Few-Shot示例，提升对输入输出结构的理解与一致性。融入思维链CoT，在 Prompt 中引导模型分步骤推理，显式呈现思考过程，促使模型进行逻辑推导。</p>
+</li>
+<li><p>强化学习：后训练阶段，提升模型的推理能力和对齐性，让智能体通过与环境的持续交互，在“尝试—反馈”的循环中学习最优策略，以最大化长期累积奖励。所谓“强化”，指的是当某个行为带来正向反馈（奖励）时，该行为在未来被选择的概率会增强；反之亦然。</p>
+</li>
+<li><p>逻辑推理CoT训练：OpenAI的o系列模型出来之后，慢思考机制，构建长链条的思维过程CoT，可以分步求解、自我反思、错误回溯。数据来源为更强模型生成的具有逻辑结构和推理链的数据。训练方式：基于思维链的知识蒸馏，将强模型生成的高质量推理链作为“教师模型”的输出，指导“学生模型”学习其推理模式。</p>
+</li>
+<li><p>监督微调：全参微调更新所有模型参数，效果好但资源消耗大。LoRA通过低秩矩阵近似权重变化，大幅减少可训练参数量，节省显存和计算成本。冻结原始权重，插入低秩适配模块，仅训练这些新增的小参数。关键参数：lora_rank（秩大小）、lora_alpha（缩放系数）。</p>
+</li>
+<li><p>微调实战：利用强模型对部分样本进行高质量标注，在开源轻量模型上进行监督微调，利用 ModelScope 下载模型，Swift 框架进行微调。数据准备：大模型标注 → 人工校验 → 清洗转换 → 拆分为训练&#x2F;验证&#x2F;测试集。模型部署：上传至 OSS，通过 Omega 平台完成高效推理。</p>
+</li>
+<li><p>vllm：一个高效、轻量级的大语言模型推理与部署框架，专注于提升大模型在实际应用中的推理速度和资源利用率。vLLM采用PagedAttention技术，借鉴操作系统的虚拟内存和分页管理思想，优化了注意力机制中键值缓存（KV Cache）的存储与管理，显著降低了显存占用，提升了吞吐量。可将推理速度提升数倍，并支持更高并发请求。</p>
 </li>
 </ul>
 <h2 id="大模型Agent"><a href="#大模型Agent" class="headerlink" title="大模型Agent"></a>大模型Agent</h2><ul>
