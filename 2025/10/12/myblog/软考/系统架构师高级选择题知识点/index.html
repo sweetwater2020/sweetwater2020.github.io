@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="多态在多个类中可以定义同一个操作或属性名，并在每个类中可以有不同的实现。 对象包含三个基本要素，分别是对象标识、对象状态和对象行为。 【破坏信息的完整性】是指数据被非授权地进行增删、修改或破坏而收到损失。不选授权侵犯。 网络逻辑结构设计的内容包括：  1.逻辑网络设计图 2.IP地址方案 3.安全方案 4.招聘和培训网络员工的具体说明 5.对软硬件、服务、员工和培训的费用初步估计 不包括：【用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="系统架构师高级选择题知识点">
+<meta property="og:url" content="http://example.com/2025/10/12/myblog/%E8%BD%AF%E8%80%83/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88%E9%AB%98%E7%BA%A7%E9%80%89%E6%8B%A9%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="多态在多个类中可以定义同一个操作或属性名，并在每个类中可以有不同的实现。 对象包含三个基本要素，分别是对象标识、对象状态和对象行为。 【破坏信息的完整性】是指数据被非授权地进行增删、修改或破坏而收到损失。不选授权侵犯。 网络逻辑结构设计的内容包括：  1.逻辑网络设计图 2.IP地址方案 3.安全方案 4.招聘和培训网络员工的具体说明 5.对软硬件、服务、员工和培训的费用初步估计 不包括：【用户">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-12T12:41:08.421Z">
+<meta property="article:modified_time" content="2025-10-12T12:52:25.265Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="软考">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/10/12/myblog/%E8%BD%AF%E8%80%83/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88%E9%AB%98%E7%BA%A7%E9%80%89%E6%8B%A9%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>系统架构师高级选择题知识点 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/12/myblog/%E8%BD%AF%E8%80%83/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88%E9%AB%98%E7%BA%A7%E9%80%89%E6%8B%A9%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          系统架构师高级选择题知识点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-10-12 20:41:08 / Modified: 20:52:25" itemprop="dateCreated datePublished" datetime="2025-10-12T20:41:08+08:00">2025-10-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E8%80%83/" itemprop="url" rel="index"><span itemprop="name">软考</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>多态在多个类中可以定义同一个操作或属性名，并在每个类中可以有不同的实现。</li>
+<li>对象包含三个基本要素，分别是对象标识、对象状态和对象行为。</li>
+<li>【破坏信息的完整性】是指数据被非授权地进行增删、修改或破坏而收到损失。不选授权侵犯。</li>
+<li>网络逻辑结构设计的内容包括：</li>
+</ul>
+<p>1.逻辑网络设计图</p>
+<p>2.IP地址方案</p>
+<p>3.安全方案</p>
+<p>4.招聘和培训网络员工的具体说明</p>
+<p>5.对软硬件、服务、员工和培训的费用初步估计</p>
+<p>不包括：【用户培训计划】</p>
+<ul>
+<li>分布式数据库中，【分片透明】是指用户或应用程序不需要知道逻辑上访问的表具体是怎么分块存储的。【复制透明】是指采用复制技术的分布方法，用户不需要知道数据是复制到哪些节点，如何复制的。【位置透明】是指用户无须知道数据存放的物理位置。【逻辑透明】，即局部数据模型透明，是指用户或应用程序无须知道局部场地使用的是哪种数据模型。</li>
+<li>变更控制自动化工具，特性之一是记录每一个状态变更的日期及变更者。没有【自动维护系统的不同版本】。</li>
+<li>特定领域软件架构（Domain Specific Software Architecture，DSSA）以一个特定问题领域为对象，形成由领域参考模型、参考需求、参考架构等组成的开发基础架构，其目标是支持一个特定领域中多个应用的生成。DSSA的基本活动包括领域分析、领域设计和领域实现。其中领域分析的主要目的是获得【领域模型】，领域模型描述领域中系统之间共同的需求，即领域需求；领域设计的主要目标是获得【DSSA】，DSSA描述领域模型中表示需求的解决方案；领域实现的主要目标是依据领域模型和DSSA开发和组织可重用信息，并对基础软件架构进行实现。</li>
+<li>系统工程对系统的结构、要素、信息和反馈等进行分析，以达到最优规划、最优设计、最优管理和最优控制等目的。</li>
+<li>霍尔三维结构是由逻辑维、时间维和知识维组成的立体空间结构。</li>
+</ul>
+<p>1、逻辑维</p>
+<p>运用系统工程方法解决某一大型工程项目时，一般可分为七个步骤：</p>
+<p>1.明确问题</p>
+<p>2.建立价值体系或评价体系</p>
+<p>3.系统分析</p>
+<p>4.系统综合</p>
+<p>5.系统方案的优化选择</p>
+<p>6.决策”决策就是管理”，”决策就是决定”，人类的决策管理活动面临着被决策系统的日益庞大和日益复杂。</p>
+<p>7.制定计划有了决策就要付诸实施，实施就要依靠严格的有效的计划。</p>
+<p>2、时间维（工作进程）</p>
+<p>对于一个具体的工作项目，从制定规划起一直到更新为止，全部过程可分为七个阶段：</p>
+<p>1.规划阶段。即调研、程序设计阶段，目的在于谋求活动的规划与战略；</p>
+<p>2.拟定方案。提出具体的计划方案。</p>
+<p>3.研制阶段。作出研制方案及生产计划。</p>
+<p>4.生产阶段。生产出系统的零部件及整个系统，并提出安装计划。</p>
+<p>5.安装阶段。将系统安装完毕，并完成系统的运行计划。</p>
+<p>6.运行阶段。系统按照预期的用途开展服务。</p>
+<p>7.更新阶段。即为了提高系统功能，取消旧系统而代之以新系统，或改进原有系统，使之更加有效地工作。</p>
+<p>3、知识维（专业科学知识）</p>
+<p>系统工程除了要求为完成上述各步骤、各阶段所需的某些共性知识外，还需要其他学科的知识和各种专业技术，霍尔把这些知识分为工程、医药、建筑、商业、法律、管理、社会科学和艺术等。各类系统工程，如军事系统工程、经济系统工程、信息系统工程等。都需要使用其它相应的专业基础知识。</p>
+<ul>
+<li>系统构建中可以采用多种不同的技术，【逆向工程】就是分析已有的程序，寻求比源代码更高级的抽象表现形式，在软件生命周期内将软件某种形式的描述转换成更为抽象形式的活动；重构是指在同一抽象级别上转换系统描述形式；设计恢复是指借助工具从已有程序中抽象出有关数据设计、总体结构设计和过程设计的信息；【再工程】是在逆向工程所获信息的基础上修改或重构已有的系统，产生系统的一个新版本。</li>
+<li>SCCS是版本控制工具。</li>
+<li>…管理办法，不得开发…，没有【未经国家正式批准的】。</li>
+<li>三级模式结构的数据库，如果对一个表创建聚索引，改变的是数据库的【内模式】。</li>
+<li>软件架构风格描述某一特定领域中的系统组织方式和惯用模式，反映了领域中众多系统所共有的【结构和语义】两个方面的特征。</li>
+<li>DUML2.0的消息类型有：简单消息、同步消息、异步消息、对象创建消息、对象销毁消息、无触发对象和无接收对象的消息。没有【静态消息动态消息】。</li>
+<li>软件架构设计活动将已标识构件集成到软件架构中，设计这些构件，但不予以实现。</li>
+<li>变更控制过程：问题分析与变更描述、变更分析与成本计算、变更实现。</li>
+<li>PGP已经成为使用最广泛的电子邮件加密软件。</li>
+<li>信号量S的物理意义为：当S&gt;0时，表示资源的可用数；当S&lt;0时，其绝对值表示等待资源的进程数。</li>
+<li>软件商标权的保护对象是【软件注册商标】而不是软件商标。</li>
+<li>Command命令模式，将一个请求封装成一个对象，从而可用不同的请求对客户进行参数化。</li>
+<li>属性冲突：包括属性域和属性取值的冲突。</li>
+<li>命名冲突：包括同名异义和异名同义。</li>
+<li>结构冲突：包括同一对象在不同应用中具有不同的抽象，以及统一实体在不同的局部E-R图中所包含的属性个数和属性排列次序不完全相同。</li>
+<li>外部设计处于软件设计的开始阶段，主要是按系统需求说明来确定此系统的软件结构和对应于系统需求说明，设计出各个功能部分的功能和接口。内部设计处于软件工程中的概要设计阶段，按照外部设计中确立的系统软件结构，来细化此系统各个功能部件以及各个部件接口的设计，并且详细给出各个功能部件详细的数据输入、输出设计。内部设计细化外部设计中的各种功能。</li>
+<li>构件的特性是:</li>
+</ul>
+<p>1.独立部署单元；</p>
+<p>2.作为第三方的组装单元；</p>
+<p>3.没有（外部的）可见状态。一个构件可以包含多个类元素，但是一个类元素只能属于一个构件。</p>
+<ul>
+<li><p>SDN(Software Defined Netwok)软件定义网络，本质是将网络软件化，这样就可以像升级、安装软件一样对网络进行修改，方便更多的应用程序能快速部署到网络上。SDN网络架构有三层，分别是： （1）应用层。对应用户不同的业务和应用。 （2）控制层。主要负责处理数据平面资源的编排，维护网络拓扑、状态信息等。 （3）数据转发层。负责用户数据的转发。</p>
+</li>
+<li><p>项目范围管理中，包含：① 项目章程。② 项目范围管理计划。③ 组织过程资产。④ 批准的变更申请。没有【项目文档管理方法】。</p>
+</li>
+<li><p>面向对象的设计模型包含以【包图】表示的软件体系结构图，以交互图表示的用例实现图，完整精确的类图，针对复杂对象的状态图和用以描述流程化处理的活动图等。</p>
+</li>
+<li><p>对计算机评价的主要性能指标有时钟频率、数据处理速率、运算精度和内存容量等。对数据库管理系统评价的主要性能指标有最大连接数、数据库所允许的索引数量和最大并发事务处理能力等。</p>
+</li>
+<li><p>【架构风格】描述了一类软件架构的特征，它独立于实际问题，强调软件系统中通用的组织结构选择。垃圾回收机制是Java语言管理内存资源时常用的一种【设计模式】。</p>
+</li>
+<li><p>存储体系结构包括不同层次上的存储器，通过适当的硬件、软件有机地组合在一起形成计算机的存储体系结构。例如，由高速缓存（Cache）、主存储器（MM）和辅助存储器构成的3层存储器层次结构。接近CPU的存储器容量更小、速度更快、成本更高，辅存容量大、速度慢，价格低。采用分级存储体系的目的是解决【存储的容量、价格和速度之间的矛盾】。</p>
+</li>
+<li><p>软件重用分垂直式重用与水平式重用，垂直式重用是指局限于某一垂直领域的重用，如只在电力系统中用到的构件；而水平式重用是指通用领域的重用，如【标准函数库】，任何软件都能用，所以是水平式重用。</p>
+</li>
+<li><p>常用的AI芯片的技术架构包括 GPU， FPGA， ASIC和TPU</p>
+</li>
+<li><p>为实现IP地址的自动配置，IPv6主机将【MAC地址】附加在地址前缀1111 1110 10之后，产生一个链路本地地址。</p>
+</li>
+<li><p>数据库设计主要分为用户需求分析、概念结构、逻辑结构和物理结构设计四个阶段。其中，在用户需求分析阶段中，数据库设计人员采用一定的辅助工具对应用对象的功能、性能、限制等要求所进行的科学分析，并形成【需求说明文档、数据字典和数据流程图】。用户需求分析阶段形成的相关文档用以作为【概念结构设计】的设计依据。</p>
+</li>
+<li><p>RAM责任分配矩阵，RAM中每项活动中有且只有一个负责人。</p>
+</li>
+<li><p>测试可以分为动态测试与静态测试。动态测试是通过运行程序发现错误，包括黑盒测试（等价类划分、边界值分析法、错误推测法）与白盒测试（各种类型的覆盖测试）。静态测试是人工测试方式，包括桌前检查（桌面检查）、代码走查、代码审查。</p>
+</li>
+<li><p>架构设计能够支持项目计划和项目管理等活动。但是，系统架构的给出必须建立在需求明确的基础上。所以系统结构不能捕获并了解用户需求。</p>
+</li>
+<li><p>逆向工程导出的信息可分为如下4个抽象层次。 ①实现级：包括程序的抽象语法树、符号表等信息。 ②结构级：包括反映程序分量之间相互依赖关系的信息，例如调用图、结构图等。 ③功能级：包括反映程序段功能及程序段之间关系的信息。 ④领域级：包括反映程序分量或程序与应用领域概念之间对应关系的信息。</p>
+</li>
+<li><p>软件过程构架结构由四个层次组成：方针、过程、规程和第四层的标准、规范、指南、模板、Checklist等组成。</p>
+</li>
+<li><p>结构化方法也称为生命周期法，是一种传统的信息系统开发方法，由结构化分析、 结构化设计和结构化程序设计三部分组成，其精髓是自顶向下、逐步求精和模块化设计。</p>
+</li>
+<li><p>集成模式有三种，分别是面向信息的集成、面向过程的集成和面向服务的集成。其中面向过程的集成模式强调处理不同应用系统之间的交互逻辑，与核心业务逻辑相分离，并通过不同应用系统之间的协作共同完成某项业务功能。</p>
+</li>
+<li><p>候选关键字和无损连接：首先找出所有无损关键字，也就是能根据它来推断出所有的。在推倒关系的前置里找。无损链接，要看拆分出的关系中是否都包含无损连接。</p>
+</li>
+<li><p>网络层协议：IP、ICMP、IGMP、ARP、RARP</p>
+</li>
+<li><p>软件集成测试也称为组装测试、联合测试（对于子系统而言，则称为部件测试）。它将已通过单元测试的模块集成在一起，主要测试模块之间的协作性。从组装策略而言，可以分为【一次性组装测试和增量式组装】（包括自顶向下、自底向上及混合式）两种。集成测试计划通常是在【软件概要设计阶段】完成的，集成测试一般采用黑盒测试方法。</p>
+</li>
+<li><p>软件产品配置是指一个软件产品在生存周期各个阶段所产生的各种形式和各种版本的文档、计算机程序、部件及数据的集合。包含属于产品组成部分的工作成果，如需求文档、设计文档、源代码和测试用例等。属于项目管理和机构支撑过程域产生的文档，如工作计划、项目质量报、项目跟踪报告等。不包含【CASE工具操作手册】</p>
+</li>
+<li><p>企业信息化涉还要扩展到【客户关系管理、供应链管理】乃至发展到电子商务。</p>
+</li>
+<li><p>基于架构的软件设计（Architecture-Based Software Design，ABSD）方法有三个基础，分别是对系统进行功能分解、采用【架构风格】实现质量属性与商业需求、采用软件模板设计软件结构。ABSD方法主要包括架构需求等6个主要活动，其中【架构复审】活动的目标是标识潜在的风险，及早发现架构设计中的缺陷和错误；【架构演化】活动针对用户的需求变化，修改应用架构，满足新的需求</p>
+</li>
+<li><p>架构文档要保持较新，但不要随时保证文档最新，要保持文档的稳定性。架构文档化的主要输出结果是【架构规格说明书和架构质量说明书。】</p>
+</li>
+<li><p>数据库设计主要分为用户需求分析、概念结构、逻辑结构和物理结构设计四个阶段。数据库设计的需求分析阶段应当形成：需求说明文档、数据字典和数据流程图。作为概念结构设计阶段的依据。</p>
+</li>
+<li><p>UML图，状态图每条箭头上都会有事件，而活动图则不一定有。</p>
+</li>
+<li><p>软件需求包括：业务需求、用户需求和功能需求。</p>
+</li>
+<li><p>传统的系统分析以功能分解为基础，利用结构化分析自顶向下完成。面向对象分析关注于模型的创建，该分析模型有：类模型、交互模型、状态模型。面向对象分析两个子阶段：领域分析、需求分析。</p>
+</li>
+<li><p>信息化需求包含三个层次：战略需求、运作需求、技术需求。</p>
+</li>
+<li><p>候选关键字：一组能够区分表中所有记录的字段，且不能再减少字段数量。类似于主键。</p>
+</li>
+<li><p>无损连接且保持函数依赖的分解：无损连接意思是一张大表拆成多张小表后，这些小表可以重新拼凑出原来的大表。保持函数依赖意思是小表仍然保留原始表中所有的函数依赖。</p>
+</li>
+<li><p>进程前趋图，PV进程控制，P是执行的前提条件，V是执行后该谁执行。</p>
+</li>
+<li><p>自然连接R⋈S运算，是左边和右边的放一起，再去掉右边重复的属性列名。相同属性列需要进行等值连接，然后比如1&lt;6是第1个列的值&lt;第6个列的值。</p>
+</li>
+<li><p>基于架构的软件开发，强调采用视角和视图来描述软件架构，采用用例和质量场景来描述需求。</p>
+</li>
+<li><p>特定领域软件架构的基本活动包括领域分析、领域设计和领域实现。其中，领域分析的主要目的是获得领域模型。领域设计的主要目标是获得特定领域软件架构。领域实现是为了开发和组织可重用信息，对基础软件架构进行实现。</p>
+</li>
+<li><p>基于架构的软件设计方法有三个基础，分别是对系统进行功能分解、采用架构风格实现质量属性与商业需求、采用软件模板设计软件结构。软件架构文档应该从使用者的角度进行书写，针对不同背景的人员采用不同的书写方式，并将文档分发给相关人员。架构文档要保持较新，但不要随时保证文档最新，要保持文档的稳定性。架构文档化的主要输出结果是架构规格说明书和架构质量说明书。</p>
+</li>
+<li><p>Builder模式将复杂对象的构建与其表示相分离，这样相同的构造过程可以创建不同的对象。Prototype原型模式，通过克隆现有对象来创建新对象。Spring 的 Prototype 作用域 是一种特定的 Bean 管理方式，每次请求都会创建一个新的 Bean 实例。两者都强调通过复制或创建新实例来满足需求，而不是重复使用同一个对象。</p>
+</li>
+<li><p>架构设计（architecture design）第一步是将非功能性需求（nonfunctional requirements）细化为更详细的需求。在设计架构时主要有四类非功能需求比较重要：操作需求（Operational requirements）确定了系统执行所需的运行环境以及这些环境可能随时间发生哪些变化；性能需求（Performance requirements）主要关注如响应时间，容量和可靠性等非功能性需求问题；安全需求（Security requirements）是保护信息系统免受无论是否是有意的行为而造成损毁和数据丢失的能力；文化和政治需求取决于系统将要被使用的国家。</p>
+</li>
+<li><p>系统设计的目的是确定一种应用体系架构，通过分析最初在需求分析期间创建的数据模型和过程模型来完成该任务。</p>
+</li>
+<li><p>一个系统的三类主要硬件构件是客户机、服务器、网络。</p>
+</li>
+<li><p>Decorator（装饰器模式）通过创建一个包装对象来动态地为对象添加新功能，而不改变其原有结构。例如，在 Java 的 InputStream 类中，BufferedInputStream 就是一个装饰器，它在 InputStream 的基础上增加了缓冲功能，从而提高了读取效率。</p>
+</li>
+<li><p>Adapter（适配器模式）用于将一个类的接口转换成客户端期望的另一种接口，使原本不兼容的类能够协同工作。例如，使用手机充电器时，电源适配器将 220V 电压转换为手机所需的 5V 电压。</p>
+</li>
+<li><p>Bridge（桥接模式）将抽象部分与实现部分分离，使它们可以独立变化。例如，图形绘制程序中，形状（如圆形、矩形）是抽象部分，而绘制方式是实现部分。通过桥接模式，可以在不修改形状代码的情况下切换不同的绘制方式。</p>
+</li>
+<li><p>Facade（外观模式）提供了一个统一的高层接口，用于简化复杂子系统的访问。它隐藏了子系统内部的复杂性，为客户端提供了一个更简单、更易用的接口，同时降低了客户端与子系统之间的耦合度。</p>
+</li>
+<li><p>甘特图不能清晰地获取各任务之间的依赖关系。</p>
+</li>
+<li><p>在逻辑网络设计阶段的任务是根据用户需求，描述网络行为和性能。</p>
+</li>
+<li><p>UML中有4种事物：结构事物是UML模型中的名词。它们通常是模型的静态部分,描述概念或物理元素；行为事物是UML模型的动态部分。它们是模型中的动词,描述了跨越时间和空间的行为；分组事物是UML模型的组织部分。它们是—些由模型分解成的盒子；注释事物是UML模型的解释部分。这些注释事物用来描述、说明和标注模型的任何元素。</p>
+</li>
+<li><p>软件系统架构是关于软件系统的结构、【行为】和属性的高级抽象。在描述阶段，主要描述直接构成系统的抽象组件以及各个组件之间的连接规则，特别是相对细致地描述组件的【交互关系】。在实现阶段，这些抽象组件被细化为实际的组件，比如具体类或者对象。软件系统架构不仅指定了软件系统的组织和【拓扑】结构，而且显示了系统需求和组件之间的对应关系，包括设计决策的基本方法和基本原理。</p>
+</li>
+<li><p>软件构件是—个独立可部署的软件单元，—个构件不能有任何（外部的）可见状态，但是可以利用容器管理自身对外的可见状态。</p>
+</li>
+<li><p>特定领域软件架构以一个特定问题领域为对象，形成由领域参考模型、参考需求、【参考架构】等组成的开发基础架构，其目标是支持一个特定领域中多个应用的生成。DSSA的基本活动包括领域分析、领域设计和领域实现。其中领域分析的主要目的是获得领域模型，【领域模型】描述领域中系统之间共同的需求，即领域需求。</p>
+</li>
+<li><p>分布透明性包括：分片透明性、位置透明性和局部数据模型透明性。分片透明性是分布透明性的最高层次。位置透明性是分布透明性的下一层次。指用户或应用程序应当了解分片情况，但不必了解片段的存储场地。局部数据模型（逻辑透明）透明性是指用户或应用程序应当了解分片及各片断存储的场地，但不必了解局部场地上使用的是何种数据模型。</p>
+</li>
+<li><p>软件架构风格描述某一特定领域中的系统组织方式和惯用模式，反映了领域中众多系统所共有的【结构和语义】两个方面的特征。</p>
+</li>
+<li><p>数据仓库4大特点：面向主题：数据按主题组织。集成的：消除了源数据中的不一致性，提供整个企业的一致性全局信息。相对稳定的(非易失的)：主要进行查询操作，只有少量的修改和删除操作（或是不删除）。反映历史变化(随着时间变化)：记录了企业从过去某一时刻到当前各个阶段的信息，可对发展历程和未来趋势做定量分析和预测。</p>
+</li>
+<li><p>嵌入式系统分为三层：应用软件、操作系统软件和中间件，中间件的主要作用是【屏蔽底层操作系统的差异】。</p>
+</li>
+<li><p>参与电子商务的实体有4类：客户(个人消费者或集团购买)、商户(包括销售商、制造商和储运商)、银行(包括发行和收单行)及认证中心。</p>
+</li>
+<li><p>在PKI系统体系中，证书机构CA负责生成和签署数字证书，注册机构RA负责验证申请数字证书用户的身份。</p>
+</li>
+<li><p>CRM是一套先进的管理思想及技术手段，它通过将人力资源、业务流程与专业技术进行有效的整合。</p>
+</li>
+<li><p>侵犯注册商标专用权：未经商标注册人许可，在同一种商品上使用与其注册商标相同的商标的。</p>
+</li>
+<li><p>项目时间管理中的过程包括：活动定义、活动排序、活动的资源估算、活动历时估算、制定计划和进度控制。</p>
+</li>
+<li><p>采用Kerberos系统进行认证时，可以在报文中加入【时间戳】来防止重放攻击。</p>
+</li>
+<li><p>UML：逻辑视图： 也称为“设计视图”，它表示了设计模型中在架构方面具有重要意义的 部分，即类、子系统、包和用例实现的子集。进程视图：将可执行线程和进程作为活动类的建模，是逻辑视图的一次执行实例， 描述了并发与同步结构。实现视图：对组成基于系统的物理代码的文件和构件进行建模。部署视图：把构件部署到一组物理节点上， 表示软件到硬件的映射和分布结构。用例视图：最基本的需求分析模型。</p>
+</li>
+<li><p>软件开发过程中，如果用户仅提出软件的一些基本功能，没有详细定义输入、处理和输出需求，应该采用原型开发模型。</p>
+</li>
+<li><p>在基于体系结构的软件设计方法中，采用【视角和视图】来描述软件架构，采用【用例】来描述功能需求，采用【质量场景】来描述质量需求。</p>
+</li>
+<li><p>各种系统性能评估方法：指令执行速度法常用每秒百万次指令运算（MIPS)评估系统性能；等效指令速度法评估系统性能时需要计算各类指令在程序中所占的比例；综合理论性能法（CPT)采用每秒百万次 理论运算（MTOPS) 评估系统性能；基准程序法主要针对CPU (有时包括主存）的性能，通常也会考虑I&#x2F;O结构、操作系统、编译程序的效率等对系统性能的影响。</p>
+</li>
+<li><p>在软件架构评估中，敏感点是一个或多个构件的特性，权衡点是影响多个质量属性的特性，是多个质量属性的敏感点。</p>
+</li>
+<li><p>采用反编译技术获得的软件不属于著作权法保护的内容。</p>
+</li>
+<li><p>SoC称为片上系统，是一个有专用目标的集成电路，其中包含完整系统并有嵌入软件的全部内容。SoC不是一块处理器芯片。同时它又是一种技术，用以实现从确定系统功能开始，到软&#x2F;硬件划分，并完成设计的整个过程。从狭义角度讲，它是信息系统核心的芯片集成，是将系统关键部件集成在一块芯片上。从广义角度讲，SoC是一个微小型系统，如果说中央处理器(CPU)是大脑，那么SoC就是包括大脑、心脏、眼睛和手的系统。国内外学术界—般倾向将SoC定义为将微处理器、模拟IP核、数字IP核和存储器(或片外存储控制接口)集成在单—芯片上，它通常是客户定制的，或是面向特定用途的标准产品。</p>
+</li>
+<li><p>交换机接收到数据帧后，如果没有相应的表项，交换机会采用广播方式进行转发。交换机通过读取输入帧中的源地址添加相应的MAC地址表项。交换机的MAC地址表项是动态增长的，重启时不清空。</p>
+</li>
+<li><p>敏捷方法是以人为核心、迭代、循序渐进的开发方法。结构化开发方法是面向过程的。</p>
+</li>
+<li><p>软件设计可分为概要设计和详细设计两个阶段。概要设计也称为高层设计或总体设计即将软件需求转化为数据结构和软件的系统结构；详细设计也称为低层设计，即对结构图进行细化，得到详细的数据结构与算法。</p>
+</li>
+<li><p>架构描述语言(Architecture Description Language，ADL)是一种为明确说明软件系统的概念架构和对这些概念架构建模提供功能的语言。ADL主要包括以下组成部分：组件、组件接口、连接件和架构配置。</p>
+</li>
+<li><p>特定领域软件架构DSSA，以一个特定问题领域为对象，形成由领域参考模型、参考需求、参考架构等组成的开发基础架构。DSSA的基本活动包括领域分析、领域设计和领域实现。其中【领域分析者】的任务是控制整个领域分析过程，进行知识获取，将获取的知识组织到领域模型中；【领域设计者】的任务是根据领域模型和现有系统开发出DSSA，并对DSSA的准确性和一致性进行验证。【领域专家】的主要任务是提供关于领城中系统的需求规约和实现的知识。</p>
+</li>
+<li><p>设计模式可以分为创建型模式、结构型模式和行为型模式三类。</p>
+</li>
+</ul>
+<p>创建型模式通过采用抽象类所定义的接口，封装了系统中对象如何创建、组合等信息，其代表有工厂方法模式（Factory Method Pattern)、抽象工厂模式（Abstract Factory Pattern)、建造者模式（Builder Pattern)、原型模式（Prototype Pattern）、单例模式（Singleton Pattern)等。</p>
+<p>结构型模式主要用于如何组合己有的类和对象以获得更大的结构，其代表有适配器模式（Adapter Pattern)、桥接模式（Bridge Pattern)、组合模式（Composite Pattern)、装饰者模式（Decorator Pattern)、外观模式（Facade Pattern)、享元模式（Flyweight Pattern)、代理模式（Proxy Pattern)等。</p>
+<p>行为型模式主要用于对象之间的职责及其提供服务的分配方式，其代表有责任链模式（Chain of Responsibility Pattern)、命令模式（Command Pattern)、解释器模式（Interpreter Pattern)、迭代器模式（Iterator Pattern)、中介者模式（Mediator Pattern)、备忘录模式 (Memento Pattern)、观察者模式（Observer Pattern)、状态模式（State Pattern)、策略模式（Strategy Pattern)、模板方法模式（Template Method Pattern)、访问者模式（Visitor Pattern)等。</p>
+<ul>
+<li>第一范式：每个属性的数据必须是不可再分解的原子值，保证字段的原子性。第二范式：在满足1NF的基础上，要求所有非主属性必须完全依赖于候选码，不能存在候选码的部分依赖。第三范式：在满足2NF的前提下，要求非主属性之间不存在传递依赖，即非主属性必须直接依赖于候选码，而不能通过其他非主属性间接依赖。</li>
+<li>Windows操作系统在图形用户界面处理方面采用的是典型的【事件驱动】的架构风格。首先注册事件处理的是回调函数，当某个界面事件发生时（例如键盘敲击、鼠标移动等），系统会查找并选择合适的回调函数处理该事件。</li>
+<li>命令模式：将一个请求封装成一个对象，从而使得用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。命令模式是行为型对象模式，它抽象出待执行的动作以参数化某对象。</li>
+<li>接口设计的主要依据是数据流图，接口设计的任务主要是描述软件与外部环境之间的交互关系，软件内模块之间的调用关系。定义软件的主要结构元素及其之间的关系是架构阶段的任务；确定软件涉及的文件系统的结构及数据库的表结构是数据存储设计阶段的任务；确定软件各个模块内部的算法和数据结构是详细设计阶段的任务。</li>
+<li>流水线处理机在执行指令时，把执行过程分为若干个流水级，若各流水级需要的时间不同，则流水线必须选择各级中时间较大者为流水级的处理时间。流水线的吞吐率为一个流水级时间的倒数，即最长流水级时间的倒数。</li>
+<li>architecture 架构。</li>
+<li>软件著作权的产生时间是【自软件开发完成之日时】。</li>
+<li>CORBA构件模型中，【对象适配器】的主要作用是在底层传输平台与接收调用并返回结果的对象实现之间进行协调，目前采用的对象适配器规范是【POA（可移植对象适配器）】，它替代了传统的BOA（基本对象适配器）。</li>
+<li>【Servant（伺服对象）】是最终完成客户请求的服务对象实现。</li>
+<li>构件为一系列固定顺序的计算单元，构件之间只通过数据传递交互。每个处理步骤是一个独立的程序，每一步必须在其前一步结束后才能开始，数据必须是完整的，以【整体】的方式传递。</li>
+<li>基于规则的系统包括规则集、规则解释器、规则&#x2F;数据选择器和【工作内存】，一般用在人工智能领域和DSS中。</li>
+<li>软件开发环境（Software Development Environment, SDE）是指支持软件的工程化开发和维护而使用的一组软件，由软件工具集和环境集成机制构成。</li>
+<li>软件开发环境应支持多种集成机制，根据功能的不同，集成机制可以划分为【环境信息库】用于存储与系统开发有关的信息，并支持信息的交流与共享、【过程控制与消息服务器】是实现过程集成和控制集成的基础、【环境用户界面】统一的、具有一致性的用户界面是软件开发环境的重要特征。</li>
+<li>在线性规划中，如果X和Y都是某线性规划问题的最优解，那么任何在X和Y之间的凸组合也是其最优解。</li>
+<li>RAID是独立冗余磁盘阵列。简单地说，是一种把多块独立的硬盘(物理硬盘)按不同的方式组合起来形成一个硬盘组(逻辑硬盘)，从而提供比单个硬盘更高的存储性能和提供数据备份技术。</li>
+<li>RAID5的存储机制当有N块阵列盘时，用户空间为N-1块盘容量。</li>
+<li>共有3块80G的硬盘做RAID5，则总容量为(3-1)×80&#x3D;160G;如果有2块80G的盘和1块40G的盘，则以较小的盘的容量为计算方式，总容量为(3-1)×40&#x3D;80G。</li>
+<li>大多数情况下，为测试新系统的性能，用户必须依靠评价程序来评价机器的性能。把应用程序用的最多、最频繁的那部分核心程序作为评价计算机性能的标准程序，称为【基准测试程序】（benchmark）。</li>
+<li>Web服务器性能指标主要有请求响应时间、事务响应时间、并发用户数、吞吐量、资源利用率、每秒钟系统能够处理的交易或者事务的数量等。没有【丢包率】。</li>
+<li>面向对象设计的基本任务，把面向对象分析模型转换为面向对象设计模型。面向对象的分析模型主要由【顶层架构图】、用例与用例图、领域概念模型构成。设计模型则包含以包图表示的软件体系结构图、以交互图表示的【用例实现图】、完整精确的类图、针对复杂对象的状态图和描述流程化处理过程的【活动图】等。</li>
+<li>软件架构设计包括提出架构模型、产生架构设计和进行设计评审等活动，是一个迭代的过程。架构设计主要关注软件组件的结构、属性和【交互作用】，并通过多种【视图】全面描述特定系统的架构。</li>
+<li>敏感点(sensitivity point)和权衡点(tradeoff point)。</li>
+<li>敏感点是一个或多个构件的特性，明确在搞清楚如何实现质量目标时应注意什么。权衡点是影响多个质量属性的特性，是多个质量属性的敏感点。</li>
+<li>四种构件，实体构件需要长期持久化并主要用于事务性行为，由容器管理持久化。加工构件没有客户端要访问的主键。【会话构件】的状态信息是由构件自身而不是容器维护。服务构件是无状态的。</li>
+<li>CORBA服务端构件模型中，【伺服对象】是对象的真正实现，负责完成客户端请求。对象适配器用于屏蔽内核的实现细节，为服务器对象的实现者提供抽象接口。对象请求代理解释调用并负责查找实现该请求的对象，将参数传给找到的对象，并调用方法返回。</li>
+<li>PV操作中，进入临界区执行P操作，退出临界区执行V操作。</li>
+<li>数据资产的特征包括：可控制、可量化、可变现、虚拟性、共享性、时效性、安全性、交换性、规模性。没有：可测试、可维护。</li>
+<li>受人委托开发软件，如果没有书面协议约定，著作权属于受委托者，也就是开发软件的软件公司。</li>
+<li>在Composite组合模式中，类Component为组合中的对象声明接口，是负节点。类Leaf是实现。类Composite是右下角和Component形成环的。</li>
+<li>wifi认证方法中，【WPA2】使用了AES加密算法，安全性更高。</li>
+<li>【路径测试】不是系统测试的内容。</li>
+<li>业务系统的运行平台和开发语言差异大，使用的通信协议和数据格式也不同，使用【总线】合适。需要集成并灵活定义系统功能之间的协作关系，使用基于【工作流】的功能关系定义方式。</li>
+<li>与瀑布模型相比，【增量式开发】降低了实现需求变更的成本，更容易得到客户的反馈意见。</li>
+<li>关系模型中，自然连接后属性的个数，需要去掉那些一样的。</li>
+<li>【机密性】保证信息不泄露给未授权的用户。【完整性】保证信息的完整和准确，防止信息被篡改。</li>
+<li>逆向工程导出的信息分为实现级、结构级、功能级、领域级。程序的抽象语法树属于【实现级】，反映程序分量之间相互依赖关系的信息属于【结构级】。</li>
+<li>【SQL注入攻击】不是利用TCP&#x2F;IP漏洞发起的攻击。</li>
+<li>想要在单个对象中动态并且透明地添加责任，使用装饰器模式。</li>
+<li>层次化网络设计原则中，应该首先设计接入层。</li>
+<li>联合需求计划JRP，主要目的是【收集需求】而不是【对需求进行分析和验证】。</li>
+<li>在基于体系结构的软件设计方法中，采用【视角和视图】来描述软件架构，采用【用例】来描述功能需求，采用【质量属性场景】来描述质量需求。注意最后一个可以是质量场景，不是质量属性。</li>
+<li>实施整体变更控制的工具与技术：会议、变更控制工具、专家判断。没有【实现设计】。</li>
+<li>【外部设计】处于软件设计的开始阶段，按系统需求说明来确定系统软件结构，并设计出各个部分的功能和接口。内部设计处于软件工程的概要设计阶段，细化外部设计中的各个功能。</li>
+<li>基于构建的开发模型，模块化，支持复用构建，由软件的需求分析定义、【体系结构设计】、【构建库建立】、【应用软件构建】、测试和发布，五个阶段组成。</li>
+<li>4+1视图：（1）逻辑视图。逻辑视图主要支持系统的功能需求，即系统提供给最终用户的服务。一般用类图和对象图描述。（2）开发视图。开发视图也称为模块视图，在UML中被称为实现视图，它主要侧重于软件模块的组织和管理。该视图可描述源代码，系统文件结构。（3）进程视图。进程视图侧重于系统的运行特性，主要关注一些非功能性需求，例如，系统的性能和可用性等。进程视图强调并发性、分布性、系统集成性和容错能力，以及逻辑视图中的功能抽象如何适合进程结构等，它也定义了逻辑视图中的各个类的操作具体是在哪一个线程中被执行的。（4）物理视图。物理视图在UML中被称为部署视图，它主要考虑如何把软件映射到硬件上，它通常要考虑到解决系统拓扑结构、系统安装和通信等问题。当软件运行于不同的物理节点上时，各视图中的构件都直接或间接地对应于系统的不同节点上。因此，从软件到节点的映射要有较高的灵活性，当环境改变时，对系统其他视图的影响最小化。（5）场景。场景可以看作是那些重要系统活动的抽象，它使四个视图有机联系起来，从某种意义上说场景是最重要的需求抽象。场景视图对应UML中的用例视图。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E8%80%83/" rel="tag"># 软考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/29/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E8%BF%99%E4%BA%9B%E5%B9%B4%E7%9C%8B%E7%9A%84%E7%AE%97%E6%B3%95%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="这些年看的算法知识点">
+      <i class="fa fa-chevron-left"></i> 这些年看的算法知识点
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
