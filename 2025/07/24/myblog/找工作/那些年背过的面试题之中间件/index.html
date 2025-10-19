@@ -28,7 +28,7 @@
 <meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制proto">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:23:55.444Z">
-<meta property="article:modified_time" content="2025-09-24T14:14:26.086Z">
+<meta property="article:modified_time" content="2025-10-19T10:30:32.029Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-24 22:14:26" itemprop="dateModified" datetime="2025-09-24T22:14:26+08:00">2025-09-24</time>
+                <time title="Modified: 2025-10-19 18:30:32" itemprop="dateModified" datetime="2025-10-19T18:30:32+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -345,19 +345,20 @@
 <li>metaq总结：高性能（吞吐量高并发量高，队列模型、并行消费、基于Netty）、高可靠性（消息丢失可能小，重试机制、故障规避机制、重试、死信队列）、高实时性（低延迟，快速失败、异步刷盘、零拷贝）</li>
 </ul>
 <ul>
-<li>不同 mq 区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。</li>
+<li>Kafka和RocketMq区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。kafka通过副本机制（Replication）保证高可用性，但在极端情况下（如所有副本都不可用）可能会丢失消息，metaq支持同步刷盘、异步刷盘和事务消息，提供更高的消息可靠性，确保消息不丢失。</li>
 <li>mq路由方式： Kafka：生产者发送消息到指定的Topic，消息根据分区策略（如key哈希或轮询）分配到分区，消费者按分区自动拉取；分区保证消息有序，提升并发。 RocketMQ：支持Topic+Tag路由，消息可通过Tag细分类别。Producer可自定义MessageQueue选择器，根据业务或hash映射到指定队列，消费者可按Tag精准订阅。</li>
 <li>MQ如何保证消息可靠性：Kafka： 消息持久化到磁盘，设置副本数提升高可用； 生产者可配置ack机制，决定写入成功的判定标准（如ack&#x3D;all保证最强一致性）。 RocketMQ： 消息写入Broker后持久化，支持异步&#x2F;同步刷盘，以及主从复制； 提供事务消息机制，以及消息重复、丢失、顺序等保障。</li>
+<li>RocketMq如何Ack的：Ack指的是消费者收到消息后向消息队列反馈处理结果，避免消息丢失或重复消费。自动Ack：在Push消费模式下，消费者成功处理消息，未抛出异常即认为消费成功，客户端自动向Broker确认消息，无需手动干预，适用于处理逻辑简单场景。手动Ack：在Pull消费模式或部分Push模式下，采用显式确认模式，只有消费者回调方法明确返回CONSUME_SUCCESS才视为消费成功，如果消费过程中发生异常或返回RECONSUME_LATER，RocketMQ会将消息投递到RETRY队列，延迟重试，重试多次仍失败则进入死信队列（DLQ）。引申：可结合事务进行批量确认。</li>
 </ul>
-<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><ul>
 <li>消息队列：消息队列是一个用于接收消息、存储消息并且转发消息的中间件，异步、削峰、解耦。</li>
 <li>metaq中的nameserver：类似kafka中zookeeper的角色，不直接采用ZooKeeper是因为ZooKeeper有自动选举Master的功能，MetaQ的架构设计上决定了它不需要进行Master选举，而只需要使用一个轻量级的元数据服务器就可以了。</li>
 <li>kafka：一个多分区、多副本且基于 ZooKeeper协调的分布式消息系统。定位为一个分布式流式处理平台，高吞吐、可持久化、可水平扩展、支持流数据处理。</li>
 <li>kafka的架构：zookeeper保存broker集群元数据，对控制器进行选举操作。Producer生产消息并发送到Broker。Consumer从Broker订阅并消费消息。Broker接收生产者的消息，存储消息，为消息设置偏移量。Topic消息的主题。一个Topic细分为多个分区，在存储上看作一个可追加的Log文件。offset是消息在分区中的唯一标识，保证消息在分区的顺序性，不跨分区，也就是kafka只保证分区有序性。Replication副本，保证高可用，同一Partion在多个Broker上存多个副本，主提供读写，主失效的话，zookeeper选举controller，controller选择主。</li>
 <li>kafka高可用：多分区，一个Topic主题分区数据跨越多个broker分布式存储，每个分区有多个副本，主出现故障，可以故障转移。</li>
 <li>kafka一定不会丢失消息吗：只有一个副本情况下会丢失，生产者确认策略是异步的还是同步的，异步的可能在消息到达服务器之前丢失。短暂网络故障、磁盘损坏。</li>
-<li>netty的优点：1⃣️Reactor模型处理并发网络事件：主Reactor线程负责接收新的客户端连接，将连接分配给从Reactor，负责监控和处理IO事件。2⃣️内存管理：池化的内存分配方式，减少内存分配和回收成本。字节缓冲区ByteBuf提供内存读写，较JDK自带的ByteBuffer具有更高的性能，引用计数。3⃣️连接管理：基于事件循环(EventLoop)的模型来管理网络连接。每个EventLoop都维护了它自己的选择器(Selector)和任务队列，能够处理成百上千的连接而不会创建与之对等的线程，降低资源消耗。链式的处理器ChannelHandler来处理网络事件。</li>
-<li>tcp和udp：tcp面向连接，udp无连接。tcp提供可靠传输，流量控制，拥塞控制，udp尽力而为，不保证数据包顺序、完整性、正确性，不会自动重传。tcp点到点的，面向字节流，传输慢，首部开销大20-60字节，适合文件传输、网页。udp一对一多对一多对多一对多，面向报文，传输效率快，不可靠，首部开销小8字节，适合视频通话。</li>
+<li>kafka如何保证不丢消息又不会重复消费：不丢消息：生产者发送消息时，等待所有副本确认；多副本存储，即使部分节点挂掉，数据也不丢；Kafka消费者在处理完一条消息后，手动告诉Kafka这条消息已经处理成功，然后Kafka才会更新消费者的偏移量（Offset）。不重复消费：生产者启用幂等性，避免重复发送相同消息。</li>
+<li>介绍kafka的分区，消费者和partition的关系是什么：Kafka的分区（Partition）是主题（Topic）在物理存储层的分片，一个主题可被划分为多个分区。每个分区都是独立、有序、不可变的消息队列，能提高并发能力和扩展性。消费者组（Consumer Group）中的每个消费者负责读取部分分区。Kafka保证每个分区只能被一个消费者组中的一台消费者独占消费，避免重复处理。分区数量越多，理论上并发消费能力越强。</li>
 </ul>
 <h2 id="netty"><a href="#netty" class="headerlink" title="netty"></a>netty</h2><ul>
 <li>Netty是什么：提供异步的基于事件驱动的网络应用程序框架。用来快速开发高性能、高可靠性的网络IO程序，最流行的NIO框架。Elasticsearch、Dubbo、gRpc、Zookeeper、Rocketmq都用Netty。NIO、Seletor选择器、事件驱动、回调异步。</li>
@@ -381,6 +382,7 @@
 <li>Netty长连接和心跳机制：TCP长连接中可能出现断网异常，因此引入心跳机制，在client和server之间没有数据交互时给对方发送特殊数据包，对方收到后回应一个（PING-PONG交互），表示仍然在线。</li>
 <li>Netty对象池技术：对象池缓存创建好的对象，避免需要时才创建。Netty中buffer是对数据的抽象，数据拷贝时用到，代表可读写的内存区域，通过ByteBuf类实现，Netty会对其进行池化，减少内存分配和垃圾回收开销。</li>
 <li>Netty序列化协议：不强制使用特定的序列化协议。它提供了灵活的编解码器机制，允许开发者根据需要使用不同的序列化协议：json&#x2F;pb。</li>
+<li>netty的优点：1⃣️Reactor模型处理并发网络事件：主Reactor线程负责接收新的客户端连接，将连接分配给从Reactor，负责监控和处理IO事件。2⃣️内存管理：池化的内存分配方式，减少内存分配和回收成本。字节缓冲区ByteBuf提供内存读写，较JDK自带的ByteBuffer具有更高的性能，引用计数。3⃣️连接管理：基于事件循环(EventLoop)的模型来管理网络连接。每个EventLoop都维护了它自己的选择器(Selector)和任务队列，能够处理成百上千的连接而不会创建与之对等的线程，降低资源消耗。链式的处理器ChannelHandler来处理网络事件。</li>
 </ul>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
 <li>设计模式：23种，为复杂解耦，将一大坨代码拆分成职责单一的模块，满足高内聚低耦合、开闭原则（不改变现有代码的基础上扩展功能）。创建型：创建和使用解耦。结构型：不同的功能代码解耦。行为型：不同的行为代码解耦。</li>
@@ -454,6 +456,8 @@
 </li>
 <li><p>tcp不提供加密功能，需要应用层的TSL&#x2F;SSL。两台服务器间可以建立多个tcp连接（socket&#x3D;ip+端口号不同即可）</p>
 </li>
+<li><p>tcp和udp：tcp面向连接，udp无连接。tcp提供可靠传输，流量控制，拥塞控制，udp尽力而为，不保证数据包顺序、完整性、正确性，不会自动重传。tcp点到点的，面向字节流，传输慢，首部开销大20-60字节，适合文件传输、网页。udp一对一多对一多对多一对多，面向报文，传输效率快，不可靠，首部开销小8字节，适合视频通话。</p>
+</li>
 <li><p>输入url发生什么：1.DNS解析获取ip，浏览器缓存-路由器缓存-DNS缓存。2.根据ip建立TCP连接。3.浏览器向服务器发送http请求。4.服务器响应http请求。5.浏览器进行渲染。</p>
 </li>
 <li><p>tcp&#x2F;ip理解：IP协议是网络层的协议，使用分组交换技术来传输数据，通过路由器进行转发，最终到达目的地。无连接性、无状态性、不保证可靠传输。TCP是传输层协议，主要负责在IP协议提供的基础上实现可靠的、有序的、有连接的和无差错的数据传输。</p>
@@ -475,6 +479,8 @@
 <li><p>http请求信息里有什么：请求行（请求方法、URL、协议版本）、请求头（如Host、User-Agent、Accept、Content-Type等，用于传递客户端信息）和可选的请求体（如POST提交的数据）。</p>
 </li>
 <li><p>http请求传参方式：1）URL参数（查询字符串），如?id&#x3D;1，常用于GET请求；2）请求体传参，如表单数据或JSON，多用于POST、PUT请求；3）请求头传参，如通过Authorization传递令牌。</p>
+</li>
+<li><p>进程通信的方式： 管道：分为无名管道和命名管道。无名管道用于有亲缘关系的进程间通信，数据是单向流动的；命名管道可以在无亲缘关系的进程间通信。消息队列：消息的链表，进程可以从中读写消息，克服了管道只能承载无格式字节流的缺点。共享内存：多个进程可以共享同一块内存区域，是最快的IPC方式，不过需要进程间同步访问。信号量：是一个计数器，用于控制多个进程对共享资源的访问，主要用于进程同步。信号：用于通知进程发生了某个事件，进程收到信号后会采取相应动作。套接字：支持不同主机间的进程通信，可用于网络编程。</p>
 </li>
 </ul>
 <h2 id="边缘计算"><a href="#边缘计算" class="headerlink" title="边缘计算"></a>边缘计算</h2><ul>
@@ -570,7 +576,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">14.</span> <span class="nav-text">Linux</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kafka"><span class="nav-number">6.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">14.</span> <span class="nav-text">Linux</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -585,7 +591,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

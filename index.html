@@ -183,6 +183,76 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/16/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%9B%BE%E8%A7%A3%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/16/myblog/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E5%9B%BE%E8%A7%A3%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">图解机器学习与深度学习入门</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-10-16 08:39:27 / Modified: 08:46:28" itemprop="dateCreated datePublished" datetime="2025-10-16T08:39:27+08:00">2025-10-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><ul>
+<li>机器学习任务分为分类和回归：分类是对数据的类别进行划分，回归的目的是观察数据的倾向性。分类任务预测离散类别标签（如判断邮件是否为垃圾邮件），回归任务预测连续数值（如预测房价）。两者均属监督学习，依赖带标签数据训练模型，但输出类型不同：分类输出类别，回归输出数值。常用分类算法有逻辑回归、决策树，回归算法有线性回归、支持向量回归等。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/12/myblog/%E8%BD%AF%E8%80%83/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88%E9%AB%98%E7%BA%A7%E9%80%89%E6%8B%A9%E9%A2%98%E7%9F%A5%E8%AF%86%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -532,10 +602,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-09-29 22:39:50 / Modified: 22:40:33" itemprop="dateCreated datePublished" datetime="2025-09-29T22:39:50+08:00">2025-09-29</time>
+              <time title="Created: 2025-09-29 22:39:50" itemprop="dateCreated datePublished" datetime="2025-09-29T22:39:50+08:00">2025-09-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-14 23:16:04" itemprop="dateModified" datetime="2025-10-14T23:16:04+08:00">2025-10-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -576,7 +652,153 @@
 <p><strong>Encoder（编码器）</strong>：由多个相同的层堆叠而成，每层包括一个多头自注意力机制（Multi-Head Self-Attention）和一个位置前馈神经网络（Position-wise Feed-Forward Network）。编码器负责将输入序列转换为隐藏表示，这些表示捕捉了序列中元素之间的依赖关系，并且每个位置的信息都能被传递到下一个层次。</p>
 <p><strong>Decoder（解码器）</strong>：同样由多个相同层组成，除了包含与编码器类似的组件外，还增加了一个额外的多头注意力层，称为“编码器-解码器注意力”层。这个层允许解码器关注到编码器的所有输出，帮助生成目标序列。此外，解码器在每个时间步只能访问到当前及之前的时间步信息，以保证预测的正确顺序。</p>
 <p>通过这种结构，Transformer能够高效地并行训练，并显著提升处理长距离依赖问题的能力。</p>
-<h2 id="FastText原理及实践"><a href="#FastText原理及实践" class="headerlink" title="FastText原理及实践"></a>FastText原理及实践</h2><h2 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h2><p>Cursor是一款由Anysphere开发的AI代码编辑器，定位为“下一代开发者工作台”。基于 VS Code 内核深度优化，集成Claude、DeepSeek、Gemini、GPT等大语言模型，提供自然语言对话式编程、代码自动生成、代码补全、跨文件上下文理解等功能，适用于快速原型开发、代码重构与技术文档编写。</p>
+<h2 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h2><p>Cursor是一款由Anysphere开发的AI代码编辑器，定位为“下一代开发者工作台”。基于 VS Code 内核深度优化，集成Claude、DeepSeek、Gemini、GPT等大语言模型，提供自然语言对话式编程、代码自动生成、代码补全、跨文件上下文理解等功能，适用于快速原型开发、代码重构与技术文档编写。</p>
+<h2 id="data-juicer"><a href="#data-juicer" class="headerlink" title="data-juicer"></a>data-juicer</h2><ul>
+<li>data-juicer：阿里达摩院开发的开源数据处理工具，主要用于大规模数据的清洗、过滤和预处理。提供了丰富的数据处理算子、高效并行化的数据处理流水线，支持数据预处理、可视化、数据评估等各项能力。用来为模型训练提供高质量数据集。</li>
+<li>PySpark：spark的python api，利用spark的强大功能进行大规模数据处理和分析。spark是开源的分布式计算框架，基于内存计算高效处理大规模数据，支持批处理、流处理、机器学习和图计算等多种任务。</li>
+<li>streamlit：用于快速构建和部署数据驱动的Web应用程序，用于将数据分析结果可视化，无需前端开发。支持热重载，修改代码保存会自动刷新展示结果。支持 Pandas、NumPy、Matplotlib、Plotly 等常用的数据科学库。可以展示数据框、绘制图表、加载机器学习模型等。Streamlit提供缓存机制，避免重复计算，用@st.cache_data 或 @st.cache_resource 装饰器来缓存函数的结果。</li>
+<li>PySpark中的DataFrame：Pandas的DataFrame是单机版的数据处理框架，适用于较小规模的数据集。PySpark的DataFrame是分布式计算框架的一部分，适用于大规模数据集，并能在集群环境中高效运行。Pandas的DataFrame不直接支持 SQL 查询。PySpark的DataFrame可以通过SQL查询来操作数据，并且可以直接在 Spark 上执行 SQL 查询。Pandas的DataFrame操作是立即执行的。PySpark的DataFrame使用延迟计算模型，只有在真正需要结果的时候才会触发计算。Pandas的DataFrame数据完全加载到内存中。PySpark的DataFrame数据分布在多个节点上，只在必要时加载到内存中。</li>
+<li>单机上的spark：在一个单一机器上运行PySpark，不会像在分布式集群环境中那样跨多个节点分布数据。但是依然具有分布式计算的特点：可以利用多线程或多进程来并行处理数据，使用延迟计算提高效率，将数据分成多个分区，每个分区可以独立处理，利用多核处理器的并行计算能力。</li>
+<li>如何配置Spark集群：首先在每台机器上安装并解压 Spark，设置环境变量；接着在主节点上启动 Spark Master负责协调整个集群工作，在各工作节点上启动 Spark Workers负责执行具体的计算任务；最后通过 spark-submit 命令提交应用程序到集群，指定主节点地址，即可实现并行分布式计算。</li>
+</ul>
+<h2 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h2><ul>
+<li><p>量化交易：一种通过数学模型和算法程序进行投资决策的交易方式，其核心是用数据驱动代替主观判断。强化学习强调智能体（Agent）通过与环境的交互来学习最优策略，以最大化累积奖励。能够在动态环境中优化长期收益。</p>
+</li>
+<li><p>cursor和Copliot：Copliot是插件形式的，而cursor是基于 VS Code 二次开发的完整 IDE。copliot是AI辅助，cursor就是AI优先，可以直接对project进行操作，可以进行多位编辑。</p>
+</li>
+</ul>
+<h2 id="大模型训练"><a href="#大模型训练" class="headerlink" title="大模型训练"></a>大模型训练</h2><p>● 预训练（Pre-training）：数据特征是大量未标记的数据，用于训练模型的初始参数，Loss计算方式为全部数据参与计算loss，主要作用是通过学习未标记数据的统计信息和语义表示来提供一种通用的理解能力，主要用于全场景。数据量级别为10B到10T token。 </p>
+<p>● SFT（Supervised Fine-Tuning）：数据特征是Query和Response代码对，Loss计算方式是Response参与计算loss，主要作用是优化预训练模型，使其生成用户所期望的回答。数据量级别为10k到100k Pair。</p>
+<p>● RLHF：基于人类反馈的强化学习，数据特征是Query, Response True, Response False三元组，Loss计算方式是Reward Model奖励模型，主要作用是能够结合强化学习与人类反馈，提升大型语言模型的指令遵从。数据量级别为100k到1M Pair。 </p>
+<p>● RAG（Retrieval-augmented generation）检索增强生成：数据特征为结构化、非结构化和半结构化，可以和知识图谱结合。</p>
+<h2 id="MCP"><a href="#MCP" class="headerlink" title="MCP"></a>MCP</h2><p>MCP 是什么： Model Context Protocol，Anthropic (Claude) 主导发布的一个标准协议。让 AI 模型能够与不同的数据源和工具进行无缝交互。它就像 USB-C 接口一样统一标准。</p>
+<p>MCP 架构：客户端 - 服务器架构，包含：MCP 主机（MCP Hosts）：发起请求的 AI 应用程序，比如聊天机器人、AI 驱动的 IDE 等。MCP 客户端（MCP Clients）：在主机程序内部，作为Host的中介，管理 MCP Host与一个或多个 MCP 服务器之间的通信。MCP 服务器（MCP Servers）：为 MCP 客户端提供上下文、工具和提示信息。本地资源（Local Resources）：本地计算机中可供 MCP 服务器安全访问的资源，如文件、数据库。远程资源（Remote Resources）：MCP 服务器可以连接到的远程资源，如通过 API 提供的数据。</p>
+<p>MCP 优点：统一标准不用重复造轮子、数据不用上传到云端，AI 直接在本地处理。</p>
+<p>MCP的诞生标志着prompt engineering进入了一个新的发展阶段，它通过提供更结构化的上下文信息，显著提升了模型的能力。没有MCP时，需要手动从数据库中筛选信息或使用工具来检索相关信息，OpenAI引入function call，允许模型根据需要调用预定义函数以获取数据或执行特定操作，但是对平台高度依赖，不同LLM平台间API实现存在差异，切换模型时需要重写代码。MCP提供丰富的插件库，不限于特定的AI模型。</p>
+<p>MCP如何调用工具：MCP的选择机制基于prompt实现。客户端将问题发送给LLM，LLM分析可用工具并选择，客户端通过MCP Server执行所选的工具，工具执行结果返回LLM，LLM结合执行结果，归纳总结回答用户问题。模型是依靠prompt来识别当前可用的工具有哪些。具体做法是，我们将各个工具的使用描述以文本形式传递给模型，从而使模型能够了解有哪些工具可供选择，并基于实时情况做出最佳选择。模型是通过 prompt engineering，即提供所有工具的结构化描述和 few-shot 的 example 来确定该使用哪些工具。</p>
+<p>1、理念：通用协议，为大模型与外部的工具和数据源提供统一的通信接口；</p>
+<p>2、架构：典型的客户端-服务端架构。</p>
+<p>3、信息组织：基于JSON-RPC协议，高度标准化。</p>
+<p>4、通信模式：支持交互式、持续性的上下文管理。</p>
+<p>既生Function Call，何生MCP：</p>
+<p>Function call 的能力来源于大模型的后训练，详细来说，就是给大模型一些选择工具的样本，让模型学会在合适的时机决策需要调用工具。但是不同用户的工具定义格式是不同的，为了把用户的请求和大模型厂商微调的格式对上，所以才有了 function call。Function call 本质是就是每个大模型厂家的事实标准。但是复用性差，解决办法：1.让模型针对具体任务生成个性化代码，只需要额外提供一个代码编译运行环境即可，Manus。2.用一个中间层包装一下，把中间层做成标准，MCP。</p>
+<p>server包含三个核心能力：工具、资源和提示词。</p>
+<p>工具：调用外部服务和API，MCP服务器识别适当的工具，与服务交互并返回结果。资源：向AI模型暴露数据，来自本地存储、数据库或云平台。当 AI 模型请求特定数据时，MCP 服务器检索并处理相关信息。提示词：工作流程的可复用模板。 </p>
+<h2 id="大模型"><a href="#大模型" class="headerlink" title="大模型"></a>大模型</h2><ul>
+<li>人工智能技术历经数十年掀起了四次技术革新，分别是“专家系统时代、机器学习时代、深度学习时代和大模型时代”。</li>
+</ul>
+<ul>
+<li>大模型：本质上是一个使用海量数据训练而成的深度神经网络模型，通过巨大的数据和参数规模实现了智能的涌现，展现出类似人类的智能（例如，自然语言处理、计算机视觉、语音识别等能力）。</li>
+<li>大模型和小模型的区别：参数、层数的差别。模型的训练数据和参数不断扩大，达到临界规模后，模型从原始数据中自动学习并发现新的、更高层次的特征和模式，表现出未能预测的、复杂的能力，这叫做涌现能力。</li>
+<li>大模型的缩放法则：指随着模型规模逐步放大，任务的表现越来越好</li>
+<li>大模型的涌现能力：指随着模型的规模增长，当规模跨过一定阈值，对某类任务的效果会出现突然的性能增长，涌现出新的能力。当全部人类的知识被存储在大模型中，这些知识被动态连接起来时，其所具有的智能远超人们预期。</li>
+<li>DeepSeek-V3正式发布（自研 MoE 模型，671B 参数，激活 37B，在 14.8T token 上进行了预训练）。超越了 Qwen2.5-72B和Llama-3.1-405B等其他开源模型。和闭源GPT-4o 以及 Claude-3.5-Sonnet 不分伯仲。Claude是Anthropic的。</li>
+<li>语言模型的发展历程：统计语言模型（ngram统计模型，具有一定生成能力）、神经语言模型（RNN-LM、word2vec无监督学习语义特征表示）、预训练语言模型（Bert、GPT-1&#x2F;2捕捉上下文语义，需要监督数据微调）、大语言模型（GPT-3&#x2F;4规模扩展带来性能重要提升，不再依靠下游任务数据的微调）</li>
+<li>预训练数据：网页、书籍、代码、百科、多轮对话、数学、题库。CC、finewebedu、dclm、nemo。预训练是在大规模语料上进行预训练，获得通用的语言理解和生成能力。预训练语料的规模和质量对于提升大语言模型的能力至关重要。</li>
+<li>Transformer：由多层的多头自注意力（Multi-head Self-attention）模块堆叠而成的神经网络模型。原始的Transformer模型由编码器和解码器两个部分构成，这两个部分可以独立使用，例如基于编码器架构的BERT模型和解码器架构的GPT模型。Transformer主要由三个关键组件组成，包括：Embedding（文本输入被划分为更小的单元，称为标记，标记被转换为称为嵌入向量的数字向量，用于捕获单词的语义）、Transformer Block（处理和转换输入数据的模型，核心是attention机制）和Output Probabilities（最终的线性层和 softmax 层将处理的嵌入转换为概率，使模型能够预测序列中的下一个标记）。</li>
+<li>Transformer的自注意力机制在计算每个词元时都需要利用到序列中所有词元的信息，这导致计算和存储复杂度随输入序列长度的平方级别增长。在处理长序列时，这种复杂性会消耗大量的计算资源与存储空间。</li>
+<li>增强大语言模型长文本建模能力的研究主要集中在两个方向：一是扩展位置编码，二是调整上下文窗口。</li>
+<li>PEFT参数高效微调：高效微调技术的目标是在通用大模型的基础上，使用领域数据集进行微调，使其能够展现出较强的指令遵循能力，可以通过零样本学习的方式解决多种下游任务。</li>
+</ul>
+<h2 id="deepseek"><a href="#deepseek" class="headerlink" title="deepseek"></a>deepseek</h2><ul>
+<li><p>deepseek用的H800的GPU做的训练，只有2000张左右H800，V3训练成本不超600W美元。</p>
+</li>
+<li><p>Deepseek-V3用了很少的成本训练出不错的模型。R1则通过新的reward机制GRPO (group relative policy optimization)，并使用规则类验证机制自动对输出进行打分，以V3为基础模型，一个多月时间里调教出了性能堪比4o, o1的模型。</p>
+</li>
+<li><p>V3叠了61个MoE (mix of expert 混合专家) block，虽然总参数量很大，但每次训练或推理时只激活了极小一部分链路，使得训练成本大大降低，推理速度也显著提高。</p>
+</li>
+<li><p>Deepseek最大的技术亮点是采用了混合精度框架，即在不同的区块里使用不同的精度来存储数据。众所周知精度越高内存占用越大，运算起来复杂度也越大。Deepseek在一些不需要很高精度的模块，使用很低的精度FP8储存数据，极大的降低了训练计算量。</p>
+</li>
+<li><p>checkpoint：在模型训练过程中保存的中间状态或快照，通常包括模型的参数（权重）、优化器的状态、训练进度等信息。通过 checkpoint，可以在训练中断后恢复训练，或者在推理时加载预训练模型。</p>
+</li>
+<li><p>R1-Zero和R1训练大概耗时2~3周，DeepSeek报告中发布三个模型：dp-v3（671B，激活37B），在此基础上，DS-R1-zero（实验品，没有SFT，全靠RL获得了推理能力，但模型输出不可控，可读性差，语种混杂），DS-R1（v3为基础，训练pipline和r1-zero一致，通过SFT+RL+冷启动过程训练，对标o1），使用DS-R1作为教师，蒸馏优化6个小模型（1.5b-70b，Qwen2.5四个，llama2个）。</p>
+</li>
+<li><p>DS-R1-zero：DS-v3为base模型，采用 GRPO的强化学习方式，进化出推理能力、Cot。</p>
+</li>
+<li><p>Cot：Chain-of-Thought思维链技术旨在通过引导模型生成一系列逻辑步骤或推理过程，从而提升模型在复杂任务上的表现。不仅增强了模型的理解能力，还提高了其在需要多步推理的问题上的准确性和可靠性。通过提示词设计、训练阶段加入中间推理步骤的数据实现。</p>
+</li>
+<li><p>强化学习RL：强化学习是一种通过与环境交互来学习最优策略的机器学习方法，智能体根据当前状态选择动作，并从环境中获得奖励反馈。智能体的目标是通过不断试错，找到能够最大化长期累积奖励的行为策略。适合需要连续决策和优化的复杂任务。</p>
+</li>
+<li><p>GRPO：PPO的变种，Group Relative Policy Optimization (GRPO) 群组相对策略优化是一种强化学习中的策略优化算法，旨在通过分组机制提升多智能体系统中的协作效率和策略稳定性。GRPO采用相对策略更新的方法，确保各组之间的策略调整既独立又协调，从而优化整体系统的表现。该方法广泛应用于多智能体协作、分布式资源管理和协同控制等领域，有助于实现更高效和可扩展的策略学习。</p>
+</li>
+<li><p>模型蒸馏： 一种将大型复杂模型（教师模型）的知识迁移到小型高效模型（学生模型）的技术。使得快速训练得到一个水平不错的学生模型，且学生模型相对较小，部署更具性价比。总体是个SFT有监督的微调，在特定prompt，学生模型学习教师模型的输出概率分布（如果开源模型 学习中间层的特征），从而快速调整自己的权重参数。包括以下几个典型步骤：教师模型：首先训练或直接使用性能强大的教师模型 （例如OpenAI O1）。数据准备：精心设计关心的prompt，并从教师模型中推理数据样本，这些数据将用于训练学生模型。学生模型训练：使用教师模型的输出作为监督信号，对较小的学生模型进行训练。不断调整学生模型的结构和参数，尽可能接近教师模型的性能。</p>
+</li>
+<li><p>R1-ZERO：采用PPO改进版GRPO 强化学习策略，奖励模型是RL学习方向的刺激信号，基于rule来设计奖励模型，包括2方面：准确性和format。限定输出模版必须先输出think过程，然后输出结果。表明不借助SFT只靠RL可以原生、自发的进化出强大的reasoning能力，比如反思、多种方式尝试。</p>
+</li>
+<li><p>R1：只用少量高质量的样本数据产生强大的reasoning能力，基于v3，经历四个训练阶段：1、cold-start高质量微调：少量高质量的Cot数据（r1-zero生成）做模型微调，让模型产生出反思、验证的过程。2、第一轮RL，获得reasoning能力，重点在数学、编程、科学等方面的强化学习。3、微调SFT，利用其模型产生一批prompt和response，在各种通识领域，合计800K样本，只微调2epoch。4、第二轮RL，全域强化学习，对数学代码等仍采用简单的rule-based的奖励信号，对其他场景，采用人类对齐的reward model。</p>
+</li>
+<li><p>蒸馏：以R1为教师，选择qwen2.5的1.5b-32b和llama3的8b和72b，进行SFT微调（蒸馏）。数据准备：671b教师模型生成高质量推理数据样本，作为学生模型的训练样本。数据增强：进一步扩展、修改和优化，多样性和代表性。蒸馏：学习教师模型的输出概率，采用混合损失函数设计（输出概率分布接近教师模型，输出概率分布接近真值）。L2正则化防止过拟合。</p>
+</li>
+<li><p>deepseek-r1-zero：在基础模型DeepSeek-V3上进行强化学习（RL）后得到了DeepSeek-R1-Zero模型。该模型学会了如何推理、创建思维链序列，并具备自我验证和反思等能力。尽管DeepSeek-R1-Zero的学习能力令人惊叹，但它存在语言混合、可读性差等严重问题。</p>
+</li>
+<li><p>deepseek-r1：首先使用数千个思维链（CoT）序列示例形式的冷启动数据，在DeepSeek-V3上进行监督微调（SFT），目的是为强化学习创建一个更稳定的起点，解决DeepSeek-R1-Zero存在的问题。接着进行强化学习，并设置奖励机制，以促进语言一致性，增强在科学、编码和数学等任务上的推理能力。然后，再次进行监督微调，这次加入了非推理重点的训练示例，帮助模型保留写作、角色扮演等更多通用能力。最后，再次进行强化学习，以更好地符合人类偏好。最终得到了一个拥有6710亿参数的高性能模型。（为了加快训练，deepseek加入了SFT的数据解决冷启动的问题，通过R1-Zero生成SFT的数据，解决了R1的冷启动问题。）</p>
+</li>
+<li><p>deepseek-r1-distill：基于Qwen和Llama架构，对参数在15亿 - 700亿之间的较小模型进行微调，得到了一组更轻量、更高效且推理能力更强的模型。这极大地提高了开发人员的可及性，因为许多提炼后的模型可以在他们的设备上快速运行。</p>
+</li>
+<li><p>deepseek的两点贡献：训练成本下降（混合精度、GRPO）、思维链&#x2F;深度思考增强（纯强化学习、冷启动数据和多阶段训练）。并没有抛弃SFT，在R1训练中加入了大量高质量的数据（结果正确+思维链完整）进行SFT。</p>
+</li>
+<li><p>deepseek在算法创新上，MLA、GRPO。以及强大的实验迭代能力，整个链路（数据、模型结构、训练算法流程、训练架构优化等）众多方案中找到可行的。海量优化空间中找到对的路径。</p>
+</li>
+</ul>
+<h2 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h2><p>强化学习（Reinforcement Learning, RL）是机器学习的一个重要分支，其核心思想是通过智能体（Agent）与环境（Environment）的交互，学习一种策略（Policy），以最大化长期累积奖励（Reward）。与监督学习和无监督学习不同，强化学习更关注在<strong>动态环境中的决策与优化</strong>。</p>
+<ul>
+<li>核心概念</li>
+</ul>
+<ol>
+<li>智能体（Agent）：学习的主体，负责与环境交互并做出决策。</li>
+<li>环境（Environment）：智能体所处的世界，根据智能体的动作给出反馈。</li>
+<li>状态（State）：环境在某一时刻的描述。</li>
+<li>动作（Action）：智能体在某个状态下可以执行的操作。</li>
+<li>奖励（Reward）：环境对智能体动作的即时反馈（正&#x2F;负&#x2F;零），指导学习方向。</li>
+<li>策略（Policy）：智能体的行为规则，即从状态到动作的映射。</li>
+<li>价值函数（Value Function）：评估某个状态或动作的长期价值（未来累积奖励的期望）。</li>
+</ol>
+<ul>
+<li>关键特点</li>
+</ul>
+<p>- 试错学习（Trial and Error）：通过不断尝试、接收反馈（奖励或惩罚）来优化策略。</p>
+<p>- 延迟奖励（Delayed Reward）：当前动作可能影响未来的长期收益，需权衡即时与未来奖励。</p>
+<p>- 动态环境：环境可能随时间变化，智能体需适应不确定性。</p>
+<h2 id="质量提升Prox"><a href="#质量提升Prox" class="headerlink" title="质量提升Prox"></a>质量提升Prox</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/python12222_/article/details/142684959">https://blog.csdn.net/python12222_/article/details/142684959</a></p>
+<ul>
+<li>Program-Every-Example (ProX) 是上海交大联合研究的一个用于提升大规模预训练语料质量的数据优化框架。</li>
+<li>大规模预训练数据是构建强大语言模型的基础。业界的实践通常是抓取互联网上的海量的网页数据，然后人工设计专门的规则来进行数据清洗，这些规则虽然能够在处理上万亿 token 级别的语料时保持较高的效率，但其局限性也逐渐显现。数据的清洗效果往往决于规则是否全面，然而这些规则并不能理解文档中的上下文语境，同时也很难为每一个文档去定制规则，因此面对多样化的样本需求，这些静态规则难以灵活应对，导致语料质量提升空间有限，制约了模型的进一步突破。</li>
+<li>上海交大提出Program-Every-Example (ProX) 框架。ProX 通过采用语言模型而非人类规则进行自动化的数据优化，灵活应对多样化的样本特征，显著提升了预训练语料的质量。</li>
+<li>ProX 不仅可以识别低质量的文本，还能进行更精准的优化和清理，如字符串标准化、噪声行删除等操作，确保每个样本都能以最佳状态进入预训练过程。总体框架：利用语言模型生成程序 + 执行，提升数据质量。</li>
+<li>文档级别的数据过滤和选择，能够有效识别低质量的文档并加以排除，提升数据集的质量。但是，其精细化处理能力不足，通常只停留在文档的选择层面，可能没有进一步对文档内的细节进行更深入的优化和清理，例如字符级别的规范化处理、噪声行的删除等操作，从而限制了数据优化的效果。</li>
+<li>数据合成方法通过大语言模型（LLM）基于种子数据或特定话题，主动生成新的高质量数据。这种合成技术尽管展示了生成多样化、丰富语料的潜力，但其挑战在于需要极大的计算资源支持，特别是在大规模生成时，计算代价非常高。LLM 生成的数据还面临幻觉问题，即生成内容与事实不符，无法保证训练数据的真实性和一致性。</li>
+<li>Prox：通过使用较小的语言模型（如 0.3B 的超小规模模型）来执行数据优化任务，并且将数据优化的过程转变为调用特定的 python 函数。对每个文档都生成特定的函数调用。ProX 框架会再通过执行这些程序，来对语料进行文档级别的过滤和噪声行、字符级别的处理。做到了简单过滤方法无法实现的精细化操作。ProX 设计的函数接口，覆盖了文档级别过滤、噪声行去除、字符串清洗等操作。</li>
+<li>针对数据优化的粒度，ProX 将优化分为两个阶段：文档级别和子文档 &#x2F; 块级别 (将文档切分成更小的窗口)，分别对应文档级别的过滤和更细粒度的块内优化如行级别和字符级别的优化。ProX 合成了对应的微调数据，以便对基座模型进行微调以处理和优化真实的语料。</li>
+<li>在文档级别操作中，借鉴self-rewarding以及fineweb-edu中采用的评分机制，构建出保留高分文档，去除低分文档的优化程序。</li>
+<li>在chunk块级别操作中，利用了 Llama-3 和少样本提示的方法，构造了对于多种噪声的函数调用，并对这些离散的函数调用进行语法检查和正确性分析，筛选然后合并为一个较为复杂的程序。</li>
+</ul>
+<h2 id="PPL"><a href="#PPL" class="headerlink" title="PPL"></a>PPL</h2><ul>
+<li>PPL困惑度Perplexity，是衡量语言模型对一段文本“不确定性”的一种量化方式。困惑度越低，说明语言模型对这段文本的预测越“自信”，也就是说文本越符合语言模型学到的语言规律。意味着逻辑清晰，语法通顺。</li>
+<li>计算方法：语言模型对整个句子概率的对数，取负数之后exp指数函数。很好预测时，概率高，对数概率接近0，ppl很小。预测不确定时，概率低，对数概率是很大的负数，ppl很大。<br> PPL局限性：对长文本不敏感，长文本的 PPL 容易偏高，建议按 token 归一化。不考虑语义，PPL 只反映语言模型是否熟悉该结构，不代表语义正确。模型依赖性强，使用不同语言模型（如 GPT vs BERT）会得到不同的 PPL 值。</li>
+</ul>
+<h2 id="ultra-fineweb"><a href="#ultra-fineweb" class="headerlink" title="ultra-fineweb"></a>ultra-fineweb</h2><ul>
+<li>模型驱动的数据过滤方法：1、缺乏有效的数据验证策略使得很难及时就数据质量提供反馈。2、用于训练分类器的种子数据的选择缺乏明确的标准，严重依赖人类的专业知识，引入了一定程度的主观性。</li>
+<li>要做什么：1、快速评估数据对LLM的影响。2、高效的数据过滤流水线，采用了基于FastText的轻量级分类器。</li>
+<li>早期的方法通常依赖于使用手动规则的启发式过滤，这些启发式方法无法识别复杂的内容噪声。 因此，采用神经分类器选择高质量内容的模型数据过滤已成为更好的选择。</li>
+<li>传统的方法通过使用候选语料库从头开始训练LLM来验证数据质量。本文提出的有效验证策略利用了几乎训练有素的LLM作为基础，在最后的训练步骤中纳入候选语料库，并将由此产生的性能改进用作评估数据质量的指标。</li>
+</ul>
+<h2 id="Transformer和Moe"><a href="#Transformer和Moe" class="headerlink" title="Transformer和Moe"></a>Transformer和Moe</h2><ul>
+<li>Transformer，基于自注意力机制的神经网络架构，是AI大模型的核心架构，最初用于机器翻译，核心是自注意力机制，可同时分析句子中所有词的关系，捕获序列中全局的依赖关系，而非像传统RNN那样逐词处理。核心特点是：并行计算，同时处理所有词。长距离依赖，轻松捕获句子开头和结尾的关联。编码器解码器结构，编码器理解输入，解码器生成输出。通过堆叠多层注意力和前馈神经网络模块，Transformer 易于扩展到更大的模型，比如 BERT、GPT 和 Vision Transformer。</li>
+<li>Moe混合专家模型，是一种模型设计思想，通过动态激活不同专家来节省算力。核心特点是：专家网络，多个专家小模型各司其职。门控路由，根据输入内容激活1-2个专家。稀疏计算，仅用部分参数，推理速度快。</li>
+<li>Transformer 和 MoE 的结合：在标准 Transformer 的每一层中或某些特定层，用一个 MoE 模块替换常规的前馈神经网络FFN，该 MoE 模块由多个不同的专家组成。每个专家的结构类似于普通 Transformer 层中的 FFN，然后用门控机制实现稀疏激活。</li>
+</ul>
+<h2 id="fasttext"><a href="#fasttext" class="headerlink" title="fasttext"></a>fasttext</h2><ul>
+<li>fastText是Facebook于2016年开源的一个词向量计算和文本分类工具。在文本分类任务中，fastText（浅层网络）往往能取得和深度网络相媲美的精度，却在训练时间上比深度网络快许多数量级。主要用于生成词向量（word embeddings）和快速进行文本分类。相较于其他工具（如 Word2Vec），FastText 计算速度更快、内存效率更高，非常适合大规模文本处理任务。</li>
+<li>softmax回归：用于把模型的分数变成概率，归一化到0-1。</li>
+</ul>
+<h2 id="emdedding"><a href="#emdedding" class="headerlink" title="emdedding"></a>emdedding</h2><ul>
+<li>embedding词嵌入：将单词表示为数值向量的方法，它能够捕捉单词间的语义关系和上下文信息。在词嵌入空间中，具有相似含义的单词被定位在相近的位置，向量之间的距离和方向编码了单词之间的相似度。机器学习算法通过这些数值向量理解语言。</li>
+<li>应用场景：文本分类（垃圾邮件检测）、命名实体识别（NER）、词语相似度(类比任务)、问答系统中进行语义匹配和文档检索。</li>
+<li>真实的词嵌入通常具有数百维。词嵌入的创建过程：1.文本预处理：包括分词、去除停用词和标点符号。2.上下文窗口识别：通过滑动上下文窗口识别目标词和上下文词，使模型能够学习词语之间的关系。3.模型训练：模型基于词语的上下文进行预测，将语义相似的词语在向量空间中定位在一起。4.参数调整：在训练过程中，模型参数不断调整以最小化预测误差。</li>
+<li>两种词嵌入生成方法：1.基于频率的嵌入：词语的重要性或显著性可以从它在文本中出现的频率推断出来。2.基于预测的嵌入：捕捉词语之间的语义关系和上下文信息。</li>
+<li>主流词嵌入模型：Word2Vec是由谷歌于2013年开发的流行词嵌入模型、GloVe是斯坦福大学的，使用共现统计来创建词向量。Word2Vec 专注于从每个词周围的直接上下文中学习，而 GloVe 则采用更广泛的视角，分析词语在整个语料库中一起出现的频率，然后使用这些信息创建词向量。传统词嵌入为每个词分配一个固定向量，是静态嵌入，而 Transformer 模型使用一种不同类型的嵌入，称为基于上下文的嵌入。在基于上下文的嵌入中，词语的表示会根据其周围的上下文而变化，具备上下文敏感性。</li>
+<li>embedding（嵌入）和token化（分词&#x2F;标记化）：token化是把文本拆分成token（并转成ID），是离散化的过程。解决自然语言中词汇的无限性和歧义性问题。embedding是把token的ID映射成高维实数向量，是向量化的过程。这些向量捕捉了词汇的语义和语法信息，是模型理解语言的基础。两者关系：Token化后的ID通过Embedding层转为向量，作为大模型的输入。Tokenization 决定了输入的粒度（如单词或子词），而 Embedding 决定了如何表达这些 Token 的语义。</li>
+</ul>
 
       
     </div>
@@ -852,7 +1074,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-08 21:23:02" itemprop="dateModified" datetime="2025-10-08T21:23:02+08:00">2025-10-08</time>
+                <time title="Modified: 2025-10-19 18:24:57" itemprop="dateModified" datetime="2025-10-19T18:24:57+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -875,7 +1097,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ArrayDeque 是 Java 集合框架中实现了双端队列（Deque）接口的类，底层基于可变长度数组。它支持在队列头尾高效地插入和删除元素，因此既可当队列（FIFO），也可当栈（LIFO）使用。</span><br><span class="line"><span class="type">ArrayDeque</span> <span class="variable">deque</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;&gt;();</span><br><span class="line">做队列：</span><br><span class="line">deque.offer(<span class="string">&quot;C&quot;</span>);       <span class="comment">// 入队（尾部）</span></span><br><span class="line">deque.poll();           <span class="comment">// 出队（头部）</span></span><br><span class="line">作栈：</span><br><span class="line">deque.push(<span class="string">&quot;D&quot;</span>);        <span class="comment">// 入栈（头部）</span></span><br><span class="line">deque.pop();            <span class="comment">// 出栈（头部）</span></span><br></pre></td></tr></table></figure>
+          <h2 id="数据操作"><a href="#数据操作" class="headerlink" title="数据操作"></a>数据操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ArrayDeque 是 Java 集合框架中实现了双端队列（Deque）接口的类，底层基于可变长度数组。它支持在队列头尾高效地插入和删除元素，因此既可当队列（FIFO），也可当栈（LIFO）使用。</span><br><span class="line"><span class="type">ArrayDeque</span> <span class="variable">deque</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;&gt;();</span><br><span class="line">做队列：</span><br><span class="line">deque.offer(<span class="string">&quot;C&quot;</span>);       <span class="comment">// 入队（尾部）</span></span><br><span class="line">deque.poll();           <span class="comment">// 出队（头部）</span></span><br><span class="line">作栈：</span><br><span class="line">deque.push(<span class="string">&quot;D&quot;</span>);        <span class="comment">// 入栈（头部）</span></span><br><span class="line">deque.pop();            <span class="comment">// 出栈（头部）</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> str.indexOf(<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"><span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> str.indexOf(<span class="string">&#x27;a&#x27;</span>, fromIndex);</span><br><span class="line">indexOf 用于查找某个字符或子字符串在字符串中第一次出现的位置（索引），如果找不到则返回 -<span class="number">1</span>。</span><br></pre></td></tr></table></figure>
 
 
 
@@ -919,6 +1141,11 @@
 
 <p>基于 数组 + ReentrantLock + Condition:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.Condition;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.locks.ReentrantLock;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BlockingQueue</span>&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> T[] items;      <span class="comment">// 使用数组存储元素</span></span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> <span class="variable">head</span> <span class="operator">=</span> <span class="number">0</span>, tail = <span class="number">0</span>, count = <span class="number">0</span>; <span class="comment">// 头指针、尾指针、当前大小</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> capacity;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ReentrantLock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantLock</span>();</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Condition</span> <span class="variable">notEmpty</span> <span class="operator">=</span> lock.newCondition(); <span class="comment">// 等待非空</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Condition</span> <span class="variable">notFull</span> <span class="operator">=</span> lock.newCondition(); <span class="comment">// 等待非满</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">BlockingQueue</span><span class="params">(<span class="type">int</span> capacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (capacity &lt;= <span class="number">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Capacity must be &gt; 0&quot;</span>);</span><br><span class="line">    <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">    <span class="built_in">this</span>.items = (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[capacity]; <span class="comment">// 创建泛型数组</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 入队：如果队列满，则阻塞等待</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(T item)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    <span class="keyword">if</span> (item == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">NullPointerException</span>(<span class="string">&quot;Item cannot be null&quot;</span>);</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">while</span> (count == capacity) &#123;</span><br><span class="line">        notFull.await(); <span class="comment">// 队列满，生产者等待</span></span><br><span class="line">      &#125;</span><br><span class="line">      items[tail] = item;</span><br><span class="line">      tail = (tail + <span class="number">1</span>) % capacity; <span class="comment">// 循环利用数组</span></span><br><span class="line">      count++;</span><br><span class="line">      notEmpty.signal(); <span class="comment">// 唤醒消费者</span></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 出队：如果队列空，则阻塞等待</span></span><br><span class="line">  <span class="keyword">public</span> T <span class="title function_">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">while</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">        notEmpty.await(); <span class="comment">// 队列空，消费者等待</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="type">T</span> <span class="variable">item</span> <span class="operator">=</span> items[head];</span><br><span class="line">      items[head] = <span class="literal">null</span>;  <span class="comment">// GC 友好：帮助垃圾回收</span></span><br><span class="line">      head = (head + <span class="number">1</span>) % capacity;</span><br><span class="line">      count--;</span><br><span class="line">      notFull.signal();   <span class="comment">// 唤醒生产者</span></span><br><span class="line">      <span class="keyword">return</span> item;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取当前队列大小</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">size</span><span class="params">()</span> &#123;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> count;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否为空</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> size() == <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 是否已满</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isFull</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> size() == capacity;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="树结构合并"><a href="#树结构合并" class="headerlink" title="树结构合并"></a>树结构合并</h2><p>给定一个 <code>List&lt;Node&gt;</code>，每个节点有 id 和<code> List&lt;Node&gt; children</code>。 这些节点可能代表同一棵树的不同部分，要求：按 id 合并相同路径的节点，形成一棵或多棵合并后的树。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 假设 Node 类如下</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    String id;</span><br><span class="line">    List&lt;Node&gt; children;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Node</span><span class="params">(String id)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.id = id;</span><br><span class="line">        <span class="built_in">this</span>.children = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Node&#123;&quot;</span> + <span class="string">&quot;id=&#x27;&quot;</span> + id + <span class="string">&#x27;\&#x27;&#x27;</span> + <span class="string">&quot;, children=&quot;</span> + children + <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeMerger</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将多个可能重叠的树节点列表合并成一棵或多棵完整的树</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nodes 输入的节点列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 合并后的根节点列表（森林）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Node&gt; <span class="title function_">mergeTrees</span><span class="params">(List&lt;Node&gt; nodes)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用 Map 缓存所有已处理的节点，以 id 为键</span></span><br><span class="line">        Map&lt;String, Node&gt; nodeMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一步：遍历所有输入节点，构建节点缓存</span></span><br><span class="line">        <span class="keyword">for</span> (Node node : nodes) &#123;</span><br><span class="line">            <span class="comment">// 如果此 id 的节点还未创建，则创建一个</span></span><br><span class="line">            <span class="type">Node</span> <span class="variable">cachedNode</span> <span class="operator">=</span> nodeMap.computeIfAbsent(node.id, k -&gt; <span class="keyword">new</span> <span class="title class_">Node</span>(k));</span><br><span class="line">            <span class="comment">// 将当前节点的所有子节点递归地合并到缓存节点中</span></span><br><span class="line">            mergeChildren(node.children, cachedNode.children, nodeMap);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第二步：找出所有根节点（即不在任何其他节点 children 中的节点）</span></span><br><span class="line">        Set&lt;String&gt; childIds = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Node node : nodeMap.values()) &#123;</span><br><span class="line">            <span class="keyword">for</span> (Node child : node.children) &#123;</span><br><span class="line">                childIds.add(child.id);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 所有没有作为子节点出现的节点，就是根节点</span></span><br><span class="line">        List&lt;Node&gt; roots = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (Node node : nodeMap.values()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!childIds.contains(node.id)) &#123;</span><br><span class="line">                roots.add(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> roots;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 递归合并子节点列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sourceChildren 源子节点列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> targetChildren 目标子节点列表</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nodeMap 节点缓存</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">mergeChildren</span><span class="params">(List&lt;Node&gt; sourceChildren, List&lt;Node&gt; targetChildren, Map&lt;String, Node&gt; nodeMap)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (Node child : sourceChildren) &#123;</span><br><span class="line">            <span class="comment">// 获取或创建目标列表中对应 id 的节点</span></span><br><span class="line">            <span class="type">Node</span> <span class="variable">targetChild</span> <span class="operator">=</span> nodeMap.computeIfAbsent(child.id, k -&gt; <span class="keyword">new</span> <span class="title class_">Node</span>(k));</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 如果目标列表中还没有这个子节点，则添加</span></span><br><span class="line">            <span class="keyword">if</span> (!targetChildren.contains(targetChild)) &#123;</span><br><span class="line">                targetChildren.add(targetChild);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 递归合并子节点的 children</span></span><br><span class="line">            mergeChildren(child.children, targetChild.children, nodeMap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 测试示例</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 构造测试数据</span></span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeA</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeB</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeC</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;C&quot;</span>);</span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeD</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;D&quot;</span>);</span><br><span class="line"></span><br><span class="line">        nodeA.children.add(nodeB);</span><br><span class="line">        nodeB.children.add(nodeC);</span><br><span class="line"></span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeA2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeB2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">        <span class="type">Node</span> <span class="variable">nodeD2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(<span class="string">&quot;D&quot;</span>);</span><br><span class="line"></span><br><span class="line">        nodeA2.children.add(nodeB2);</span><br><span class="line">        nodeB2.children.add(nodeD2);</span><br><span class="line"></span><br><span class="line">        List&lt;Node&gt; inputNodes = Arrays.asList(nodeA, nodeA2);</span><br><span class="line"></span><br><span class="line">        List&lt;Node&gt; mergedTrees = mergeTrees(inputNodes);</span><br><span class="line">        System.out.println(mergedTrees);</span><br><span class="line">        <span class="comment">// 输出: [Node&#123;id=&#x27;A&#x27;, children=[Node&#123;id=&#x27;B&#x27;, children=[Node&#123;id=&#x27;C&#x27;, children=[]&#125;, Node&#123;id=&#x27;D&#x27;, children=[]&#125;]&#125;]&#125;]</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1164,6 +1391,45 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">// 最长有效括号</span></span><br><span class="line">    <span class="comment">// 用栈保存左括号的索引，其实不只，第一个保存的是起点前的位置。</span></span><br><span class="line">    <span class="comment">// 初始化时，栈先压入 -1，表示“有效括号子串起点前的位置”。</span></span><br><span class="line">    <span class="comment">// 遇到右括号则弹出栈顶，如果弹出后栈空了，说明遇到不能配对的右括号，把当前位置下标入栈（新起点）。</span></span><br><span class="line">    <span class="comment">// 否则，当前有效括号长度为i - 栈顶下标，更新最大长度。</span></span><br><span class="line">    <span class="comment">// 这里记录不是遇到不有效再记录，而是每次遇到有效时记录</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestValidParentheses</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> <span class="title class_">ArrayDeque</span>&lt;&gt;();</span><br><span class="line">        stack.push(-<span class="number">1</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">maxLen</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.charAt(i) == <span class="string">&#x27;(&#x27;</span>) &#123;</span><br><span class="line">                stack.push(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">                <span class="keyword">if</span> (stack.isEmpty()) &#123;</span><br><span class="line">                    stack.push(i);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    maxLen = Math.max(maxLen, i - stack.peek());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxLen;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+
+<h2 id="手机号的字母组合"><a href="#手机号的字母组合" class="headerlink" title="手机号的字母组合"></a>手机号的字母组合</h2><p>给定一个仅包含数字 <code>2-9</code> 的字符串，返回所有它能表示的字母组合。答案可以按 <strong>任意顺序</strong> 返回。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    Map&lt;Integer, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;()&#123;&#123;</span><br><span class="line">        put(<span class="number">2</span>, <span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        put(<span class="number">3</span>, <span class="string">&quot;def&quot;</span>);</span><br><span class="line">        put(<span class="number">4</span>, <span class="string">&quot;ghi&quot;</span>);</span><br><span class="line">        put(<span class="number">5</span>, <span class="string">&quot;jkl&quot;</span>);</span><br><span class="line">        put(<span class="number">6</span>, <span class="string">&quot;mno&quot;</span>);</span><br><span class="line">        put(<span class="number">7</span>, <span class="string">&quot;pqrs&quot;</span>);</span><br><span class="line">        put(<span class="number">8</span>, <span class="string">&quot;tuv&quot;</span>);</span><br><span class="line">        put(<span class="number">9</span>, <span class="string">&quot;wxyz&quot;</span>);</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">    List&lt;String&gt; res;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">letterCombinations</span><span class="params">(String digits)</span> &#123;</span><br><span class="line">        <span class="comment">// 电话号码的字母组合：递归DFS</span></span><br><span class="line">        <span class="keyword">if</span> (digits.equals(<span class="string">&quot;&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        dfs(digits, <span class="number">0</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">dfs</span><span class="params">(String digits, Integer start, String track)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (digits.length() == track.length()) &#123;</span><br><span class="line">            res.add(track);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">String</span> <span class="variable">options</span> <span class="operator">=</span> map.get(digits.charAt(start) - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> option : options.toCharArray()) &#123;</span><br><span class="line">            track += option;</span><br><span class="line">            dfs(digits, start + <span class="number">1</span>, track);</span><br><span class="line">            track = track.substring(<span class="number">0</span>, track.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="删除链表的倒数第-N-个结点"><a href="#删除链表的倒数第-N-个结点" class="headerlink" title="删除链表的倒数第 N 个结点"></a>删除链表的倒数第 N 个结点</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">removeNthFromEnd</span><span class="params">(ListNode head, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="comment">// 得考虑只有一个元素的情况</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">preHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        preHead.next = head;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">fast</span> <span class="operator">=</span> head;</span><br><span class="line">        <span class="keyword">while</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">            n --;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">slow</span> <span class="operator">=</span> preHead;</span><br><span class="line">        <span class="keyword">while</span> (fast != <span class="literal">null</span>) &#123;</span><br><span class="line">            slow = slow.next;</span><br><span class="line">            fast = fast.next;</span><br><span class="line">        &#125;</span><br><span class="line">        slow.next = slow.next.next;</span><br><span class="line">        <span class="keyword">return</span> preHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="省份数量"><a href="#省份数量" class="headerlink" title="省份数量"></a>省份数量</h2><p>有 <code>n</code> 个城市，其中一些彼此相连，另一些没有相连。如果城市 <code>a</code> 与城市 <code>b</code> 直接相连，且城市 <code>b</code> 与城市 <code>c</code> 直接相连，那么城市 <code>a</code> 与城市 <code>c</code> 间接相连。</p>
+<p><strong>省份</strong> 是一组直接或间接相连的城市，组内不含其他没有相连的城市。</p>
+<p>给你一个 <code>n x n</code> 的矩阵 <code>isConnected</code> ，其中 <code>isConnected[i][j] = 1</code> 表示第 <code>i</code> 个城市和第 <code>j</code> 个城市直接相连，而 <code>isConnected[i][j] = 0</code> 表示二者不直接相连。</p>
+<p>返回矩阵中 <strong>省份</strong> 的数量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="comment">// 省份数量，用并查集，写union和find函数，最后统计数量。或者union里记录省份数也行，从cityLen开始减，合并的话减1.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] fathers;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findCircleNum</span><span class="params">(<span class="type">int</span>[][] isConnected)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">cityLen</span> <span class="operator">=</span> isConnected.length;</span><br><span class="line">        fathers = <span class="keyword">new</span> <span class="title class_">int</span>[cityLen];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; cityLen; i ++) fathers[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; cityLen; i ++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; cityLen; j ++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (isConnected[i][j] == <span class="number">1</span>)  union(i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 统计根节点数量</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; cityLen; i ++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (fathers[i] == i) res ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (fathers[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">        <span class="comment">// 赋值表达式的值等于右操作数的值</span></span><br><span class="line">        <span class="comment">// 这里是剪枝优化，让查找路径上的所有节点都直接连到根节点，从而 扁平化树结构，加速后续查找。</span></span><br><span class="line">        <span class="keyword">return</span> fathers[x] = find(fathers[x]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">union</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">fatherX</span> <span class="operator">=</span> find(x);</span><br><span class="line">        <span class="type">int</span> <span class="variable">fatherY</span> <span class="operator">=</span> find(y);</span><br><span class="line">        <span class="keyword">if</span> (fatherX != fatherY) fathers[fatherY] = fatherX;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="冗余连接"><a href="#冗余连接" class="headerlink" title="冗余连接"></a>冗余连接</h2><p>树可以看成是一个连通且 <strong>无环</strong> 的 <strong>无向</strong> 图。</p>
+<p>给定一个图，该图从一棵 <code>n</code> 个节点 (节点值 <code>1～n</code>) 的树中添加一条边后获得。添加的边的两个不同顶点编号在 <code>1</code> 到 <code>n</code> 中间，且这条附加的边不属于树中已存在的边。图的信息记录于长度为 <code>n</code> 的二维数组 <code>edges</code> ，<code>edges[i] = [ai, bi]</code> 表示图中在 <code>ai</code> 和 <code>bi</code> 之间存在一条边。</p>
+<p>请找出一条可以删去的边，删除后可使得剩余部分是一个有着 <code>n</code> 个节点的树。如果有多个答案，则返回数组 <code>edges</code> 中最后出现的那个。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] fathers;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] findRedundantConnection(<span class="type">int</span>[][] edges) &#123;</span><br><span class="line">        <span class="comment">// 冗余连接，正常树有n个节点，n-1条边，增加一条表产生了环。</span></span><br><span class="line">        <span class="comment">// 用并查集，初始状态每个节点属于单独的连通分量，遍历边进行union</span></span><br><span class="line">        <span class="comment">// 在union之前首先判断这两个节点是否已经连通，如果已经连通则当前边为冗余连接</span></span><br><span class="line">        <span class="comment">// 因为从1开始，所以len+1</span></span><br><span class="line">        fathers = <span class="keyword">new</span> <span class="title class_">int</span>[edges.length + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= edges.length; i ++) fathers[i] = i;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] edge : edges) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> edge[<span class="number">0</span>];</span><br><span class="line">            <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> edge[<span class="number">1</span>];</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">isConnect</span> <span class="operator">=</span> union(x, y);</span><br><span class="line">            <span class="keyword">if</span> (isConnect) <span class="keyword">return</span> edge;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回是否已经连通</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">union</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">fx</span> <span class="operator">=</span> find(x);</span><br><span class="line">        <span class="type">int</span> <span class="variable">fy</span> <span class="operator">=</span> find(y);</span><br><span class="line">        <span class="keyword">if</span> (fx != fy) &#123;</span><br><span class="line">            fathers[fy] = fx;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">find</span><span class="params">(<span class="type">int</span> x)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == fathers[x]) <span class="keyword">return</span> x;</span><br><span class="line">        <span class="keyword">return</span> fathers[x] = find(fathers[x]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="链表两数相加"><a href="#链表两数相加" class="headerlink" title="链表两数相加"></a>链表两数相加</h2><p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ListNode <span class="title function_">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> &#123;</span><br><span class="line">        <span class="comment">// 两数相加，遍历就好，记录进位，注意遍历后如果有进位需要再加一个节点</span></span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">preHead</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="type">ListNode</span> <span class="variable">preNode</span> <span class="operator">=</span> preHead;</span><br><span class="line">        <span class="type">int</span> <span class="variable">jinWei</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">val</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">val1</span> <span class="operator">=</span> l1 == <span class="literal">null</span>? <span class="number">0</span>:l1.val;</span><br><span class="line">            <span class="type">int</span> <span class="variable">val2</span> <span class="operator">=</span> l2 == <span class="literal">null</span>? <span class="number">0</span>:l2.val;</span><br><span class="line">            val = (val1 + val2 + jinWei) % <span class="number">10</span>;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(val);</span><br><span class="line">            jinWei = (val1 + val2 + jinWei) / <span class="number">10</span>;</span><br><span class="line">            preNode.next = node;</span><br><span class="line">            preNode = preNode.next;</span><br><span class="line">            l1 = l1 == <span class="literal">null</span>? l1:l1.next;</span><br><span class="line">            l2 = l2 == <span class="literal">null</span>? l2:l2.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (jinWei != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">ListNode</span> <span class="variable">node</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ListNode</span>(jinWei);</span><br><span class="line">            preNode.next = node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> preHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="同构字符串"><a href="#同构字符串" class="headerlink" title="同构字符串"></a>同构字符串</h2><p>给定两个字符串 <code>s</code> 和 <code>t</code> ，判断它们是否是同构的。</p>
+<p>如果 <code>s</code> 中的字符可以按某种映射关系替换得到 <code>t</code> ，那么这两个字符串是同构的。</p>
+<p>每个出现的字符都应当映射到另一个字符，同时不改变字符的顺序。不同字符不能映射到同一个字符上，相同字符只能映射到同一个字符上，字符可以映射到自己本身。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：s = &quot;egg&quot;, t = &quot;add&quot;</span><br><span class="line">输出：true</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isIsomorphic</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="comment">// 遍历就好，遍历过程中使用map查看映射关系，如果映射关系不对则false</span></span><br><span class="line">        <span class="comment">// 有个问题：不同字符不能映射到同一个字符，比如：aaa和bcb，用一个Set管理map的value</span></span><br><span class="line">        Map&lt;Character, Character&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        Set&lt;Character&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; s.length(); i ++) &#123;</span><br><span class="line">            <span class="type">Character</span> <span class="variable">a</span> <span class="operator">=</span> s.charAt(i);</span><br><span class="line">            <span class="type">Character</span> <span class="variable">b</span> <span class="operator">=</span> t.charAt(i);</span><br><span class="line">            <span class="comment">// map中第一次出现</span></span><br><span class="line">            <span class="keyword">if</span> (!map.containsKey(a)) &#123;</span><br><span class="line">                <span class="comment">// 但是value再set中已经出现，表示之前用过</span></span><br><span class="line">                <span class="keyword">if</span> (set.contains(b)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    map.put(a, b);</span><br><span class="line">                    set.add(b);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 校验是否和已有value一致</span></span><br><span class="line">                <span class="keyword">if</span> (!b.equals(map.get(a))) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -1255,82 +1521,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" class="post-title-link" itemprop="url">那些年背过的面试题之Python</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-08-10 08:30:05" itemprop="dateCreated datePublished" datetime="2025-08-10T08:30:05+08:00">2025-08-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-13 23:01:22" itemprop="dateModified" datetime="2025-08-13T23:01:22+08:00">2025-08-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h2><p>Django 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻击。凭借其完备的生态系统和严谨的设计，Django 非常适合构建数据驱动、安全可靠的中大型 Web 应用，让开发者更专注于业务逻辑的实现。</p>
-<p><strong>使用 Django 开发的步骤</strong>：1. <strong>安装</strong>：<code>pip install django</code>。2. <strong>创建项目</strong>：<code>django-admin startproject mysite</code>，生成项目骨架。3. <strong>创建应用</strong>：<code>python manage.py startapp myapp</code>，Django 鼓励功能模块化。4. <strong>定义模型</strong>：在 <code>models.py</code> 中用 Python 类定义数据结构，Django ORM 映射到数据库。5. <strong>注册应用</strong>：将应用名添加到 <code>settings.py</code> 的 <code>INSTALLED_APPS</code> 中。6. <strong>设计 URL</strong>：在项目和应用中配置 <code>urls.py</code>，将 URL 路由到视图。7. <strong>编写视图</strong>：在 <code>views.py</code> 中处理请求并返回响应（如渲染模板）。8. <strong>创建模板</strong>：在 <code>templates</code> 目录下编写 HTML 模板。9. <strong>迁移数据库</strong>：<code>makemigrations</code> 生成迁移文件，<code>migrate</code> 同步模型到数据库。10. <strong>运行</strong>：<code>python manage.py runserver</code> 启动开发服务器。</p>
-<p><strong>在Docker内运行</strong>：编写 <code>Dockerfile</code> 定义Python环境、安装依赖（包括Django）；创建 <code>docker-compose.yml</code> 配置Web服务和数据库（如PostgreSQL）；将代码复制到镜像；暴露端口（如8000）；使用 <code>docker-compose up</code> 构建并运行容器，Django应用即在隔离环境中启动。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1362,7 +1552,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-12 22:03:10" itemprop="dateModified" datetime="2025-10-12T22:03:10+08:00">2025-10-12</time>
+                <time title="Modified: 2025-10-14 23:17:21" itemprop="dateModified" datetime="2025-10-14T23:17:21+08:00">2025-10-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1633,7 +1823,98 @@
 <li>对CNN、RNN、Transformer的理解：1⃣️CNN卷积神经网络：处理具有网格状拓扑结构如图像的模型，本质上就是拿很多个不同类型的（Channel通道）的放大镜（Convolution卷积核）去目标事物上扫描，从而发现更多的局部特征。逐层深入，选择并强化最重要的特征。通过池化层简化特征集，并选择最显著的特征。经过一系列卷积和池化操作后，CNN 在其最后阶段利用全连接层计算分类预测的概率。2⃣️RNN循环神经网络：处理序列数据的模型，本质就是一个词一个词的投喂给同一模型，从而能更好的发现词和词之间的顺序、关联性等特征，在NLP语言处理的场景上很合适。3⃣️ Transformer：通过mask掩码的机制解决了RNN的串行计算问题，通过注意力机制解决了CNN、RNN只能发现局部特征的限制。前者大大加速了模型的训练效率，后者通过全局视角的注意力机制大大提高了模型在NLP处理的精准度。</li>
 <li>模型参数和超参数：模型参数是在训练数据上学习的变量，例如神经网络中的权重和偏置，它们在学习过程中通过数据不断更新和优化。超参数是在训练开始前设定的，在训练过程中保持不变，包括：学习率、批次大小、迭代次数、神经网络的层数和大小、正则化项强度等。</li>
 </ul>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><ul>
+<li>parquet：一种列式的开源存储格式，用于大规模数据处理和分析，拥有高效的存储和读取性能，支持多种高效压缩算法，广泛应用于大数据生态。相比行式存储，列式存储优点：相同类型的数据存储在一起更容易高效压缩，对于只需要读取部分列的查询可以减少IO。与hadoop、spark、hive等兼容。用pandas就可以读取，df &#x3D; pd.read_parquet(file_path)。</li>
+<li>hugging face是开源社区，ModelScope魔搭是阿里AI模型社区。</li>
+<li>MinHash 是一种高效的算法，用于估计两个集合的相似度（Jaccard 相似度）的高效算法，尤其适用于海量数据处理。Jaccard 相似度 &#x3D; 两个集合交集的大小除以并集的大小。但是当集合非常大时，直接计算交集和并集的成本很高，尤其是当集合数量很多时。MinHash：通过哈希函数将集合压缩成一个固定长度的签名，从而快速估计 Jaccard 相似度。步骤：选择k个哈希函数，对集合中的每个元素应用k个的哈希函数，记录每个哈希函数生成的最小哈希值，构建k长度的签名矩阵，然后通过比较签名矩阵中的签名向量来高效估计各集合之间的相似性。</li>
+<li>ngram：指的是文本中的连续n个项目（如字符、单词）的序列</li>
+<li>语言模型是用来计算一段文本的概率。有统计语言模型和神经网络语言模型，对于实时性要求高的应用，通常会使用统计语言模型。无法往前看所有单词，就看固定数量的单词，假设每个词只和它前 n-1 个词相关，这就是n-gram。n越大，更能体现出句子信息，但是模型参数会指数级增大，一般传统的语音识别中，会经常使用三元语言模型。</li>
+<li>cc：一个包含所有公共网页的大规模数据集，开源的。</li>
+<li>大模型数据工程：采集处理所有风格的研发资产（文本、图像、知识图谱、数据库…），将其形成预训练语料或者指令微调数据集。并针对不同的资产格式或者研发场景任务设计详细的训练数据以及分层知识库。需要确保数据消费的安全性和可追溯性，包括数据集采集、标注、清洗、评估。</li>
+<li>训练数据包括：通用文本：网页，如CommonCrawl，数据量大，使得 LLM 能够获得多样化的语言知识并增强 LLM 的泛化能力；多轮对话文本，如公共对话语料，增强 LLM 的对话能力；书籍。专用文本：多语言文本、科学文本、百科、论文、代码。</li>
+<li>数据预处理流程：采集&#x2F;采购&#x2F;合成的rawdata原始数据，进行解析，清洗（启发式规则、模型质量分筛选、去重、去污、去毒、隐私打码），标准化为processdata，质量评估，ID化（用于将文本分解为词或子词的组合，使机器更好地理解和分析文本），上架上云为Trainabledata。</li>
+<li>数据去噪：优点：提高数据准确性和一致性，减少数据中的干扰因素，提升模型的性能，增强模型泛化能力，提升训练效率。方法：启发式基于规则的数据清洗（例如URL过滤、页面长度过滤、去除特殊字符等）、基于模型的高质量文本筛选（例如使用fastText二进制分类器进行模型打分）。</li>
+<li>数据去毒：优点：毒性过滤旨在去除数据集中不需要的有毒文本（诸如涉黄、涉政、涉赌等敏感信息），减少偏见和歧视性内容，降低模型在实际应用中产生不当输出的风险。方法：对数据进行扫描打标，其中有用到小模型、Bert模型进行识别，也有使用关键字进行识别。</li>
+<li>数据去重：优点：重复数据删除有利于缓解记忆、避免训练-测试重叠、提高训练效率，同时保持模型困惑。有助于平衡模型的记忆和泛化。方法：md5去重、ngram去重，将文本分割成连续的ngram序列来识别和消除重复内容、全局去重等方式，去掉重复数据。DCLM中还用到MinHash算法进行文档级别去重、Bloom过滤器进行文档和段落级别去重。</li>
+<li>数据去污：优点：去除与测试集和打榜数据集重叠的样本。这是为了确保模型在测试阶段能够准确地评估其性能。方法：DCLM中去污包含移除与测试集重叠的训练样本，例如移除DCLM-BASELINE中包含MMLU问题及其选项的文档。</li>
+</ul>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" class="post-title-link" itemprop="url">那些年背过的面试题之Python</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-08-10 08:30:05" itemprop="dateCreated datePublished" datetime="2025-08-10T08:30:05+08:00">2025-08-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-13 23:01:22" itemprop="dateModified" datetime="2025-08-13T23:01:22+08:00">2025-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h2><p>Django 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻击。凭借其完备的生态系统和严谨的设计，Django 非常适合构建数据驱动、安全可靠的中大型 Web 应用，让开发者更专注于业务逻辑的实现。</p>
+<p><strong>使用 Django 开发的步骤</strong>：1. <strong>安装</strong>：<code>pip install django</code>。2. <strong>创建项目</strong>：<code>django-admin startproject mysite</code>，生成项目骨架。3. <strong>创建应用</strong>：<code>python manage.py startapp myapp</code>，Django 鼓励功能模块化。4. <strong>定义模型</strong>：在 <code>models.py</code> 中用 Python 类定义数据结构，Django ORM 映射到数据库。5. <strong>注册应用</strong>：将应用名添加到 <code>settings.py</code> 的 <code>INSTALLED_APPS</code> 中。6. <strong>设计 URL</strong>：在项目和应用中配置 <code>urls.py</code>，将 URL 路由到视图。7. <strong>编写视图</strong>：在 <code>views.py</code> 中处理请求并返回响应（如渲染模板）。8. <strong>创建模板</strong>：在 <code>templates</code> 目录下编写 HTML 模板。9. <strong>迁移数据库</strong>：<code>makemigrations</code> 生成迁移文件，<code>migrate</code> 同步模型到数据库。10. <strong>运行</strong>：<code>python manage.py runserver</code> 启动开发服务器。</p>
+<p><strong>在Docker内运行</strong>：编写 <code>Dockerfile</code> 定义Python环境、安装依赖（包括Django）；创建 <code>docker-compose.yml</code> 配置Web服务和数据库（如PostgreSQL）；将代码复制到镜像；暴露端口（如8000）；使用 <code>docker-compose up</code> 构建并运行容器，Django应用即在隔离环境中启动。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
       
     </div>
 
@@ -1775,259 +2056,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/" class="post-title-link" itemprop="url">那些年背过的面试题之java2025</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-07-27 19:18:28" itemprop="dateCreated datePublished" datetime="2025-07-27T19:18:28+08:00">2025-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-08-10 23:28:30" itemprop="dateModified" datetime="2025-08-10T23:28:30+08:00">2025-08-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Reactor响应式编程和Reactor线程模型"><a href="#Reactor响应式编程和Reactor线程模型" class="headerlink" title="Reactor响应式编程和Reactor线程模型"></a>Reactor响应式编程和Reactor线程模型</h2><p>Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。</p>
-<p><strong>特点</strong>：<br>非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。<br>背压支持：允许消费者控制生产者的速率，防止资源过载。<br>高效性：适合高并发场景，能够更好地利用系统资源。<br>函数式风格：提供丰富的操作符，可以通过链式调用对数据流进行转换和处理。</p>
-<p><strong>适用场景</strong>：响应式系统（如 Spring WebFlux）、数据流处理（如实时日志分析、事件流处理）。</p>
-<p>Reactor 提供了<strong>两个核心类</strong>：<br>Flux：表示可以发射 0到N个元素 的异步数据流。<br>Mono：表示可以发射 0或1个元素 的异步数据流。<br>Flux 是 Reactor 中的一个核心类，用于表示可以发射多个元素的异步数据流。发射 0到N个元素，并最终以完成或错误信号结束。Flux 提供了丰富的操作符，可以轻松地对数据流进行转换、过滤、合并和错误处理。<br>——————————————————————<br>Reactor线程模型：一种经典的IO多路复用设计模式，用于高效处理大量并发连接。核心思想是通过一个或多个线程监听 I&#x2F;O 事件（如读写就绪），并将这些事件分发给相应的处理器进行处理。</p>
-<p><strong>特点</strong>：<br>事件驱动：通过监听 I&#x2F;O 事件（如 select、poll 或 epoll）来避免阻塞等待。<br>单线程或多线程模型：单线程 Reactor 模型：所有事件由一个线程处理。多线程 Reactor 模型：使用多个线程来处理事件，适合高并发场景。<br>非阻塞 I&#x2F;O：避免因等待 I&#x2F;O 操作完成而阻塞线程，从而提高吞吐量。</p>
-<p><strong>典型实现</strong>：Java NIO、Netty 等框架基于 Reactor 模型构建。</p>
-<p><strong>核心组件</strong>：<br>Acceptor：负责接收新的连接请求，并将其注册到事件监听器中。<br>Dispatcher：负责监听 I&#x2F;O 事件并分发给对应的处理器。<br>Handler：处理具体的业务逻辑。</p>
-<p><strong>适用场景</strong>：高并发网络服务（如 Web 服务器、消息队列等）、需要高效处理大量短连接或长连接的场景。<br>——————————————————————<br>Project Reactor和Reactor线程模型的联系：<br>**Project Reactor 提供了更高层次的抽象，专注于业务逻辑的响应式处理，而 Reactor线程模型则更关注底层 I&#x2F;O 事件的分发，处理网络层IO。**都是非阻塞的，都是事件驱动的。</p>
-<h2 id="record关键字"><a href="#record关键字" class="headerlink" title="record关键字"></a>record关键字</h2><p>record：一种用于<strong>定义不可变数据载体类</strong>的特殊类形式，是 Java 14 引入的一个关键字，正式在 Java 16 标准化。</p>
-<p>record 是<strong>一种简化数据类的语法，目的是存储数据而不对这些数据进行复杂的操作或修改的场景。自动生成了包括构造函数，getter、toString、equals、hashCode 等方法。</strong></p>
-<p>它是一种不可变（Immutable）的类，所有字段都是 final，创建后状态不能更改。</p>
-<p><strong>用法</strong>：<br>1、作为独立的类文件<br><code>public record Film(String name, String desc) &#123;&#125;</code></p>
-<p>2、嵌套在其他类中，类似静态内部类<br><code>public static record Film</code></p>
-<p>3、方法内部<br>从 Java 16 开始，record 可以被定义为局部类（即在方法内部定义）。这种用法适合<strong>仅在某个方法中使用的临时数据结构</strong>。直接record Film</p>
-<p>PS：静态内部类和非静态内部类：静态内部类不依赖于外部类的实例，可以直接通过外部类名访问。只能访问外部类的静态成员。非静态内部类依赖于外部类的实例，必须通过外部类的实例来创建。可以访问外部类的所有成员，因为内部类持有一个对外部类实例的隐式引用。</p>
-<h2 id="线上redis机器爆了，如何优化"><a href="#线上redis机器爆了，如何优化" class="headerlink" title="线上redis机器爆了，如何优化"></a>线上redis机器爆了，如何优化</h2><p>如果在生产环境中发现 Redis 出现异常，比如内存爆了或者响应变慢，首先通过 Redis 的 INFO 命令（<strong>redis-cli info</strong>）和监控平台查看当前的资源使用情况，确认是<strong>内存、CPU、连接数还是某个慢查询</strong>引起的。</p>
-<p>如果是** Big Key **（存储的数据体积很大，如一个Hash包含上万个字段）或者热 Key 造成的，我会进行数据结构优化、拆分 Key、引入本地缓存；如果是连接数过高，我会检查连接池配置，适当增加连接池大小或引入连接复用。</p>
-<p>如果是 QPS 过高导致 Redis 成为瓶颈，我会考虑引入<strong>Redis 集群、读写分离、或者对热点数据进行缓存</strong>。</p>
-<p>此外，我也会加强缓存的<strong>失效策略</strong>、防止缓存穿透和击穿，并结合布隆过滤器等手段保护后端数据库。</p>
-<h2 id="spring声明式事务-Transactional"><a href="#spring声明式事务-Transactional" class="headerlink" title="spring声明式事务@Transactional"></a>spring声明式事务@Transactional</h2><p>在Spring中事务管理的方式有两种，编程式事务和声明式事务。编程式事务将业务代码和事务代码耦合到一块，当发生异常的时候还得需要手动回滚事务，不优雅。</p>
-<p>声明式事务：<strong>基于AOP，设置好切点，当我们调用事务方法时，会调用到生成的代理对象，代理对象中加入了事务提交和回滚的逻辑。当方法执行成功时提交事务，当方法发生异常时回滚事务。</strong></p>
-<p>@Transactional可以用在类，方法，接口上：</p>
-<ol>
-<li>用在类上，该类的所有public方法都具有事务</li>
-<li>用在方法上，方法具有事务。当类和方法同时配置事务的时候，方法的属性会覆盖类的属性</li>
-<li>用在接口上，一般不建议这样使用，因为只有基于接口的代理会生效，如果Spring AOP使用cglib来实现动态代理，会导致事务失效（因为注解不能被继承）</li>
-</ol>
-<p><strong>@Transactional失效的场景</strong></p>
-<ol>
-<li>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</li>
-<li>自调用，因为@Transactional是基于动态代理实现的，自调用时，方法执行不会经过代理对象</li>
-<li>异常在代码中被你自己try catch了，不抛异常进入不了回滚的逻辑</li>
-<li>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常，如果抛出任何异常都回滚，可以配置rollbackFor为Exception</li>
-<li>事务传播配置不符合业务逻辑</li>
-</ol>
-<p><strong>为什么只有public方法上的@Transactional注解才会生效？</strong></p>
-<p>首先JDK动态代理肯定只能是public，因为接口的权限修饰符只能是public。cglib代理的方式是可以代理protected方法的（private不行，子类访问不了父类的private方法）如果支持protected，可能会造成当切换代理的实现方式时表现不同，增大出现bug的可能性，所以统一一下。</p>
-<p>Transactional的事务传播行为默认为Propagation.REQUIRED。<strong>「如果当前存在事务，则加入该事务。如果当前没有事务，则创建一个新的事务」</strong></p>
-<p>Propagation.REQUIRES_NEW**「创建一个新事务，如果当前存在事务，则把当前事务挂起」**</p>
-<h2 id="HashMap和HashTable的区别"><a href="#HashMap和HashTable的区别" class="headerlink" title="HashMap和HashTable的区别"></a>HashMap和HashTable的区别</h2><ul>
-<li><p><strong>继承类不同</strong>：HashTable继承Dictionary类，HashMap继承AbstractMap类</p>
-</li>
-<li><p><strong>线程安全级别不同</strong>：HashTable是线程安全的类，每个public方法都有Synchronized修饰，HashMap不是线程安全的</p>
-</li>
-<li><p><strong>是否允许null的要求不同</strong>：HashTable：key不允许为null，value不允许为null。HashMap：key允许为null，value允许为null。</p>
-</li>
-<li><p><strong>底层数据结构不同</strong>：在JDK1.8以后，HashMap的底层数据结构改成了数组+链表+红黑树的实现，在链表的节点大于TREEIFY_THRESHOLD&#x3D;8时，链表转为红黑树，在树节点小于UNTREEIFY_THRESHOLD&#x3D;6时，红黑树转变为链表。（之所以有8和6两个阈值是为了避免某个链表在临界点频繁插入删除，导致转换频繁降低性能）。而Hashtable的底层实现就是数组+链表，而没有红黑树，因此各种操作都要简单很多。</p>
-</li>
-<li><p><strong>容量和扩容不同</strong>：Hashtable的容量是直接使用用户输入的容量initialCapacity。HashMap在用户输入的基础上，强制将容量转换为大于输入容量的最小2的幂次方数值。扩容方面，<code>HashMap</code> 自动扩容为 2 的幂，利于位运算提升性能，而 <code>Hashtable</code> 扩容为原容量的 2 倍加 1。</p>
-</li>
-<li><p><strong>索引计算上</strong>，<code>HashMap</code> 使用 <code>hash &amp; (length - 1)</code>，比 <code>Hashtable</code> 的取模运算更高效。</p>
-</li>
-<li><p><code>HashMap</code> 的迭代器为 fail-fast 类型，当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出并行修改异常，但迭代器本身的remove()方法移除元素则不会抛出。而 <code>Hashtable</code> 的 <code>Enumerator</code> 不是。</p>
-</li>
-</ul>
-<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><p>零拷贝（Zero-Copy）是一种高效的I&#x2F;O操作技术，旨在<strong>减少数据在内核空间与用户空间之间不必要的复制</strong>，从而提升数据传输性能。传统I&#x2F;O操作中，数据通常需从磁盘读取到内核缓冲区，再复制到用户缓冲区，处理后再写回内核缓冲区并发送到网络，涉及多次上下文切换和数据拷贝。零拷贝通过系统调用（如Linux的<code>sendfile</code>、<code>splice</code>或<code>mmap</code>），让<strong>数据直接在内核内部从文件系统缓冲区传输到网络协议栈</strong>，避免了用户空间的中转。这不仅<strong>减少了CPU的拷贝开销，也降低了上下文切换次数</strong>，显著提高了大文件传输、网络服务等场景的效率，是高性能系统设计中的关键技术。</p>
-<p>例如Netty：使用堆外直接内存进行Socket读写，不需要进行字节缓冲区的二次拷贝，避免了 JVM 堆内存与系统内存之间的数据拷贝。Netty的Zero-copy完全是在用户态（Java应用层）的，偏向于优化数据操作。OS层面的Zero-copy通常是避免在用户态和内核态之间的拷贝数据。</p>
-<p>例如RocketMQ：在消息存储与传输过程中，RocketMQ 利用零拷贝技术优化消息的发送性能。当消费者拉取消息时，通过 <code>mmap</code> 将消息文件映射到内存，或使用 <code>transferTo</code> 调用实现数据从文件通道直接传输到网络通道，避免内核与用户空间的多次拷贝。这不仅减少了内存占用，也加快了消息传输速度，支持高吞吐量的消息处理。</p>
-<h2 id="Redis字典的实现方式和冲突处理"><a href="#Redis字典的实现方式和冲突处理" class="headerlink" title="Redis字典的实现方式和冲突处理"></a>Redis字典的实现方式和冲突处理</h2><p>Redis字典基于哈希表实现，其核心结构是一个数组，每个元素是指向<code>dictEntry</code>链表的指针。每个<code>dictEntry</code>存储键值对及下一个节点的指针，通过**链地址法（拉链法）**处理哈希冲突：当多个键映射到同一槽位时，它们被链接在同一链表中。</p>
-<p>Redis使用MurmurHash2算法计算键的哈希值，再通过<code>hash &amp; (size-1)</code>确定索引位置，确保分布均匀。</p>
-<p>为应对数据增长，Redis支持动态扩容与缩容。当负载因子过高（如超过1）或过低时，会触发rehash。Redis采用<strong>渐进式rehash</strong>机制：分配新哈希表，每次访问字典时顺带迁移部分数据，直至全部完成。这避免了集中迁移带来的性能阻塞。也就是说，Redis字典内部维护两个哈希表（ht[0]和ht[1]），在rehash期间两者并存，查找、删除操作会兼顾访问两个表，确保数据一致性。插入操作仅作用于ht[1]。rehash完成后，ht[1]成为主表，ht[0]被清空。 </p>
-<p>此外，Redis在哈希表扩容时，新表大小为大于当前容量的最小2的幂，确保位运算高效定位。</p>
-<h2 id="介绍MVC机制"><a href="#介绍MVC机制" class="headerlink" title="介绍MVC机制"></a>介绍MVC机制</h2><p>MVC（Model-View-Controller，模型-视图-控制器）是一种软件架构模式，用于分离应用程序的逻辑与界面。</p>
-<p>模型（Model）代表数据和业务逻辑，处理核心的数据管理和规则定义，并在数据发生变化时通知视图（View）。</p>
-<p>视图（View）负责展示信息给用户，它从模型获取数据显示给用户，但不直接与模型交互，而是通过控制器（Controller）。</p>
-<p>控制器接收用户的输入，解释这些输入并将它们转换为对模型或视图的操作命令，如更新数据或请求视图刷新。</p>
-<p>这种分离使得代码更加模块化、易于维护和扩展，特别适合于开发复杂用户界面的应用程序，同时提高了灵活性和可重用性。MVC广泛应用于Web应用框架中，如Django（<strong>一个高级的Python Web框架，遵循模型-模板-视图（Model-Template-View, MTV）架构模式，模型（Model）定义数据结构；模板（Template）控制页面展示逻辑；视图（View）则是业务逻辑层，决定了哪些数据被呈现。</strong>）、Ruby on Rails等。</p>
-<h2 id="Flink和Spark的区别"><a href="#Flink和Spark的区别" class="headerlink" title="Flink和Spark的区别"></a>Flink和Spark的区别</h2><p>Apache Flink 和 Apache Spark 都是分布式计算框架，Flink流处理，Spark批处理。</p>
-<p>处理模型</p>
-<ul>
-<li><strong>Flink</strong> 主要支持流处理，并以流处理为基础扩展到批处理。这意味着它首先被设计用于实时数据处理，能够提供低延迟的数据处理能力，适用于需要即时响应的应用场景。</li>
-<li><strong>Spark</strong> 最初是作为一个批处理框架而设计的，后来通过Spark Streaming增加了对流处理的支持。Spark Streaming采用微批处理的方式（mini-batch），即把流数据按时间窗口分割成一系列小批次来处理，这使得它的延迟比Flink稍高一些。</li>
-</ul>
-<p>吞吐量</p>
-<p>关于吞吐量，两者都有很高的处理效率，但在不同场景下表现各异：</p>
-<ul>
-<li><strong>Flink</strong> 由于其原生的流处理架构，在处理持续不断的数据流时具有更高的吞吐量和更低的延迟。对于要求严格实时性的应用，比如欺诈检测、在线推荐系统等，Flink通常是更好的选择。</li>
-<li><strong>Spark</strong> 在批处理任务上表现出色，尤其是在处理大规模静态数据集时。尽管Spark Streaming可以通过增加批次大小来提高吞吐量，但这样做会增加处理延迟。因此，对于那些可以容忍一定延迟的大规模数据分析任务，Spark可能更为合适。</li>
-</ul>
-<h2 id="介绍JVM"><a href="#介绍JVM" class="headerlink" title="介绍JVM"></a>介绍JVM</h2><p>JVM（Java虚拟机）是运行Java应用程序的虚拟机，它使得Java程序具有“一次编写，到处运行”的能力。JVM的主要任务是将编写的Java字节码（.class文件）转换成本地计算机的机器码并执行。通过提供一个跨平台的运行环境，JVM隐藏了底层操作系统的差异，确保了Java程序可以在任何安装有相应JVM的设备上运行。</p>
-<p>JVM包含类加载器、运行时数据区（包括方法区、堆、栈等）、执行引擎等关键组件。类加载器负责加载程序所需的类文件；运行时数据区为程序执行提供内存空间；执行引擎则负责解释或即时编译字节码为机器码执行。此外，JVM还包含了垃圾回收机制，自动管理内存，释放不再使用的对象所占用的空间。JVM不仅支持Java语言，还支持其他可以编译成Java字节码的语言，如Kotlin和Scala。</p>
-<h2 id="JVM调优经验"><a href="#JVM调优经验" class="headerlink" title="JVM调优经验"></a>JVM调优经验</h2><p>主要目标是优化内存使用、减少GC停顿时间以及提高系统吞吐量。</p>
-<ol>
-<li><strong>合理设置堆大小</strong>：根据应用的实际需求和服务器资源，合理配置<code>-Xms</code>（初始堆大小）和<code>-Xmx</code>（最大堆大小），避免频繁的GC。通常建议将初始堆和最大堆设置为相同值，以减少动态扩展带来的开销。16G机器设置12G。</li>
-<li><strong>选择合适的垃圾回收器</strong>：<ul>
-<li>对于低延迟要求的应用，可以选择G1或ZGC等低延迟回收器。</li>
-<li>对于高吞吐量要求的批处理任务，可以使用CMS并发清除。</li>
-</ul>
-</li>
-<li><strong>监控与分析GC日志</strong>：通过启用GC日志，结合工具如<code>GCViewer</code>或<code>GCEasy</code>分析GC行为，识别是否存在频繁的Full GC或长时间的停顿。jstat监控GC。</li>
-<li><strong>优化新生代比例</strong>：通过<code>-XX:NewRatio</code>和<code>-XX:SurvivorRatio</code>调整新生代与老年代的比例，确保大多数对象在Minor GC中被回收，减少晋升到老年代的对象数量。</li>
-<li><strong>合理使用元空间</strong>：JDK 8以后，永久代被元空间取代，使用本地内存存储类信息。可通过<code>-XX:MetaspaceSize</code>和<code>-XX:MaxMetaspaceSize</code>控制其大小，防止因加载过多类导致内存溢出。</li>
-<li><strong>线程栈大小调整</strong>：对于线程数较多的应用，适当减小<code>-Xss</code>（线程栈大小）可节省内存，但需确保不会导致栈溢出。</li>
-</ol>
-<h2 id="JVM的堆分为哪几部分"><a href="#JVM的堆分为哪几部分" class="headerlink" title="JVM的堆分为哪几部分"></a>JVM的堆分为哪几部分</h2><p>JVM的堆是内存管理的核心区域，用于存放对象实例，主要分为三部分：</p>
-<ol>
-<li><strong>新生代（Young Generation）</strong>：新创建的对象首先分配在此。它又分为Eden区、From Survivor区和To Survivor区。大多数对象在Eden区分配，经过几次垃圾回收后仍存活的对象将被移到Survivor区。</li>
-<li><strong>老年代（Old Generation）</strong>：存放从新生代晋升过来的长期存活对象。当对象经历多次GC未被回收，或占用空间较大时，会被移入老年代。</li>
-<li><strong>永久代&#x2F;元空间（PermGen&#x2F;Metaspace）</strong>：方法区，JDK 8之前为永久代，用于存储类信息、常量、静态变量等；JDK 8及以后改为元空间，使用本地内存管理，避免了永久代的内存溢出问题。</li>
-</ol>
-<p>堆由垃圾回收器统一管理，是GC的主要区域。</p>
-<h2 id="数据仓库和传统数据库有什么区别"><a href="#数据仓库和传统数据库有什么区别" class="headerlink" title="数据仓库和传统数据库有什么区别"></a>数据仓库和传统数据库有什么区别</h2><p>用途：传统数据库主要用于OLTP（on-line transaction processing）翻译为联机事务处理，即即时的系统交互，数据仓库主要用于OLAP（On-Line Analytical Processing）翻译为联机分析处理，从字面上来看OLTP是做事务处理，OLAP是做分析处理。从对数据库操作来看，OLTP主要是对数据的增删改，OLAP是对数据的查询。</p>
-<p>建模：传统数据库主要使用范式建模，数据仓库可以根据需要采用范式建模或者现在互联网普遍使用的星形模型等。</p>
-<p>使用技术：传统数据库一般使用mysql等关系型数据库，数据仓库目前互联网行业更多的是使用hadoop等大数据技术，也有使用mysql等，可以根据实际情况搭建。 </p>
-<p>存储的数据：传统数据库只存储当前状态的数据，数据仓库需要存储历史状态的数据，用户对历史数据的回溯分析。  </p>
-<p>ODPS设计用于大规模数据存储、处理和分析，支持包括批处理、流计算、交互式查询在内的多种计算模式，更接近于数仓。</p>
-<h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO多路复用是一种允许单个进程监视多个文件描述符的技术，使得系统在单线程的情况下可以同时处理多个客户端请求。一旦某个描述符就绪（通常是读就绪或写就绪），就能进行相应的IO系统调用。其核心机制依赖于操作系统提供的系统调用，如select、poll和epoll（Linux）。通过这些调用，程序可以一次性监听多个socket或其他IO资源的状态，避免了为每个连接创建独立线程或进程的开销。</p>
-<p>epoll相对于select的改进：</p>
-<p>1.select单进程打开的最大的fd是有限制的，默认是1024个，对于需要支持上万TCP连接的服务器来说太少。epoll没有这个限制，支持的最大fd上限是操作系统最大文件句柄数。1G内存的机器大约是10万个句柄。</p>
-<p>2.IO效率不会随着FD增加而线性下降。select和poll缺点是当有很大的socket集合时，任意时刻只有少部分的socket是活跃的，select和poll每次调用都会扫描全部集合，导致效率下降。epoll以空间换时间，更高效的事件通知机制。</p>
-<p>3.epoll通过mmap（内存映射）技术将内核空间中的事件就绪列表映射到用户空间，从而让应用程序可以直接访问这个列表，减少了内核与用户空间之间的数据复制和上下文切换的开销，加速了消息传递过程。这种方式提高了处理大量并发连接时的效率和性能。</p>
-<h2 id="Java和Python的区别"><a href="#Java和Python的区别" class="headerlink" title="Java和Python的区别"></a>Java和Python的区别</h2><p><strong>语法与开发效率</strong>：Python 语法简洁直观，适合快速开发；Java 语法较严谨，代码量通常更多。</p>
-<p><strong>类型系统</strong>：Python 是动态类型语言，变量类型在运行时确定；Java 是静态类型语言，需在编译时声明类型，类型安全更强。</p>
-<p><strong>执行方式</strong>：Python 是解释型语言，通过解释器执行；Java 是编译型语言，先编译成字节码，再由 JVM 解释或 JIT 编译执行。</p>
-<p><strong>性能</strong>：Java 通常性能更高，得益于 JVM 的优化；Python 在计算密集型任务中相对较慢。</p>
-<p><strong>应用场景</strong>：Java 常用于大型企业级应用、Android 开发；Python 广泛应用于数据科学、AI、脚本和Web开发。</p>
-<h2 id="Seata分布式事务解决方案"><a href="#Seata分布式事务解决方案" class="headerlink" title="Seata分布式事务解决方案"></a>Seata分布式事务解决方案</h2><p>Seata是蚂蚁金服和阿里巴巴共同开源的分布式事务解决方案。致力于提供高性能和简单易用的分布式事务服务，为用户打造一站式的分布式解决方案。</p>
-<p><strong>分布式事务</strong>：是指在分布式系统中，一次操作需要跨多个节点、服务或数据库协调完成，要求这些操作要么全部成功，要么全部失败，以保证数据的一致性。</p>
-<p>其中三个重要角色： <strong>TC</strong> **事务协调者：**维护全局和分支事务的状态，协调全局事务提交或回滚。  **TM ** **事务管理器：**定义全局事务的范围、开始全局事务、提交或回滚全局事务。  **RM ** **资源管理器：**管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</p>
-<p>四种不同的分布式事务解决方案：</p>
-<ul>
-<li>XA模式：强一致性分阶段事务模式，牺牲了一定的可用性，无业务侵入 </li>
-<li>TCC模式：最终一致的分阶段事务模式，通过业务层面定义尝试、确认和取消操作，实现灵活的补偿型事务。（柔性事务）</li>
-<li>AT模式：最终一致的分阶段事务模式，无业务侵入，也是Seata的默认模式 </li>
-<li>SAGA模式：将长事务拆分为多个本地事务，每个步骤执行后记录状态，出错时通过补偿操作回滚前面已完成的步骤。（柔性事务）</li>
-</ul>
-<h2 id="Redis实现防超卖"><a href="#Redis实现防超卖" class="headerlink" title="Redis实现防超卖"></a>Redis实现防超卖</h2><p>使用Redis可以有效地管理库存并保证数据一致性。</p>
-<p>一种常见的做法是利用Redis的<code>WATCH</code>机制结合事务来确保库存扣减操作的原子性和一致性。首先，将商品库存存储在Redis中。当有购买请求时，客户端先通过<code>WATCH</code>命令监控库存键的状态。然后，在事务中尝试执行库存检查和扣减操作（如<code>DECR</code>）。如果在这期间没有其他客户端修改该库存键，则<code>EXEC</code>命令会成功执行事务；如果有其他客户端在此期间修改了库存值，则当前事务会被放弃，需要重新尝试整个过程。</p>
-<p><strong>为什么只用INCR&#x2F;DECR不行</strong>：虽然Redis的<code>INCR</code>和<code>DECR</code>命令本身是原子性的，可以直接用于增加或减少数值，但在并发环境下仅依赖这些命令无法完全避免超卖问题。这是因为：</p>
-<ul>
-<li><strong>缺乏前置条件判断</strong>：直接使用<code>DECR</code>可能会导致库存变为负数，即超过实际库存数量的商品被卖出。</li>
-<li><strong>无回滚机制</strong>：一旦后续业务逻辑失败（例如订单创建失败），无法自动恢复已扣减的库存，造成数据不一致。</li>
-</ul>
-<p><strong>使用WATCH和事务：</strong></p>
-<ul>
-<li><strong>确保数据一致性</strong>：通过<code>WATCH</code>监控关键资源，在并发情况下只有在资源未被其他进程修改的前提下才执行事务，保证了多个步骤作为一个整体执行，避免了竞态条件。</li>
-<li><strong>提供乐观锁功能</strong>：<code>WATCH</code>机制是一种实现乐观锁的方式。它允许客户端在执行事务前监视一个或多个键，如果在事务执行前这些键被其他客户端修改过，则事务将失败不会执行任何操作。这种机制非常适合读多写少的场景。一种无锁机制来解决并发问题。</li>
-</ul>
-<h2 id="高并发项目中的限流和熔断"><a href="#高并发项目中的限流和熔断" class="headerlink" title="高并发项目中的限流和熔断"></a>高并发项目中的限流和熔断</h2><p><strong>限流</strong>：目的是控制请求量，防止系统过载。常用算法包括令牌桶和漏桶算法。通过设定速率阈值，如每秒处理请求数（RPS），超过限制的请求将被拒绝或排队。例如，使用Guava的RateLimiter类实现平滑限流。阿里巴巴的Sentinel，实现对特定资源的精准限流，确保系统在高并发场景下的稳定性和可靠性。</p>
-<p><strong>熔断</strong>：用于避免故障扩散。当服务调用失败率超过阈值时（如50%请求失败），启动熔断器，快速失败而不是尝试执行可能耗时的操作。一段时间后，允许部分请求通过进行试探性恢复。Hystrix是一个流行的熔断库，它提供了开箱即用的熔断、降级等功能。</p>
-<h2 id="优化多节点流程编排，优化工作流引擎性能"><a href="#优化多节点流程编排，优化工作流引擎性能" class="headerlink" title="优化多节点流程编排，优化工作流引擎性能"></a>优化多节点流程编排，优化工作流引擎性能</h2><p><strong>多节点流程编排优化：</strong></p>
-<ol>
-<li><strong>并行执行</strong>：识别可以并行处理的任务，通过合理的任务调度机制（如DAG调度）最大化并发度，减少整体执行时间。</li>
-<li><strong>减少节点间通信开销</strong>：尽量减少跨节点的数据传输量，使用高效的序列化&#x2F;反序列化格式（如Protocol Buffers或Avro），并对数据进行压缩。</li>
-<li><strong>智能路由与负载均衡</strong>：根据各节点当前的负载情况动态分配任务，避免某些节点过载而其他节点闲置。</li>
-<li><strong>缓存中间结果</strong>：对于重复计算的部分，可以在适当的位置增加缓存机制，存储中间结果以供后续步骤直接使用。</li>
-<li><strong>重试机制</strong>：为可能失败的操作设置合理的重试策略，包括指数退避算法等，以提高系统的容错能力。</li>
-</ol>
-<p><strong>工作流引擎性能优化：</strong></p>
-<ol>
-<li><strong>异步处理</strong>：尽可能采用异步调用代替同步等待，降低请求间的耦合度，加快响应速度。</li>
-<li><strong>数据库优化</strong>：使用索引加速查询。对于频繁读写的表，考虑分库分表策略。</li>
-<li><strong>批处理</strong>：对于大批量的数据操作，应采用批量提交而非逐条处理的方式，减少IO次数。</li>
-<li><strong>资源池管理</strong>：有效管理连接池、线程池等资源，防止因资源耗尽导致的服务不可用。</li>
-</ol>
-<h2 id="双写一致性问题"><a href="#双写一致性问题" class="headerlink" title="双写一致性问题"></a>双写一致性问题</h2><p>双写一致性问题主要出现在使用缓存与数据库共同存储数据的场景中，两个独立的数据存储系统，在并发更新时难以保证操作的原子性和顺序性。当应用同时写入缓存和数据库时，由于网络延迟、系统故障或并发读写，可能导致两者数据不一致。</p>
-<p>例如，如果<strong>先更新数据库再更新缓存</strong>，在这期间若有其他请求读取了旧的缓存数据，则会导致短暂的数据不一致。缓存更新失败也会导致不一致。同样，若<strong>先更新缓存再更新数据库</strong>，而此时数据库更新失败或出现网络问题，也会造成缓存与数据库数据的差异。此外，并发操作加剧了这一问题，多个客户端可能同时对同一数据进行读写操作，如果没有适当的同步机制，很容易导致部分客户端读取到未更新或错误的数据版本。<strong>先删缓存再更新数据库</strong>存在并发窗口期，可能使旧数据重新加载进缓存。</p>
-<p><strong>如何解决</strong>：</p>
-<p><strong>先更新数据库，再删除缓存</strong>，结合延迟双删或消息队列异步补偿，确保最终一致。</p>
-<ol>
-<li><strong>先更新数据库，后删除缓存</strong>：最常用。当需要更新数据时，首先更新数据库，然后立即删除对应的缓存项。下次查询时会从数据库加载最新数据到缓存中。在更新数据库之后和删除缓存之前，有短暂的不一致窗口。但是降低了因并发引起的复杂性和潜在的数据不一致风险。</li>
-<li><strong>延迟双删策略</strong>：在更新数据库之后，不仅立即删除缓存，还会设置一个小延迟（如50ms），再次删除同一缓存项。因为当一个线程正在更新数据库并删除缓存时，另一个并发线程可能已经从旧缓存中读取了数据，并在更新操作完成之前将其重新写入缓存，导致缓存中的数据比数据库还旧，这是缓存重建行为。</li>
-<li><strong>消息队列同步</strong>：利用消息队列确保操作顺序执行。将所有对数据库的修改通过消息队列进行异步处理，确保每个操作按序到达并更新缓存和数据库，适用于对一致性要求较高的场景。</li>
-<li><strong>使用分布式事务或Saga模式</strong>：对于复杂的业务逻辑，可以采用分布式事务或者Saga模式来管理跨服务的数据一致性，但这通常增加了系统的复杂度。</li>
-</ol>
-<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>CAP理论帮助开发者理解分布式系统的取舍。CAP理论指出，在分布式系统中，<strong>一致性（Consistency）</strong>、<strong>可用性（Availability）</strong> 和 <strong>分区容错性（Partition tolerance）</strong> 三者不可兼得，最多只能同时满足其中两项。</p>
-<ul>
-<li><strong>一致性</strong>：所有节点在同一时间看到的数据是相同的。</li>
-<li><strong>可用性</strong>：每个请求都能在合理时间内收到成功或失败的响应，不保证数据最新。</li>
-<li><strong>分区容错性</strong>：系统在部分节点间通信中断（网络分区）时仍能继续运行。</li>
-</ul>
-<p>由于网络故障难以避免，分区容错性通常是必须保证的。因此，系统设计通常在 <strong>CP（如ZooKeeper）</strong> 和 <strong>AP（缓存系统，一般会追求AP可用，并通过一些手段尽可能保证弱一致性和最终一致性）</strong> 之间权衡：CP系统在分区发生时保证数据一致但可能拒绝服务；AP系统保持可用，但允许数据暂时不一致。</p>
-<h2 id="RocketMQ事务消息"><a href="#RocketMQ事务消息" class="headerlink" title="RocketMQ事务消息"></a>RocketMQ事务消息</h2><p>可以利用事务消息轻松地实现分布式事务，采用2PC的思想来实现提交事务消息，同时增加一个补偿逻辑来处理二阶段超时或者失败的消息。</p>
-<p>RocketMQ实现事务消息主要分为两个阶段：正常事务的发送及提交、事务信息的补偿流程 整体流程为：</p>
-<ul>
-<li>正常事务发送与提交阶段：1、生产者发送一个半消息给MQServer（半消息是指消费者暂时不能消费的消息） 2、服务端响应消息写入结果，半消息发送成功 3、生产者开始执行本地事务 4、执行完本地事务后再告诉MQServer本地事务的执行状态，确认消息究竟是Commit还是Rollback</li>
-<li>事务信息的补偿流程 1、如果MQServer长时间没收到本地事务的执行状态，会向生产者发起一个确认回查的操作请求 2、生产者收到确认回查请求后，检查本地事务的执行状态 3、MQServer根据检查后的结果执行Commit或者Rollback操作。补偿阶段主要是用于解决生产者在发送Commit或者Rollback操作时发生超时或失败的情况。</li>
-</ul>
-<p>例如场景：用户请求订单微服务 <code>order-service</code> 接口删除订单（退货），删除订单后需要发送消息给用户服务<code>account-service</code>，用户微服务收到消息后会给用户账户增加余额。这个需求跟钱相关，肯定要保证消息的事务性。</p>
-<p>事务消息相对普通消息最大的特点就是一阶段发送的消息对用户是不可见的，也就是说消费者不能直接消费。实现方法是改变主题。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2098,7 +2126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

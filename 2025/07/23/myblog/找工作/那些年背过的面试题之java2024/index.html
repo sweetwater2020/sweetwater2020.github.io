@@ -28,7 +28,7 @@
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-10-06T09:38:28.643Z">
+<meta property="article:modified_time" content="2025-10-19T08:12:38.121Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-06 17:38:28" itemprop="dateModified" datetime="2025-10-06T17:38:28+08:00">2025-10-06</time>
+                <time title="Modified: 2025-10-19 16:12:38" itemprop="dateModified" datetime="2025-10-19T16:12:38+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,12 +262,23 @@
 <p>JDK 11：引入ZGC（低延迟垃圾回收器）、支持运行单文件源码（java Hello.java）、String新增trim、isBlank等方法。</p>
 <p>JDK 17：密封类（sealed classes，限制继承）、switch模式匹配（预览）、废弃安全管理器。</p>
 <p>JDK 21（LTS）：虚拟线程（Virtual Threads，提升并发性能）、结构化并发（预览）、switch模式匹配正式发布。</p>
+<ul>
+<li>接口和抽象类：抽象类是单继承，接口多实现。都用于实现抽象和多态。接口定义行为规范，所有方法默认为抽象，支持多继承，适合定义功能契约；Java 8起可含默认方法。抽象类用于代码复用，可包含抽象方法和具体实现，只能单继承，适合具有“is-a”关系的类层次设计。选择接口更利于解耦，选择抽象类则便于共享代码。</li>
+</ul>
 <h2 id="锁、并发编程"><a href="#锁、并发编程" class="headerlink" title="锁、并发编程"></a>锁、并发编程</h2><ul>
 <li><p>java有哪些锁：内置锁synchronized、重入锁ReentrantLock、读写锁ReadWriteLock、条件锁Condition</p>
 </li>
 <li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
 </li>
+<li><p>synchronized原理：java内置锁，原理是通过对象监视器Monitor锁机制实现。当一个线程进入被 synchronized 修饰的方法或代码块时，会尝试获取对象的监视器锁，获取成功则进入临界区，其他线程只能等待该线程释放锁后再竞争进入。依赖 JVM 的指令（如 monitorenter、monitorexit）。同步实例方法：锁的是当前对象 (this)。同步静态方法：锁的是类对象 (ClassName.class)。</p>
+</li>
+<li><p>synchronized可重入吗：是可重入的锁，保证了在递归调用、父子类继承调用等场景下同步不会发生死锁。原理是每个锁都有一个计数器，线程每次成功获得锁时计数加1，释放时计数减1。</p>
+</li>
+<li><p>Synchronized为什么锁升级：重量级锁的实现依赖于操作系统的互斥量（Monitor），当多个线程同时请求锁时，无法获取锁的线程会被挂起（阻塞），并由操作系统进行线程的调度和唤醒。这种阻塞和唤醒涉及用户态与内核态的切换，开销较大，会导致线程的等待、切换等大量耗时操作，从而造成明显的性能损耗。锁升级不可逆。</p>
+</li>
 <li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>volatile原理：保证变量可见性和有序性的关键字。在多线程环境下，变量被声明为volatile时，会确保对该变量的写操作会立刻刷新到主内存，其他线程读取时也直接从主内存获取最新值，而不是从线程本地缓存。其底层实现是通过内存屏障技术，在读写volatile变量时插入特定的指令，强制刷新和读取主内存，并且防止指令重排实现有序性。不过，volatile无法保障复合操作的原子性（比如自增），仅适用于状态标志等场景。</p>
 </li>
 <li><p>voliate 能保证原子性么：volatile 不能保证原子性。它的作用是保证变量的可见性和禁止指令重排，保证原子操作的线程安全，确保当一个线程修改了volatile变量后，其他线程能立即看到最新值。但对于复合操作（如count++），读-改-写三个步骤，volatile无法保证这些步骤的原子执行，仍然会发生竞态条件，导致结果不一致。要实现原子性，需使用同步机制（如synchronized）或原子类（如AtomicInteger），而不能仅依赖volatile。</p>
 </li>
@@ -323,12 +334,14 @@
 </li>
 <li><p>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</p>
 </li>
+<li><p>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</p>
+</li>
+<li><p>父子线程中怎么保证ThreadLocal共享：普通的ThreadLocal只能保证每个线程拥有自己独立的变量，父子线程无法共享。InheritableThreadLocal可以让子线程在创建时自动继承父线程已设置的ThreadLocal值。子线程构造时将父线程的拷贝一份。子线程对变量修改不会影响父线程，实现的是“值传递”而非引用共享。或者显式传递，通过构造函数将变量传进去。</p>
+</li>
 <li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
 </li>
 </ul>
 <ul>
-<li><p>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</p>
-</li>
 <li><p>线程池核心线程数设置：如果是CPU密集型任务，可设置为CPU核数；IO密集型任务可适当增大（如核数2倍）。</p>
 </li>
 <li><p>java原生线程池：FixedThreadPool固定数量线程的线程池。CachedThreadPool自动扩展线程数的线程池。SingleThreadExecutor单线程线程池，所有任务按顺序执行。ScheduledThreadPool定时周期执行的线程池。通过Executors工厂类创建。</p>
@@ -362,6 +375,9 @@
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
+<li>SPI机制：（Service Provider Interface）是Java的一种服务发现机制，它允许框架或模块在运行时动态地加载、发现和替换实现类，实现模块化和扩展性。其原理是通过META-INF&#x2F;services目录下的配置文件，JDK在运行时查找并实例化实现类，无需改动主程序代码。</li>
+<li>哪些用了SPI：JDBC：通过SPI加载不同数据库厂商的驱动实现；Servlet容器：如Tomcat通过SPI发现各种服务实现；日志框架：如SLF4J用于动态选择Logback、Log4j等实现；Dubbo：大量使用 SPI 机制实现协议和负载均衡等扩展；Spring Boot：自动配置中借鉴 SPI 思想，通过 spring.factories 实现自动装配。</li>
+<li>介绍JDBC：JDBC（Java Database Connectivity）是Java提供的用于操作关系型数据库的标准API。它通过一套统一接口，使Java程序可以连接不同类型的数据库，执行SQL语句，实现数据的查询和更新。JDBC的原理是采用SPI机制，数据库厂商提供各自的驱动实现（实现了JDBC接口），Java应用通过DriverManager加载并注册驱动，然后根据URL连接数据库。驱动通过底层协议与数据库通信，JDBC负责将SQL请求和结果在Java与数据库之间转换。这样，开发者可以用统一的方式访问各种数据库，大大提升了代码的通用性和扩展性。</li>
 </ul>
 <h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
 <li>IO：涉及到数据的存储、交换，都用IO，文件IO、网络IO</li>
@@ -419,12 +435,9 @@
 <li>排查工具：1.df -h查看磁盘使用情况。2.free -h &#x2F; vmstat显示系统内存使用情况。3.mpstat命令查看cpu使用情况，输出各种cpu时间百分比。4.netstat -s查看网络状态，显示各种网络协议的统计信息，接收发送数据包数等。5.iostat -x查看IO统计信息。6.top命令实时显示Linux系统中进程的动态运行信息，包括CPU和内存的使用情况。top -Hp $pid用于显示特定进程的线程信息。</li>
 <li>OOM排查：除了程序计数器，其他内存存储都可能OOM。原因：1.内存泄漏：程序未能释放不再使用的内存。2.Java堆分配空间不足导致内存溢出。排查：使用jmap -dump命令dump文件，在内存分析工具如VisualVM、MAT中观察对象引用关系、对象数量大小。可能未正确释放资源、关闭文件流、断开网络连接、销毁对象引用。定位到代码排查。</li>
 <li>jvm调优：分配jvm内存需要考虑应用需求，是否处理大量数据。考虑垃圾收集器。16g机器将JVM最大堆内存设置为12G（Xms12G -Xmx12G），使用G1垃圾收集器。元空间存储类的元数据，设置初始值256M，最大值512M。线程堆栈大小，几百KB到1MB，取决于有没有深层递归（-Xss256k）。</li>
+<li>死锁如何排查：1️⃣<code> jstack -l &lt;pid&gt;</code> 👉 直接标注Deadlock位置 2️⃣ Arthas的thread -b 👉 一键定位死锁线程 3️⃣ VisualVM&#x2F;JConsole 👉 图形化查看线程阻塞</li>
 </ul>
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
-</li>
-<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
-</li>
 <li><p>队列：Queue接口是FIFO队列，Deque扩展Queue是双端队列接口。ArrayDeque是Deque的实现，双端队列。LinkedList也是Deque的实现，可以做双端队列。Stack栈，继承自Vector。Vector是同步集合，使用synchronized。</p>
 </li>
 <li><p>HashMap：数组+链表+红黑树。链表长度&gt;8数组长度&gt;64时变红黑树。链表解决哈希冲突，bucket。键和值都允许为空。</p>
@@ -432,6 +445,10 @@
 <li><p>HashMap为什么使用红黑树：哈希函数质量不高&#x2F;存储大量数据，链表变长，影响搜索效率。所以jdk8之后，链表长度超过8时，链表变红黑树，自平衡的二叉查找树，搜索元素时间复杂度O(logn)，提高搜索效率。</p>
 </li>
 <li><p>HashMap扩容底层数组为什么扩为两倍保持2的幂次：1.方便利用位运算替代取模运算来计算元素索引位置。2.减少冲突：二进制位增加一位，只看最高位要么移动要么不变，确保分布均匀。 </p>
+</li>
+<li><p>HashMap怎么解决哈希冲突：链表法解决哈希冲突。当多个键的哈希值映射到同一个桶时，这些键值对会以链表的形式存储在该桶中。当链表长度超过阈值（默认为8），链表会被转换为红黑树，以提高查找效率。当节点数量减少到6或更少时，红黑树会重新转换回链表。这种机制既保证了哈希表的高效性，又有效解决了冲突问题。</p>
+</li>
+<li><p>HashMap中判断key重复：两个元素的hashaCode相等且通过equals方法返回true。</p>
 </li>
 <li><p>ConcurrentHashMap：线程安全的HashMap，jdk7使用分段锁，分16段，一段一把锁。jdk8使用synchronized和CAS保证线程安全。</p>
 </li>
@@ -457,11 +474,21 @@
 </li>
 <li><p>String不可变的好处：1⃣️安全性：防止被恶意修改导致的安全漏洞。2⃣️线程安全：String对象本身线程安全。指向String对象的引用变量不是。3⃣️实现字符串常量池成为可能，重用字符串，节省内存开销。4⃣️创建字符串的哈希码缓存：字符串不可变，哈希码也不会变，适合作为键使用在哈希表中HashMap。</p>
 </li>
+<li><p>String s&#x3D;new String(); 和 String s&#x3D;“”; 两种初始化：<code>String s = &quot;xxx&quot;;</code> 使用字符串字面量，会先检查字符串常量池，若存在 <code>&quot;xxx&quot;</code> 则直接复用，避免创建重复对象，性能更优。而 <code>String s = new String(&quot;xxx&quot;);</code> 会在堆中强制创建新对象，即使内容相同也生成不同实例，效率较低。前者仅可能创建0或1个对象（常量池中），后者至少创建1个堆对象（常量池也可能创建），可能导致内存浪费。</p>
+</li>
+<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
+</li>
+<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
+</li>
 <li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
 </li>
-<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，而Hashtable继承自遗留的Dictionary类。</p>
+<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，数组＋链表，而Hashtable继承自遗留的Dictionary类，数组＋链表＋红黑树。实际开发中不建议使用HashTable，多线程环境下推荐使用ConcurrentHashMap .</p>
 </li>
 <li><p>HashMap如何获取元素：首先根据键对象的 hashCode() 计算哈希值，确定该键对应的桶（bucket）位置。随后，通过 equals() 方法在该桶的链表或树中查找与目标键相等的元素，进而获取对应的 value。</p>
+</li>
+<li><p>jdk7中hashmap为什么会死循环，jdk8怎么解决:  JDK 7 死循环原因：JDK 7 中 HashMap 数据结构为数组＋链表，扩容时采用<strong>头插法</strong>迁移数据。多线程场景下，若线程 A 读取 HashMap准备扩容时，线程B先完成扩容（链表顺序因头插法颠倒），当线程 A 继续执行时，会导致环形链表，出现死循环问题。JDK 8 中 HashMap 采用数组＋链表＋红黑树结构，且扩容时改用<strong>尾插法</strong>，保持与扩容前相同的顺序，避免了因头插法导致的链表成环和死循环问题。</p>
+</li>
+<li><p>对象作为Map的key注意什么：（1）重写equals()和hashCode()方法：hashCode() 决定对象存储在哈希表的哪个位置，equals() 用于在发生哈希冲突时判断两个 key 是否相等。如果没有正确重写，会导致逻辑上相同的对象被认为是不同的key，因为两个默认都基于内存地址，即使内容相同的对象也会有不同哈希值，出现查找失败、重复插入、删除失败等问题。正确：重写为比较对象，保证相等的对象有相等的哈希码。（2）key使用不可变对象，防止对象状态变化后导致定位不到原来的key。（3）自定义hashCode方法时，应保证散列分布均匀。</p>
 </li>
 <li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
 </li>
@@ -475,7 +502,13 @@
 </li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
-<li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
+<li><p>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</p>
+</li>
+<li><p>IO异常是什么：检查异常，需要在编译时就处理的，要么try catch，要么throws，指文件读写或网络通信时因文件不存在或网络中断导致的。</p>
+</li>
+</ul>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><ul>
+<li>反射的优点：增强程序的灵活性：可以在运行时动态地获取类的信息、创建对象、调用方法和访问属性，不需要在编译时就确定类型。便于解耦和扩展：可以调用私有成员，能够打破封装限制，在一些框架开发中方便扩展功能。</li>
 </ul>
 <h2 id="变量修饰"><a href="#变量修饰" class="headerlink" title="变量修饰"></a>变量修饰</h2><ul>
 <li><p>static：静态</p>
@@ -494,6 +527,12 @@
 </ul>
 </li>
 <li><p>类加载机制：运行时动态加载，类加载器（ClassLoader）负责将类的字节码Class文件从不同的来源（例如文件系统、网络等）加载到Java虚拟机中。1⃣️加载阶段：类加载器读取二进制数据（.class文件）并生成对应的java.lang.Class对象。2⃣️验证：确保加载的类的字节码是合法的，检查字节码的格式、语法、数据流、符号引用等。3⃣️准备：为类变量分配内存并初始化为默认值，方法区中分配。4⃣️解析：将常量池内的符号引用转换为直接引用的过程。5⃣️初始化：执行静态变量的赋值操作和静态代码块内的代码。</p>
+</li>
+<li><p>介绍类加载：Java类加载是指JVM将类的字节码文件加载到内存并生成对应Class对象的过程。类加载分为<strong>加载、连接和初始化</strong>三个阶段。加载阶段是通过类加载器读取字节码文件。连接阶段包括<strong>验证（确保字节码安全）、准备（为静态变量分配内存并赋默认值）、解析（符号引用转为直接引用）</strong>。初始化阶段是执行静态初始化语句和静态代码块，给静态变量赋初值。只有在第一次主动使用类时，才会触发加载。类加载由ClassLoader负责，采用双亲委派模型。支持Java的动态扩展与安全运行，是反射、热部署等功能的基础。</p>
+</li>
+<li><p>不同变量加载时机：（1）静态变量在类的初始化阶段加载：准备阶段分配内存并赋默认值，初始化阶段执行static代码块完成赋值。分配到方法区（2）常量（final static）在连接阶段的“准备”步骤就会初始化。存放在方法区的运行时常量池，字符串存放在字符串常量池中（JDK 7后移到堆中）（3）实例变量在对象创建时（即运行期）随new指令在堆中分配，属于类实例化过程，不参与类加载的早期阶段。（4）局部变量不属于类成员，不在类加载过程中处理，而是在方法执行时随栈帧创建在虚拟机栈中分配，必须手动初始化。因此，静态变量与类加载绑定，实例变量与对象创建绑定，局部变量则与方法调用绑定。</p>
+</li>
+<li><p>Java动态加载：Java动态加载是指在程序运行期间根据需求才加载类文件，而不是在编译时期就确定所有要加载的类。这种机制主要依赖于类加载器（ClassLoader），通过例如 Class.forName()、ClassLoader.loadClass() 等方法实现，在运行时根据实际情况加载、连接和初始化类。</p>
 </li>
 <li><p>符号引用和直接引用：符号引用就是一组符号来描述所引用的目标，直接引用就是直接指向目标的指针、相对偏移量或一个能间接定位到目标的句柄。</p>
 </li>
@@ -591,7 +630,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">java相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">锁、并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">5.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">6.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO"><span class="nav-number">7.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">8.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">9.</span> <span class="nav-text">故障排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">10.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">11.</span> <span class="nav-text">异常体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0"><span class="nav-number">12.</span> <span class="nav-text">变量修饰</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">java相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E3%80%81%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">锁、并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">5.</span> <span class="nav-text">线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">6.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO"><span class="nav-number">7.</span> <span class="nav-text">IO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">8.</span> <span class="nav-text">垃圾回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5"><span class="nav-number">9.</span> <span class="nav-text">故障排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">10.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="nav-number">11.</span> <span class="nav-text">异常体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">12.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0"><span class="nav-number">13.</span> <span class="nav-text">变量修饰</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -606,7 +645,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

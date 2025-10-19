@@ -183,6 +183,318 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2025/" class="post-title-link" itemprop="url">那些年背过的面试题之java2025</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-07-27 19:18:28" itemprop="dateCreated datePublished" datetime="2025-07-27T19:18:28+08:00">2025-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-19 16:18:31" itemprop="dateModified" datetime="2025-10-19T16:18:31+08:00">2025-10-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">那些年背过的面试题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Reactor响应式编程和Reactor线程模型"><a href="#Reactor响应式编程和Reactor线程模型" class="headerlink" title="Reactor响应式编程和Reactor线程模型"></a>Reactor响应式编程和Reactor线程模型</h2><p>Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。</p>
+<p><strong>特点</strong>：<br>非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。<br>背压支持：允许消费者控制生产者的速率，防止资源过载。<br>高效性：适合高并发场景，能够更好地利用系统资源。<br>函数式风格：提供丰富的操作符，可以通过链式调用对数据流进行转换和处理。</p>
+<p><strong>适用场景</strong>：响应式系统（如 Spring WebFlux）、数据流处理（如实时日志分析、事件流处理）。</p>
+<p>Reactor 提供了<strong>两个核心类</strong>：<br>Flux：表示可以发射 0到N个元素 的异步数据流。<br>Mono：表示可以发射 0或1个元素 的异步数据流。<br>Flux 是 Reactor 中的一个核心类，用于表示可以发射多个元素的异步数据流。发射 0到N个元素，并最终以完成或错误信号结束。Flux 提供了丰富的操作符，可以轻松地对数据流进行转换、过滤、合并和错误处理。<br>——————————————————————<br>Reactor线程模型：一种经典的IO多路复用设计模式，用于高效处理大量并发连接。核心思想是通过一个或多个线程监听 I&#x2F;O 事件（如读写就绪），并将这些事件分发给相应的处理器进行处理。</p>
+<p><strong>特点</strong>：<br>事件驱动：通过监听 I&#x2F;O 事件（如 select、poll 或 epoll）来避免阻塞等待。<br>单线程或多线程模型：单线程 Reactor 模型：所有事件由一个线程处理。多线程 Reactor 模型：使用多个线程来处理事件，适合高并发场景。<br>非阻塞 I&#x2F;O：避免因等待 I&#x2F;O 操作完成而阻塞线程，从而提高吞吐量。</p>
+<p><strong>典型实现</strong>：Java NIO、Netty 等框架基于 Reactor 模型构建。</p>
+<p><strong>核心组件</strong>：<br>Acceptor：负责接收新的连接请求，并将其注册到事件监听器中。<br>Dispatcher：负责监听 I&#x2F;O 事件并分发给对应的处理器。<br>Handler：处理具体的业务逻辑。</p>
+<p><strong>适用场景</strong>：高并发网络服务（如 Web 服务器、消息队列等）、需要高效处理大量短连接或长连接的场景。<br>——————————————————————<br>Project Reactor和Reactor线程模型的联系：<br>**Project Reactor 提供了更高层次的抽象，专注于业务逻辑的响应式处理，而 Reactor线程模型则更关注底层 I&#x2F;O 事件的分发，处理网络层IO。**都是非阻塞的，都是事件驱动的。</p>
+<h2 id="record关键字"><a href="#record关键字" class="headerlink" title="record关键字"></a>record关键字</h2><p>record：一种用于<strong>定义不可变数据载体类</strong>的特殊类形式，是 Java 14 引入的一个关键字，正式在 Java 16 标准化。</p>
+<p>record 是<strong>一种简化数据类的语法，目的是存储数据而不对这些数据进行复杂的操作或修改的场景。自动生成了包括构造函数，getter、toString、equals、hashCode 等方法。</strong></p>
+<p>它是一种不可变（Immutable）的类，所有字段都是 final，创建后状态不能更改。</p>
+<p><strong>用法</strong>：<br>1、作为独立的类文件<br><code>public record Film(String name, String desc) &#123;&#125;</code></p>
+<p>2、嵌套在其他类中，类似静态内部类<br><code>public static record Film</code></p>
+<p>3、方法内部<br>从 Java 16 开始，record 可以被定义为局部类（即在方法内部定义）。这种用法适合<strong>仅在某个方法中使用的临时数据结构</strong>。直接record Film</p>
+<p>PS：静态内部类和非静态内部类：静态内部类不依赖于外部类的实例，可以直接通过外部类名访问。只能访问外部类的静态成员。非静态内部类依赖于外部类的实例，必须通过外部类的实例来创建。可以访问外部类的所有成员，因为内部类持有一个对外部类实例的隐式引用。</p>
+<h2 id="线上redis机器爆了，如何优化"><a href="#线上redis机器爆了，如何优化" class="headerlink" title="线上redis机器爆了，如何优化"></a>线上redis机器爆了，如何优化</h2><p>如果在生产环境中发现 Redis 出现异常，比如内存爆了或者响应变慢，首先通过 Redis 的 INFO 命令（<strong>redis-cli info</strong>）和监控平台查看当前的资源使用情况，确认是<strong>内存、CPU、连接数还是某个慢查询</strong>引起的。</p>
+<p>如果是** Big Key **（存储的数据体积很大，如一个Hash包含上万个字段）或者热 Key 造成的，我会进行数据结构优化、拆分 Key、引入本地缓存；如果是连接数过高，我会检查连接池配置，适当增加连接池大小或引入连接复用。</p>
+<p>如果是 QPS 过高导致 Redis 成为瓶颈，我会考虑引入<strong>Redis 集群、读写分离、或者对热点数据进行缓存</strong>。</p>
+<p>此外，我也会加强缓存的<strong>失效策略</strong>、防止缓存穿透和击穿，并结合布隆过滤器等手段保护后端数据库。</p>
+<h2 id="spring声明式事务-Transactional"><a href="#spring声明式事务-Transactional" class="headerlink" title="spring声明式事务@Transactional"></a>spring声明式事务@Transactional</h2><p>在Spring中事务管理的方式有两种，编程式事务和声明式事务。编程式事务将业务代码和事务代码耦合到一块，当发生异常的时候还得需要手动回滚事务，不优雅。</p>
+<p>声明式事务：<strong>基于AOP，设置好切点，当我们调用事务方法时，会调用到生成的代理对象，代理对象中加入了事务提交和回滚的逻辑。当方法执行成功时提交事务，当方法发生异常时回滚事务。</strong></p>
+<p>@Transactional可以用在类，方法，接口上：</p>
+<ol>
+<li>用在类上，该类的所有public方法都具有事务</li>
+<li>用在方法上，方法具有事务。当类和方法同时配置事务的时候，方法的属性会覆盖类的属性</li>
+<li>用在接口上，一般不建议这样使用，因为只有基于接口的代理会生效，如果Spring AOP使用cglib来实现动态代理，会导致事务失效（因为注解不能被继承）</li>
+</ol>
+<p><strong>@Transactional失效的场景</strong></p>
+<ol>
+<li>@Transactional注解应用到非public方法（除非特殊配置，例如使用AspectJ 静态织入实现 AOP）</li>
+<li>自调用，因为@Transactional是基于动态代理实现的，自调用时，方法执行不会经过代理对象</li>
+<li>异常在代码中被你自己try catch了，不抛异常进入不了回滚的逻辑</li>
+<li>异常类型不正确，默认只支持RuntimeException和Error，不支持检查异常，如果抛出任何异常都回滚，可以配置rollbackFor为Exception</li>
+<li>事务传播配置不符合业务逻辑</li>
+</ol>
+<p><strong>为什么只有public方法上的@Transactional注解才会生效？</strong></p>
+<p>首先JDK动态代理肯定只能是public，因为接口的权限修饰符只能是public。cglib代理的方式是可以代理protected方法的（private不行，子类访问不了父类的private方法）如果支持protected，可能会造成当切换代理的实现方式时表现不同，增大出现bug的可能性，所以统一一下。</p>
+<p>Transactional的事务传播行为默认为Propagation.REQUIRED。<strong>「如果当前存在事务，则加入该事务。如果当前没有事务，则创建一个新的事务」</strong></p>
+<p>Propagation.REQUIRES_NEW**「创建一个新事务，如果当前存在事务，则把当前事务挂起」**</p>
+<h2 id="HashMap和HashTable的区别"><a href="#HashMap和HashTable的区别" class="headerlink" title="HashMap和HashTable的区别"></a>HashMap和HashTable的区别</h2><ul>
+<li><p><strong>继承类不同</strong>：HashTable继承Dictionary类，HashMap继承AbstractMap类</p>
+</li>
+<li><p><strong>线程安全级别不同</strong>：HashTable是线程安全的类，每个public方法都有Synchronized修饰，HashMap不是线程安全的</p>
+</li>
+<li><p><strong>是否允许null的要求不同</strong>：HashTable：key不允许为null，value不允许为null。HashMap：key允许为null，value允许为null。</p>
+</li>
+<li><p><strong>底层数据结构不同</strong>：在JDK1.8以后，HashMap的底层数据结构改成了数组+链表+红黑树的实现，在链表的节点大于TREEIFY_THRESHOLD&#x3D;8时，链表转为红黑树，在树节点小于UNTREEIFY_THRESHOLD&#x3D;6时，红黑树转变为链表。（之所以有8和6两个阈值是为了避免某个链表在临界点频繁插入删除，导致转换频繁降低性能）。而Hashtable的底层实现就是数组+链表，而没有红黑树，因此各种操作都要简单很多。</p>
+</li>
+<li><p><strong>容量和扩容不同</strong>：Hashtable的容量是直接使用用户输入的容量initialCapacity。HashMap在用户输入的基础上，强制将容量转换为大于输入容量的最小2的幂次方数值。扩容方面，<code>HashMap</code> 自动扩容为 2 的幂，利于位运算提升性能，而 <code>Hashtable</code> 扩容为原容量的 2 倍加 1。</p>
+</li>
+<li><p><strong>索引计算上</strong>，<code>HashMap</code> 使用 <code>hash &amp; (length - 1)</code>，比 <code>Hashtable</code> 的取模运算更高效。</p>
+</li>
+<li><p><code>HashMap</code> 的迭代器为 fail-fast 类型，当有其它线程改变了HashMap的结构（增加或者移除元素），将会抛出并行修改异常，但迭代器本身的remove()方法移除元素则不会抛出。而 <code>Hashtable</code> 的 <code>Enumerator</code> 不是。</p>
+</li>
+</ul>
+<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><p>零拷贝（Zero-Copy）是一种高效的I&#x2F;O操作技术，旨在<strong>减少数据在内核空间与用户空间之间不必要的复制</strong>，从而提升数据传输性能。传统I&#x2F;O操作中，数据通常需从磁盘读取到内核缓冲区，再复制到用户缓冲区，处理后再写回内核缓冲区并发送到网络，涉及多次上下文切换和数据拷贝。零拷贝通过系统调用（如Linux的<code>sendfile</code>、<code>splice</code>或<code>mmap</code>），让<strong>数据直接在内核内部从文件系统缓冲区传输到网络协议栈</strong>，避免了用户空间的中转。这不仅<strong>减少了CPU的拷贝开销，也降低了上下文切换次数</strong>，显著提高了大文件传输、网络服务等场景的效率，是高性能系统设计中的关键技术。</p>
+<p>例如Netty：使用堆外直接内存进行Socket读写，不需要进行字节缓冲区的二次拷贝，避免了 JVM 堆内存与系统内存之间的数据拷贝。Netty的Zero-copy完全是在用户态（Java应用层）的，偏向于优化数据操作。OS层面的Zero-copy通常是避免在用户态和内核态之间的拷贝数据。</p>
+<p>例如RocketMQ：在消息存储与传输过程中，RocketMQ 利用零拷贝技术优化消息的发送性能。当消费者拉取消息时，通过 <code>mmap</code> 将消息文件映射到内存，或使用 <code>transferTo</code> 调用实现数据从文件通道直接传输到网络通道，避免内核与用户空间的多次拷贝。这不仅减少了内存占用，也加快了消息传输速度，支持高吞吐量的消息处理。</p>
+<h2 id="Redis字典的实现方式和冲突处理"><a href="#Redis字典的实现方式和冲突处理" class="headerlink" title="Redis字典的实现方式和冲突处理"></a>Redis字典的实现方式和冲突处理</h2><p>Redis字典基于哈希表实现，其核心结构是一个数组，每个元素是指向<code>dictEntry</code>链表的指针。每个<code>dictEntry</code>存储键值对及下一个节点的指针，通过**链地址法（拉链法）**处理哈希冲突：当多个键映射到同一槽位时，它们被链接在同一链表中。</p>
+<p>Redis使用MurmurHash2算法计算键的哈希值，再通过<code>hash &amp; (size-1)</code>确定索引位置，确保分布均匀。</p>
+<p>为应对数据增长，Redis支持动态扩容与缩容。当负载因子过高（如超过1）或过低时，会触发rehash。Redis采用<strong>渐进式rehash</strong>机制：分配新哈希表，每次访问字典时顺带迁移部分数据，直至全部完成。这避免了集中迁移带来的性能阻塞。也就是说，Redis字典内部维护两个哈希表（ht[0]和ht[1]），在rehash期间两者并存，查找、删除操作会兼顾访问两个表，确保数据一致性。插入操作仅作用于ht[1]。rehash完成后，ht[1]成为主表，ht[0]被清空。 </p>
+<p>此外，Redis在哈希表扩容时，新表大小为大于当前容量的最小2的幂，确保位运算高效定位。</p>
+<h2 id="介绍MVC机制"><a href="#介绍MVC机制" class="headerlink" title="介绍MVC机制"></a>介绍MVC机制</h2><p>MVC（Model-View-Controller，模型-视图-控制器）是一种软件架构模式，用于分离应用程序的逻辑与界面。</p>
+<p>模型（Model）代表数据和业务逻辑，处理核心的数据管理和规则定义，并在数据发生变化时通知视图（View）。</p>
+<p>视图（View）负责展示信息给用户，它从模型获取数据显示给用户，但不直接与模型交互，而是通过控制器（Controller）。</p>
+<p>控制器接收用户的输入，解释这些输入并将它们转换为对模型或视图的操作命令，如更新数据或请求视图刷新。</p>
+<p>这种分离使得代码更加模块化、易于维护和扩展，特别适合于开发复杂用户界面的应用程序，同时提高了灵活性和可重用性。MVC广泛应用于Web应用框架中，如Django（<strong>一个高级的Python Web框架，遵循模型-模板-视图（Model-Template-View, MTV）架构模式，模型（Model）定义数据结构；模板（Template）控制页面展示逻辑；视图（View）则是业务逻辑层，决定了哪些数据被呈现。</strong>）、Ruby on Rails等。</p>
+<h2 id="Flink和Spark的区别"><a href="#Flink和Spark的区别" class="headerlink" title="Flink和Spark的区别"></a>Flink和Spark的区别</h2><p>Apache Flink 和 Apache Spark 都是分布式计算框架，Flink流处理，Spark批处理。</p>
+<p>处理模型</p>
+<ul>
+<li><strong>Flink</strong> 主要支持流处理，并以流处理为基础扩展到批处理。这意味着它首先被设计用于实时数据处理，能够提供低延迟的数据处理能力，适用于需要即时响应的应用场景。</li>
+<li><strong>Spark</strong> 最初是作为一个批处理框架而设计的，后来通过Spark Streaming增加了对流处理的支持。Spark Streaming采用微批处理的方式（mini-batch），即把流数据按时间窗口分割成一系列小批次来处理，这使得它的延迟比Flink稍高一些。</li>
+</ul>
+<p>吞吐量</p>
+<p>关于吞吐量，两者都有很高的处理效率，但在不同场景下表现各异：</p>
+<ul>
+<li><strong>Flink</strong> 由于其原生的流处理架构，在处理持续不断的数据流时具有更高的吞吐量和更低的延迟。对于要求严格实时性的应用，比如欺诈检测、在线推荐系统等，Flink通常是更好的选择。</li>
+<li><strong>Spark</strong> 在批处理任务上表现出色，尤其是在处理大规模静态数据集时。尽管Spark Streaming可以通过增加批次大小来提高吞吐量，但这样做会增加处理延迟。因此，对于那些可以容忍一定延迟的大规模数据分析任务，Spark可能更为合适。</li>
+</ul>
+<h2 id="介绍JVM"><a href="#介绍JVM" class="headerlink" title="介绍JVM"></a>介绍JVM</h2><p>JVM（Java虚拟机）是运行Java应用程序的虚拟机，它使得Java程序具有“一次编写，到处运行”的能力。JVM的主要任务是将编写的Java字节码（.class文件）转换成本地计算机的机器码并执行。通过提供一个跨平台的运行环境，JVM隐藏了底层操作系统的差异，确保了Java程序可以在任何安装有相应JVM的设备上运行。</p>
+<p>JVM包含类加载器、运行时数据区（包括方法区、堆、栈等）、执行引擎等关键组件。类加载器负责加载程序所需的类文件；运行时数据区为程序执行提供内存空间；执行引擎则负责解释或即时编译字节码为机器码执行。此外，JVM还包含了垃圾回收机制，自动管理内存，释放不再使用的对象所占用的空间。JVM不仅支持Java语言，还支持其他可以编译成Java字节码的语言，如Kotlin和Scala。</p>
+<h2 id="JVM调优经验"><a href="#JVM调优经验" class="headerlink" title="JVM调优经验"></a>JVM调优经验</h2><p>主要目标是优化内存使用、减少GC停顿时间以及提高系统吞吐量。</p>
+<ol>
+<li><strong>合理设置堆大小</strong>：根据应用的实际需求和服务器资源，合理配置<code>-Xms</code>（初始堆大小）和<code>-Xmx</code>（最大堆大小），避免频繁的GC。通常建议将初始堆和最大堆设置为相同值，以减少动态扩展带来的开销。16G机器设置12G。</li>
+<li><strong>选择合适的垃圾回收器</strong>：<ul>
+<li>对于低延迟要求的应用，可以选择G1或ZGC等低延迟回收器。</li>
+<li>对于高吞吐量要求的批处理任务，可以使用CMS并发清除。</li>
+</ul>
+</li>
+<li><strong>监控与分析GC日志</strong>：通过启用GC日志，结合工具如<code>GCViewer</code>或<code>GCEasy</code>分析GC行为，识别是否存在频繁的Full GC或长时间的停顿。jstat监控GC。</li>
+<li><strong>优化新生代比例</strong>：通过<code>-XX:NewRatio</code>和<code>-XX:SurvivorRatio</code>调整新生代与老年代的比例，确保大多数对象在Minor GC中被回收，减少晋升到老年代的对象数量。</li>
+<li><strong>合理使用元空间</strong>：JDK 8以后，永久代被元空间取代，使用本地内存存储类信息。可通过<code>-XX:MetaspaceSize</code>和<code>-XX:MaxMetaspaceSize</code>控制其大小，防止因加载过多类导致内存溢出。</li>
+<li><strong>线程栈大小调整</strong>：对于线程数较多的应用，适当减小<code>-Xss</code>（线程栈大小）可节省内存，但需确保不会导致栈溢出。</li>
+</ol>
+<h2 id="JVM的堆分为哪几部分"><a href="#JVM的堆分为哪几部分" class="headerlink" title="JVM的堆分为哪几部分"></a>JVM的堆分为哪几部分</h2><p>JVM的堆是内存管理的核心区域，用于存放对象实例，主要分为三部分：</p>
+<ol>
+<li><strong>新生代（Young Generation）</strong>：新创建的对象首先分配在此。它又分为Eden区、From Survivor区和To Survivor区。大多数对象在Eden区分配，经过几次垃圾回收后仍存活的对象将被移到Survivor区。</li>
+<li><strong>老年代（Old Generation）</strong>：存放从新生代晋升过来的长期存活对象。当对象经历多次GC未被回收，或占用空间较大时，会被移入老年代。</li>
+<li><strong>永久代&#x2F;元空间（PermGen&#x2F;Metaspace）</strong>：方法区，JDK 8之前为永久代，用于存储类信息、常量、静态变量等；JDK 8及以后改为元空间，使用本地内存管理，避免了永久代的内存溢出问题。</li>
+</ol>
+<p>堆由垃圾回收器统一管理，是GC的主要区域。</p>
+<h2 id="数据仓库和传统数据库有什么区别"><a href="#数据仓库和传统数据库有什么区别" class="headerlink" title="数据仓库和传统数据库有什么区别"></a>数据仓库和传统数据库有什么区别</h2><p>用途：传统数据库主要用于OLTP（on-line transaction processing）翻译为联机事务处理，即即时的系统交互，数据仓库主要用于OLAP（On-Line Analytical Processing）翻译为联机分析处理，从字面上来看OLTP是做事务处理，OLAP是做分析处理。从对数据库操作来看，OLTP主要是对数据的增删改，OLAP是对数据的查询。</p>
+<p>建模：传统数据库主要使用范式建模，数据仓库可以根据需要采用范式建模或者现在互联网普遍使用的星形模型等。</p>
+<p>使用技术：传统数据库一般使用mysql等关系型数据库，数据仓库目前互联网行业更多的是使用hadoop等大数据技术，也有使用mysql等，可以根据实际情况搭建。 </p>
+<p>存储的数据：传统数据库只存储当前状态的数据，数据仓库需要存储历史状态的数据，用户对历史数据的回溯分析。  </p>
+<p>ODPS设计用于大规模数据存储、处理和分析，支持包括批处理、流计算、交互式查询在内的多种计算模式，更接近于数仓。</p>
+<h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO多路复用是一种允许单个进程监视多个文件描述符的技术，使得系统在单线程的情况下可以同时处理多个客户端请求。一旦某个描述符就绪（通常是读就绪或写就绪），就能进行相应的IO系统调用。其核心机制依赖于操作系统提供的系统调用，如select、poll和epoll（Linux）。通过这些调用，程序可以一次性监听多个socket或其他IO资源的状态，避免了为每个连接创建独立线程或进程的开销。</p>
+<p>epoll相对于select的改进：</p>
+<p>1.select单进程打开的最大的fd是有限制的，默认是1024个，对于需要支持上万TCP连接的服务器来说太少。epoll没有这个限制，支持的最大fd上限是操作系统最大文件句柄数。1G内存的机器大约是10万个句柄。</p>
+<p>2.IO效率不会随着FD增加而线性下降。select和poll缺点是当有很大的socket集合时，任意时刻只有少部分的socket是活跃的，select和poll每次调用都会扫描全部集合，导致效率下降。epoll以空间换时间，更高效的事件通知机制。</p>
+<p>3.epoll通过mmap（内存映射）技术将内核空间中的事件就绪列表映射到用户空间，从而让应用程序可以直接访问这个列表，减少了内核与用户空间之间的数据复制和上下文切换的开销，加速了消息传递过程。这种方式提高了处理大量并发连接时的效率和性能。</p>
+<h2 id="Java和Python的区别"><a href="#Java和Python的区别" class="headerlink" title="Java和Python的区别"></a>Java和Python的区别</h2><p><strong>语法与开发效率</strong>：Python 语法简洁直观，适合快速开发；Java 语法较严谨，代码量通常更多。</p>
+<p><strong>类型系统</strong>：Python 是动态类型语言，变量类型在运行时确定；Java 是静态类型语言，需在编译时声明类型，类型安全更强。</p>
+<p><strong>执行方式</strong>：Python 是解释型语言，通过解释器执行；Java 是编译型语言，先编译成字节码，再由 JVM 解释或 JIT 编译执行。</p>
+<p><strong>性能</strong>：Java 通常性能更高，得益于 JVM 的优化；Python 在计算密集型任务中相对较慢。</p>
+<p><strong>应用场景</strong>：Java 常用于大型企业级应用、Android 开发；Python 广泛应用于数据科学、AI、脚本和Web开发。</p>
+<h2 id="Seata分布式事务解决方案"><a href="#Seata分布式事务解决方案" class="headerlink" title="Seata分布式事务解决方案"></a>Seata分布式事务解决方案</h2><p>Seata是蚂蚁金服和阿里巴巴共同开源的分布式事务解决方案。致力于提供高性能和简单易用的分布式事务服务，为用户打造一站式的分布式解决方案。</p>
+<p><strong>分布式事务</strong>：是指在分布式系统中，一次操作需要跨多个节点、服务或数据库协调完成，要求这些操作要么全部成功，要么全部失败，以保证数据的一致性。</p>
+<p>其中三个重要角色： <strong>TC</strong> **事务协调者：**维护全局和分支事务的状态，协调全局事务提交或回滚。  **TM ** **事务管理器：**定义全局事务的范围、开始全局事务、提交或回滚全局事务。  **RM ** **资源管理器：**管理分支事务处理的资源，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</p>
+<p>四种不同的分布式事务解决方案：</p>
+<ul>
+<li>XA模式：强一致性分阶段事务模式，牺牲了一定的可用性，无业务侵入 </li>
+<li>TCC模式：最终一致的分阶段事务模式，通过业务层面定义尝试、确认和取消操作，实现灵活的补偿型事务。（柔性事务）</li>
+<li>AT模式：最终一致的分阶段事务模式，无业务侵入，也是Seata的默认模式 </li>
+<li>SAGA模式：将长事务拆分为多个本地事务，每个步骤执行后记录状态，出错时通过补偿操作回滚前面已完成的步骤。（柔性事务）</li>
+</ul>
+<h2 id="Redis实现防超卖"><a href="#Redis实现防超卖" class="headerlink" title="Redis实现防超卖"></a>Redis实现防超卖</h2><p>使用Redis可以有效地管理库存并保证数据一致性。</p>
+<p>一种常见的做法是利用Redis的<code>WATCH</code>机制结合事务来确保库存扣减操作的原子性和一致性。首先，将商品库存存储在Redis中。当有购买请求时，客户端先通过<code>WATCH</code>命令监控库存键的状态。然后，在事务中尝试执行库存检查和扣减操作（如<code>DECR</code>）。如果在这期间没有其他客户端修改该库存键，则<code>EXEC</code>命令会成功执行事务；如果有其他客户端在此期间修改了库存值，则当前事务会被放弃，需要重新尝试整个过程。</p>
+<p><strong>为什么只用INCR&#x2F;DECR不行</strong>：虽然Redis的<code>INCR</code>和<code>DECR</code>命令本身是原子性的，可以直接用于增加或减少数值，但在并发环境下仅依赖这些命令无法完全避免超卖问题。这是因为：</p>
+<ul>
+<li><strong>缺乏前置条件判断</strong>：直接使用<code>DECR</code>可能会导致库存变为负数，即超过实际库存数量的商品被卖出。</li>
+<li><strong>无回滚机制</strong>：一旦后续业务逻辑失败（例如订单创建失败），无法自动恢复已扣减的库存，造成数据不一致。</li>
+</ul>
+<p><strong>使用WATCH和事务：</strong></p>
+<ul>
+<li><strong>确保数据一致性</strong>：通过<code>WATCH</code>监控关键资源，在并发情况下只有在资源未被其他进程修改的前提下才执行事务，保证了多个步骤作为一个整体执行，避免了竞态条件。</li>
+<li><strong>提供乐观锁功能</strong>：<code>WATCH</code>机制是一种实现乐观锁的方式。它允许客户端在执行事务前监视一个或多个键，如果在事务执行前这些键被其他客户端修改过，则事务将失败不会执行任何操作。这种机制非常适合读多写少的场景。一种无锁机制来解决并发问题。</li>
+</ul>
+<h2 id="高并发项目中的限流和熔断"><a href="#高并发项目中的限流和熔断" class="headerlink" title="高并发项目中的限流和熔断"></a>高并发项目中的限流和熔断</h2><p><strong>限流</strong>：目的是控制请求量，防止系统过载。常用算法包括令牌桶和漏桶算法。通过设定速率阈值，如每秒处理请求数（RPS），超过限制的请求将被拒绝或排队。例如，使用Guava的RateLimiter类实现平滑限流。阿里巴巴的Sentinel，实现对特定资源的精准限流，确保系统在高并发场景下的稳定性和可靠性。</p>
+<p><strong>熔断</strong>：用于避免故障扩散。当服务调用失败率超过阈值时（如50%请求失败），启动熔断器，快速失败而不是尝试执行可能耗时的操作。一段时间后，允许部分请求通过进行试探性恢复。Hystrix是一个流行的熔断库，它提供了开箱即用的熔断、降级等功能。</p>
+<h2 id="优化多节点流程编排，优化工作流引擎性能"><a href="#优化多节点流程编排，优化工作流引擎性能" class="headerlink" title="优化多节点流程编排，优化工作流引擎性能"></a>优化多节点流程编排，优化工作流引擎性能</h2><p><strong>多节点流程编排优化：</strong></p>
+<ol>
+<li><strong>并行执行</strong>：识别可以并行处理的任务，通过合理的任务调度机制（如DAG调度）最大化并发度，减少整体执行时间。</li>
+<li><strong>减少节点间通信开销</strong>：尽量减少跨节点的数据传输量，使用高效的序列化&#x2F;反序列化格式（如Protocol Buffers或Avro），并对数据进行压缩。</li>
+<li><strong>智能路由与负载均衡</strong>：根据各节点当前的负载情况动态分配任务，避免某些节点过载而其他节点闲置。</li>
+<li><strong>缓存中间结果</strong>：对于重复计算的部分，可以在适当的位置增加缓存机制，存储中间结果以供后续步骤直接使用。</li>
+<li><strong>重试机制</strong>：为可能失败的操作设置合理的重试策略，包括指数退避算法等，以提高系统的容错能力。</li>
+</ol>
+<p><strong>工作流引擎性能优化：</strong></p>
+<ol>
+<li><strong>异步处理</strong>：尽可能采用异步调用代替同步等待，降低请求间的耦合度，加快响应速度。</li>
+<li><strong>数据库优化</strong>：使用索引加速查询。对于频繁读写的表，考虑分库分表策略。</li>
+<li><strong>批处理</strong>：对于大批量的数据操作，应采用批量提交而非逐条处理的方式，减少IO次数。</li>
+<li><strong>资源池管理</strong>：有效管理连接池、线程池等资源，防止因资源耗尽导致的服务不可用。</li>
+</ol>
+<h2 id="双写一致性问题"><a href="#双写一致性问题" class="headerlink" title="双写一致性问题"></a>双写一致性问题</h2><p>双写一致性问题主要出现在使用缓存与数据库共同存储数据的场景中，两个独立的数据存储系统，在并发更新时难以保证操作的原子性和顺序性。当应用同时写入缓存和数据库时，由于网络延迟、系统故障或并发读写，可能导致两者数据不一致。</p>
+<p>例如，如果<strong>先更新数据库再更新缓存</strong>，在这期间若有其他请求读取了旧的缓存数据，则会导致短暂的数据不一致。缓存更新失败也会导致不一致。同样，若<strong>先更新缓存再更新数据库</strong>，而此时数据库更新失败或出现网络问题，也会造成缓存与数据库数据的差异。此外，并发操作加剧了这一问题，多个客户端可能同时对同一数据进行读写操作，如果没有适当的同步机制，很容易导致部分客户端读取到未更新或错误的数据版本。<strong>先删缓存再更新数据库</strong>存在并发窗口期，可能使旧数据重新加载进缓存。</p>
+<p><strong>如何解决</strong>：</p>
+<p><strong>先更新数据库，再删除缓存</strong>，结合延迟双删或消息队列异步补偿，确保最终一致。</p>
+<ol>
+<li><strong>先更新数据库，后删除缓存</strong>：最常用。当需要更新数据时，首先更新数据库，然后立即删除对应的缓存项。下次查询时会从数据库加载最新数据到缓存中。在更新数据库之后和删除缓存之前，有短暂的不一致窗口。但是降低了因并发引起的复杂性和潜在的数据不一致风险。</li>
+<li><strong>延迟双删策略</strong>：在更新数据库之后，不仅立即删除缓存，还会设置一个小延迟（如50ms），再次删除同一缓存项。因为当一个线程正在更新数据库并删除缓存时，另一个并发线程可能已经从旧缓存中读取了数据，并在更新操作完成之前将其重新写入缓存，导致缓存中的数据比数据库还旧，这是缓存重建行为。</li>
+<li><strong>消息队列同步</strong>：利用消息队列确保操作顺序执行。将所有对数据库的修改通过消息队列进行异步处理，确保每个操作按序到达并更新缓存和数据库，适用于对一致性要求较高的场景。</li>
+<li><strong>使用分布式事务或Saga模式</strong>：对于复杂的业务逻辑，可以采用分布式事务或者Saga模式来管理跨服务的数据一致性，但这通常增加了系统的复杂度。</li>
+</ol>
+<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>CAP理论帮助开发者理解分布式系统的取舍。CAP理论指出，在分布式系统中，<strong>一致性（Consistency）</strong>、<strong>可用性（Availability）</strong> 和 <strong>分区容错性（Partition tolerance）</strong> 三者不可兼得，最多只能同时满足其中两项。</p>
+<ul>
+<li><strong>一致性</strong>：所有节点在同一时间看到的数据是相同的。</li>
+<li><strong>可用性</strong>：每个请求都能在合理时间内收到成功或失败的响应，不保证数据最新。</li>
+<li><strong>分区容错性</strong>：系统在部分节点间通信中断（网络分区）时仍能继续运行。</li>
+</ul>
+<p>由于网络故障难以避免，分区容错性通常是必须保证的。因此，系统设计通常在 <strong>CP（如ZooKeeper）</strong> 和 <strong>AP（缓存系统，一般会追求AP可用，并通过一些手段尽可能保证弱一致性和最终一致性）</strong> 之间权衡：CP系统在分区发生时保证数据一致但可能拒绝服务；AP系统保持可用，但允许数据暂时不一致。</p>
+<h2 id="RocketMQ事务消息"><a href="#RocketMQ事务消息" class="headerlink" title="RocketMQ事务消息"></a>RocketMQ事务消息</h2><p>可以利用事务消息轻松地实现分布式事务，采用2PC的思想来实现提交事务消息，同时增加一个补偿逻辑来处理二阶段超时或者失败的消息。</p>
+<p>RocketMQ实现事务消息主要分为两个阶段：正常事务的发送及提交、事务信息的补偿流程 整体流程为：</p>
+<ul>
+<li>正常事务发送与提交阶段：1、生产者发送一个半消息给MQServer（半消息是指消费者暂时不能消费的消息） 2、服务端响应消息写入结果，半消息发送成功 3、生产者开始执行本地事务 4、执行完本地事务后再告诉MQServer本地事务的执行状态，确认消息究竟是Commit还是Rollback</li>
+<li>事务信息的补偿流程 1、如果MQServer长时间没收到本地事务的执行状态，会向生产者发起一个确认回查的操作请求 2、生产者收到确认回查请求后，检查本地事务的执行状态 3、MQServer根据检查后的结果执行Commit或者Rollback操作。补偿阶段主要是用于解决生产者在发送Commit或者Rollback操作时发生超时或失败的情况。</li>
+</ul>
+<p>例如场景：用户请求订单微服务 <code>order-service</code> 接口删除订单（退货），删除订单后需要发送消息给用户服务<code>account-service</code>，用户微服务收到消息后会给用户账户增加余额。这个需求跟钱相关，肯定要保证消息的事务性。</p>
+<p>事务消息相对普通消息最大的特点就是一阶段发送的消息对用户是不可见的，也就是说消费者不能直接消费。实现方法是改变主题。</p>
+<h2 id="大文件找相同url"><a href="#大文件找相同url" class="headerlink" title="大文件找相同url"></a>大文件找相同url</h2><p>题目：给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url?</p>
+<p>方法1：首先数据太大没法加载在内存中用set表示，所以分成大量小文件来对比，hash法，对文件求哈希，并用取余的方式散列到1000个文件中，a的第n个文件只可能和b的第n个文件相同，缩小范围。</p>
+<p>方法2：Bloom flter，用来检测一个元素是否属于一个集合，以牺牲正确率为前提，来换取空间效率与时间效率的提高。判断不属于集合一定正确，判断属于集合可能错误。难点在于用多少位，以及k个hash函数。4GB 内存可以表示 340亿 bit，把文件a中的url 采用 Bloom filter 方法映射到这 340亿 bit 上，然后遍历文件b，判断是否存在。但是采用这种方法会有一定的错误率。</p>
+<h2 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h2><p>Bloom filter 是一个包含了m 位的位数组，数组的每一位都初始化为 0，然后定义k个不同的 Hash 函数，每个函数都可以将集合中的元素映射到位数组的某一位。当向集合中插入一个元素时，根据k个 Hash函数可以得到位数组中的k个位，将这些位设置为1。元素个数n，当 Hash 函数个数 k&#x3D;(In2)*(m&#x2F;n)时错误率最小。</p>
+<h2 id="设计一个秒杀系统"><a href="#设计一个秒杀系统" class="headerlink" title="设计一个秒杀系统"></a>设计一个秒杀系统</h2><p>设计目标：高并发、高性能和防超卖。</p>
+<p>流量削峰：使用消息队列（如Kafka、RocketMQ）缓冲请求，避免直接冲击数据库。前端通过验证码、排队页面或限流令牌桶减少瞬时请求。</p>
+<p>缓存热点数据：将商品库存、活动信息等放入Redis，减少数据库压力。使用Redis的原子操作（如DECR）扣减库存，避免超卖。</p>
+<p>限流与熔断：使用限流工具（如Sentinel）限制每秒请求量，防止系统崩溃。必要时直接熔断。</p>
+<p>分布式锁：使用Redis或Zookeeper实现分布式锁，例如redis存商品库存，同一时刻只有一个请求扣减库存；对用户id加锁，防止同一用户重复提交订单。</p>
+<p>异步处理：下单成功后，通过消息队列异步处理订单，提升响应速度。</p>
+<h2 id="实现一个消息队列"><a href="#实现一个消息队列" class="headerlink" title="实现一个消息队列"></a>实现一个消息队列</h2><p>消息队列是一种用于在不同组件或系统之间传递和存储数据的机制。实现的核心是存储消息并支持生产者和消费者通信。使用BlockingQueue存储消息，自动阻塞，本身已是线程安全的。ArrayBlockingQueue固定容量的场景，LinkedBlockingQueue不固定容量的场景。定义消息类、生产者、消费者。生产者调用queue.put(message)发送消息，消费者调用queue.take()获取消息并处理。持久化：将消息存入数据库或文件，防止丢失。消息确认：消费者处理完后发送确认，确保消息不丢。</p>
+<h2 id="常见的限流算法"><a href="#常见的限流算法" class="headerlink" title="常见的限流算法"></a>常见的限流算法</h2><p>令牌桶算法：一个固定容量的桶，按照固定速率向桶添加令牌。请求到来时，需要从桶中取出一个令牌才能被处理，如果桶为空，则拒绝该请求或等待。保证平均流入系统的请求数量不会超过设定值。</p>
+<p>漏桶算法：一个底部带孔的桶用来接住所有的进水，桶以固定速率（流出孔洞）处理请求，桶满则拒绝请求。</p>
+<p>计数器算法：设定一个固定时间窗口，统计请求数量，超过阈值则拒绝请求直到下一个窗口。</p>
+<p>滑动窗口算法：改进自计数器算法，将固定时间窗口改为滑动窗口，更平滑，减少尖峰时刻对系统的影响。在分布式系统中，使用Redis等中间件统一计数，确保全局限流。</p>
+<h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><p>计算机镜像（Computer Image）是对系统、磁盘、光盘或应用程序的完整复制或备份，它包含了所有的数据、文件系统、配置和应用程序。镜像技术广泛应用于系统备份、恢复、数据迁移、虚拟化以及软件部署等场景，确保系统可以快速恢复或标准化部署。</p>
+<p>系统镜像：对整个操作系统和相关配置的完整备份。用来系统恢复、系统迁移。</p>
+<p>磁盘镜像：一个包含整个磁盘或分区的完整复制，包含磁盘上的所有数据、文件系统、元数据。</p>
+<p>光盘镜像：一种将光盘内容完整复制到一个文件中的镜像格式，通常以.iso文件格式存储</p>
+<p>容器镜像container image：一种用于创建容器的只读模板，包含应用程序及其所有依赖项，如库、配置文件和环境变量。用于软件部署、微服务架构中每一个服务都可以打包为一个容器镜像、持续集成持续交付CICD中使用容器镜像进行自动构建、测试、部署。<strong>工具：<strong>Docker</strong>：</strong> 最流行的容器化平台，支持创建和管理容器镜像。<strong>Kubernetes</strong>： 容器编排平台，用于管理大规模容器化应用。</p>
+<p>dockerfile：Dockerfile 就是一套自动化构建镜像的指令集，用它你可以✅ 定义镜像的完整内容 ✅ 一键生成标准化镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 1. 基础镜像：从 Python 3.9 官方镜像开始构建</span><br><span class="line">FROM python:3.9-slim</span><br><span class="line"># 2. 设置工作目录（容器内的路径）</span><br><span class="line">WORKDIR /app</span><br><span class="line"># 3. 复制本地文件到镜像中</span><br><span class="line">COPY requirements.txt ./</span><br><span class="line">COPY your_script.py ./</span><br><span class="line"># 4. 安装依赖（比如第三方库）</span><br><span class="line">RUN pip install --no-cache-dir -r requirements.txt</span><br><span class="line"># 5. 定义容器启动时自动执行的命令</span><br><span class="line">CMD [&quot;python&quot;, &quot;./your_script.py&quot;]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CPU两大架构：ARM和X86"><a href="#CPU两大架构：ARM和X86" class="headerlink" title="CPU两大架构：ARM和X86"></a>CPU两大架构：ARM和X86</h2><p>中央处理单元（CPU）主要由运算器、控制器、寄存器三部分组成。</p>
+<ul>
+<li>x86使用复杂指令集，每条指令可以完成多个操作。适合高性能计算任务。功耗较高。主要应用于PC、服务器，厂商：Intel 和 AMD。</li>
+<li>arm使用精简指令集，每条指令只完成简单操作。强调通过流水线技术提高指令执行速度，适合低功耗场景。主要应用于移动设备、嵌入式系统，厂商：苹果（M 系列芯片）、高通（骁龙系列）、三星。</li>
+<li>ARM 正在向高性能领域迈进，而 x86 也在努力降低功耗。</li>
+</ul>
+<h2 id="Autowired构造器注入"><a href="#Autowired构造器注入" class="headerlink" title="@Autowired构造器注入"></a>@Autowired构造器注入</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> UserService userService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">OrderService</span><span class="params">(UserService userService)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.userService = userService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构造器注入是在实例创建时，将所有依赖通过构造函数一次性注入，缺少依赖会报错，通常配合final修饰成员变量，对象创建后依赖不可变（更安全）。可直接用构造方法传入mock对象，便于单元测试。字段注入则直接将依赖赋值给类属性，写法更简洁但依赖可变，可维护性和可测试性较差，容易出现依赖未注入或隐性错误。</p>
+<h2 id="BeanPostProcessor、InitializingBean的afterPropertiesSet、-PostConstruct"><a href="#BeanPostProcessor、InitializingBean的afterPropertiesSet、-PostConstruct" class="headerlink" title="BeanPostProcessor、InitializingBean的afterPropertiesSet、@PostConstruct"></a>BeanPostProcessor、InitializingBean的afterPropertiesSet、@PostConstruct</h2><p>BeanPostProcessor</p>
+<p>作用：Spring 提供的扩展接口，用于在 Spring 容器初始化每一个 Bean 前后统一做自定义处理。适用于全局 Bean 增强、AOP代理等场景。此处理器会应用于所有 Bean。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化前的处理</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Before:&quot;</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化后的处理</span></span><br><span class="line">        System.out.println(<span class="string">&quot;After:&quot;</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>InitializingBean 的 afterPropertiesSet 方法</p>
+<p>作用：Bean 实现该接口后，Spring 在依赖注入完成后自动调用 afterPropertiesSet() 方法。适合做 Bean 的初始化操作，如检查配置、加载资源。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyInitializingBean</span> <span class="keyword">implements</span> <span class="title class_">InitializingBean</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">afterPropertiesSet</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterPropertiesSet方法调用&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@PostConstruct</p>
+<p>作用：标准注解。标记一个方法，Spring在依赖注入完成后自动调用该方法。常用于初始化Bean自身资源，与 afterPropertiesSet 作用类似。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyPostConstructBean</span> &#123;</span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;@PostConstruct方法调用&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>区别：</p>
+<ul>
+<li><p>BeanPostProcessor 作用于容器所有Bean，可统筹管理Bean生命周期，常用于切面、代理、拦截等功能。</p>
+</li>
+<li><p>InitializingBean&#x2F;afterPropertiesSet 和 @PostConstruct 都是“自身Bean”的初始化回调，用于单个 Bean 的自定义初始化。</p>
+</li>
+<li><p>执行顺序：BeanPostProcessor（前） → @PostConstruct → afterPropertiesSet → BeanPostProcessor（后）</p>
+</li>
+</ul>
+<h2 id="ApplicationContextAware"><a href="#ApplicationContextAware" class="headerlink" title="ApplicationContextAware"></a>ApplicationContextAware</h2><p>ApplicationContextAware 是 Spring 的接口，允许 Bean 获得容器 ApplicationContext 引用，可动态获取其他 Bean 或资源。</p>
+<p>使用方法：实现此接口，并重写 setApplicationContext(ApplicationContext context) 方法即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBean</span> <span class="keyword">implements</span> <span class="title class_">ApplicationContextAware</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> ApplicationContext context;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setApplicationContext</span><span class="params">(ApplicationContext context)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.context = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">UserService</span> <span class="variable">userService</span> <span class="operator">=</span> (UserService) context.getBean(<span class="string">&quot;userService&quot;</span>);</span><br><span class="line"><span class="type">UserService</span> <span class="variable">userService</span> <span class="operator">=</span> context.getBean(UserService.class);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/27/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E5%81%9A%E8%BF%87%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A2%98%E4%B9%8BLetcode100/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -406,7 +718,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-24 22:28:09" itemprop="dateModified" datetime="2025-09-24T22:28:09+08:00">2025-09-24</time>
+                <time title="Modified: 2025-10-19 15:40:41" itemprop="dateModified" datetime="2025-10-19T15:40:41+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -438,6 +750,12 @@
 </li>
 <li><p>spring AOP：面向切面编程，一种编程范式，代码前后做增强操作，提高代码模块性。实现：基于动态代理，实现接口用JDK动态代理，否则CGLIB动态代理。@Aspect注解和@Around切入点实现切面。</p>
 </li>
+<li><p>AOP失效的场景：（1）同类对象内部方法调用，即在类内部一个方法调用被增强的另一个方法，AOP不会生效，因为此时没有经过Spring代理；（2）注解使用在private、static、final方法上，这类方法无法被代理或增强；（3）未通过Spring容器获取对象，如自己用new创建的对象，AOP不会生效；（4）未启用 AOP：缺少 @EnableAspectJAutoProxy 或组件扫描配置。 </p>
+</li>
+<li><p>为什么同类对象内部方法调用AOP不生效：因为没有经过Spring代理。Spring AOP的原理是通过代理对象（如JDK动态代理或CGLIB）拦截方法调用并织入切面逻辑。当外部通过Spring容器获取bean并调用时，实际调用的是代理对象的方法；而在同类方法内部直接调用，实际调用的是原对象中的方法，没有经过代理，AOP无法拦截，所以切面不会执行。这是“自调用”导致AOP失效的根本原因。</p>
+</li>
+<li><p>方法上加上什么修饰符会导致aop失效：static、final、private。static方法属于类，不会经过代理对象，Spring无法对其增强；final方法不可被子类重写，CGLIB代理也无法切入这些方法，AOP同样失效；private方法只能在类内部调用，不经过代理对象，因此也无法被增强。对于 default 方法：若使用 JDK 动态代理（基于接口），调用的是代理对象，AOP 可以生效；若使用 CGLIB 且正确继承，通常也生效。但若通过 this 调用或未走代理，则可能失效。</p>
+</li>
 <li><p>静态代理和动态代理：静态代理是由程序员手动编写代理类，或者通过工具生成，代理类在编译期间已经确定，方法调用时，代理类调用真实类的方法，可实现在调用前后添加额外逻辑。动态代理则在运行期间动态生成代理类，如JDK动态代理利用反射生成代理对象，无需提前写好代理类，只需实现InvocationHandler接口；CGLIB动态代理是通过字节码技术生成目标类的子类对象。静态代理灵活性差，维护成本高；动态代理可实现通用、高度灵活的AOP等机制。Spring AOP主要用动态代理实现。</p>
 </li>
 <li><p>JDK和CGLIB动态代理：JDK动态代理针对类实现某个接口，基于反射生成实现同样接口的代理类。CGLIB底层基于asm第三方框架，通过修改字节码生成一个子类。</p>
@@ -451,6 +769,8 @@
 <li><p>FactoryBean和BeanFactory：BeanFactory是IOC容器，负责生产和管理Bean对象：读取bean配置、加载bean、依赖注入、bean生命周期管理。FactoryBean是工厂Bean，可以实现该接口来自定义Bean的创建过程。重写getObject方法控制Bean的创建，getBean获取Bean实例。</p>
 </li>
 <li><p>Spring事务的传播机制：用来定义业务方法之间事务处理方式的机制，根据给定的事务规则来创建和控制事务的边界和范围，保证数据一致性。@Transactional注解的propagation属性指定。例如银行转账操作中有个审计方法，这个方法异常不想影响转账事务的回滚，就用REQUIRES_NEW创建新事务。一共有七种：1.REQUIRED：默认的，存在就加入该事务，没有事务就创建新的。2.REQUIRES_NEW：无论存不存在都创建新的。3.NOT_SUPPORTED：非事务方式执行，存在事务则挂起。4.SUPPORTS：存在则加入事务，不存在则非事务。5.NESTED：如果存在事务，则在嵌套事务（可独立提交，外部事务回滚它也得回滚）内执行。如果没有事务，则按REQUIRED属性执行。6.NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。7.MANDATORY：支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就抛出异常。</p>
+</li>
+<li><p>a方法加事务注解，b方法加事务注解，a方法内调b方法，事务会失效吗：不会，没有经过Spring代理。在Spring中，同一个类内a方法调用加了@Transactional的b方法时，b方法的事务注解会失效，只能跟随a方法的事务统一提交或回滚，无法开启新的事务或应用不同的事务传播行为。原因是事务注解是通过AOP代理机制实现的，内部调用不会经过Spring代理，导致b方法的@Transactional无法被拦截。若要让b方法事务生效，应通过容器注入方式调用。</p>
 </li>
 <li><p>@Autowired和@Resource：都是用来实现依赖注入的注解。@Autowired是spring的注解，默认根据类型注入，多个类型相同则进一步根据名称。如果按照类型匹配接口不同实现类需要结合@Qualifier。提供required属性允许找不到bean时是否抛出异常。@Resource是j2ee的注解，默认按byName自动注入，不能用于构造函数。</p>
 </li>
@@ -484,19 +804,40 @@
 </li>
 </ul>
 <h2 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h2><ul>
-<li>什么是springboot：基于spring的开源框架，用于快速创建独立的生产级别的可运行的Spring应用程序。不是Spring功能上的增强，而是提供一种快速开发Spring项目的方式。spring问题：写配置文件繁琐，依赖繁琐，maven坐标版本问题。springboot提供的优点：自动配置、起步依赖、安全。约定优于配置的理念，开发者不需要手动配置大量spring配置文件，而是自动配置。提供一系列的起步依赖starter，快速构建出一些常用的应用程序，整合Junit、redis、mybatis等很方便。帮助管理jar包版本，避免依赖版本不一致的问题。</li>
-<li>SpringBoot原理：SpringBoot通过自动配置原理，简化了Spring项目的搭建和运行。它利用大量的@EnableAutoConfiguration和条件化装配（如@Conditional），根据项目依赖自动注册相应组件和Bean，减少繁琐的XML配置，使开发者专注于业务逻辑。同时，SpringBoot内嵌Tomcat等容器，支持一键启动和打包。</li>
-<li>SpringCloud原理：SpringCloud是在SpringBoot基础上，集成和封装了微服务领域的常用组件（如注册中心、配置中心、服务网关等），通过一套规范和自动化配置，实现服务注册与发现、负载均衡、分布式配置管理、断路器等核心功能。这样极大提升了微服务系统的开发效率与可扩展性，方便系统的解耦和横向扩展。</li>
-<li>Spring、Spring MVC和SpringBoot区别：Spring是Java开发框架，用于创建企业级的java应用程序，提供IOC和AOP等功能。Spring MVC是Spring框架的一个模块，用于创建Web应用程序，使用控制器、视图和模型来实现MVC设计模式。Spring Boot是一个基于Spring框架的快速开发工具，使用自动配置快速创建Spring应用程序。总结：Spring是基础框架，Spring MVC是基于Spring的Web框架，而Spring Boot则是基于Spring的快速开发框架。Spring Boot内嵌了Tomcat、Jetty等Web容器，可以直接运行Web应用程序，而Spring MVC需要部署到Web容器中才能运行。</li>
-<li>springboot自动配置的原理：基于Spring的条件化配置功能实现，Condition接口和@Conditional注解。以及springboot的一系列自动配置类，Spring Boot应用的入口类会使用@SpringBootApplication注解，它包含@SpringBootConfiguration，@EnableAutoConfiguration和@ComponentScan注解，@EnableAutoConfiguration是自动配置的核心。@EnableAutoConfiguration利用Spring的@Import注解来加载配置类，META-INF&#x2F;spring.factories配置文件中定义了大量的配置类，springboot应用启动时会自动加载这些配置类。并且在配置类中使用Condition来加载满足条件的bean，如DataSource、JdbcTemplate等。（总结：1.条件注解 2.@EnableAutoConfiguration）</li>
-<li>springboot核心注解：@SpringBootApplication：复合注解，标识springboot应用的主类。@Configuration表明该类是java配置类。@ EnableAutoConfiguration开启自动配置功能。@ComponentScan用于自动扫描和注册bean。</li>
-<li>spring boot starter：是预配置的依赖管理器，将一组库&#x2F;依赖捆绑在一起，便于开发特定类型的应用程序。简化依赖管理，提供开箱即用的配置，是约定优于配置的应用，集成常用技术和库。spring-boot-starter-web：开发Web应用，包含Spring MVC、Tomcat容器等。spring-boot-starter-data-jpa：使用JPA的Starter，包含Hibernate、Spring Data JPA、Spring ORM等依赖。spring-boot-starter-data-redis：使用Redis的Starter，包含Jedis客户端和Spring Data Redis等依赖。spring-boot-starter-test：适用于测试的Starter，包含JUnit、Mockito、Spring Test等依赖。spring-boot-starter-actuator：监视器，适用于监控和管理Spring Boot应用程序的Starter，包含Spring Boot Actuator等依赖。</li>
-<li>spring-boot-starter-parent：springboot官方提供的一个Maven父工程，是springboot项目的父工程，parent元素设置为它，继承一些常用依赖和插件，减少手动配置。统一管理springboot中的常用依赖版本号，确保版本兼容性。</li>
-<li>如何自定义spring boot starter：在项目的src&#x2F;main&#x2F;resources目录下创建META-INF&#x2F;spring.factories文件，内容如下：org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;com.example.my_starter.MyAutoConfiguration，告诉springboot启动时自动加载配置类。创建MyAutoConfiguration配置类，并在类上加上@Configuration注解，在其中定义需要自动配置的Bean。然后打包上传Maven仓库。</li>
-<li>spring-boot-maven-plugin：用于将SpringBoot应用，以及依赖项和配置文件打包成可执行的Jar包或War包，包含嵌入式的Tomcat容器或Jetty容器。方便部署和运行。</li>
-<li>springboot打成的jar包和普通jar包区别：1⃣️springboot的jar包是可执行的jar包，包含了内嵌的Tomcat、Jetty等Web服务器，可直接运行。普通jar包纸包含类、资源等，需要在外部环境中手动配置Web服务器运行。2⃣️springboot打的jar包中包含了启动类的main方法，可直接运行。普通jar包需要指定启动类。3⃣️springboot的jar包中包含一些默认的配置文件，如application.properties，用于配置属性、数据源等。普通jar包不包含。</li>
-<li>springboot实现热部署：使用Spring DevTools工具，支持应用程序代码修改后自动重新加载应用程序上下文和服务器。spring loaded也行，避免反复构建和部署。</li>
-<li>springboot可以兼容老spring项目吗：可以使用@ImportResource注解来加载老的xml配置文件，用于@Configuration或@SpringBootApplication类上。</li>
+<li><p>什么是springboot：基于spring的开源框架，用于快速创建独立的生产级别的可运行的Spring应用程序。不是Spring功能上的增强，而是提供一种快速开发Spring项目的方式。spring问题：写配置文件繁琐，依赖繁琐，maven坐标版本问题。springboot提供的优点：自动配置、起步依赖、安全。约定优于配置的理念，开发者不需要手动配置大量spring配置文件，而是自动配置。提供一系列的起步依赖starter，快速构建出一些常用的应用程序，整合Junit、redis、mybatis等很方便。帮助管理jar包版本，避免依赖版本不一致的问题。</p>
+</li>
+<li><p>SpringBoot原理：SpringBoot通过自动配置原理，简化了Spring项目的搭建和运行。它利用大量的@EnableAutoConfiguration和条件化装配（如@Conditional），根据项目依赖自动注册相应组件和Bean，减少繁琐的XML配置，使开发者专注于业务逻辑。同时，SpringBoot内嵌Tomcat等容器，支持一键启动和打包。</p>
+</li>
+<li><p>SpringCloud原理：SpringCloud是在SpringBoot基础上，集成和封装了微服务领域的常用组件（如注册中心、配置中心、服务网关等），通过一套规范和自动化配置，实现服务注册与发现、负载均衡、分布式配置管理、断路器等核心功能。这样极大提升了微服务系统的开发效率与可扩展性，方便系统的解耦和横向扩展。</p>
+</li>
+<li><p>Spring、Spring MVC和SpringBoot区别：Spring是Java开发框架，用于创建企业级的java应用程序，提供IOC和AOP等功能。Spring MVC是Spring框架的一个模块，用于创建Web应用程序，使用控制器、视图和模型来实现MVC设计模式。Spring Boot是一个基于Spring框架的快速开发工具，使用自动配置快速创建Spring应用程序。总结：Spring是基础框架，Spring MVC是基于Spring的Web框架，而Spring Boot则是基于Spring的快速开发框架。Spring Boot内嵌了Tomcat、Jetty等Web容器，可以直接运行Web应用程序，而Spring MVC需要部署到Web容器中才能运行。</p>
+</li>
+<li><p>springboot自动配置的原理：基于Spring的条件化配置功能实现，Condition接口和@Conditional注解。以及springboot的一系列自动配置类，Spring Boot应用的入口类会使用@SpringBootApplication注解，它包含@SpringBootConfiguration，@EnableAutoConfiguration和@ComponentScan注解，@EnableAutoConfiguration是自动配置的核心。@EnableAutoConfiguration利用Spring的@Import注解来加载配置类，META-INF&#x2F;spring.factories配置文件中定义了大量的配置类，springboot应用启动时会自动加载这些配置类。并且在配置类中使用Condition来加载满足条件的bean，如DataSource、JdbcTemplate等。（总结：1.条件注解 2.@EnableAutoConfiguration）</p>
+</li>
+<li><p>springboot核心注解：@SpringBootApplication：复合注解，标识springboot应用的主类。@Configuration表明该类是java配置类。@ EnableAutoConfiguration开启自动配置功能。@ComponentScan用于自动扫描和注册bean。</p>
+</li>
+<li><p>springboot启动时都用到哪些注解：</p>
+<p>1、@SpringBootApplication启动入口注解，复合注解：</p>
+<p>@SpringBootConfiguration：标识这是一个 Spring Boot 配置类；</p>
+<p>@EnableAutoConfiguration：启用自动配置，根据依赖自动加载配置（如有 spring-boot-starter-web 就配置 Web 环境）；</p>
+<p>@ComponentScan：自动扫描主类所在包及其子包下的 @Component、@Service、@Controller 等组件并注册为 Bean。</p>
+<p>2、@EnableScheduling 开启定时任务、@EnableAsync 开启异步方法执行、@PropertySource 加载自定义配置文件、@Import 加载额外配置类。</p>
+<p>3、@Configuration：标识某个类为Spring配置类，可用于创建和管理Bean。相当于xml配置文件。其中@Bean用于注册方法返回对象为Spring容器Bean。实现Bean的注册和管理。</p>
+</li>
+<li><p>spring boot starter：是预配置的依赖管理器，将一组库&#x2F;依赖捆绑在一起，便于开发特定类型的应用程序。简化依赖管理，提供开箱即用的配置，是约定优于配置的应用，集成常用技术和库。spring-boot-starter-web：开发Web应用，包含Spring MVC、Tomcat容器等。spring-boot-starter-data-jpa：使用JPA的Starter，包含Hibernate、Spring Data JPA、Spring ORM等依赖。spring-boot-starter-data-redis：使用Redis的Starter，包含Jedis客户端和Spring Data Redis等依赖。spring-boot-starter-test：适用于测试的Starter，包含JUnit、Mockito、Spring Test等依赖。spring-boot-starter-actuator：监视器，适用于监控和管理Spring Boot应用程序的Starter，包含Spring Boot Actuator等依赖。</p>
+</li>
+<li><p>spring-boot-starter-parent：springboot官方提供的一个Maven父工程，是springboot项目的父工程，parent元素设置为它，继承一些常用依赖和插件，减少手动配置。统一管理springboot中的常用依赖版本号，确保版本兼容性。</p>
+</li>
+<li><p>如何自定义spring boot starter：在项目的src&#x2F;main&#x2F;resources目录下创建META-INF&#x2F;spring.factories文件，内容如下：org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;com.example.my_starter.MyAutoConfiguration，告诉springboot启动时自动加载配置类。创建MyAutoConfiguration配置类，并在类上加上@Configuration注解，在其中定义需要自动配置的Bean。然后打包上传Maven仓库。</p>
+</li>
+<li><p>spring-boot-maven-plugin：用于将SpringBoot应用，以及依赖项和配置文件打包成可执行的Jar包或War包，包含嵌入式的Tomcat容器或Jetty容器。方便部署和运行。</p>
+</li>
+<li><p>springboot打成的jar包和普通jar包区别：1⃣️springboot的jar包是可执行的jar包，包含了内嵌的Tomcat、Jetty等Web服务器，可直接运行。普通jar包纸包含类、资源等，需要在外部环境中手动配置Web服务器运行。2⃣️springboot打的jar包中包含了启动类的main方法，可直接运行。普通jar包需要指定启动类。3⃣️springboot的jar包中包含一些默认的配置文件，如application.properties，用于配置属性、数据源等。普通jar包不包含。</p>
+</li>
+<li><p>springboot实现热部署：使用Spring DevTools工具，支持应用程序代码修改后自动重新加载应用程序上下文和服务器。spring loaded也行，避免反复构建和部署。</p>
+</li>
+<li><p>springboot可以兼容老spring项目吗：可以使用@ImportResource注解来加载老的xml配置文件，用于@Configuration或@SpringBootApplication类上。</p>
+</li>
 </ul>
 <ul>
 <li>SpringBoot 项目启动参数：</li>
@@ -554,7 +895,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-24 22:14:26" itemprop="dateModified" datetime="2025-09-24T22:14:26+08:00">2025-09-24</time>
+                <time title="Modified: 2025-10-19 18:30:32" itemprop="dateModified" datetime="2025-10-19T18:30:32+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -673,19 +1014,20 @@
 <li>metaq总结：高性能（吞吐量高并发量高，队列模型、并行消费、基于Netty）、高可靠性（消息丢失可能小，重试机制、故障规避机制、重试、死信队列）、高实时性（低延迟，快速失败、异步刷盘、零拷贝）</li>
 </ul>
 <ul>
-<li>不同 mq 区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。</li>
+<li>Kafka和RocketMq区别： 架构：Kafka基于分区和副本、使用Zookeeper管理元数据，适合大数据实时处理。RocketMQ自有NameServer和Broker机制，支持更多灵活消息特性。 消息模型：Kafka以Topic为中心，消费者从分区拉取消息。RocketMQ支持Topic和Tag，分组与消费更灵活。 事务&#x2F;延迟消息：Kafka事务功能局限，RocketMQ原生支持分布式事务和延迟队列。 可靠性：Kafka偏向高吞吐，RocketMQ更注重消息可靠性和低延迟。kafka通过副本机制（Replication）保证高可用性，但在极端情况下（如所有副本都不可用）可能会丢失消息，metaq支持同步刷盘、异步刷盘和事务消息，提供更高的消息可靠性，确保消息不丢失。</li>
 <li>mq路由方式： Kafka：生产者发送消息到指定的Topic，消息根据分区策略（如key哈希或轮询）分配到分区，消费者按分区自动拉取；分区保证消息有序，提升并发。 RocketMQ：支持Topic+Tag路由，消息可通过Tag细分类别。Producer可自定义MessageQueue选择器，根据业务或hash映射到指定队列，消费者可按Tag精准订阅。</li>
 <li>MQ如何保证消息可靠性：Kafka： 消息持久化到磁盘，设置副本数提升高可用； 生产者可配置ack机制，决定写入成功的判定标准（如ack&#x3D;all保证最强一致性）。 RocketMQ： 消息写入Broker后持久化，支持异步&#x2F;同步刷盘，以及主从复制； 提供事务消息机制，以及消息重复、丢失、顺序等保障。</li>
+<li>RocketMq如何Ack的：Ack指的是消费者收到消息后向消息队列反馈处理结果，避免消息丢失或重复消费。自动Ack：在Push消费模式下，消费者成功处理消息，未抛出异常即认为消费成功，客户端自动向Broker确认消息，无需手动干预，适用于处理逻辑简单场景。手动Ack：在Pull消费模式或部分Push模式下，采用显式确认模式，只有消费者回调方法明确返回CONSUME_SUCCESS才视为消费成功，如果消费过程中发生异常或返回RECONSUME_LATER，RocketMQ会将消息投递到RETRY队列，延迟重试，重试多次仍失败则进入死信队列（DLQ）。引申：可结合事务进行批量确认。</li>
 </ul>
-<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><ul>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><ul>
 <li>消息队列：消息队列是一个用于接收消息、存储消息并且转发消息的中间件，异步、削峰、解耦。</li>
 <li>metaq中的nameserver：类似kafka中zookeeper的角色，不直接采用ZooKeeper是因为ZooKeeper有自动选举Master的功能，MetaQ的架构设计上决定了它不需要进行Master选举，而只需要使用一个轻量级的元数据服务器就可以了。</li>
 <li>kafka：一个多分区、多副本且基于 ZooKeeper协调的分布式消息系统。定位为一个分布式流式处理平台，高吞吐、可持久化、可水平扩展、支持流数据处理。</li>
 <li>kafka的架构：zookeeper保存broker集群元数据，对控制器进行选举操作。Producer生产消息并发送到Broker。Consumer从Broker订阅并消费消息。Broker接收生产者的消息，存储消息，为消息设置偏移量。Topic消息的主题。一个Topic细分为多个分区，在存储上看作一个可追加的Log文件。offset是消息在分区中的唯一标识，保证消息在分区的顺序性，不跨分区，也就是kafka只保证分区有序性。Replication副本，保证高可用，同一Partion在多个Broker上存多个副本，主提供读写，主失效的话，zookeeper选举controller，controller选择主。</li>
 <li>kafka高可用：多分区，一个Topic主题分区数据跨越多个broker分布式存储，每个分区有多个副本，主出现故障，可以故障转移。</li>
 <li>kafka一定不会丢失消息吗：只有一个副本情况下会丢失，生产者确认策略是异步的还是同步的，异步的可能在消息到达服务器之前丢失。短暂网络故障、磁盘损坏。</li>
-<li>netty的优点：1⃣️Reactor模型处理并发网络事件：主Reactor线程负责接收新的客户端连接，将连接分配给从Reactor，负责监控和处理IO事件。2⃣️内存管理：池化的内存分配方式，减少内存分配和回收成本。字节缓冲区ByteBuf提供内存读写，较JDK自带的ByteBuffer具有更高的性能，引用计数。3⃣️连接管理：基于事件循环(EventLoop)的模型来管理网络连接。每个EventLoop都维护了它自己的选择器(Selector)和任务队列，能够处理成百上千的连接而不会创建与之对等的线程，降低资源消耗。链式的处理器ChannelHandler来处理网络事件。</li>
-<li>tcp和udp：tcp面向连接，udp无连接。tcp提供可靠传输，流量控制，拥塞控制，udp尽力而为，不保证数据包顺序、完整性、正确性，不会自动重传。tcp点到点的，面向字节流，传输慢，首部开销大20-60字节，适合文件传输、网页。udp一对一多对一多对多一对多，面向报文，传输效率快，不可靠，首部开销小8字节，适合视频通话。</li>
+<li>kafka如何保证不丢消息又不会重复消费：不丢消息：生产者发送消息时，等待所有副本确认；多副本存储，即使部分节点挂掉，数据也不丢；Kafka消费者在处理完一条消息后，手动告诉Kafka这条消息已经处理成功，然后Kafka才会更新消费者的偏移量（Offset）。不重复消费：生产者启用幂等性，避免重复发送相同消息。</li>
+<li>介绍kafka的分区，消费者和partition的关系是什么：Kafka的分区（Partition）是主题（Topic）在物理存储层的分片，一个主题可被划分为多个分区。每个分区都是独立、有序、不可变的消息队列，能提高并发能力和扩展性。消费者组（Consumer Group）中的每个消费者负责读取部分分区。Kafka保证每个分区只能被一个消费者组中的一台消费者独占消费，避免重复处理。分区数量越多，理论上并发消费能力越强。</li>
 </ul>
 <h2 id="netty"><a href="#netty" class="headerlink" title="netty"></a>netty</h2><ul>
 <li>Netty是什么：提供异步的基于事件驱动的网络应用程序框架。用来快速开发高性能、高可靠性的网络IO程序，最流行的NIO框架。Elasticsearch、Dubbo、gRpc、Zookeeper、Rocketmq都用Netty。NIO、Seletor选择器、事件驱动、回调异步。</li>
@@ -709,6 +1051,7 @@
 <li>Netty长连接和心跳机制：TCP长连接中可能出现断网异常，因此引入心跳机制，在client和server之间没有数据交互时给对方发送特殊数据包，对方收到后回应一个（PING-PONG交互），表示仍然在线。</li>
 <li>Netty对象池技术：对象池缓存创建好的对象，避免需要时才创建。Netty中buffer是对数据的抽象，数据拷贝时用到，代表可读写的内存区域，通过ByteBuf类实现，Netty会对其进行池化，减少内存分配和垃圾回收开销。</li>
 <li>Netty序列化协议：不强制使用特定的序列化协议。它提供了灵活的编解码器机制，允许开发者根据需要使用不同的序列化协议：json&#x2F;pb。</li>
+<li>netty的优点：1⃣️Reactor模型处理并发网络事件：主Reactor线程负责接收新的客户端连接，将连接分配给从Reactor，负责监控和处理IO事件。2⃣️内存管理：池化的内存分配方式，减少内存分配和回收成本。字节缓冲区ByteBuf提供内存读写，较JDK自带的ByteBuffer具有更高的性能，引用计数。3⃣️连接管理：基于事件循环(EventLoop)的模型来管理网络连接。每个EventLoop都维护了它自己的选择器(Selector)和任务队列，能够处理成百上千的连接而不会创建与之对等的线程，降低资源消耗。链式的处理器ChannelHandler来处理网络事件。</li>
 </ul>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
 <li>设计模式：23种，为复杂解耦，将一大坨代码拆分成职责单一的模块，满足高内聚低耦合、开闭原则（不改变现有代码的基础上扩展功能）。创建型：创建和使用解耦。结构型：不同的功能代码解耦。行为型：不同的行为代码解耦。</li>
@@ -782,6 +1125,8 @@
 </li>
 <li><p>tcp不提供加密功能，需要应用层的TSL&#x2F;SSL。两台服务器间可以建立多个tcp连接（socket&#x3D;ip+端口号不同即可）</p>
 </li>
+<li><p>tcp和udp：tcp面向连接，udp无连接。tcp提供可靠传输，流量控制，拥塞控制，udp尽力而为，不保证数据包顺序、完整性、正确性，不会自动重传。tcp点到点的，面向字节流，传输慢，首部开销大20-60字节，适合文件传输、网页。udp一对一多对一多对多一对多，面向报文，传输效率快，不可靠，首部开销小8字节，适合视频通话。</p>
+</li>
 <li><p>输入url发生什么：1.DNS解析获取ip，浏览器缓存-路由器缓存-DNS缓存。2.根据ip建立TCP连接。3.浏览器向服务器发送http请求。4.服务器响应http请求。5.浏览器进行渲染。</p>
 </li>
 <li><p>tcp&#x2F;ip理解：IP协议是网络层的协议，使用分组交换技术来传输数据，通过路由器进行转发，最终到达目的地。无连接性、无状态性、不保证可靠传输。TCP是传输层协议，主要负责在IP协议提供的基础上实现可靠的、有序的、有连接的和无差错的数据传输。</p>
@@ -803,6 +1148,8 @@
 <li><p>http请求信息里有什么：请求行（请求方法、URL、协议版本）、请求头（如Host、User-Agent、Accept、Content-Type等，用于传递客户端信息）和可选的请求体（如POST提交的数据）。</p>
 </li>
 <li><p>http请求传参方式：1）URL参数（查询字符串），如?id&#x3D;1，常用于GET请求；2）请求体传参，如表单数据或JSON，多用于POST、PUT请求；3）请求头传参，如通过Authorization传递令牌。</p>
+</li>
+<li><p>进程通信的方式： 管道：分为无名管道和命名管道。无名管道用于有亲缘关系的进程间通信，数据是单向流动的；命名管道可以在无亲缘关系的进程间通信。消息队列：消息的链表，进程可以从中读写消息，克服了管道只能承载无格式字节流的缺点。共享内存：多个进程可以共享同一块内存区域，是最快的IPC方式，不过需要进程间同步访问。信号量：是一个计数器，用于控制多个进程对共享资源的访问，主要用于进程同步。信号：用于通知进程发生了某个事件，进程收到信号后会采取相应动作。套接字：支持不同主机间的进程通信，可用于网络编程。</p>
 </li>
 </ul>
 <h2 id="边缘计算"><a href="#边缘计算" class="headerlink" title="边缘计算"></a>边缘计算</h2><ul>
@@ -865,7 +1212,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-09-24 22:28:56" itemprop="dateModified" datetime="2025-09-24T22:28:56+08:00">2025-09-24</time>
+                <time title="Modified: 2025-10-19 18:27:24" itemprop="dateModified" datetime="2025-10-19T18:27:24+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -893,7 +1240,19 @@
 </li>
 <li><p>redis分布式锁的原理：Redis分布式锁基于SETNX+EXPIRE实现，利用Redis单线程原子操作保证互斥。加锁使用SET key value NX EX seconds，key为锁名称，value为唯一标识符，用来标识哪个客户端持有这个锁，防止误删；释放锁通过Lua脚本原子性校验并删除。</p>
 </li>
+<li><p>redis分布式锁需要考虑：setnx保障互斥性、设置过期时间避免客户端崩溃导致锁无法释放、任务执行时间长则通过后台线程定期续期、使用redis集群避免单点故障。</p>
+</li>
+<li><p>Redis分布式锁和zk分布式锁区别：1、实现原理：<strong>Redis</strong> <strong>分布式锁</strong>：通常利用 SETNX尝试设置一个唯一的键值对来获取锁，可通过 Lua 脚本保证操作的原子性。<strong>Zookeeper</strong> <strong>分布式锁</strong>：基于 Zookeeper 的临时顺序节点特性，客户端尝试创建一个临时顺序节点，然后判断自己创建的节点是否是当前所有子节点中序号最小的，如果是则表示获取到锁，用完后节点自动删除（因是临时节点）释放锁，否则监听前一个序号节点来等待锁释放。2、性能：<strong>Redis</strong> <strong>分布式锁</strong>：性能相对较高，因为 Redis 基于内存操作，读写速度快，适合高并发场景下频繁获取和释放锁的操作。<strong>Zookeeper</strong> <strong>分布式锁</strong>：性能稍逊一筹，由于 Zookeeper 是基于磁盘存储以及涉及节点的创建、监听等较复杂操作。3、可靠性：<strong>Redis</strong> <strong>分布式锁</strong>：存在一定风险，可能出现锁提前过期导致业务未完成锁却被释放，或者节点宕机使得锁无法正常释放或续期等问题。<strong>Zookeeper</strong> <strong>分布式锁</strong>：可靠性较高，基于 Zookeeper 自身的一致性保证以及临时顺序节点机制，只要 Zookeeper 集群正常，基本能保证锁的正确获取与释放，不容易出现锁异常的情况。4、应用场景：<strong>Redis</strong> <strong>分布式锁</strong>：更适合在对性能要求高、业务逻辑相对简单且锁持有时间较短的场景。<strong>Zookeeper</strong> <strong>分布式锁</strong>：适合对可靠性要求高、需要强顺序保证的复杂业务场景，像分布式任务调度系统中确保任务按顺序执行等场景。</p>
+</li>
+<li><p>redis和zk分布式锁区别：redis依赖单线程特性保证原子性，zk基于临时顺序节点，利用ZK的强一致性和Watch机制实现。redis在主从切换的时候可能出现锁丢失，zk强一致性但是性能较低。总之，Redis适合高性能场景，ZK适合高一致性场景。</p>
+</li>
 <li><p>redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点负责多个哈希槽。2⃣️无中心架构：节点对等，无中心节点。3⃣️主从复制：一个节点可以有多个从节点，实现故障恢复、数据冗余、读写分离。</p>
+</li>
+<li><p>redis集群模式数据分片的原理：整个集群共设有16384个哈希槽（2的14次方）。使用CRC16（16位循环冗余校验算法）对数据块进行多项式除法运算，生成一个16位的校验值。然后对16384取余，得到对应哈希槽。每个节点分配一些槽，实现负载均衡和横向扩展。</p>
+</li>
+<li><p>redis集群扩容：纵向扩展：升级单个实例配置（内存&#x2F;磁盘&#x2F;CPU），简单但受限于硬件；横向扩展：增加Redis实例数量（分片），将数据分布到多个节点上。通过 Redis Cluster 实现，采用分片机制，使用16384个哈希槽来划分数据，新增节点后，系统会自动迁移部分Slot到新节点，实现负载均衡。</p>
+</li>
+<li><p>redis主从切换会丢数据吗：Redis主从切换时有可能丢数据，主要因为主从同步有延迟，主节点尚未同步的数据在主宕机后无法恢复到新主节点。此外，持久化机制如AOF、RDB也可能因未及时写盘而造成数据丢失。</p>
 </li>
 <li><p>redis两种同步策略：全量RDB文件、增量同步AOF</p>
 </li>
@@ -908,6 +1267,8 @@
 <li><p>redis哨兵机制：保证高可用，实现集群监控故障转移。多个sentinel节点。1⃣️监控：sential节点与其他master&#x2F;slave&#x2F;sentinel节点发送PING做心跳检测，交换信息监控主从拓扑。2⃣️主观客观下线：主观一台认为，客观大多数认为。3⃣️哨兵选举：sentinel选出一个leader做故障转移，raft算法，1.节点认为主管下线就申请成为leader，2.其他节点没有答应别人就答应他，3.票数达标就成为leader。4⃣️故障转移：根据从节点优先级选择新的master节点，sentinel leader向其他节点发送命令，并关注原master。</p>
 </li>
 <li><p>redis双写一致性：更新操作同时写入数据库和缓存，因为分布式系统中网络延迟、系统故障等原因，导致两者数据不一致，解决：1.先写数据库再删缓存：高并发可能会多次缓存穿透，增加数据库压力。2.先写数据库再更新缓存：不会缓存穿透，但是更新缓存操作需要并发控制防止竞争。更高级：消息队列保障顺序、分布式锁。</p>
+</li>
+<li><p>redis和mysql的双写一致性：先更新数据库，再删除缓存。数据库更新成功后，删除 Redis 中的旧数据，避免脏读。可结合延迟双删、消息队列异步处理，降低并发下不一致风险。极端情况下可用分布式锁，但会降低性能。删除数据时，先删除数据库，再删除缓存，隔一会儿再删缓存。 </p>
 </li>
 <li><p>redis延时双删：在删除数据时，防止删除不能完全同步，首先删除数据库记录，再第一次删除缓存记录，延时短暂时间后，再删一次缓存。避免缓存网络抖动未删除。如果之间又写入，缓存穿透一次读到数据库。</p>
 </li>
@@ -930,6 +1291,10 @@
 <li><p>redis6.0改用多线程：依然使用单线程处理客户端请求，只是多线程处理数据读写和协议解析。redis性能瓶颈在网络IO而非CPU。</p>
 </li>
 <li><p>redis热key问题：某个key大量并发打到一台服务器，达到网卡上线，宕机。缓存雪崩。解决：热key打散在不同服务器。提前加载热key到内存，内存做二级缓存。</p>
+</li>
+<li><p>redis的大key：指的是value（值）很大，而不是key（键）本身。大key包含大量的数据，如大型的字符串、列表、集合等。导致在进行某些操作时（如删除、过期、内存回收等）对Redis性能产生负面影响。可能会阻塞主线程，导致Redis响应延迟、持久化时间变长、传输消耗带宽。</p>
+</li>
+<li><p>redis中大key解决：尽量避免将大量数据存储在一个key中，将数据拆分成多个小key存储，如大型集合拆分成多个小集合。使用分片，将数据分片存储在不同的Redis实例中。及时发现并清理大key。使用更高效的数据结构来存储数据，例如使用压缩列表（ziplist）或哈希表（hash）。对于需要删除的大key，可以使用渐进式删除的方法，逐步删除数据，避免一次性删除导致的阻塞。</p>
 </li>
 <li><p>redis设置过期时间：expire key seconds；set key value EX seconds；底层采用过期字典存储键的过期时间。</p>
 </li>
@@ -954,6 +1319,7 @@
 <ul>
 <li>redis如何部署：Redis 部署方式主要有三种：第一，单机部署，可以从官网下载源码编译并启动服务；第二，使用 Docker 快速拉取官方镜像并启动容器；第三，集群部署，配置多个节点并通过命令组建集群用于高可用和分片扩展。</li>
 <li>redis使用场景：缓存热点数据、分布式锁、计数器、排行榜、消息队列。</li>
+<li>redis的命令：（1）set key value、expire key 60、SET key value NX EX 60、（2）新建hash并设置字段：HSET hashkey field1 “value1”、HGET hashkey field1、HGETALL hashkey、（3）操作List：左侧插入LPUSH mylist “apple”、RPUSH mylist “orange”、LPOP mylist、RPOP mylist、获取指定区间的元素LRANGE mylist 0 -1（全部）、列表长度LLEN mylist、（4）操作zset：添加成员及分数ZADD myzset 100 “Tom”、获取前两位及分数ZRANGE myzset 0 1 WITHSCORES、获取某成员分数ZSCORE myzset “Tom”、获取总成员数ZCARD myzset、按分数区间获取ZRANGEBYSCORE myzset 90 100、删除成员ZREM myzset “Tom”、（5）操作set：SADD myset “apple”、获取所有元素SMEMBERS myset、判断是否在集合SISMEMBER myset “apple”、SREM myset “apple”、元素个数SCARD myset、交集SINTER set1 set2、并集SUNION set1 set2、差集SDIFF set1 set2、（6）自增键：用set设置，再用incr操作，INCR mycounter、INCRBY mycounter 5、DECR mycounter。</li>
 </ul>
 <h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><ul>
 <li><p>RDBMS和NoSQL：RDBMS关系型数据库（组织化结构，表格行列格式，Mysql、Oracle、PostgreSQL）、Not only sql非关系型数据库（数据存储没有固定格式，可横向扩展）。1⃣️数据结构：结构化与非结构化，键值redis、列存储HBase、文档MongoDB、图形存储Neo4j。2⃣️数据关联：sql中多张表可关联，nosql数据之间无关联。3⃣️查询语言：sql固定查询语言，nosql不固定查询语言。4⃣️事务一致性：sql提供强一致性和完整事务支持，nosql提供BASE基本可用、软状态、最终一致性。5⃣️存储方式：sql存在磁盘，nosql存在内存。6⃣️扩展性：sql垂直扩展，升级单个服务器的内存cpu存储空间。nosql可水平扩展，分布式存储。</p>
@@ -961,6 +1327,8 @@
 <li><p>数据库事务：一条&#x2F;多条语句组成，要么全部执行要么全部不执行的执行单元。1⃣️原子性：最小执行单元，操作失败时undo log来回滚。2⃣️一致性：事务执行前后数据保持一致。3⃣️隔离性：并发执行的事务之间不会互相干扰，MVCC、锁机制实现不同隔离级别。4⃣️持久性：事务一旦提交对数据库的修改是永久的，系统崩溃时使用redo日志来恢复。</p>
 </li>
 <li><p>redo日志和undo日志：1⃣️redo log：重做日志，保障持久性，系统崩溃时恢复数据。物理日志，记录数据页的物理修改操作。更新先写入redo log，再空闲时更新到磁盘，预写式技术减少IO频率。2⃣️undo log：撤销日志，保障原子性，回滚时恢复数据。逻辑日志，记录数据操作的逆向操作。还提供一致性读，即使数据被修改也能从undo log访问到修改前的数据。</p>
+</li>
+<li><p>redo log和undo log的刷盘时机：在事务提交时，必须将redo log缓冲区中的内容写入到磁盘，或者缓冲区达到一定大小后自动刷盘。undo log的刷盘时机通常不那么严格，因为它们只在需要回滚事务时才需要，通常在事务提交前写入磁盘，但也可能延迟写入。</p>
 </li>
 <li><p>事务的隔离级别：事务隔离级别定义了一个事务可能受其他事务影响的程度。1⃣️读未提交：可能脏读（读到其他事务未提交的修改）。2⃣️读已提交：不可重复度（事务内两次读到数据不一致）。3⃣️可重复度：默认的，幻读（可能读到第一次读没有的新纪录，行数不一致）。4⃣️串行化：事务串行执行，强制锁定事务访问的数据，锁竞争。（表级锁）</p>
 </li>
@@ -987,6 +1355,8 @@
 <li><p>哈希索引：Memory存储引擎使用，基于内存。散列算法使用哈希表很快O(1)，适合等值比较查询，不适合范围查询。如果重复的键会哈希冲突。Innodb中自适应哈希索引。</p>
 </li>
 <li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
+</li>
+<li><p>跳表和B+树区别：数据结构：跳表：基于有序链表，通过在原链表基础上添加多层索引链表来实现快速查找等操作，呈多层链式结构。B + 树：是一种多路平衡查找树，叶子节点形成有序链表且存储实际数据（或指向数据的指针），非叶子节点主要起索引作用。查找效率都O (log n)，跳表最坏O(n)。<strong>跳表</strong>常用于实现一些简单高效的内存数据结构，比如 Redis 的有序集合部分实现，适合在内存中处理动态数据集合的快速查找等操作。<strong>B +</strong> <strong>树</strong>广泛应用于数据库索引系统（如 MySQL 的 InnoDB 存储引擎索引），适合对外存（磁盘）数据进行高效组织和检索，减少磁盘 I&#x2F;O 次数。</p>
 </li>
 <li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
 </li>
@@ -1023,6 +1393,10 @@
 </li>
 <li><p>mysql分库分表：将数据分散在多个数据库和表中。垂直拆分：按照表的列来进行拆分，将一个表分割成多个表。水平拆分：按照表的行进行拆分，用某个id做哈希取余进行分散。挑战：数据一致性、跨库或跨表的事务处理、数据迁移和重新分片等问题。解决：两阶段提交会锁定资源。XA协议。事务补偿。</p>
 </li>
+<li><p>分库分表中的数据倾斜：在分库分表中，数据分布不均匀，导致某些库或表负载过高，影响性能。选择更均匀的字段作为分片键；使用一致性哈希算法分散数据，减少倾斜；动态扩容，增加分片并迁移热点数据；对高频访问的热点数据单独缓存，减轻数据库压力。</p>
+</li>
+<li><p>一致性哈希算法是一种分布式哈希技术，用于解决节点增减时数据大规模迁移的问题。它将哈希空间组织成一个环形，节点和数据按哈希值映射到环上，数据由其顺时针方向最近的节点负责。当节点增减时，仅影响相邻数据，显著减少数据迁移量，广泛应用于分布式缓存和负载均衡。引入“虚拟节点”机制，使物理节点在环上对应多个虚拟位置。</p>
+</li>
 <li><p>跨库事务：tddl不支持跨库事务提交，强一致性需要使用切面事务实现。最终一致性可以用状态机+定时任务实现。</p>
 </li>
 <li><p>自增id：1.redis提供incr命令，单线程。2.雪花id：41位时间戳（毫秒，能用70年），10位机器标识，12位序列号。</p>
@@ -1049,6 +1423,10 @@
 </li>
 <li><p>慢sql分析：查看慢查询日志；使用EXPLAIN分析执行计划，关注扫描类型（type）、可能索引（key）、返回行数（rows）等；检查SQL语句、字段、索引设计是否合理。</p>
 </li>
+<li><p>mysql的explain关注哪几列：（1）type查询方式：性能从高到低依次为：system（单行表）、const（唯一索引单行）、eq_ref（唯一索引连接）、ref（非唯一索引）、range（范围查询）、index（索引扫描）、ALL（全表扫描）；（2）key：显示实际使用的索引。为 NULL 时表示没有用到索引；（3）rows：表示预估需要扫描的数据行数，行数越少越好；（4）extra：显示额外的信息，Using index 表示查询仅用索引就返回结果，性能好；Using filesort 表示需要额外的文件排序，通常会影响性能；Using temporary 表示查询过程中需要建立临时表，如分组或去重等操作，会消耗额外资源。</p>
+</li>
+<li><p>mysql慢查询：索引优化，为查询条件中的字段添加索引，避免全表扫描，注意避免索引失效（如使用!&#x3D;、OR、函数操作等）。优化JOIN语句，减少嵌套查询；使用EXPLAIN分析执行计划。对大表进行分库分表。</p>
+</li>
 <li><p>MySQL索引失效场景：对索引字段使用函数或运算、类型不匹配导致隐式转换、模糊查询左侧为%、未使用联合索引的最左前缀、OR条件中部分字段无索引、使用&lt;&gt;、!&#x3D;、IS NULL、等不等空值查询，以及高重复率低选择性字段。</p>
 </li>
 <li><p>索引什么不要对大字段建立：大字段占用空间大，会导致索引维护和存储开销大，影响插入、更新时的性能。并且大字段检索效率低。</p>
@@ -1056,6 +1434,21 @@
 <li><p>mysql底层数据结构：B+树（如InnoDB索引）、哈希表（Memory引擎、自适应哈希索引）以及页式存储（Page）。B+树支持高效检索和范围查询，页结构提升读写性能，事务日志（Redo、Undo Log）则保证数据安全和事务性。</p>
 </li>
 <li><p>sql注入如何解决：SQL注入是一种攻击手段，攻击者通过拼接恶意SQL代码获取或篡改数据。解决SQL注入的关键方法是使用<strong>预编译</strong>或参数化查询，避免直接拼接SQL字符串，使用户输入不会被当作SQL指令解析。加强输入校验与过滤，控制输入的格式和内容，限制特殊字符。使用ORM框架如MyBatis、Hibernate，默认采用安全的参数绑定方式。设置适当的权限，敏感操作需严格验证和监控，从而综合防止SQL注入风险。</p>
+</li>
+</ul>
+<ul>
+<li><p>mysql索引失效：（1）对索引列使用了函数、计算表达式，索引会失效。（2）使用LIKE模糊查询时以“%”开头，则无法使用索引。（3）查询条件的类型与索引列不一致会造成隐式转换，从而索引失效。比如列为varchar，传入的是数字。（4）使用 !&#x3D;、&lt;&gt;、&lt;、&gt; 等非等值范围条件时，复合索引中，一旦遇到范围查询，右边的列将无法使用索引。!&#x3D; 和 &lt;&gt; 因匹配大量数据，优化器可能直接放弃索引转为全表扫描。（5）如果or连接的多个条件中，有部分字段未建索引，会导致全表扫描。（6）IS NOT NULL 通常导致索引失效，因匹配大量数据，优化器倾向于全表扫描。</p>
+</li>
+<li><p>mysql联合索引使用失效问题：原则：最左前缀原则 + 范围查询中断右侧字段使用。举例abc联合索引。</p>
+<p>select * from myTest where a&#x3D;3 and b&gt;7 and c&#x3D;3;   —- b范围值，断点，阻塞了c的索引。a用到了，b也用到了，c没有用到，注意b自身能用到。</p>
+<p>select * from myTest where a&#x3D;3 order by b;  – a用到了索引，b在结果排序中也用到了索引的效果，a下面任意一段的b是排好序的。</p>
+<p>select * from mytable where b&#x3D;3 order by a;   – b没有用到索引，排序中a也没有发挥索引效果。</p>
+</li>
+<li><p>mysql死锁：MySQL死锁通常发生在多个事务交叉锁定不同资源、并发操作顺序不一致或锁范围冲突时。事务中的行锁（如InnoDB）只在事务提交或回滚时才会统一释放，若事务长期不提交，锁会持续持有，增大死锁风险。</p>
+</li>
+<li><p>mysql中的ROW_NUMBER()：ROW_NUMBER() 是 SQL 中的窗口函数，用于为每一行分配一个唯一的连续序号（从 1 开始），常配合 OVER() 子句使用。它支持按指定字段分组（PARTITION BY）并在组内按某列排序（ORDER BY）。例如：统计每个班级学生成绩排名时，可用 PARTITION BY 班级 ORDER BY 成绩，使每班学生独立编号。即使成绩相同，ROW_NUMBER() 仍会强制区分顺序。 ROW_NUMBER() OVER (PARTITION BY class ORDER BY score DESC) AS rank_no。</p>
+</li>
+<li><p>批量数据插入Mysql注意：使用批量插入语句，减少网络和磁盘IO，提高效率。插入前可暂时关闭非必要索引，插入后再重建，以提高写入速度。将多条插入语句放在一个事务中，减少事务提交次数。分批插入，避免一次性写入导致锁表或内存溢出。注意主从同步延迟，可能导致读到旧数据，应合理控制插入速率。</p>
 </li>
 </ul>
 <h2 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h2><ul>
@@ -1111,7 +1504,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-06 17:38:28" itemprop="dateModified" datetime="2025-10-06T17:38:28+08:00">2025-10-06</time>
+                <time title="Modified: 2025-10-19 16:12:38" itemprop="dateModified" datetime="2025-10-19T16:12:38+08:00">2025-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1147,12 +1540,23 @@
 <p>JDK 11：引入ZGC（低延迟垃圾回收器）、支持运行单文件源码（java Hello.java）、String新增trim、isBlank等方法。</p>
 <p>JDK 17：密封类（sealed classes，限制继承）、switch模式匹配（预览）、废弃安全管理器。</p>
 <p>JDK 21（LTS）：虚拟线程（Virtual Threads，提升并发性能）、结构化并发（预览）、switch模式匹配正式发布。</p>
+<ul>
+<li>接口和抽象类：抽象类是单继承，接口多实现。都用于实现抽象和多态。接口定义行为规范，所有方法默认为抽象，支持多继承，适合定义功能契约；Java 8起可含默认方法。抽象类用于代码复用，可包含抽象方法和具体实现，只能单继承，适合具有“is-a”关系的类层次设计。选择接口更利于解耦，选择抽象类则便于共享代码。</li>
+</ul>
 <h2 id="锁、并发编程"><a href="#锁、并发编程" class="headerlink" title="锁、并发编程"></a>锁、并发编程</h2><ul>
 <li><p>java有哪些锁：内置锁synchronized、重入锁ReentrantLock、读写锁ReadWriteLock、条件锁Condition</p>
 </li>
 <li><p>synchronized：内置锁，控制对共享资源访问的同步机制，修饰实例方法、静态方法、代码块，原理：对象头MarkWord，记录hashCode、锁标志、GC年龄。修饰代码块monitorenter和monitorexist字节码指令。修饰方法flags指令，锁的计数器。锁升级：无锁、偏向锁（记录线程指针）、轻量级锁（CAS自旋）、重量级锁（阻塞线程）</p>
 </li>
+<li><p>synchronized原理：java内置锁，原理是通过对象监视器Monitor锁机制实现。当一个线程进入被 synchronized 修饰的方法或代码块时，会尝试获取对象的监视器锁，获取成功则进入临界区，其他线程只能等待该线程释放锁后再竞争进入。依赖 JVM 的指令（如 monitorenter、monitorexit）。同步实例方法：锁的是当前对象 (this)。同步静态方法：锁的是类对象 (ClassName.class)。</p>
+</li>
+<li><p>synchronized可重入吗：是可重入的锁，保证了在递归调用、父子类继承调用等场景下同步不会发生死锁。原理是每个锁都有一个计数器，线程每次成功获得锁时计数加1，释放时计数减1。</p>
+</li>
+<li><p>Synchronized为什么锁升级：重量级锁的实现依赖于操作系统的互斥量（Monitor），当多个线程同时请求锁时，无法获取锁的线程会被挂起（阻塞），并由操作系统进行线程的调度和唤醒。这种阻塞和唤醒涉及用户态与内核态的切换，开销较大，会导致线程的等待、切换等大量耗时操作，从而造成明显的性能损耗。锁升级不可逆。</p>
+</li>
 <li><p>volatile：轻量级的synchronized，保证共享变量的可见性，读写操作直接对主内存进行，不会引起线程上下文的切换和调度。禁止指令重排。lock前缀指令，相当于内存屏障。保证原子操作线程安全。非原子操作不保证，用AtomicInteger、CAS。</p>
+</li>
+<li><p>volatile原理：保证变量可见性和有序性的关键字。在多线程环境下，变量被声明为volatile时，会确保对该变量的写操作会立刻刷新到主内存，其他线程读取时也直接从主内存获取最新值，而不是从线程本地缓存。其底层实现是通过内存屏障技术，在读写volatile变量时插入特定的指令，强制刷新和读取主内存，并且防止指令重排实现有序性。不过，volatile无法保障复合操作的原子性（比如自增），仅适用于状态标志等场景。</p>
 </li>
 <li><p>voliate 能保证原子性么：volatile 不能保证原子性。它的作用是保证变量的可见性和禁止指令重排，保证原子操作的线程安全，确保当一个线程修改了volatile变量后，其他线程能立即看到最新值。但对于复合操作（如count++），读-改-写三个步骤，volatile无法保证这些步骤的原子执行，仍然会发生竞态条件，导致结果不一致。要实现原子性，需使用同步机制（如synchronized）或原子类（如AtomicInteger），而不能仅依赖volatile。</p>
 </li>
@@ -1208,12 +1612,14 @@
 </li>
 <li><p>ThreadLocalMap如何清理：当一个线程终止时，该线程的 <code>ThreadLocalMap</code> 会随着线程对象一起被垃圾回收器自动清理。在 <code>set(T value)</code> 和 <code>get()</code> 操作中，如果发现某个 <code>Entry</code> 的 <code>key</code> 已经为 <code>null</code>（即 <code>ThreadLocal</code> 被垃圾回收了），那么这个 <code>Entry</code> 会被从 <code>ThreadLocalMap</code> 中移除。对于长时间运行的线程或线程池中的线程，如果不主动清除不再需要的 <code>ThreadLocal</code> 变量，可能会导致内存泄漏，因为 <code>ThreadLocalMap</code> 中的值是强引用类型的，即使对应的 <code>ThreadLocal</code> 实例已经被垃圾回收了（<code>ThreadLocalMap</code> 的键为弱引用），只要线程还在运行，这些值就不会被释放。线程池中，在finally中使用<code>threadLocal.remove();</code>手动清理。</p>
 </li>
+<li><p>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</p>
+</li>
+<li><p>父子线程中怎么保证ThreadLocal共享：普通的ThreadLocal只能保证每个线程拥有自己独立的变量，父子线程无法共享。InheritableThreadLocal可以让子线程在创建时自动继承父线程已设置的ThreadLocal值。子线程构造时将父线程的拷贝一份。子线程对变量修改不会影响父线程，实现的是“值传递”而非引用共享。或者显式传递，通过构造函数将变量传进去。</p>
+</li>
 <li><p>happens-before：向程序员提供跨线程的内存可见性保证。volatile规则：对一个volatile的写happens - before后续对这个volatile的读。监视器规则：对一个锁的解锁happens - before随后对这个锁的加锁。线程生命周期规则：start、join。</p>
 </li>
 </ul>
 <ul>
-<li><p>ThreadLocal 作用和坑：ThreadLocal用于为每个线程提供独立的变量副本，线程之间互不影响。例如数据库连接、用户信息，避免多线程共享导致数据安全问题。 内存泄露：线程池中线程被复用，每个线程的ThreadLocalMap，key是ThreadLocal对象（弱引用），value是存入的值（强引用），未及时调用remove()清理，导致value一直存在。</p>
-</li>
 <li><p>线程池核心线程数设置：如果是CPU密集型任务，可设置为CPU核数；IO密集型任务可适当增大（如核数2倍）。</p>
 </li>
 <li><p>java原生线程池：FixedThreadPool固定数量线程的线程池。CachedThreadPool自动扩展线程数的线程池。SingleThreadExecutor单线程线程池，所有任务按顺序执行。ScheduledThreadPool定时周期执行的线程池。通过Executors工厂类创建。</p>
@@ -1247,6 +1653,9 @@
 </ul>
 <h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><ul>
 <li>SPI：service provider interface，服务加载机制，META-INF中配置接口和实现，ServiceLoader运行时发现和加载实现，可动态替换服务实现。提供可扩展的方式，使得第三方服务可以提供新的实现或自定义功能，解耦接口和服务实现。应用：JDBC驱动加载，日志框架选择。</li>
+<li>SPI机制：（Service Provider Interface）是Java的一种服务发现机制，它允许框架或模块在运行时动态地加载、发现和替换实现类，实现模块化和扩展性。其原理是通过META-INF&#x2F;services目录下的配置文件，JDK在运行时查找并实例化实现类，无需改动主程序代码。</li>
+<li>哪些用了SPI：JDBC：通过SPI加载不同数据库厂商的驱动实现；Servlet容器：如Tomcat通过SPI发现各种服务实现；日志框架：如SLF4J用于动态选择Logback、Log4j等实现；Dubbo：大量使用 SPI 机制实现协议和负载均衡等扩展；Spring Boot：自动配置中借鉴 SPI 思想，通过 spring.factories 实现自动装配。</li>
+<li>介绍JDBC：JDBC（Java Database Connectivity）是Java提供的用于操作关系型数据库的标准API。它通过一套统一接口，使Java程序可以连接不同类型的数据库，执行SQL语句，实现数据的查询和更新。JDBC的原理是采用SPI机制，数据库厂商提供各自的驱动实现（实现了JDBC接口），Java应用通过DriverManager加载并注册驱动，然后根据URL连接数据库。驱动通过底层协议与数据库通信，JDBC负责将SQL请求和结果在Java与数据库之间转换。这样，开发者可以用统一的方式访问各种数据库，大大提升了代码的通用性和扩展性。</li>
 </ul>
 <h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><ul>
 <li>IO：涉及到数据的存储、交换，都用IO，文件IO、网络IO</li>
@@ -1304,12 +1713,9 @@
 <li>排查工具：1.df -h查看磁盘使用情况。2.free -h &#x2F; vmstat显示系统内存使用情况。3.mpstat命令查看cpu使用情况，输出各种cpu时间百分比。4.netstat -s查看网络状态，显示各种网络协议的统计信息，接收发送数据包数等。5.iostat -x查看IO统计信息。6.top命令实时显示Linux系统中进程的动态运行信息，包括CPU和内存的使用情况。top -Hp $pid用于显示特定进程的线程信息。</li>
 <li>OOM排查：除了程序计数器，其他内存存储都可能OOM。原因：1.内存泄漏：程序未能释放不再使用的内存。2.Java堆分配空间不足导致内存溢出。排查：使用jmap -dump命令dump文件，在内存分析工具如VisualVM、MAT中观察对象引用关系、对象数量大小。可能未正确释放资源、关闭文件流、断开网络连接、销毁对象引用。定位到代码排查。</li>
 <li>jvm调优：分配jvm内存需要考虑应用需求，是否处理大量数据。考虑垃圾收集器。16g机器将JVM最大堆内存设置为12G（Xms12G -Xmx12G），使用G1垃圾收集器。元空间存储类的元数据，设置初始值256M，最大值512M。线程堆栈大小，几百KB到1MB，取决于有没有深层递归（-Xss256k）。</li>
+<li>死锁如何排查：1️⃣<code> jstack -l &lt;pid&gt;</code> 👉 直接标注Deadlock位置 2️⃣ Arthas的thread -b 👉 一键定位死锁线程 3️⃣ VisualVM&#x2F;JConsole 👉 图形化查看线程阻塞</li>
 </ul>
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
-<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
-</li>
-<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
-</li>
 <li><p>队列：Queue接口是FIFO队列，Deque扩展Queue是双端队列接口。ArrayDeque是Deque的实现，双端队列。LinkedList也是Deque的实现，可以做双端队列。Stack栈，继承自Vector。Vector是同步集合，使用synchronized。</p>
 </li>
 <li><p>HashMap：数组+链表+红黑树。链表长度&gt;8数组长度&gt;64时变红黑树。链表解决哈希冲突，bucket。键和值都允许为空。</p>
@@ -1317,6 +1723,10 @@
 <li><p>HashMap为什么使用红黑树：哈希函数质量不高&#x2F;存储大量数据，链表变长，影响搜索效率。所以jdk8之后，链表长度超过8时，链表变红黑树，自平衡的二叉查找树，搜索元素时间复杂度O(logn)，提高搜索效率。</p>
 </li>
 <li><p>HashMap扩容底层数组为什么扩为两倍保持2的幂次：1.方便利用位运算替代取模运算来计算元素索引位置。2.减少冲突：二进制位增加一位，只看最高位要么移动要么不变，确保分布均匀。 </p>
+</li>
+<li><p>HashMap怎么解决哈希冲突：链表法解决哈希冲突。当多个键的哈希值映射到同一个桶时，这些键值对会以链表的形式存储在该桶中。当链表长度超过阈值（默认为8），链表会被转换为红黑树，以提高查找效率。当节点数量减少到6或更少时，红黑树会重新转换回链表。这种机制既保证了哈希表的高效性，又有效解决了冲突问题。</p>
+</li>
+<li><p>HashMap中判断key重复：两个元素的hashaCode相等且通过equals方法返回true。</p>
 </li>
 <li><p>ConcurrentHashMap：线程安全的HashMap，jdk7使用分段锁，分16段，一段一把锁。jdk8使用synchronized和CAS保证线程安全。</p>
 </li>
@@ -1342,11 +1752,21 @@
 </li>
 <li><p>String不可变的好处：1⃣️安全性：防止被恶意修改导致的安全漏洞。2⃣️线程安全：String对象本身线程安全。指向String对象的引用变量不是。3⃣️实现字符串常量池成为可能，重用字符串，节省内存开销。4⃣️创建字符串的哈希码缓存：字符串不可变，哈希码也不会变，适合作为键使用在哈希表中HashMap。</p>
 </li>
+<li><p>String s&#x3D;new String(); 和 String s&#x3D;“”; 两种初始化：<code>String s = &quot;xxx&quot;;</code> 使用字符串字面量，会先检查字符串常量池，若存在 <code>&quot;xxx&quot;</code> 则直接复用，避免创建重复对象，性能更优。而 <code>String s = new String(&quot;xxx&quot;);</code> 会在堆中强制创建新对象，即使内容相同也生成不同实例，效率较低。前者仅可能创建0或1个对象（常量池中），后者至少创建1个堆对象（常量池也可能创建），可能导致内存浪费。</p>
+</li>
+<li><p>ArrayList和LinkedList：ArrayList基于动态数组，连续内存，适合遍历和查找元素，不适合增删，增删创建新数组。LinkedList基于双向链表，适合增删，不适合随机查找。</p>
+</li>
+<li><p>HashSet和TreeSet：HashSet底层基于HashMap。TreeSet基于红黑树，元素处于排序状态，支持有序集合操作。</p>
+</li>
 <li><p>HashMap和TreeMap：HashMap基于哈希表，使用哈希函数提供O1的快速访问，不保证元素顺序。数组+链表&#x2F;红黑树。TreeMap基于红黑树，键值对按照键的自然顺序或指定比较器顺序Ologn复杂度排序。两者都是非线程安全的。</p>
 </li>
-<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，而Hashtable继承自遗留的Dictionary类。</p>
+<li><p>HashMap和HashTable：HashMap是非线程安全的，性能较高，允许使用null作为键或值；而Hashtable是线程安全的，内部方法大多使用synchronized修饰，性能较低，且不允许null键或null值。HashMap继承自AbstractMap类，数组＋链表，而Hashtable继承自遗留的Dictionary类，数组＋链表＋红黑树。实际开发中不建议使用HashTable，多线程环境下推荐使用ConcurrentHashMap .</p>
 </li>
 <li><p>HashMap如何获取元素：首先根据键对象的 hashCode() 计算哈希值，确定该键对应的桶（bucket）位置。随后，通过 equals() 方法在该桶的链表或树中查找与目标键相等的元素，进而获取对应的 value。</p>
+</li>
+<li><p>jdk7中hashmap为什么会死循环，jdk8怎么解决:  JDK 7 死循环原因：JDK 7 中 HashMap 数据结构为数组＋链表，扩容时采用<strong>头插法</strong>迁移数据。多线程场景下，若线程 A 读取 HashMap准备扩容时，线程B先完成扩容（链表顺序因头插法颠倒），当线程 A 继续执行时，会导致环形链表，出现死循环问题。JDK 8 中 HashMap 采用数组＋链表＋红黑树结构，且扩容时改用<strong>尾插法</strong>，保持与扩容前相同的顺序，避免了因头插法导致的链表成环和死循环问题。</p>
+</li>
+<li><p>对象作为Map的key注意什么：（1）重写equals()和hashCode()方法：hashCode() 决定对象存储在哈希表的哪个位置，equals() 用于在发生哈希冲突时判断两个 key 是否相等。如果没有正确重写，会导致逻辑上相同的对象被认为是不同的key，因为两个默认都基于内存地址，即使内容相同的对象也会有不同哈希值，出现查找失败、重复插入、删除失败等问题。正确：重写为比较对象，保证相等的对象有相等的哈希码。（2）key使用不可变对象，防止对象状态变化后导致定位不到原来的key。（3）自定义hashCode方法时，应保证散列分布均匀。</p>
 </li>
 <li><p>反射怎么创建对象：1⃣️Class的newInstance方法为无参构造器的类创建：Class&lt;?&gt; clazz &#x3D; Class.forName(“com.Demo”); Object o &#x3D; clazz.newInstance(); 2⃣️先获取Constructor，再newInstance。可以获取指定构造参数的构造器。3⃣️私有方法，可以constructor.setAccessible(true); 来设置可访问。</p>
 </li>
@@ -1360,7 +1780,13 @@
 </li>
 </ul>
 <h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><ul>
-<li>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</li>
+<li><p>java异常体系：一个以Throwable类为根的类层次结构，两个分支：1⃣️Error和Exception。Error错误代表了JVM无法预期或难以恢复的严重问题，比如OOM、StackOverflowError、线程死锁等，一般无需捕捉。Exception异常包括：2⃣️Checked Exceptions受检异常，又叫编译时异常，在编写可能会抛出它们的方法时需要显式地进行处理（通过try-catch块）或声明（通过throws关键字），这些异常通常是外部错误，如文件未找到（FileNotFoundException）、网络问题（IOException）、SQL异常等。3⃣️Unchecked Exceptions非受检异常，又叫运行时异常，包括RuntimeException及其子类，不需要显示处理或声明，通常是程序错误，例如数组越界、空指针。</p>
+</li>
+<li><p>IO异常是什么：检查异常，需要在编译时就处理的，要么try catch，要么throws，指文件读写或网络通信时因文件不存在或网络中断导致的。</p>
+</li>
+</ul>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><ul>
+<li>反射的优点：增强程序的灵活性：可以在运行时动态地获取类的信息、创建对象、调用方法和访问属性，不需要在编译时就确定类型。便于解耦和扩展：可以调用私有成员，能够打破封装限制，在一些框架开发中方便扩展功能。</li>
 </ul>
 <h2 id="变量修饰"><a href="#变量修饰" class="headerlink" title="变量修饰"></a>变量修饰</h2><ul>
 <li><p>static：静态</p>
@@ -1379,6 +1805,12 @@
 </ul>
 </li>
 <li><p>类加载机制：运行时动态加载，类加载器（ClassLoader）负责将类的字节码Class文件从不同的来源（例如文件系统、网络等）加载到Java虚拟机中。1⃣️加载阶段：类加载器读取二进制数据（.class文件）并生成对应的java.lang.Class对象。2⃣️验证：确保加载的类的字节码是合法的，检查字节码的格式、语法、数据流、符号引用等。3⃣️准备：为类变量分配内存并初始化为默认值，方法区中分配。4⃣️解析：将常量池内的符号引用转换为直接引用的过程。5⃣️初始化：执行静态变量的赋值操作和静态代码块内的代码。</p>
+</li>
+<li><p>介绍类加载：Java类加载是指JVM将类的字节码文件加载到内存并生成对应Class对象的过程。类加载分为<strong>加载、连接和初始化</strong>三个阶段。加载阶段是通过类加载器读取字节码文件。连接阶段包括<strong>验证（确保字节码安全）、准备（为静态变量分配内存并赋默认值）、解析（符号引用转为直接引用）</strong>。初始化阶段是执行静态初始化语句和静态代码块，给静态变量赋初值。只有在第一次主动使用类时，才会触发加载。类加载由ClassLoader负责，采用双亲委派模型。支持Java的动态扩展与安全运行，是反射、热部署等功能的基础。</p>
+</li>
+<li><p>不同变量加载时机：（1）静态变量在类的初始化阶段加载：准备阶段分配内存并赋默认值，初始化阶段执行static代码块完成赋值。分配到方法区（2）常量（final static）在连接阶段的“准备”步骤就会初始化。存放在方法区的运行时常量池，字符串存放在字符串常量池中（JDK 7后移到堆中）（3）实例变量在对象创建时（即运行期）随new指令在堆中分配，属于类实例化过程，不参与类加载的早期阶段。（4）局部变量不属于类成员，不在类加载过程中处理，而是在方法执行时随栈帧创建在虚拟机栈中分配，必须手动初始化。因此，静态变量与类加载绑定，实例变量与对象创建绑定，局部变量则与方法调用绑定。</p>
+</li>
+<li><p>Java动态加载：Java动态加载是指在程序运行期间根据需求才加载类文件，而不是在编译时期就确定所有要加载的类。这种机制主要依赖于类加载器（ClassLoader），通过例如 Class.forName()、ClassLoader.loadClass() 等方法实现，在运行时根据实际情况加载、连接和初始化类。</p>
 </li>
 <li><p>符号引用和直接引用：符号引用就是一组符号来描述所引用的目标，直接引用就是直接指向目标的指针、相对偏移量或一个能间接定位到目标的句柄。</p>
 </li>
@@ -1435,10 +1867,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-02-12 21:55:33 / Modified: 22:01:29" itemprop="dateCreated datePublished" datetime="2025-02-12T21:55:33+08:00">2025-02-12</time>
+              <time title="Created: 2025-02-12 21:55:33" itemprop="dateCreated datePublished" datetime="2025-02-12T21:55:33+08:00">2025-02-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-16 08:40:25" itemprop="dateModified" datetime="2025-10-16T08:40:25+08:00">2025-10-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1954,155 +2392,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/05/myblog/java/Page%E5%88%86%E9%A1%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.gif">
-      <meta itemprop="name" content="Sweetwater">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sweetwater's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/05/myblog/java/Page%E5%88%86%E9%A1%B5/" class="post-title-link" itemprop="url">Page分页</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-11-05 12:55:45" itemprop="dateCreated datePublished" datetime="2022-11-05T12:55:45+08:00">2022-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-23 23:09:22" itemprop="dateModified" datetime="2023-02-23T23:09:22+08:00">2023-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">java开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="spring整合mybatis"><a href="#spring整合mybatis" class="headerlink" title="spring整合mybatis"></a>spring整合mybatis</h2><p>新建一个子工程web-repository。</p>
-<p>mybatis依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.3.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.35&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>项目结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">--web-repository</span><br><span class="line"> --src</span><br><span class="line">  --main</span><br><span class="line">   --java</span><br><span class="line">     --config</span><br><span class="line">       --SpringConfig.java</span><br><span class="line">     --domain</span><br><span class="line">       --StudentDO.java</span><br><span class="line">     --StudentDao.java</span><br><span class="line">   --resource</span><br><span class="line">     --mapper</span><br><span class="line">  --test</span><br></pre></td></tr></table></figure>
-
-<p>✅spring配置类：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;org.example&quot;&#125;)</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>要引入spring依赖。</p>
-<p>spring配置：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/fengyupinglan/p/14517267.html">https://www.cnblogs.com/fengyupinglan/p/14517267.html</a></p>
-<p>✅spring整合mybatis</p>
-<p>首先，spring配置文件可以是xml文件在resource文件夹下，也可以是注解方式的java文件。先写一个spring配置文件，自动装配搞上去。还有mybatis的一些bean要配置上去。</p>
-<h3 id="xml方式"><a href="#xml方式" class="headerlink" title="xml方式"></a>xml方式</h3><p>xml文件方式，spring-mybatis.xml<br>开启自动扫描和配置bean</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns:aop</span>=<span class="string">&quot;http://www.springframework.org/schema/aop&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span> <span class="attr">xmlns:tx</span>=<span class="string">&quot;http://www.springframework.org/schema/tx&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/aop</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/aop/spring-aop.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/tx</span></span></span><br><span class="line"><span class="string"><span class="tag">						http://www.springframework.org/schema/tx/spring-tx.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--开启组件扫描,扫描多个包用,隔开--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;org.example&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 开启Aspect生成代理对象 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--加载properties文件--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">ignore-unresolvable</span>=<span class="string">&#x27;true&#x27;</span> <span class="attr">location</span>=<span class="string">&#x27;classpath:dbconfig.properties&#x27;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 1.配置阿里druid连接池 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.alibaba.druid.pool.DruidDataSource&quot;</span> <span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 配置数据库基本信息 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;url&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.url&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.username&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.password&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClassName&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.driverClassName&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;maxActive&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.maxActive&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;initialSize&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;db.initialSize&#125;&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 2.配置spring的数据源，声明事务 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 3.配置 mybatis，扫描mapper.xml文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.1 配置 mybatis config --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mybatis-config.xml&quot;</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 3.2 配置扫描mybatis映射文件路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;mapperLocations&quot;</span> <span class="attr">value</span>=<span class="string">&quot;classpath:mapper/*.xml&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 4.类似于 jdbcTemplate 帮助类 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionTemplate&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionTemplate&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">&quot;sqlSessionFactory&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 自动扫描了所有的*Mapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mapper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;basePackage&quot;</span> <span class="attr">value</span>=<span class="string">&quot;org.example.mysql&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>druid需要依赖包：druid<br>SqlSessionFactoryBean 需要依赖包：spring-jdbc<br>还需要 ibatis-common</p>
-<p>dbconfig.properties:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">db.url=jdbc:mysql://localhost:3306/test?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8</span><br><span class="line">db.driverClassName=com.mysql.cj.jdbc.Driver</span><br><span class="line">db.password=jade</span><br><span class="line">db.username=liuxuan</span><br><span class="line">db.maxActive=5</span><br><span class="line">db.initialSize=1</span><br></pre></td></tr></table></figure>
-
-<p>mybatis配置文件，mybatis-config.xml<br>一些configuration setting</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">configuration</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//ybatis.org//DTD SQL Map Config 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;cacheEnabled&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;useGeneratedKeys&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;defaultExecutorType&quot;</span> <span class="attr">value</span>=<span class="string">&quot;REUSE&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;STDOUT_LOGGING&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">setting</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>xml方式spring整合mybatis，mybatis配置项的意义：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45797116/article/details/117105095">https://blog.csdn.net/qq_45797116/article/details/117105095</a></p>
-<p>xml文件中如果想引入其他xml文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;import resource=&quot;.../...xml&quot;/&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h3><p>注解方式，SpringConfig.java</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">package org.example.mysql.config;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.context.annotation.ImportResource;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(basePackages = &#123;&quot;org.example&quot;&#125;)</span><br><span class="line">@ImportResource(&quot;classpath:spring-mybatis.xml&quot;) //导入xml配置项</span><br><span class="line">public class SpringConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里，可以用@Import导入其他注解方式的配置文件，以及用@ImportResource导入xml方式的配置文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Import(CDPlayerConfig.class)  </span><br><span class="line">@ImportResource(&quot;classpath:cons-injec.xml&quot;) //导入xml配置项</span><br></pre></td></tr></table></figure>
-
-<p>注解方式倒入配置文件：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42107384/article/details/116475637">https://blog.csdn.net/weixin_42107384/article/details/116475637</a></p>
-<p>纯注解方式的整合spring和mybatis配置：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44226181/article/details/127343597">https://blog.csdn.net/weixin_44226181/article/details/127343597</a></p>
-<p>还有一个一行代码的基于注解整合的：<br><a target="_blank" rel="noopener" href="https://www.pudn.com/news/62f1dcb95425817ffc22c172.html">https://www.pudn.com/news/62f1dcb95425817ffc22c172.html</a></p>
-<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package org.example;</span><br><span class="line"></span><br><span class="line">public class StudentDaoTest &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testSelectById() &#123;</span><br><span class="line"></span><br><span class="line">        // xml：</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);</span><br><span class="line">        UserMapper mapper = (UserMapper) context.getBean(&quot;userMapper&quot;);</span><br><span class="line"></span><br><span class="line">        // 注解：</span><br><span class="line">        ApplicationContext context =new AnnotationConfigApplicationContext(SpringConfig.class);</span><br><span class="line">        StudentDao studentDao = (StudentDao) context.getBean(&quot;studentDao&quot;);</span><br><span class="line"></span><br><span class="line">        StudentDO studentDO = studentDao.selectById(1L);</span><br><span class="line">        System.out.println(studentDO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>测试验证及xml中配置SqlSessionFactory的bean和扫描的bean：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28082757/article/details/103488364">https://blog.csdn.net/qq_28082757/article/details/103488364</a></p>
-<p>配置数据库连接池有几种方法，上面用的是ali的druid连接池，关于Druid连接池：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chy18883701161/p/12594889.html">https://www.cnblogs.com/chy18883701161/p/12594889.html</a></p>
-<p>注解方式配置JdbcConfig中 PlatformTransactionManager 是事务管理，在spring-jdbc包下。<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/903c01cb2a77">https://www.jianshu.com/p/903c01cb2a77</a></p>
-<p>@Mapper注解，难道是spring-boot才能用的？<br>mybatis支持的映射方式有基于xml的mapper.xml文件、基于java的使用Mapper接口class。<br>从mybatis3.4.0开始加入了@Mapper注解，目的就是为了不再写mapper映射文件。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46369022/article/details/122755858">https://blog.csdn.net/weixin_46369022/article/details/122755858</a><br>需要依赖包：mybatis-spring-boot-starter</p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>✅ @Value里的字段报红</p>
-<p>原因：自动导入了lombok里的@Value，要用的是SpringFramework下的@Value。</p>
-<p>✅ xml配置文件加载不到properties属性问题</p>
-<p>原因：spring中没有成功加载相应的配置文件</p>
-<p>解决：进入File-Project Struccture，进入Facets中进行配置，.在右边的spring目录下，找到对应的爆红问题所在配置文件，选择xml文件，点击修改符合（下图中的小铅笔），在跳出来的弹框中，选择添加（加号），然后选择Additioonal properties files。然后找到需要加载进spring中的配置文件，点击OK，添加成功。</p>
-<p>来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/zhaogot/article/details/103224088">https://blog.csdn.net/zhaogot/article/details/103224088</a></p>
-<p>✅ xml配置文件中的问题：根元素 “beans” 必须匹配 DOCTYPE 根 “null”</p>
-<p>在<code>&lt;beans&gt;</code>标签那里报出来。</p>
-<p>原因：mybatis在扫描Mapper.xml文件时，扫描到非mapper文件。比如本次报错扫描到了自己。spring.xml的根元素是<code>&lt;beans&gt;&lt;/beans&gt;</code>当然不会有DOCTYPE了。<br>所以当Mybatis扫描到了Spring.xml这个非Mapper.xml文件时，自然找不到DOCTYPE，所以会有“DOCTYPE 根 “null””这个错误。</p>
-<p>粗心：应该扫的是mybatis-config.xml文件，结构写成了自己。</p>
-<p>来自：<a target="_blank" rel="noopener" href="https://www.codeleading.com/article/7746743165/">https://www.codeleading.com/article/7746743165/</a></p>
-<p>✅ org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)</p>
-<p>原因：mapper接口和xml文件没匹配上，有可能是文件名方法名没匹配上，这里是在配置文件里没加扫描接口，加了就好了。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43570367/article/details/103147854">https://blog.csdn.net/weixin_43570367/article/details/103147854</a></p>
-<p>✅ properties文件 java.lang.NumberFormatException</p>
-<p>明明是数字类型，但是说我从String转为int发生异常。</p>
-<p>需要在xml配置文件中加载properties配置文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--加载properties文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">ignore-unresolvable</span>=<span class="string">&#x27;true&#x27;</span> <span class="attr">location</span>=<span class="string">&#x27;classpath:dbconfig.properties&#x27;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>spring加载properties文件的几种方式：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/chuige2013/article/details/121759088">https://blog.csdn.net/chuige2013/article/details/121759088</a></p>
-<p>✅ java.sql.SQLException: com.mysql.cj.jdbc.Driver</p>
-<p>mysql连接驱动依赖的版本不匹配问题，一般出现在使用低版本连接驱动连接高版本mysql情况下，解决方法是在maven中央仓库中下载高版本的mysql连接驱动.</p>
-<p>mysql-connector-java 换8.0.21的包，自动引入没成功，手动下载装到.m2的。</p>
-<p>✅ init datasource error, url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;mybatis?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8</p>
-<p>db.url换成：<code>jdbc:mysql://localhost:3306/mysql?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8</code></p>
-<p>✅ Table ‘mysql.student’ doesn’t exist</p>
-<p>上面mysql换成库名。</p>
-<p>😄终于成功了，不容易。</p>
-<h2 id="com-github-pagehelper"><a href="#com-github-pagehelper" class="headerlink" title="com.github.pagehelper"></a>com.github.pagehelper</h2><p>背景：使用Pige时，从数据库中获取到list之后，removeIf筛选，但是分页得到的效果不对，条目总数total是从数据库得到的list size。</p>
-<p>原因：Page与Mybatis强耦合，不是先从数据库获取再分页，而是先获取某页要获取的条目，耦合到sql中查询。</p>
-<p>难道只能是spring-boot用的？ pagehelper-spring-boot-starter 依赖包中。</p>
-<p>PageHelper分页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43958747/article/details/103822761">https://blog.csdn.net/weixin_43958747/article/details/103822761</a></p>
-<p>其中有个参数为CallBack接口。</p>
-<p>⚠️使用中的一个case：<br>Pageed中的list的元素得和数据库dao返回的数据结构一样，得是DO。获取了Paged之后再转为vo，因为分页Page和mybatis是强耦合的。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2173,7 +2462,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

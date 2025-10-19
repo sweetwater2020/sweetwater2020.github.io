@@ -28,7 +28,7 @@
 <meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。 大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-10-12T14:03:10.569Z">
+<meta property="article:modified_time" content="2025-10-14T15:17:21.894Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-12 22:03:10" itemprop="dateModified" datetime="2025-10-12T22:03:10+08:00">2025-10-12</time>
+                <time title="Modified: 2025-10-14 23:17:21" itemprop="dateModified" datetime="2025-10-14T23:17:21+08:00">2025-10-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -497,6 +497,21 @@
 <li>对CNN、RNN、Transformer的理解：1⃣️CNN卷积神经网络：处理具有网格状拓扑结构如图像的模型，本质上就是拿很多个不同类型的（Channel通道）的放大镜（Convolution卷积核）去目标事物上扫描，从而发现更多的局部特征。逐层深入，选择并强化最重要的特征。通过池化层简化特征集，并选择最显著的特征。经过一系列卷积和池化操作后，CNN 在其最后阶段利用全连接层计算分类预测的概率。2⃣️RNN循环神经网络：处理序列数据的模型，本质就是一个词一个词的投喂给同一模型，从而能更好的发现词和词之间的顺序、关联性等特征，在NLP语言处理的场景上很合适。3⃣️ Transformer：通过mask掩码的机制解决了RNN的串行计算问题，通过注意力机制解决了CNN、RNN只能发现局部特征的限制。前者大大加速了模型的训练效率，后者通过全局视角的注意力机制大大提高了模型在NLP处理的精准度。</li>
 <li>模型参数和超参数：模型参数是在训练数据上学习的变量，例如神经网络中的权重和偏置，它们在学习过程中通过数据不断更新和优化。超参数是在训练开始前设定的，在训练过程中保持不变，包括：学习率、批次大小、迭代次数、神经网络的层数和大小、正则化项强度等。</li>
 </ul>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><ul>
+<li>parquet：一种列式的开源存储格式，用于大规模数据处理和分析，拥有高效的存储和读取性能，支持多种高效压缩算法，广泛应用于大数据生态。相比行式存储，列式存储优点：相同类型的数据存储在一起更容易高效压缩，对于只需要读取部分列的查询可以减少IO。与hadoop、spark、hive等兼容。用pandas就可以读取，df &#x3D; pd.read_parquet(file_path)。</li>
+<li>hugging face是开源社区，ModelScope魔搭是阿里AI模型社区。</li>
+<li>MinHash 是一种高效的算法，用于估计两个集合的相似度（Jaccard 相似度）的高效算法，尤其适用于海量数据处理。Jaccard 相似度 &#x3D; 两个集合交集的大小除以并集的大小。但是当集合非常大时，直接计算交集和并集的成本很高，尤其是当集合数量很多时。MinHash：通过哈希函数将集合压缩成一个固定长度的签名，从而快速估计 Jaccard 相似度。步骤：选择k个哈希函数，对集合中的每个元素应用k个的哈希函数，记录每个哈希函数生成的最小哈希值，构建k长度的签名矩阵，然后通过比较签名矩阵中的签名向量来高效估计各集合之间的相似性。</li>
+<li>ngram：指的是文本中的连续n个项目（如字符、单词）的序列</li>
+<li>语言模型是用来计算一段文本的概率。有统计语言模型和神经网络语言模型，对于实时性要求高的应用，通常会使用统计语言模型。无法往前看所有单词，就看固定数量的单词，假设每个词只和它前 n-1 个词相关，这就是n-gram。n越大，更能体现出句子信息，但是模型参数会指数级增大，一般传统的语音识别中，会经常使用三元语言模型。</li>
+<li>cc：一个包含所有公共网页的大规模数据集，开源的。</li>
+<li>大模型数据工程：采集处理所有风格的研发资产（文本、图像、知识图谱、数据库…），将其形成预训练语料或者指令微调数据集。并针对不同的资产格式或者研发场景任务设计详细的训练数据以及分层知识库。需要确保数据消费的安全性和可追溯性，包括数据集采集、标注、清洗、评估。</li>
+<li>训练数据包括：通用文本：网页，如CommonCrawl，数据量大，使得 LLM 能够获得多样化的语言知识并增强 LLM 的泛化能力；多轮对话文本，如公共对话语料，增强 LLM 的对话能力；书籍。专用文本：多语言文本、科学文本、百科、论文、代码。</li>
+<li>数据预处理流程：采集&#x2F;采购&#x2F;合成的rawdata原始数据，进行解析，清洗（启发式规则、模型质量分筛选、去重、去污、去毒、隐私打码），标准化为processdata，质量评估，ID化（用于将文本分解为词或子词的组合，使机器更好地理解和分析文本），上架上云为Trainabledata。</li>
+<li>数据去噪：优点：提高数据准确性和一致性，减少数据中的干扰因素，提升模型的性能，增强模型泛化能力，提升训练效率。方法：启发式基于规则的数据清洗（例如URL过滤、页面长度过滤、去除特殊字符等）、基于模型的高质量文本筛选（例如使用fastText二进制分类器进行模型打分）。</li>
+<li>数据去毒：优点：毒性过滤旨在去除数据集中不需要的有毒文本（诸如涉黄、涉政、涉赌等敏感信息），减少偏见和歧视性内容，降低模型在实际应用中产生不当输出的风险。方法：对数据进行扫描打标，其中有用到小模型、Bert模型进行识别，也有使用关键字进行识别。</li>
+<li>数据去重：优点：重复数据删除有利于缓解记忆、避免训练-测试重叠、提高训练效率，同时保持模型困惑。有助于平衡模型的记忆和泛化。方法：md5去重、ngram去重，将文本分割成连续的ngram序列来识别和消除重复内容、全局去重等方式，去掉重复数据。DCLM中还用到MinHash算法进行文档级别去重、Bloom过滤器进行文档和段落级别去重。</li>
+<li>数据去污：优点：去除与测试集和打榜数据集重叠的样本。这是为了确保模型在测试阶段能够准确地评估其性能。方法：DCLM中去污包含移除与测试集重叠的训练样本，例如移除DCLM-BASELINE中包含MMLU问题及其选项的文档。</li>
+</ul>
 
     </div>
 
@@ -515,12 +530,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="python之零碎知识点">
-      <i class="fa fa-chevron-left"></i> python之零碎知识点
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" rel="prev" title="那些年背过的面试题之Python">
+      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之Python
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" rel="next" title="那些年背过的面试题之Python">
-      那些年背过的面试题之Python <i class="fa fa-chevron-right"></i>
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9C%BA%E6%99%AF%E9%A2%98/" rel="next" title="那些年背过的面试题之场景题">
+      那些年背过的面试题之场景题 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -580,7 +595,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">4.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">5.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">6.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">7.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">8.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">9.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">10.</span> <span class="nav-text">神经网络</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">4.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">5.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">6.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">7.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">8.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">9.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">10.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">11.</span> <span class="nav-text">数据处理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -595,7 +610,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

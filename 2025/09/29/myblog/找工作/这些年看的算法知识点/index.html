@@ -28,7 +28,7 @@
 <meta property="og:description" content="MinHash与MinHashLSHMinHash 是一种用于快速估计两个集合（如文档、网页等）之间相似度的算法，特别是在处理高维数据或海量数据时非常高效。主要用于计算 Jaccard 相似度（集合交集与并集的比值）。Jaccard 相似度需要遍历整个集合，耗费时间和内存。 MinHash 提供了一种近似计算的方法，通过构造 “简化签名” 来高效估算集合之间的相似性，而无需直接操作整个集合。  计">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-29T14:39:50.221Z">
-<meta property="article:modified_time" content="2025-09-29T14:40:33.093Z">
+<meta property="article:modified_time" content="2025-10-14T15:16:04.776Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -211,10 +211,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2025-09-29 22:39:50 / Modified: 22:40:33" itemprop="dateCreated datePublished" datetime="2025-09-29T22:39:50+08:00">2025-09-29</time>
+              <time title="Created: 2025-09-29 22:39:50" itemprop="dateCreated datePublished" datetime="2025-09-29T22:39:50+08:00">2025-09-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-10-14 23:16:04" itemprop="dateModified" datetime="2025-10-14T23:16:04+08:00">2025-10-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -262,7 +268,153 @@
 <p><strong>Encoder（编码器）</strong>：由多个相同的层堆叠而成，每层包括一个多头自注意力机制（Multi-Head Self-Attention）和一个位置前馈神经网络（Position-wise Feed-Forward Network）。编码器负责将输入序列转换为隐藏表示，这些表示捕捉了序列中元素之间的依赖关系，并且每个位置的信息都能被传递到下一个层次。</p>
 <p><strong>Decoder（解码器）</strong>：同样由多个相同层组成，除了包含与编码器类似的组件外，还增加了一个额外的多头注意力层，称为“编码器-解码器注意力”层。这个层允许解码器关注到编码器的所有输出，帮助生成目标序列。此外，解码器在每个时间步只能访问到当前及之前的时间步信息，以保证预测的正确顺序。</p>
 <p>通过这种结构，Transformer能够高效地并行训练，并显著提升处理长距离依赖问题的能力。</p>
-<h2 id="FastText原理及实践"><a href="#FastText原理及实践" class="headerlink" title="FastText原理及实践"></a>FastText原理及实践</h2><h2 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h2><p>Cursor是一款由Anysphere开发的AI代码编辑器，定位为“下一代开发者工作台”。基于 VS Code 内核深度优化，集成Claude、DeepSeek、Gemini、GPT等大语言模型，提供自然语言对话式编程、代码自动生成、代码补全、跨文件上下文理解等功能，适用于快速原型开发、代码重构与技术文档编写。</p>
+<h2 id="Cursor"><a href="#Cursor" class="headerlink" title="Cursor"></a>Cursor</h2><p>Cursor是一款由Anysphere开发的AI代码编辑器，定位为“下一代开发者工作台”。基于 VS Code 内核深度优化，集成Claude、DeepSeek、Gemini、GPT等大语言模型，提供自然语言对话式编程、代码自动生成、代码补全、跨文件上下文理解等功能，适用于快速原型开发、代码重构与技术文档编写。</p>
+<h2 id="data-juicer"><a href="#data-juicer" class="headerlink" title="data-juicer"></a>data-juicer</h2><ul>
+<li>data-juicer：阿里达摩院开发的开源数据处理工具，主要用于大规模数据的清洗、过滤和预处理。提供了丰富的数据处理算子、高效并行化的数据处理流水线，支持数据预处理、可视化、数据评估等各项能力。用来为模型训练提供高质量数据集。</li>
+<li>PySpark：spark的python api，利用spark的强大功能进行大规模数据处理和分析。spark是开源的分布式计算框架，基于内存计算高效处理大规模数据，支持批处理、流处理、机器学习和图计算等多种任务。</li>
+<li>streamlit：用于快速构建和部署数据驱动的Web应用程序，用于将数据分析结果可视化，无需前端开发。支持热重载，修改代码保存会自动刷新展示结果。支持 Pandas、NumPy、Matplotlib、Plotly 等常用的数据科学库。可以展示数据框、绘制图表、加载机器学习模型等。Streamlit提供缓存机制，避免重复计算，用@st.cache_data 或 @st.cache_resource 装饰器来缓存函数的结果。</li>
+<li>PySpark中的DataFrame：Pandas的DataFrame是单机版的数据处理框架，适用于较小规模的数据集。PySpark的DataFrame是分布式计算框架的一部分，适用于大规模数据集，并能在集群环境中高效运行。Pandas的DataFrame不直接支持 SQL 查询。PySpark的DataFrame可以通过SQL查询来操作数据，并且可以直接在 Spark 上执行 SQL 查询。Pandas的DataFrame操作是立即执行的。PySpark的DataFrame使用延迟计算模型，只有在真正需要结果的时候才会触发计算。Pandas的DataFrame数据完全加载到内存中。PySpark的DataFrame数据分布在多个节点上，只在必要时加载到内存中。</li>
+<li>单机上的spark：在一个单一机器上运行PySpark，不会像在分布式集群环境中那样跨多个节点分布数据。但是依然具有分布式计算的特点：可以利用多线程或多进程来并行处理数据，使用延迟计算提高效率，将数据分成多个分区，每个分区可以独立处理，利用多核处理器的并行计算能力。</li>
+<li>如何配置Spark集群：首先在每台机器上安装并解压 Spark，设置环境变量；接着在主节点上启动 Spark Master负责协调整个集群工作，在各工作节点上启动 Spark Workers负责执行具体的计算任务；最后通过 spark-submit 命令提交应用程序到集群，指定主节点地址，即可实现并行分布式计算。</li>
+</ul>
+<h2 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h2><ul>
+<li><p>量化交易：一种通过数学模型和算法程序进行投资决策的交易方式，其核心是用数据驱动代替主观判断。强化学习强调智能体（Agent）通过与环境的交互来学习最优策略，以最大化累积奖励。能够在动态环境中优化长期收益。</p>
+</li>
+<li><p>cursor和Copliot：Copliot是插件形式的，而cursor是基于 VS Code 二次开发的完整 IDE。copliot是AI辅助，cursor就是AI优先，可以直接对project进行操作，可以进行多位编辑。</p>
+</li>
+</ul>
+<h2 id="大模型训练"><a href="#大模型训练" class="headerlink" title="大模型训练"></a>大模型训练</h2><p>● 预训练（Pre-training）：数据特征是大量未标记的数据，用于训练模型的初始参数，Loss计算方式为全部数据参与计算loss，主要作用是通过学习未标记数据的统计信息和语义表示来提供一种通用的理解能力，主要用于全场景。数据量级别为10B到10T token。 </p>
+<p>● SFT（Supervised Fine-Tuning）：数据特征是Query和Response代码对，Loss计算方式是Response参与计算loss，主要作用是优化预训练模型，使其生成用户所期望的回答。数据量级别为10k到100k Pair。</p>
+<p>● RLHF：基于人类反馈的强化学习，数据特征是Query, Response True, Response False三元组，Loss计算方式是Reward Model奖励模型，主要作用是能够结合强化学习与人类反馈，提升大型语言模型的指令遵从。数据量级别为100k到1M Pair。 </p>
+<p>● RAG（Retrieval-augmented generation）检索增强生成：数据特征为结构化、非结构化和半结构化，可以和知识图谱结合。</p>
+<h2 id="MCP"><a href="#MCP" class="headerlink" title="MCP"></a>MCP</h2><p>MCP 是什么： Model Context Protocol，Anthropic (Claude) 主导发布的一个标准协议。让 AI 模型能够与不同的数据源和工具进行无缝交互。它就像 USB-C 接口一样统一标准。</p>
+<p>MCP 架构：客户端 - 服务器架构，包含：MCP 主机（MCP Hosts）：发起请求的 AI 应用程序，比如聊天机器人、AI 驱动的 IDE 等。MCP 客户端（MCP Clients）：在主机程序内部，作为Host的中介，管理 MCP Host与一个或多个 MCP 服务器之间的通信。MCP 服务器（MCP Servers）：为 MCP 客户端提供上下文、工具和提示信息。本地资源（Local Resources）：本地计算机中可供 MCP 服务器安全访问的资源，如文件、数据库。远程资源（Remote Resources）：MCP 服务器可以连接到的远程资源，如通过 API 提供的数据。</p>
+<p>MCP 优点：统一标准不用重复造轮子、数据不用上传到云端，AI 直接在本地处理。</p>
+<p>MCP的诞生标志着prompt engineering进入了一个新的发展阶段，它通过提供更结构化的上下文信息，显著提升了模型的能力。没有MCP时，需要手动从数据库中筛选信息或使用工具来检索相关信息，OpenAI引入function call，允许模型根据需要调用预定义函数以获取数据或执行特定操作，但是对平台高度依赖，不同LLM平台间API实现存在差异，切换模型时需要重写代码。MCP提供丰富的插件库，不限于特定的AI模型。</p>
+<p>MCP如何调用工具：MCP的选择机制基于prompt实现。客户端将问题发送给LLM，LLM分析可用工具并选择，客户端通过MCP Server执行所选的工具，工具执行结果返回LLM，LLM结合执行结果，归纳总结回答用户问题。模型是依靠prompt来识别当前可用的工具有哪些。具体做法是，我们将各个工具的使用描述以文本形式传递给模型，从而使模型能够了解有哪些工具可供选择，并基于实时情况做出最佳选择。模型是通过 prompt engineering，即提供所有工具的结构化描述和 few-shot 的 example 来确定该使用哪些工具。</p>
+<p>1、理念：通用协议，为大模型与外部的工具和数据源提供统一的通信接口；</p>
+<p>2、架构：典型的客户端-服务端架构。</p>
+<p>3、信息组织：基于JSON-RPC协议，高度标准化。</p>
+<p>4、通信模式：支持交互式、持续性的上下文管理。</p>
+<p>既生Function Call，何生MCP：</p>
+<p>Function call 的能力来源于大模型的后训练，详细来说，就是给大模型一些选择工具的样本，让模型学会在合适的时机决策需要调用工具。但是不同用户的工具定义格式是不同的，为了把用户的请求和大模型厂商微调的格式对上，所以才有了 function call。Function call 本质是就是每个大模型厂家的事实标准。但是复用性差，解决办法：1.让模型针对具体任务生成个性化代码，只需要额外提供一个代码编译运行环境即可，Manus。2.用一个中间层包装一下，把中间层做成标准，MCP。</p>
+<p>server包含三个核心能力：工具、资源和提示词。</p>
+<p>工具：调用外部服务和API，MCP服务器识别适当的工具，与服务交互并返回结果。资源：向AI模型暴露数据，来自本地存储、数据库或云平台。当 AI 模型请求特定数据时，MCP 服务器检索并处理相关信息。提示词：工作流程的可复用模板。 </p>
+<h2 id="大模型"><a href="#大模型" class="headerlink" title="大模型"></a>大模型</h2><ul>
+<li>人工智能技术历经数十年掀起了四次技术革新，分别是“专家系统时代、机器学习时代、深度学习时代和大模型时代”。</li>
+</ul>
+<ul>
+<li>大模型：本质上是一个使用海量数据训练而成的深度神经网络模型，通过巨大的数据和参数规模实现了智能的涌现，展现出类似人类的智能（例如，自然语言处理、计算机视觉、语音识别等能力）。</li>
+<li>大模型和小模型的区别：参数、层数的差别。模型的训练数据和参数不断扩大，达到临界规模后，模型从原始数据中自动学习并发现新的、更高层次的特征和模式，表现出未能预测的、复杂的能力，这叫做涌现能力。</li>
+<li>大模型的缩放法则：指随着模型规模逐步放大，任务的表现越来越好</li>
+<li>大模型的涌现能力：指随着模型的规模增长，当规模跨过一定阈值，对某类任务的效果会出现突然的性能增长，涌现出新的能力。当全部人类的知识被存储在大模型中，这些知识被动态连接起来时，其所具有的智能远超人们预期。</li>
+<li>DeepSeek-V3正式发布（自研 MoE 模型，671B 参数，激活 37B，在 14.8T token 上进行了预训练）。超越了 Qwen2.5-72B和Llama-3.1-405B等其他开源模型。和闭源GPT-4o 以及 Claude-3.5-Sonnet 不分伯仲。Claude是Anthropic的。</li>
+<li>语言模型的发展历程：统计语言模型（ngram统计模型，具有一定生成能力）、神经语言模型（RNN-LM、word2vec无监督学习语义特征表示）、预训练语言模型（Bert、GPT-1&#x2F;2捕捉上下文语义，需要监督数据微调）、大语言模型（GPT-3&#x2F;4规模扩展带来性能重要提升，不再依靠下游任务数据的微调）</li>
+<li>预训练数据：网页、书籍、代码、百科、多轮对话、数学、题库。CC、finewebedu、dclm、nemo。预训练是在大规模语料上进行预训练，获得通用的语言理解和生成能力。预训练语料的规模和质量对于提升大语言模型的能力至关重要。</li>
+<li>Transformer：由多层的多头自注意力（Multi-head Self-attention）模块堆叠而成的神经网络模型。原始的Transformer模型由编码器和解码器两个部分构成，这两个部分可以独立使用，例如基于编码器架构的BERT模型和解码器架构的GPT模型。Transformer主要由三个关键组件组成，包括：Embedding（文本输入被划分为更小的单元，称为标记，标记被转换为称为嵌入向量的数字向量，用于捕获单词的语义）、Transformer Block（处理和转换输入数据的模型，核心是attention机制）和Output Probabilities（最终的线性层和 softmax 层将处理的嵌入转换为概率，使模型能够预测序列中的下一个标记）。</li>
+<li>Transformer的自注意力机制在计算每个词元时都需要利用到序列中所有词元的信息，这导致计算和存储复杂度随输入序列长度的平方级别增长。在处理长序列时，这种复杂性会消耗大量的计算资源与存储空间。</li>
+<li>增强大语言模型长文本建模能力的研究主要集中在两个方向：一是扩展位置编码，二是调整上下文窗口。</li>
+<li>PEFT参数高效微调：高效微调技术的目标是在通用大模型的基础上，使用领域数据集进行微调，使其能够展现出较强的指令遵循能力，可以通过零样本学习的方式解决多种下游任务。</li>
+</ul>
+<h2 id="deepseek"><a href="#deepseek" class="headerlink" title="deepseek"></a>deepseek</h2><ul>
+<li><p>deepseek用的H800的GPU做的训练，只有2000张左右H800，V3训练成本不超600W美元。</p>
+</li>
+<li><p>Deepseek-V3用了很少的成本训练出不错的模型。R1则通过新的reward机制GRPO (group relative policy optimization)，并使用规则类验证机制自动对输出进行打分，以V3为基础模型，一个多月时间里调教出了性能堪比4o, o1的模型。</p>
+</li>
+<li><p>V3叠了61个MoE (mix of expert 混合专家) block，虽然总参数量很大，但每次训练或推理时只激活了极小一部分链路，使得训练成本大大降低，推理速度也显著提高。</p>
+</li>
+<li><p>Deepseek最大的技术亮点是采用了混合精度框架，即在不同的区块里使用不同的精度来存储数据。众所周知精度越高内存占用越大，运算起来复杂度也越大。Deepseek在一些不需要很高精度的模块，使用很低的精度FP8储存数据，极大的降低了训练计算量。</p>
+</li>
+<li><p>checkpoint：在模型训练过程中保存的中间状态或快照，通常包括模型的参数（权重）、优化器的状态、训练进度等信息。通过 checkpoint，可以在训练中断后恢复训练，或者在推理时加载预训练模型。</p>
+</li>
+<li><p>R1-Zero和R1训练大概耗时2~3周，DeepSeek报告中发布三个模型：dp-v3（671B，激活37B），在此基础上，DS-R1-zero（实验品，没有SFT，全靠RL获得了推理能力，但模型输出不可控，可读性差，语种混杂），DS-R1（v3为基础，训练pipline和r1-zero一致，通过SFT+RL+冷启动过程训练，对标o1），使用DS-R1作为教师，蒸馏优化6个小模型（1.5b-70b，Qwen2.5四个，llama2个）。</p>
+</li>
+<li><p>DS-R1-zero：DS-v3为base模型，采用 GRPO的强化学习方式，进化出推理能力、Cot。</p>
+</li>
+<li><p>Cot：Chain-of-Thought思维链技术旨在通过引导模型生成一系列逻辑步骤或推理过程，从而提升模型在复杂任务上的表现。不仅增强了模型的理解能力，还提高了其在需要多步推理的问题上的准确性和可靠性。通过提示词设计、训练阶段加入中间推理步骤的数据实现。</p>
+</li>
+<li><p>强化学习RL：强化学习是一种通过与环境交互来学习最优策略的机器学习方法，智能体根据当前状态选择动作，并从环境中获得奖励反馈。智能体的目标是通过不断试错，找到能够最大化长期累积奖励的行为策略。适合需要连续决策和优化的复杂任务。</p>
+</li>
+<li><p>GRPO：PPO的变种，Group Relative Policy Optimization (GRPO) 群组相对策略优化是一种强化学习中的策略优化算法，旨在通过分组机制提升多智能体系统中的协作效率和策略稳定性。GRPO采用相对策略更新的方法，确保各组之间的策略调整既独立又协调，从而优化整体系统的表现。该方法广泛应用于多智能体协作、分布式资源管理和协同控制等领域，有助于实现更高效和可扩展的策略学习。</p>
+</li>
+<li><p>模型蒸馏： 一种将大型复杂模型（教师模型）的知识迁移到小型高效模型（学生模型）的技术。使得快速训练得到一个水平不错的学生模型，且学生模型相对较小，部署更具性价比。总体是个SFT有监督的微调，在特定prompt，学生模型学习教师模型的输出概率分布（如果开源模型 学习中间层的特征），从而快速调整自己的权重参数。包括以下几个典型步骤：教师模型：首先训练或直接使用性能强大的教师模型 （例如OpenAI O1）。数据准备：精心设计关心的prompt，并从教师模型中推理数据样本，这些数据将用于训练学生模型。学生模型训练：使用教师模型的输出作为监督信号，对较小的学生模型进行训练。不断调整学生模型的结构和参数，尽可能接近教师模型的性能。</p>
+</li>
+<li><p>R1-ZERO：采用PPO改进版GRPO 强化学习策略，奖励模型是RL学习方向的刺激信号，基于rule来设计奖励模型，包括2方面：准确性和format。限定输出模版必须先输出think过程，然后输出结果。表明不借助SFT只靠RL可以原生、自发的进化出强大的reasoning能力，比如反思、多种方式尝试。</p>
+</li>
+<li><p>R1：只用少量高质量的样本数据产生强大的reasoning能力，基于v3，经历四个训练阶段：1、cold-start高质量微调：少量高质量的Cot数据（r1-zero生成）做模型微调，让模型产生出反思、验证的过程。2、第一轮RL，获得reasoning能力，重点在数学、编程、科学等方面的强化学习。3、微调SFT，利用其模型产生一批prompt和response，在各种通识领域，合计800K样本，只微调2epoch。4、第二轮RL，全域强化学习，对数学代码等仍采用简单的rule-based的奖励信号，对其他场景，采用人类对齐的reward model。</p>
+</li>
+<li><p>蒸馏：以R1为教师，选择qwen2.5的1.5b-32b和llama3的8b和72b，进行SFT微调（蒸馏）。数据准备：671b教师模型生成高质量推理数据样本，作为学生模型的训练样本。数据增强：进一步扩展、修改和优化，多样性和代表性。蒸馏：学习教师模型的输出概率，采用混合损失函数设计（输出概率分布接近教师模型，输出概率分布接近真值）。L2正则化防止过拟合。</p>
+</li>
+<li><p>deepseek-r1-zero：在基础模型DeepSeek-V3上进行强化学习（RL）后得到了DeepSeek-R1-Zero模型。该模型学会了如何推理、创建思维链序列，并具备自我验证和反思等能力。尽管DeepSeek-R1-Zero的学习能力令人惊叹，但它存在语言混合、可读性差等严重问题。</p>
+</li>
+<li><p>deepseek-r1：首先使用数千个思维链（CoT）序列示例形式的冷启动数据，在DeepSeek-V3上进行监督微调（SFT），目的是为强化学习创建一个更稳定的起点，解决DeepSeek-R1-Zero存在的问题。接着进行强化学习，并设置奖励机制，以促进语言一致性，增强在科学、编码和数学等任务上的推理能力。然后，再次进行监督微调，这次加入了非推理重点的训练示例，帮助模型保留写作、角色扮演等更多通用能力。最后，再次进行强化学习，以更好地符合人类偏好。最终得到了一个拥有6710亿参数的高性能模型。（为了加快训练，deepseek加入了SFT的数据解决冷启动的问题，通过R1-Zero生成SFT的数据，解决了R1的冷启动问题。）</p>
+</li>
+<li><p>deepseek-r1-distill：基于Qwen和Llama架构，对参数在15亿 - 700亿之间的较小模型进行微调，得到了一组更轻量、更高效且推理能力更强的模型。这极大地提高了开发人员的可及性，因为许多提炼后的模型可以在他们的设备上快速运行。</p>
+</li>
+<li><p>deepseek的两点贡献：训练成本下降（混合精度、GRPO）、思维链&#x2F;深度思考增强（纯强化学习、冷启动数据和多阶段训练）。并没有抛弃SFT，在R1训练中加入了大量高质量的数据（结果正确+思维链完整）进行SFT。</p>
+</li>
+<li><p>deepseek在算法创新上，MLA、GRPO。以及强大的实验迭代能力，整个链路（数据、模型结构、训练算法流程、训练架构优化等）众多方案中找到可行的。海量优化空间中找到对的路径。</p>
+</li>
+</ul>
+<h2 id="强化学习"><a href="#强化学习" class="headerlink" title="强化学习"></a>强化学习</h2><p>强化学习（Reinforcement Learning, RL）是机器学习的一个重要分支，其核心思想是通过智能体（Agent）与环境（Environment）的交互，学习一种策略（Policy），以最大化长期累积奖励（Reward）。与监督学习和无监督学习不同，强化学习更关注在<strong>动态环境中的决策与优化</strong>。</p>
+<ul>
+<li>核心概念</li>
+</ul>
+<ol>
+<li>智能体（Agent）：学习的主体，负责与环境交互并做出决策。</li>
+<li>环境（Environment）：智能体所处的世界，根据智能体的动作给出反馈。</li>
+<li>状态（State）：环境在某一时刻的描述。</li>
+<li>动作（Action）：智能体在某个状态下可以执行的操作。</li>
+<li>奖励（Reward）：环境对智能体动作的即时反馈（正&#x2F;负&#x2F;零），指导学习方向。</li>
+<li>策略（Policy）：智能体的行为规则，即从状态到动作的映射。</li>
+<li>价值函数（Value Function）：评估某个状态或动作的长期价值（未来累积奖励的期望）。</li>
+</ol>
+<ul>
+<li>关键特点</li>
+</ul>
+<p>- 试错学习（Trial and Error）：通过不断尝试、接收反馈（奖励或惩罚）来优化策略。</p>
+<p>- 延迟奖励（Delayed Reward）：当前动作可能影响未来的长期收益，需权衡即时与未来奖励。</p>
+<p>- 动态环境：环境可能随时间变化，智能体需适应不确定性。</p>
+<h2 id="质量提升Prox"><a href="#质量提升Prox" class="headerlink" title="质量提升Prox"></a>质量提升Prox</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/python12222_/article/details/142684959">https://blog.csdn.net/python12222_/article/details/142684959</a></p>
+<ul>
+<li>Program-Every-Example (ProX) 是上海交大联合研究的一个用于提升大规模预训练语料质量的数据优化框架。</li>
+<li>大规模预训练数据是构建强大语言模型的基础。业界的实践通常是抓取互联网上的海量的网页数据，然后人工设计专门的规则来进行数据清洗，这些规则虽然能够在处理上万亿 token 级别的语料时保持较高的效率，但其局限性也逐渐显现。数据的清洗效果往往决于规则是否全面，然而这些规则并不能理解文档中的上下文语境，同时也很难为每一个文档去定制规则，因此面对多样化的样本需求，这些静态规则难以灵活应对，导致语料质量提升空间有限，制约了模型的进一步突破。</li>
+<li>上海交大提出Program-Every-Example (ProX) 框架。ProX 通过采用语言模型而非人类规则进行自动化的数据优化，灵活应对多样化的样本特征，显著提升了预训练语料的质量。</li>
+<li>ProX 不仅可以识别低质量的文本，还能进行更精准的优化和清理，如字符串标准化、噪声行删除等操作，确保每个样本都能以最佳状态进入预训练过程。总体框架：利用语言模型生成程序 + 执行，提升数据质量。</li>
+<li>文档级别的数据过滤和选择，能够有效识别低质量的文档并加以排除，提升数据集的质量。但是，其精细化处理能力不足，通常只停留在文档的选择层面，可能没有进一步对文档内的细节进行更深入的优化和清理，例如字符级别的规范化处理、噪声行的删除等操作，从而限制了数据优化的效果。</li>
+<li>数据合成方法通过大语言模型（LLM）基于种子数据或特定话题，主动生成新的高质量数据。这种合成技术尽管展示了生成多样化、丰富语料的潜力，但其挑战在于需要极大的计算资源支持，特别是在大规模生成时，计算代价非常高。LLM 生成的数据还面临幻觉问题，即生成内容与事实不符，无法保证训练数据的真实性和一致性。</li>
+<li>Prox：通过使用较小的语言模型（如 0.3B 的超小规模模型）来执行数据优化任务，并且将数据优化的过程转变为调用特定的 python 函数。对每个文档都生成特定的函数调用。ProX 框架会再通过执行这些程序，来对语料进行文档级别的过滤和噪声行、字符级别的处理。做到了简单过滤方法无法实现的精细化操作。ProX 设计的函数接口，覆盖了文档级别过滤、噪声行去除、字符串清洗等操作。</li>
+<li>针对数据优化的粒度，ProX 将优化分为两个阶段：文档级别和子文档 &#x2F; 块级别 (将文档切分成更小的窗口)，分别对应文档级别的过滤和更细粒度的块内优化如行级别和字符级别的优化。ProX 合成了对应的微调数据，以便对基座模型进行微调以处理和优化真实的语料。</li>
+<li>在文档级别操作中，借鉴self-rewarding以及fineweb-edu中采用的评分机制，构建出保留高分文档，去除低分文档的优化程序。</li>
+<li>在chunk块级别操作中，利用了 Llama-3 和少样本提示的方法，构造了对于多种噪声的函数调用，并对这些离散的函数调用进行语法检查和正确性分析，筛选然后合并为一个较为复杂的程序。</li>
+</ul>
+<h2 id="PPL"><a href="#PPL" class="headerlink" title="PPL"></a>PPL</h2><ul>
+<li>PPL困惑度Perplexity，是衡量语言模型对一段文本“不确定性”的一种量化方式。困惑度越低，说明语言模型对这段文本的预测越“自信”，也就是说文本越符合语言模型学到的语言规律。意味着逻辑清晰，语法通顺。</li>
+<li>计算方法：语言模型对整个句子概率的对数，取负数之后exp指数函数。很好预测时，概率高，对数概率接近0，ppl很小。预测不确定时，概率低，对数概率是很大的负数，ppl很大。<br> PPL局限性：对长文本不敏感，长文本的 PPL 容易偏高，建议按 token 归一化。不考虑语义，PPL 只反映语言模型是否熟悉该结构，不代表语义正确。模型依赖性强，使用不同语言模型（如 GPT vs BERT）会得到不同的 PPL 值。</li>
+</ul>
+<h2 id="ultra-fineweb"><a href="#ultra-fineweb" class="headerlink" title="ultra-fineweb"></a>ultra-fineweb</h2><ul>
+<li>模型驱动的数据过滤方法：1、缺乏有效的数据验证策略使得很难及时就数据质量提供反馈。2、用于训练分类器的种子数据的选择缺乏明确的标准，严重依赖人类的专业知识，引入了一定程度的主观性。</li>
+<li>要做什么：1、快速评估数据对LLM的影响。2、高效的数据过滤流水线，采用了基于FastText的轻量级分类器。</li>
+<li>早期的方法通常依赖于使用手动规则的启发式过滤，这些启发式方法无法识别复杂的内容噪声。 因此，采用神经分类器选择高质量内容的模型数据过滤已成为更好的选择。</li>
+<li>传统的方法通过使用候选语料库从头开始训练LLM来验证数据质量。本文提出的有效验证策略利用了几乎训练有素的LLM作为基础，在最后的训练步骤中纳入候选语料库，并将由此产生的性能改进用作评估数据质量的指标。</li>
+</ul>
+<h2 id="Transformer和Moe"><a href="#Transformer和Moe" class="headerlink" title="Transformer和Moe"></a>Transformer和Moe</h2><ul>
+<li>Transformer，基于自注意力机制的神经网络架构，是AI大模型的核心架构，最初用于机器翻译，核心是自注意力机制，可同时分析句子中所有词的关系，捕获序列中全局的依赖关系，而非像传统RNN那样逐词处理。核心特点是：并行计算，同时处理所有词。长距离依赖，轻松捕获句子开头和结尾的关联。编码器解码器结构，编码器理解输入，解码器生成输出。通过堆叠多层注意力和前馈神经网络模块，Transformer 易于扩展到更大的模型，比如 BERT、GPT 和 Vision Transformer。</li>
+<li>Moe混合专家模型，是一种模型设计思想，通过动态激活不同专家来节省算力。核心特点是：专家网络，多个专家小模型各司其职。门控路由，根据输入内容激活1-2个专家。稀疏计算，仅用部分参数，推理速度快。</li>
+<li>Transformer 和 MoE 的结合：在标准 Transformer 的每一层中或某些特定层，用一个 MoE 模块替换常规的前馈神经网络FFN，该 MoE 模块由多个不同的专家组成。每个专家的结构类似于普通 Transformer 层中的 FFN，然后用门控机制实现稀疏激活。</li>
+</ul>
+<h2 id="fasttext"><a href="#fasttext" class="headerlink" title="fasttext"></a>fasttext</h2><ul>
+<li>fastText是Facebook于2016年开源的一个词向量计算和文本分类工具。在文本分类任务中，fastText（浅层网络）往往能取得和深度网络相媲美的精度，却在训练时间上比深度网络快许多数量级。主要用于生成词向量（word embeddings）和快速进行文本分类。相较于其他工具（如 Word2Vec），FastText 计算速度更快、内存效率更高，非常适合大规模文本处理任务。</li>
+<li>softmax回归：用于把模型的分数变成概率，归一化到0-1。</li>
+</ul>
+<h2 id="emdedding"><a href="#emdedding" class="headerlink" title="emdedding"></a>emdedding</h2><ul>
+<li>embedding词嵌入：将单词表示为数值向量的方法，它能够捕捉单词间的语义关系和上下文信息。在词嵌入空间中，具有相似含义的单词被定位在相近的位置，向量之间的距离和方向编码了单词之间的相似度。机器学习算法通过这些数值向量理解语言。</li>
+<li>应用场景：文本分类（垃圾邮件检测）、命名实体识别（NER）、词语相似度(类比任务)、问答系统中进行语义匹配和文档检索。</li>
+<li>真实的词嵌入通常具有数百维。词嵌入的创建过程：1.文本预处理：包括分词、去除停用词和标点符号。2.上下文窗口识别：通过滑动上下文窗口识别目标词和上下文词，使模型能够学习词语之间的关系。3.模型训练：模型基于词语的上下文进行预测，将语义相似的词语在向量空间中定位在一起。4.参数调整：在训练过程中，模型参数不断调整以最小化预测误差。</li>
+<li>两种词嵌入生成方法：1.基于频率的嵌入：词语的重要性或显著性可以从它在文本中出现的频率推断出来。2.基于预测的嵌入：捕捉词语之间的语义关系和上下文信息。</li>
+<li>主流词嵌入模型：Word2Vec是由谷歌于2013年开发的流行词嵌入模型、GloVe是斯坦福大学的，使用共现统计来创建词向量。Word2Vec 专注于从每个词周围的直接上下文中学习，而 GloVe 则采用更广泛的视角，分析词语在整个语料库中一起出现的频率，然后使用这些信息创建词向量。传统词嵌入为每个词分配一个固定向量，是静态嵌入，而 Transformer 模型使用一种不同类型的嵌入，称为基于上下文的嵌入。在基于上下文的嵌入中，词语的表示会根据其周围的上下文而变化，具备上下文敏感性。</li>
+<li>embedding（嵌入）和token化（分词&#x2F;标记化）：token化是把文本拆分成token（并转成ID），是离散化的过程。解决自然语言中词汇的无限性和歧义性问题。embedding是把token的ID映射成高维实数向量，是向量化的过程。这些向量捕捉了词汇的语义和语法信息，是模型理解语言的基础。两者关系：Token化后的ID通过Embedding层转为向量，作为大模型的输入。Tokenization 决定了输入的粒度（如单词或子词），而 Embedding 决定了如何表达这些 Token 的语义。</li>
+</ul>
 
     </div>
 
@@ -346,7 +498,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FastText%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E8%B7%B5"><span class="nav-number">3.</span> <span class="nav-text">FastText原理及实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor"><span class="nav-number">4.</span> <span class="nav-text">Cursor</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor"><span class="nav-number">3.</span> <span class="nav-text">Cursor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-juicer"><span class="nav-number">4.</span> <span class="nav-text">data-juicer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82"><span class="nav-number">5.</span> <span class="nav-text">杂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">6.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">7.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">大模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepseek"><span class="nav-number">9.</span> <span class="nav-text">deepseek</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">10.</span> <span class="nav-text">强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E6%8F%90%E5%8D%87Prox"><span class="nav-number">11.</span> <span class="nav-text">质量提升Prox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPL"><span class="nav-number">12.</span> <span class="nav-text">PPL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ultra-fineweb"><span class="nav-number">13.</span> <span class="nav-text">ultra-fineweb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer%E5%92%8CMoe"><span class="nav-number">14.</span> <span class="nav-text">Transformer和Moe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext"><span class="nav-number">15.</span> <span class="nav-text">fasttext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#emdedding"><span class="nav-number">16.</span> <span class="nav-text">emdedding</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -361,7 +513,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
