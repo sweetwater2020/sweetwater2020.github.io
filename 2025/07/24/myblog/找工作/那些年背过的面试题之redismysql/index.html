@@ -28,7 +28,7 @@
 <meta property="og:description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis分布式锁的原理：Redis分布式锁基于SETNX+E">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:22:24.486Z">
-<meta property="article:modified_time" content="2025-10-19T10:27:24.467Z">
+<meta property="article:modified_time" content="2025-10-25T07:11:18.600Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-19 18:27:24" itemprop="dateModified" datetime="2025-10-19T18:27:24+08:00">2025-10-19</time>
+                <time title="Modified: 2025-10-25 15:11:18" itemprop="dateModified" datetime="2025-10-25T15:11:18+08:00">2025-10-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,8 +415,6 @@
 </li>
 <li><p>自增id：1.redis提供incr命令，单线程。2.雪花id：41位时间戳（毫秒，能用70年），10位机器标识，12位序列号。</p>
 </li>
-<li><p>分库分表之主键id：需要一个全局唯一的分布式id：1⃣️数据库自增长id，根据表的数量设置步长，但是不能扩表了。2⃣️redis incr&#x2F;incrby命令生成自增长id。数据存在内存，实例宕机可能丢数据。3⃣️uuid：本地生产不占用网络资源，缺点是太长，不具备有序性。适合用于编号。4⃣️雪花算法：有序增长，全局唯一。每秒可生成四百多万id。分三段：时间毫秒级、集群+机器id、序列号。可灵活分配比特位。缺点：强依赖机器时钟，可能导致发号重复。美团Leaf分布式id中，引入zookeeper，服务向zookeeper获取机器id，zookeeper检测时间是否正确。</p>
-</li>
 <li><p>mysql和Oracle的区别：1⃣️oracle数据库是一个重量级对象关系数据库管理系统（ORDBMS），收费的。mysql是一个轻量级开源的关系数据库管理系统（RDBMS），开源的免费的。2⃣️安全性上：oracle验证用户的参数有很多，有着较强的安全性，mysql验证用户的参数只有三个（用户名、密码、位置），安全性较弱。3⃣️对事务的支持：MySQL在innodb存储引擎的行级锁的情况下才可支持事务，而Oracle则完全支持事务。4⃣️mysql的诊断调优方法较少，主要有慢查询日志。Oracle有各种成熟的性能诊断调优工具。5⃣️并发性：mysql虽然InnoDB引擎的表可用行级锁，但行级锁机制依赖于表的索引，如果表没有索引，或者sql语句没有使用索引，将使用表级锁。Oracle使用行级锁，对资源锁定粒度更小，不依赖于索引。6⃣️应用：Oracle应用于大型复杂的企业级应用，性能、可伸缩性、可靠性更强大。mysql应用于中小型应用。</p>
 </li>
 <li><p>mysql当前读和快照读：1⃣️快照读是指读取数据不需要等待其他事务对数据锁的释放，通过MVCC允许读取数据的历史版本，提供一致性视图，实现了非阻塞的读。普通的select操作就是快照读，RR可重复读和RC读已提交下的select是快照读。2⃣️当前读：读取数据的最新版本，并对读取的数据加锁（行锁或间隙锁）。常用于需要修改数据的场景，例如update、delete、select for update。在串行化隔离级别下，即使普通select也是当前读。</p>
@@ -453,6 +451,20 @@
 <ul>
 <li><p>mysql索引失效：（1）对索引列使用了函数、计算表达式，索引会失效。（2）使用LIKE模糊查询时以“%”开头，则无法使用索引。（3）查询条件的类型与索引列不一致会造成隐式转换，从而索引失效。比如列为varchar，传入的是数字。（4）使用 !&#x3D;、&lt;&gt;、&lt;、&gt; 等非等值范围条件时，复合索引中，一旦遇到范围查询，右边的列将无法使用索引。!&#x3D; 和 &lt;&gt; 因匹配大量数据，优化器可能直接放弃索引转为全表扫描。（5）如果or连接的多个条件中，有部分字段未建索引，会导致全表扫描。（6）IS NOT NULL 通常导致索引失效，因匹配大量数据，优化器倾向于全表扫描。</p>
 </li>
+<li><p>mysql注意事项：</p>
+<p>尽量不在数据库做运算。</p>
+<p>控制单表数量：行不超过500W条，超出分表；列不超过50个，超过拆表。</p>
+<p>控制表数量：单库不超过300张,超过分库。</p>
+<p>平衡范式与冗余。</p>
+<p>拒绝3B：大SQL (BIG SQL),大事务 (BIG Transaction),大批量 (BIG Batch)。</p>
+<p>字符字段建前缀索引、针对同一字段or改写为in、针对不同字段or改写为union</p>
+<p>COUNT(字段名)：只统计该字段非NULL的行。</p>
+<p>COUNT(1) 和 COUNT(*)：无视表中字段是不是NULL，总是统计所有行。</p>
+<p>UNION：结果合并，然后把完全相同的行去重（只留一份）</p>
+<p>UNION ALL：只是简单地把所有结果追加在一起，不做去重</p>
+<p>少用表的join，改用多表查询，在应用层合并处理：多表JOIN需要数据库引擎做多次匹配、数据组合、排序，涉及大量资源消耗（CPU、内存、磁盘IO）。查询时要“笛卡尔积”候选项增多。JOIN容易引起锁竞争、单条SQL卡住会拖慢其它SQL，甚至引发“雪崩”效应。数据库可能需要把大量数据读入内存、排序、比对，网络与存储也有压力。</p>
+<p>用 MySQL 的 LOAD DATA 命令批量导入数据，可直接把文本文件中的数据批量装入表中。</p>
+</li>
 <li><p>mysql联合索引使用失效问题：原则：最左前缀原则 + 范围查询中断右侧字段使用。举例abc联合索引。</p>
 <p>select * from myTest where a&#x3D;3 and b&gt;7 and c&#x3D;3;   —- b范围值，断点，阻塞了c的索引。a用到了，b也用到了，c没有用到，注意b自身能用到。</p>
 <p>select * from myTest where a&#x3D;3 order by b;  – a用到了索引，b在结果排序中也用到了索引的效果，a下面任意一段的b是排好序的。</p>
@@ -467,6 +479,18 @@
 </ul>
 <h2 id="mybatis"><a href="#mybatis" class="headerlink" title="mybatis"></a>mybatis</h2><ul>
 <li>Mybatis保证跨库数据一致性？：Mybatis是一个持久层框架，不直接提供跨库调用数据一致性的解决方案。需要借助外部分布式事务解决方案：分布式事务框架、两阶段提交、最终一致性、分布式事务中间件XA协议。</li>
+</ul>
+<h2 id="发号器"><a href="#发号器" class="headerlink" title="发号器"></a>发号器</h2><ul>
+<li><p>分库分表之主键id：需要一个全局唯一的分布式id：1⃣️数据库自增长id，根据表的数量设置步长，但是不能扩表了。2⃣️redis incr&#x2F;incrby命令生成自增长id。数据存在内存，实例宕机可能丢数据。3⃣️uuid：本地生产不占用网络资源，缺点是太长，不具备有序性。适合用于编号。4⃣️雪花算法：有序增长，全局唯一。每秒可生成四百多万id。分三段：时间毫秒级、集群+机器id、序列号。可灵活分配比特位。缺点：强依赖机器时钟，可能导致发号重复。美团Leaf分布式id中，引入zookeeper，服务向zookeeper获取机器id，zookeeper检测时间是否正确。</p>
+</li>
+<li><p>雪花ID：雪花算法由 Twitter 提出，生成 64 位唯一 ID，结构为：1 位符号位、41 位时间戳、10 位机器 ID、12 位序列号。其优点是高性能、趋势递增、适合分布式系统。时钟回拨问题：当服务器时间回退，可能生成重复 ID。解决方法：暂停 ID 生成，等待时钟追上；使用 ZooKeeper 协调服务统一分配机器 ID，并监控时钟状态，发现回拨告警或自动切换备用节点；记录上次时间戳，回拨较小时等待，过大则拒绝生成，保障唯一性。</p>
+</li>
+<li><p>发号器：</p>
+<p>MySQL负责持久化和全局唯一性，批量分配号段，Redis则缓存号段并通过自增或队列操作实现高性能发号，通过原子操作高效分发。应用先从Redis分配ID，耗尽后再向MySQL申请新的号段，确保发号效率和安全性。系统启动或故障恢复时可从数据库重建状态，避免重复或丢失。</p>
+<p>优点：性能高、并发强（Redis 支持每秒数十万次 ID 分配）、持久一致，支持多业务扩展。</p>
+<p>缺点：Redis与MySQL同步有延迟，Redis故障时可能丢失未发完的号段，造成ID不连续。</p>
+<p>解决：使用双缓存或本地备用缓存；设置合理步长平衡性能与延迟；redis即将耗尽时，预分配号段。</p>
+</li>
 </ul>
 
     </div>
@@ -551,7 +575,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">1.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">3.</span> <span class="nav-text">mybatis</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">1.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">3.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">发号器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

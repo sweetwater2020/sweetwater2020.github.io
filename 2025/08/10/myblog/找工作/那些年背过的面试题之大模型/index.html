@@ -28,7 +28,7 @@
 <meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。 大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-10-14T15:17:21.894Z">
+<meta property="article:modified_time" content="2025-10-25T07:09:37.470Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-14 23:17:21" itemprop="dateModified" datetime="2025-10-14T23:17:21+08:00">2025-10-14</time>
+                <time title="Modified: 2025-10-25 15:09:37" itemprop="dateModified" datetime="2025-10-25T15:09:37+08:00">2025-10-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -444,7 +444,29 @@
 </li>
 </ul>
 <h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><ul>
+<li><p>Transformer</p>
+<p>基于自注意力机制（Self-Attention）的深度学习模型结构，2017年提出，广泛应用于自然语言处理NLP。与传统的循环神经网络（RNN）和卷积神经网络（CNN）相比，Transformer模型完全基于<strong>注意力机制</strong>，不依赖序列的顺序处理，因此具备更强的并行计算能力，能够高效处理长距离依赖问题。</p>
+<p>Transformer的主要结构包括<strong>编码器（Encoder）和解码器（Decoder）</strong>，编码器用于提取输入序列的特征，解码器用于生成目标序列。其核心在于<strong>多头自注意力机制</strong>，通过对序列中每个位置的信息加权求和，捕捉全局依赖关系。同时，<strong>位置编码</strong>（Positional Encoding）用于补充序列顺序信息。通过堆叠<strong>多层注意力和前馈神经网络</strong>模块，Transformer 易于扩展到更大的模型，比如 BERT、GPT 和 Vision Transformer。</p>
+</li>
 <li><p>tranformers中的自注意力机制：Transformer 中的自注意力机制，就是让模型在处理每个词时，都能“环顾四周”去关注句子中与之相关的其他词。比如“小明喜欢苹果，因为它脆。”，处理“它”时，模型会自动把注意力集中在“苹果”上，从而理解指代关系。实现：首先，给每个词生成三个角色——Query（我想找谁）、Key（我能被谁找）和 Value（我有什么信息）。然后，用 Query 和所有 Key 匹配，算出一个相关性分数，再通过 softmax 转化为注意力权重，表示该关注谁。接着，按这些权重对所有 Value 加权求和，得到当前词融合上下文后的新表示。为了让模型从不同角度理解语言，还引入“多头注意力”——多个小组同时工作，有的关注语法，有的关注语义，最后把结果合并。整个过程可并行计算，高效且强大，使模型能捕捉长距离依赖和复杂结构。总之，自注意力让模型学会“哪里重要就看哪里”，是 Transformer 理解语言的核心智慧。</p>
+</li>
+<li><p>Transformer的QKV理解</p>
+<p>Q（Query）：表示当前词“想查找什么样的信息”——“我在找谁？”</p>
+<p>K（Key）：表示每个词“能被什么样的查询匹配”——“我能被谁找到？”</p>
+<p>V（Value）：表示这个词“真正要输出的信息是什么”——“我有什么可以给你的？”</p>
+<p>注意力的最终输出是怎么来的？</p>
+<p>1、用 Q 和 K 计算相关性分数，再经 softmax 得到注意力权重（关注程度）；</p>
+<p>相关性分数：对于每个词的 Query 向量 Q 和所有词的 Key 向量 K，计算点积，表示它们之间的相似度，然后将分数除以一个缩放因子（Key向量维度的平方根），缓解随着维度增大导致点积数值过大的问题。</p>
+<p>2、用这些权重对 V（Value）向量进行加权求和；</p>
+<p>V（Value）代表每个词所携带的“实际信息内容”。通过将输入的词向量（Embedding + 位置编码）乘以一个可学习的权重矩阵进行线性变换得到。</p>
+<p>为什么要线性变换：让模型能够灵活学习和区分用于不同目的的特征表示，增强模型处理复杂信息和关系的能力。</p>
+<p>3、得到的结果就是：当前词融合了所有上下文中最相关信息的新表示。</p>
+</li>
+<li><p>Transformer的位置编码：位置编码是Transformer模型中用于补充序列顺序信息的方法。由于Transformer本身不具备处理序列顺序的能力，位置编码通过为每个输入向量添加独特的位置信息，使模型能够理解单词之间的先后关系。它通过将每个位置映射为一个固定的或可学习的向量，与词向量相加后输入网络。常见的位置编码包括正弦和余弦函数编码以及可学习的位置向量。</p>
+</li>
+<li><p>位置编码和embedding关系：位置编码（Positional Encoding）与词嵌入（Word Embedding）是相加关系，共同构成 Transformer 模型的输入。词嵌入：将每个词语转换为一个高维向量，表示其语义信息。位置编码：为序列中每个位置生成一个向量，表示词语在序列中的顺序。</p>
+</li>
+<li><p>Transformer中的注意力掩码：Transformer模型常对不同长度的序列进行填充（padding），使其一致。为防止模型在注意力计算时关注到填充部分，引入注意力掩码。掩码用1标识真实数据，0标识填充，确保模型只对有效信息进行学习和预测，提升表达能力和效果，是处理变长输入序列时的关键技术。</p>
 </li>
 <li><p>softmax：将一组数值转换成概率分布（0-1之间），并且所有结果加起来正好等于 1。在 Transformer 的自注意力机制中，Softmax 用来处理“Query 和 Key 的匹配得分”，把它变成注意力权重。</p>
 </li>
@@ -459,6 +481,45 @@
 <li><p>激活函数：引入非线性，让网络能学习和表达复杂的、不是简单加减乘除能描述的规律。如果网络没有激活函数，只是一堆线性运算，不管加多少层，最后都等价于一层线性变换，模型能力很有限，不能拟合曲线。</p>
 </li>
 <li><p>常用激活函数：ReLU：max(0, x)  把负数变0，正数保留 → 快速、常用。Sigmoid：1&#x2F;(1+e^-x)  输出01，适合概率。Tanh双曲正切函数：-11之间S形曲线  更强的归一化。</p>
+</li>
+</ul>
+<h2 id="Tokenizer和Embedding"><a href="#Tokenizer和Embedding" class="headerlink" title="Tokenizer和Embedding"></a>Tokenizer和Embedding</h2><ul>
+<li><p>tokenization方法</p>
+<p>tokenizer作用是将原始文本转换为模型可以理解和处理的形式，作用：将连续的文本分割成一个个离散的单元token（代表模型可理解和生成的最小意义力度，可以是单词、字母、标点符号，token化后embedding转换为数值向量，捕捉语言的语义）。用词汇表用来将token映射到唯一的数值表示，使用数字序列进行高效计算。</p>
+<p>分词维度：单词Token：西方语言中，空格和标点符号用来分隔单词。字母Token：单个字母或字符作为Token，汉语常见。子词Token：大语言模型Bert和GPT中使用子词subword作为token，例如根据字根、词缀等，unbelievable分为un、believe、able。（1 token ~&#x3D; 4 chars）</p>
+<p>token化的局限性：区分大小写、GPT3.5的tokenizer三个数字标记为一个token、空格导致token不一致。</p>
+<p>tokenizer方法：</p>
+<p>BPE（Byte Pair Encoding）：GPT 系列使用。通过统计语料中高频字母或字符对，反复将其合并为新的子词，最终得到分词表。可拆分和组合新词，减少生僻词带来的问题。</p>
+<p>WordPiece：与BPE类似，但采用贪心算法，优先选择最能匹配的子词。广泛应用于BERT及其衍生模型。</p>
+<p>SentencePiece：Llama、ChatGLM 等使用。将文本视为原始字节流，无需预分词，支持多语言和无空格语言（如中文），直接学习统一的子词单元。</p>
+</li>
+<li><p>tokenization分词表怎么来的：分词表通过在大规模语料上训练子词算法（如BPE、WordPiece）生成。模型从字符级开始，统计并合并高频片段，逐步学习常见词和子词单元，最终形成固定大小的词汇表。该表包含词或子词到ID的映射，确保模型高效处理文本并减少未登录词问题，随预训练模型一同发布。</p>
+</li>
+<li><p>语料分词怎么做：边分词边对照分词表，以 BPE 为例，模型将文本按规则（如空格）初步拆分为子单元，然后迭代地查找分词表中存在的最长匹配子词单元，进行合并或切分。最终结果是将原始文本分解为分词表中已有的 token 序列。</p>
+</li>
+<li><p>tokenizer和embedding属于训练部分吗：</p>
+<p>分词（tokenization）：属于数据预处理阶段。它是在训练开始前，把原始文本转换为模型可识别的token序列。使用的是预先训练好的分词器（如 BPE），不参与梯度更新。</p>
+<p>Embedding：将 token ID 映射为向量，embedding 层是模型的一部分（可学习参数），其权重在训练过程中通过反向传播不断优化，以更好地表达token的语义。</p>
+</li>
+</ul>
+<ul>
+<li>embedding词嵌入：将单词表示为数值向量的方法，它能够捕捉单词间的语义关系和上下文信息。在词嵌入空间中，具有相似含义的单词被定位在相近的位置，向量之间的距离和方向编码了单词之间的相似度。机器学习算法通过这些数值向量理解语言。</li>
+<li>应用场景：文本分类（垃圾邮件检测）、命名实体识别（NER）、词语相似度(类比任务)、问答系统中进行语义匹配和文档检索。</li>
+<li>真实的词嵌入通常具有数百维。词嵌入的创建过程：1.文本预处理：包括分词、去除停用词和标点符号。2.上下文窗口识别：通过滑动上下文窗口识别目标词和上下文词，使模型能够学习词语之间的关系。3.模型训练：模型基于词语的上下文进行预测，将语义相似的词语在向量空间中定位在一起。4.参数调整：在训练过程中，模型参数不断调整以最小化预测误差。</li>
+<li>两种词嵌入生成方法：1.基于频率的嵌入：词语的重要性或显著性可以从它在文本中出现的频率推断出来。2.基于预测的嵌入：捕捉词语之间的语义关系和上下文信息。</li>
+<li>主流词嵌入模型：Word2Vec是由谷歌于2013年开发的流行词嵌入模型、GloVe是斯坦福大学的，使用共现统计来创建词向量。Word2Vec 专注于从每个词周围的直接上下文中学习，而 GloVe 则采用更广泛的视角，分析词语在整个语料库中一起出现的频率，然后使用这些信息创建词向量。传统词嵌入为每个词分配一个固定向量，是静态嵌入，而 Transformer 模型使用一种不同类型的嵌入，称为基于上下文的嵌入。在基于上下文的嵌入中，词语的表示会根据其周围的上下文而变化，具备上下文敏感性。</li>
+<li>embedding（嵌入）和token化（分词&#x2F;标记化）：token化是把文本拆分成token（并转成ID），是离散化的过程。解决自然语言中词汇的无限性和歧义性问题。embedding是把token的ID映射成高维实数向量，是向量化的过程。这些向量捕捉了词汇的语义和语法信息，是模型理解语言的基础。两者关系：Token化后的ID通过Embedding层转为向量，作为大模型的输入。Tokenization 决定了输入的粒度（如单词或子词），而 Embedding 决定了如何表达这些 Token 的语义。</li>
+</ul>
+<h2 id="Moe"><a href="#Moe" class="headerlink" title="Moe"></a>Moe</h2><ul>
+<li>Transformer，基于自注意力机制的神经网络架构，是AI大模型的核心架构，最初用于机器翻译，核心是自注意力机制，可同时分析句子中所有词的关系，捕获序列中全局的依赖关系，而非像传统RNN那样逐词处理。核心特点是：并行计算，同时处理所有词。长距离依赖，轻松捕获句子开头和结尾的关联。编码器解码器结构，编码器理解输入，解码器生成输出。通过堆叠多层注意力和前馈神经网络模块，Transformer 易于扩展到更大的模型，比如 BERT、GPT 和 Vision Transformer。</li>
+<li>Moe混合专家模型，是一种模型设计思想，通过动态激活不同专家来节省算力。核心特点是：专家网络，多个专家小模型各司其职。门控路由，根据输入内容激活1-2个专家。稀疏计算，仅用部分参数，推理速度快。</li>
+<li>Transformer 和 MoE 的结合：在标准 Transformer 的每一层中或某些特定层，用一个 MoE 模块替换常规的前馈神经网络FFN，该 MoE 模块由多个不同的专家组成。每个专家的结构类似于普通 Transformer 层中的 FFN，然后用门控机制实现稀疏激活。</li>
+</ul>
+<ul>
+<li><p>MoE（Mixture of Experts，专家混合）：是一种神经网络结构，由多个**“专家”子模块和门控网络**组成。在MoE中，每次输入只激活部分专家，由门控网络动态选择参与推理，其余专家不计算，形成参数稀疏激活。这种方式使得模型总参数可以大幅增加，提高表达能力，但推理时计算量保持较低。</p>
+<p>相较于传统的Dense模型（密集模型），Dense模型所有参数始终全量参与前向和反向计算，难以兼顾参数量和计算效率。而MoE模型通过专家选择，在不增加推理成本的情况下，提升了模型容量和多样性，已在大规模多任务和多语种场景中广泛应用。</p>
+</li>
+<li><p>Moe专家调度：在MoE（Mixture of Experts）模型中，专家调度主要依靠门控（Gate）机制实现。具体来说，输入首先经过门控网络，门控网络会为每个专家分配一个<strong>权重分数</strong>，表示该输入与各专家的匹配程度。随后，通常只选择<strong>Top-k</strong>个得分最高的专家对输入进行处理，其余专家不参与计算，从而实现了稀疏激活。被选中的专家会分别输出结果（特征向量表示），并根据分配的权重进行加权汇总作为最终输出。通过这种调度方式，MoE实现了高效利用参数和计算资源。</p>
 </li>
 </ul>
 <h2 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h2><ul>
@@ -530,12 +591,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" rel="prev" title="那些年背过的面试题之Python">
-      <i class="fa fa-chevron-left"></i> 那些年背过的面试题之Python
+    <a href="/2025/08/05/myblog/python/python%E4%B9%8B%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="prev" title="python之零碎知识点">
+      <i class="fa fa-chevron-left"></i> python之零碎知识点
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%9C%BA%E6%99%AF%E9%A2%98/" rel="next" title="那些年背过的面试题之场景题">
-      那些年背过的面试题之场景题 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BPython/" rel="next" title="那些年背过的面试题之Python">
+      那些年背过的面试题之Python <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -595,7 +656,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">4.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">5.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">6.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">7.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">8.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">9.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">10.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">11.</span> <span class="nav-text">数据处理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">2.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">3.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">4.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">5.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">6.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">7.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">8.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tokenizer%E5%92%8CEmbedding"><span class="nav-number">9.</span> <span class="nav-text">Tokenizer和Embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moe"><span class="nav-number">10.</span> <span class="nav-text">Moe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">11.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">12.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">13.</span> <span class="nav-text">数据处理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

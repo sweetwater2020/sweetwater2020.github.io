@@ -28,7 +28,7 @@
 <meta property="og:description" content="MinHash与MinHashLSHMinHash 是一种用于快速估计两个集合（如文档、网页等）之间相似度的算法，特别是在处理高维数据或海量数据时非常高效。主要用于计算 Jaccard 相似度（集合交集与并集的比值）。Jaccard 相似度需要遍历整个集合，耗费时间和内存。 MinHash 提供了一种近似计算的方法，通过构造 “简化签名” 来高效估算集合之间的相似性，而无需直接操作整个集合。  计">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-29T14:39:50.221Z">
-<meta property="article:modified_time" content="2025-10-14T15:16:04.776Z">
+<meta property="article:modified_time" content="2025-10-25T07:11:48.417Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-14 23:16:04" itemprop="dateModified" datetime="2025-10-14T23:16:04+08:00">2025-10-14</time>
+                <time title="Modified: 2025-10-25 15:11:48" itemprop="dateModified" datetime="2025-10-25T15:11:48+08:00">2025-10-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -398,23 +398,11 @@
 <li>早期的方法通常依赖于使用手动规则的启发式过滤，这些启发式方法无法识别复杂的内容噪声。 因此，采用神经分类器选择高质量内容的模型数据过滤已成为更好的选择。</li>
 <li>传统的方法通过使用候选语料库从头开始训练LLM来验证数据质量。本文提出的有效验证策略利用了几乎训练有素的LLM作为基础，在最后的训练步骤中纳入候选语料库，并将由此产生的性能改进用作评估数据质量的指标。</li>
 </ul>
-<h2 id="Transformer和Moe"><a href="#Transformer和Moe" class="headerlink" title="Transformer和Moe"></a>Transformer和Moe</h2><ul>
-<li>Transformer，基于自注意力机制的神经网络架构，是AI大模型的核心架构，最初用于机器翻译，核心是自注意力机制，可同时分析句子中所有词的关系，捕获序列中全局的依赖关系，而非像传统RNN那样逐词处理。核心特点是：并行计算，同时处理所有词。长距离依赖，轻松捕获句子开头和结尾的关联。编码器解码器结构，编码器理解输入，解码器生成输出。通过堆叠多层注意力和前馈神经网络模块，Transformer 易于扩展到更大的模型，比如 BERT、GPT 和 Vision Transformer。</li>
-<li>Moe混合专家模型，是一种模型设计思想，通过动态激活不同专家来节省算力。核心特点是：专家网络，多个专家小模型各司其职。门控路由，根据输入内容激活1-2个专家。稀疏计算，仅用部分参数，推理速度快。</li>
-<li>Transformer 和 MoE 的结合：在标准 Transformer 的每一层中或某些特定层，用一个 MoE 模块替换常规的前馈神经网络FFN，该 MoE 模块由多个不同的专家组成。每个专家的结构类似于普通 Transformer 层中的 FFN，然后用门控机制实现稀疏激活。</li>
-</ul>
 <h2 id="fasttext"><a href="#fasttext" class="headerlink" title="fasttext"></a>fasttext</h2><ul>
 <li>fastText是Facebook于2016年开源的一个词向量计算和文本分类工具。在文本分类任务中，fastText（浅层网络）往往能取得和深度网络相媲美的精度，却在训练时间上比深度网络快许多数量级。主要用于生成词向量（word embeddings）和快速进行文本分类。相较于其他工具（如 Word2Vec），FastText 计算速度更快、内存效率更高，非常适合大规模文本处理任务。</li>
 <li>softmax回归：用于把模型的分数变成概率，归一化到0-1。</li>
 </ul>
-<h2 id="emdedding"><a href="#emdedding" class="headerlink" title="emdedding"></a>emdedding</h2><ul>
-<li>embedding词嵌入：将单词表示为数值向量的方法，它能够捕捉单词间的语义关系和上下文信息。在词嵌入空间中，具有相似含义的单词被定位在相近的位置，向量之间的距离和方向编码了单词之间的相似度。机器学习算法通过这些数值向量理解语言。</li>
-<li>应用场景：文本分类（垃圾邮件检测）、命名实体识别（NER）、词语相似度(类比任务)、问答系统中进行语义匹配和文档检索。</li>
-<li>真实的词嵌入通常具有数百维。词嵌入的创建过程：1.文本预处理：包括分词、去除停用词和标点符号。2.上下文窗口识别：通过滑动上下文窗口识别目标词和上下文词，使模型能够学习词语之间的关系。3.模型训练：模型基于词语的上下文进行预测，将语义相似的词语在向量空间中定位在一起。4.参数调整：在训练过程中，模型参数不断调整以最小化预测误差。</li>
-<li>两种词嵌入生成方法：1.基于频率的嵌入：词语的重要性或显著性可以从它在文本中出现的频率推断出来。2.基于预测的嵌入：捕捉词语之间的语义关系和上下文信息。</li>
-<li>主流词嵌入模型：Word2Vec是由谷歌于2013年开发的流行词嵌入模型、GloVe是斯坦福大学的，使用共现统计来创建词向量。Word2Vec 专注于从每个词周围的直接上下文中学习，而 GloVe 则采用更广泛的视角，分析词语在整个语料库中一起出现的频率，然后使用这些信息创建词向量。传统词嵌入为每个词分配一个固定向量，是静态嵌入，而 Transformer 模型使用一种不同类型的嵌入，称为基于上下文的嵌入。在基于上下文的嵌入中，词语的表示会根据其周围的上下文而变化，具备上下文敏感性。</li>
-<li>embedding（嵌入）和token化（分词&#x2F;标记化）：token化是把文本拆分成token（并转成ID），是离散化的过程。解决自然语言中词汇的无限性和歧义性问题。embedding是把token的ID映射成高维实数向量，是向量化的过程。这些向量捕捉了词汇的语义和语法信息，是模型理解语言的基础。两者关系：Token化后的ID通过Embedding层转为向量，作为大模型的输入。Tokenization 决定了输入的粒度（如单词或子词），而 Embedding 决定了如何表达这些 Token 的语义。</li>
-</ul>
+<h2 id="Ling-1T"><a href="#Ling-1T" class="headerlink" title="Ling-1T"></a>Ling-1T</h2><p>Ring是推理模型，Ling是chat模型。万亿参数，每个token激活其中约50B参数，在20T+ token高质量、高推理浓度的语料上完成预训练。支持最高128K上下文窗口，通过“中训练+后训练”的演进式思维链（Evo-CoT）极大提升模型高效推理能力。</p>
 
     </div>
 
@@ -498,7 +486,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor"><span class="nav-number">3.</span> <span class="nav-text">Cursor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-juicer"><span class="nav-number">4.</span> <span class="nav-text">data-juicer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82"><span class="nav-number">5.</span> <span class="nav-text">杂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">6.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">7.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">大模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepseek"><span class="nav-number">9.</span> <span class="nav-text">deepseek</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">10.</span> <span class="nav-text">强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E6%8F%90%E5%8D%87Prox"><span class="nav-number">11.</span> <span class="nav-text">质量提升Prox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPL"><span class="nav-number">12.</span> <span class="nav-text">PPL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ultra-fineweb"><span class="nav-number">13.</span> <span class="nav-text">ultra-fineweb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer%E5%92%8CMoe"><span class="nav-number">14.</span> <span class="nav-text">Transformer和Moe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext"><span class="nav-number">15.</span> <span class="nav-text">fasttext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#emdedding"><span class="nav-number">16.</span> <span class="nav-text">emdedding</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MinHash%E4%B8%8EMinHashLSH"><span class="nav-number">1.</span> <span class="nav-text">MinHash与MinHashLSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform-%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%8CEncoder-%E5%92%8C-Decoder"><span class="nav-number">2.</span> <span class="nav-text">Transform 的架构，Encoder 和 Decoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cursor"><span class="nav-number">3.</span> <span class="nav-text">Cursor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-juicer"><span class="nav-number">4.</span> <span class="nav-text">data-juicer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82"><span class="nav-number">5.</span> <span class="nav-text">杂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">6.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">7.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text">大模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deepseek"><span class="nav-number">9.</span> <span class="nav-text">deepseek</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">10.</span> <span class="nav-text">强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E6%8F%90%E5%8D%87Prox"><span class="nav-number">11.</span> <span class="nav-text">质量提升Prox</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PPL"><span class="nav-number">12.</span> <span class="nav-text">PPL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ultra-fineweb"><span class="nav-number">13.</span> <span class="nav-text">ultra-fineweb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fasttext"><span class="nav-number">14.</span> <span class="nav-text">fasttext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ling-1T"><span class="nav-number">15.</span> <span class="nav-text">Ling-1T</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
