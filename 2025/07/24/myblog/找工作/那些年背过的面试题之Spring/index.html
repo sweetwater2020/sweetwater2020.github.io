@@ -28,7 +28,7 @@
 <meta property="og:description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:25:25.599Z">
-<meta property="article:modified_time" content="2025-10-19T07:40:41.515Z">
+<meta property="article:modified_time" content="2025-11-06T14:28:00.445Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-19 15:40:41" itemprop="dateModified" datetime="2025-10-19T15:40:41+08:00">2025-10-19</time>
+                <time title="Modified: 2025-11-06 22:28:00" itemprop="dateModified" datetime="2025-11-06T22:28:00+08:00">2025-11-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,6 +282,10 @@
 </li>
 <li><p>@Autowired和@Resource：都是用来实现依赖注入的注解。@Autowired是spring的注解，默认根据类型注入，多个类型相同则进一步根据名称。如果按照类型匹配接口不同实现类需要结合@Qualifier。提供required属性允许找不到bean时是否抛出异常。@Resource是j2ee的注解，默认按byName自动注入，不能用于构造函数。</p>
 </li>
+<li><p>@Autowired底层原理：基于 Spring 的 BeanPostProcessor 扩展机制+反射，核心由 AutowiredAnnotationBeanPostProcessor 实现。在 Bean 创建过程中，Spring 容器通过该后置处理器扫描类中被 @Autowired 标注的构造器、字段或方法。对于构造器注入，在实例化阶段解析参数类型，按 byType 查找匹配的 Bean，结合 @Qualifier ，并通过反射调用构造器完成依赖注入；对于字段或 setter 方法注入，则在属性填充阶段通过反射设置值或调用方法。整个过程依赖类型匹配（byType）、名称匹配（byName）及 BeanFactory.getBean() 查找机制。若存在多个候选 Bean 且无法唯一确定，会抛出 NoUniqueBeanDefinitionException。推荐使用构造器注入，因其能保证依赖不可变性和初始化完整性。</p>
+</li>
+<li><p>@Autowired为什么保证不可变性：因为构造器注入在对象创建时必须提供所有依赖，并将字段声明为 final，确保不可变；且依赖由容器强制传入，无法跳过，保证了初始化的完整性，避免出现未注入就使用的空指针风险。</p>
+</li>
 <li><p>Spring核心注解：@SpringBootApplication：组合注解，用于启动Spring Boot应用，包含@Configuration、@EnableAutoConfiguration和@ComponentScan。@Component：标注一个类为需要Spring管理的bean。@Configuration：表明该类是用于定义Bean的配置类，配合@Bean来在容器中注册自定义的Bean，方法返回对象被容器管理。@Transactional：用于声明一个方法或类需要事务管理。</p>
 </li>
 <li><p>Spring依赖注入注解：@Autowired、@Qualifier、@Resource、@Value：注入普通类型的属性。</p>
@@ -310,6 +314,10 @@
 </li>
 <li><p>spring事务失效场景，不加public为何事务失效：Spring事务失效常见场景有：方法不是 public、同类方法调用、异常未抛出、事务注解加在接口上等。Spring事务本质上是通过AOP动态代理实现的，只有 public 方法才能被代理增强。如果事务方法不是 public，Spring AOP无法生成代理，导致事务失效。</p>
 </li>
+</ul>
+<ul>
+<li><p>java中实现流式输出：Spring WebFlux 是 Spring 5 提供的响应式编程框架，支持非阻塞、异步流式处理，适合实现服务端持续推送数据（如 SSE）。它使用 Reactor 库中的 Flux 或 Mono 发送数据流，可逐条发射内容，客户端实时接收，无需等待全部生成。相比传统 Servlet，WebFlux 能以更少线程支持更高并发，非常适合流式场景。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(value = &quot;/stream&quot;, produces = &quot;text/plain&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Flux&lt;String&gt; <span class="title function_">stream</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> Flux.just(<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>, <span class="string">&quot;Flux&quot;</span>)</span><br><span class="line">        .delayElements(Duration.ofSeconds(<span class="number">1</span>))</span><br><span class="line">        .map(s -&gt; s + <span class="string">&quot;\n&quot;</span>);</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h2><ul>
 <li><p>什么是springboot：基于spring的开源框架，用于快速创建独立的生产级别的可运行的Spring应用程序。不是Spring功能上的增强，而是提供一种快速开发Spring项目的方式。spring问题：写配置文件繁琐，依赖繁琐，maven坐标版本问题。springboot提供的优点：自动配置、起步依赖、安全。约定优于配置的理念，开发者不需要手动配置大量spring配置文件，而是自动配置。提供一系列的起步依赖starter，快速构建出一些常用的应用程序，整合Junit、redis、mybatis等很方便。帮助管理jar包版本，避免依赖版本不一致的问题。</p>
@@ -451,7 +459,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

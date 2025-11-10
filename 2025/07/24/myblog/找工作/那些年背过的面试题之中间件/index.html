@@ -28,7 +28,7 @@
 <meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制proto">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:23:55.444Z">
-<meta property="article:modified_time" content="2025-10-25T06:44:13.115Z">
+<meta property="article:modified_time" content="2025-11-04T15:54:33.164Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-25 14:44:13" itemprop="dateModified" datetime="2025-10-25T14:44:13+08:00">2025-10-25</time>
+                <time title="Modified: 2025-11-04 23:54:33" itemprop="dateModified" datetime="2025-11-04T23:54:33+08:00">2025-11-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -466,7 +466,7 @@
 </li>
 <li><p>cookie、session、token：生成位置都在服务器，cookie和token保存在客户端，session保存在服务器。鉴权过程：请求携带cookie与服务器记录cookie对比确认用户状态。session用请求中session id提取，恢复用户状态。请求携带token与服务器通过请求信息生成token对比。</p>
 </li>
-<li><p>http状态码：301永久重定向。302临时重定向。400服务端无法理解客户端请求。401未授权，需要用户身份认证。403禁止访问，服务端拒绝。404未找到请求的资源。500服务端内部错误。</p>
+<li><p>http状态码：301永久重定向。302临时重定向。400服务端无法理解客户端请求（例如参数错误，参数名错误，postget方法错误）。401未授权，需要用户身份认证。403禁止访问，服务端拒绝。404未找到请求的资源。500服务端内部错误。</p>
 </li>
 <li><p>DNS基于什么协议：DNS域名解析系统，应用层，用于将人类可读的主机名转换为机器可读的IP地址。主要基于UDP进行工作，但当响应数据大小超过报文限制，或者需要更可靠传输时，用TCP。</p>
 </li>
@@ -492,6 +492,10 @@
 <li>边缘计算和云计算：边缘计算采用分布式计算架构，将运算分散在靠近数据源的近端设备处理，分担云平台的工作量，不需要把数据回传云端处理，实时性更好、效率更高、延迟最短，没有网络也不妨碍。</li>
 <li>k8s：Kubernetes是一个开源的容器编排系统，用于自动化部署、扩展和管理容器化应用程序。由google设计。</li>
 <li>docker：容器化技术允许将应用程序及其依赖项打包到一个轻量级、可移植的容器中，使得应用程序能够在任何环境中一致地运行。</li>
+<li>Docker实践：Docker 是一个容器化平台，用于将应用及其依赖打包成轻量级、可移植的容器，实现“一次构建，随处运行”。使用Docker来进行应用部署和环境管理。例如，在开发阶段，通过编写Dockerfile把应用的依赖、配置和启动脚本打包到镜像里，然后用docker build构建镜像。之后，通过docker run在本地或服务器上启动容器，实现和生产环境一致的运行环境。遇到多个服务协作时，用docker-compose配置，使用 docker-compose.yml 来统一管理，快速编排web服务、数据库、缓存等容器，使整个项目环境搭建更加高效、规范。docker ps 查看运行中的容器、docker logs 查看日志、docker prune 清理无用镜像和容器。</li>
+<li>镜像和容器：镜像是静态的、只读的模板，包含了应用程序所需的全部内容（比如代码、库、系统环境、依赖等）；容器是镜像运行时的动态实例，拥有自己的运行环境和文件系统。每个容器都是运行时独立的，相互隔离。没有镜像就没有容器，但镜像不会运行，只有容器才能运行应用。</li>
+<li>k8s实践：用来管理和部署微服务、提升服务的高可用性和扩展性。比如我们的后台服务、Web应用、数据库等都通过 K8s 集群来统一管理。编写 yaml 文件定义 Deployment、Service 等资源，然后用 kubectl 进行创建和管理。可以实现自动扩缩容，用 kubectl 命令行管理资源，查看日志，滚动升级等。</li>
+<li>docker部署和k8s部署：Docker 自己的部署通常指用 docker run 或 docker-compose，在单台或少量主机上管理容器，依赖手工操作扩容、重启、故障处理，适合开发或小型项目。而 K8s 部署则是通过 Kubernetes 统一编排容器，提供自动调度、负载均衡、自动扩缩容、健康检查、故障自愈等功能，更适合大规模高可用的生产环境。简单来说，Docker 适合“单兵作战”，K8s 可以“集群作战”，能自动处理容器管理中的各种难题。</li>
 </ul>
 <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><ul>
 <li>Linux 如何打印进程号：ps aux | grep 进程名：查看指定进程的 PID。echo $$：打印当前 shell 的进程号。</li>
@@ -595,7 +599,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

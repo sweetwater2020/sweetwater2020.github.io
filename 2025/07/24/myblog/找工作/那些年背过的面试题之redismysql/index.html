@@ -28,7 +28,7 @@
 <meta property="og:description" content="redis redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis分布式锁的原理：Redis分布式锁基于SETNX+E">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:22:24.486Z">
-<meta property="article:modified_time" content="2025-10-25T07:11:18.600Z">
+<meta property="article:modified_time" content="2025-11-05T12:54:16.440Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-25 15:11:18" itemprop="dateModified" datetime="2025-10-25T15:11:18+08:00">2025-10-25</time>
+                <time title="Modified: 2025-11-05 20:54:16" itemprop="dateModified" datetime="2025-11-05T20:54:16+08:00">2025-11-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,6 +255,14 @@
 <li><p>redis分布式锁的原理：Redis分布式锁基于SETNX+EXPIRE实现，利用Redis单线程原子操作保证互斥。加锁使用SET key value NX EX seconds，key为锁名称，value为唯一标识符，用来标识哪个客户端持有这个锁，防止误删；释放锁通过Lua脚本原子性校验并删除。</p>
 </li>
 <li><p>redis分布式锁需要考虑：setnx保障互斥性、设置过期时间避免客户端崩溃导致锁无法释放、任务执行时间长则通过后台线程定期续期、使用redis集群避免单点故障。</p>
+</li>
+<li><p>redis的lua脚本：通过 Lua 脚本在服务端原子执行复杂逻辑，保证多个操作的原子性，避免竞态条件。脚本由 EVAL 或 EVALSHA 命令调用，运行时 Redis 不会执行其他命令，确保线程安全。常用于高并发场景，如库存扣减、抢红包、限流控制等。比原生 MULTI&#x2F;EXEC 更灵活。同时减少网络往返，提升性能。</p>
+<p>例子：EVAL “redis.call(‘SET’, KEYS[1], ARGV[1])” 1 foo bar</p>
+<p>表示给 key “foo” 设置 value “bar”：其中1表示指定 KEYS 数组长度，即有多少个 key 参数。java中用jedis.eval。</p>
+<p>例如：仅当锁 key 当前值和传入 value 一致时，才删除该 key（防止误删其它线程的锁）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> redis.call(<span class="string">&#x27;get&#x27;</span>, KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] then</span><br><span class="line">  <span class="keyword">return</span> redis.call(<span class="string">&#x27;del&#x27;</span>, KEYS[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>再比如实现redis锁可重入，自动续锁。</p>
 </li>
 <li><p>Redis分布式锁和zk分布式锁区别：1、实现原理：<strong>Redis</strong> <strong>分布式锁</strong>：通常利用 SETNX尝试设置一个唯一的键值对来获取锁，可通过 Lua 脚本保证操作的原子性。<strong>Zookeeper</strong> <strong>分布式锁</strong>：基于 Zookeeper 的临时顺序节点特性，客户端尝试创建一个临时顺序节点，然后判断自己创建的节点是否是当前所有子节点中序号最小的，如果是则表示获取到锁，用完后节点自动删除（因是临时节点）释放锁，否则监听前一个序号节点来等待锁释放。2、性能：<strong>Redis</strong> <strong>分布式锁</strong>：性能相对较高，因为 Redis 基于内存操作，读写速度快，适合高并发场景下频繁获取和释放锁的操作。<strong>Zookeeper</strong> <strong>分布式锁</strong>：性能稍逊一筹，由于 Zookeeper 是基于磁盘存储以及涉及节点的创建、监听等较复杂操作。3、可靠性：<strong>Redis</strong> <strong>分布式锁</strong>：存在一定风险，可能出现锁提前过期导致业务未完成锁却被释放，或者节点宕机使得锁无法正常释放或续期等问题。<strong>Zookeeper</strong> <strong>分布式锁</strong>：可靠性较高，基于 Zookeeper 自身的一致性保证以及临时顺序节点机制，只要 Zookeeper 集群正常，基本能保证锁的正确获取与释放，不容易出现锁异常的情况。4、应用场景：<strong>Redis</strong> <strong>分布式锁</strong>：更适合在对性能要求高、业务逻辑相对简单且锁持有时间较短的场景。<strong>Zookeeper</strong> <strong>分布式锁</strong>：适合对可靠性要求高、需要强顺序保证的复杂业务场景，像分布式任务调度系统中确保任务按顺序执行等场景。</p>
 </li>
@@ -492,6 +500,10 @@
 <p>解决：使用双缓存或本地备用缓存；设置合理步长平衡性能与延迟；redis即将耗尽时，预分配号段。</p>
 </li>
 </ul>
+<h2 id="空间索引算法"><a href="#空间索引算法" class="headerlink" title="空间索引算法"></a>空间索引算法</h2><p>R-Tree是一种自平衡的树状数据结构，用于存储具有多维坐标的空间对象。它通过分层的矩形区域来组织数据，确保查询时能够快速过滤掉无关对象。R-Tree的节点包含一组矩形（也称为边界框或MBRs），这些矩形覆盖了该节点下所有子节点或对象的范围。当节点的矩形数量超过某个阈值时，该节点会被分裂成两个或更多子节点，以保持树的平衡。查询时，通过检查边界框的交集来确定哪些节点可能包含目标对象，从而减少搜索的范围。</p>
+<p>GeoHash：将二维经纬度坐标编码为一个字符串（或数字），通过将空间递归划分为网格，实现“越相近的地理位置，编码前缀越相似”。支持前缀匹配，适用于快速粗略范围查找。</p>
+<p>数据库的空间索引：从 5.7 版本起，InnoDB 支持 SPATIAL INDEX，底层基于 R-Tree 结构，适用于二维空间范围查询。使用时，需将空间字段定义为 POINT、GEOMETRY 、LINESTRING、POLYGON等类型。借助MySQL内置的GIS函数（如ST_Within、ST_Contains、ST_Distance等），可实现高效的范围查询、邻近查找和空间关系判断。</p>
+<p>Redis的空间索引：Redis自3.2版本起支持地理空间索引，Redis 的 GEO 功能基于 Geohash 编码 和 Sorted Set（有序集合） 实现：将地理位置（经度、纬度）转换为 Geohash 字符串作为分值，利用 ZSet 支持范围查询。使用 GEOADD key longitude latitude member 可添加坐标点，如记录用户位置；通过 GEORADIUS key lon lat radius unit 查询指定半径内的成员，常用于“附近的人”或“周边服务”场景；还支持 GEODIST 计算距离等。</p>
 
     </div>
 
@@ -575,7 +587,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">1.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">3.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">发号器</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis"><span class="nav-number">1.</span> <span class="nav-text">redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-number">2.</span> <span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">3.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">发号器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95%E7%AE%97%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">空间索引算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -590,7 +602,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
