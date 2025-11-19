@@ -23,17 +23,17 @@
   <meta name="description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之Spring">
-<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/index.html">
+<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/spring/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
 <meta property="og:description" content="spring Spring的架构：1⃣️控制反转IOC容器，负责管理对象的生命周期。2⃣️AOP面向切面编程，实现跨应用程序的共有关注点，代码前后做增强。3⃣️简化数据访问，如JDBC，提供一致的数据访问。4⃣️Web层，Spring MVC提供一个分离的模型-视图-控制器实现，用于构建Web应用。  spring bean的加载过程&#x2F;生命周期：1⃣️启动spring应用上下文。2⃣️加">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:25:25.599Z">
-<meta property="article:modified_time" content="2025-11-06T14:28:00.445Z">
+<meta property="article:modified_time" content="2025-11-19T14:39:59.073Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/">
+<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/spring/">
 
 
 <script id="page-configurations">
@@ -189,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.gif">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-06 22:28:00" itemprop="dateModified" datetime="2025-11-06T22:28:00+08:00">2025-11-06</time>
+                <time title="Modified: 2025-11-19 22:39:59" itemprop="dateModified" datetime="2025-11-19T22:39:59+08:00">2025-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -379,11 +379,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="prev" title="那些年背过的面试题之中间件">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="prev" title="那些年背过的面试题之中间件">
       <i class="fa fa-chevron-left"></i> 那些年背过的面试题之中间件
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="next" title="那些年背过的面试题之大数据">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="next" title="那些年背过的面试题之大数据">
       那些年背过的面试题之大数据 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -459,7 +459,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

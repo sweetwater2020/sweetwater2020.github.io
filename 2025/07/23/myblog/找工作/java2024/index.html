@@ -23,17 +23,17 @@
   <meta name="description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之java2024">
-<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/index.html">
+<meta property="og:url" content="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java2024/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
 <meta property="og:description" content="内存模型 jvm内存模型：线程共有：堆（对象实例和数组）、方法区（被虚拟机加载的类信息、方法信息、字段信息、常量、静态变量、即时编译器编译后的代码缓存）、直接内存（非运行时数据，IO操作）。线程私有：虚拟机栈（一个方法一个栈帧：局部变量表、操作数栈、动态链接、返回地址）、本地方法栈（native方法）、PC程序计数器（下一条指令位置的指针） jmm内存模型：多线程环境下对共享变量的同步，保证多线程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-22T16:44:10.012Z">
-<meta property="article:modified_time" content="2025-10-19T08:12:38.121Z">
+<meta property="article:modified_time" content="2025-11-19T14:39:21.734Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/">
+<link rel="canonical" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java2024/">
 
 
 <script id="page-configurations">
@@ -189,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bjava2024/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/23/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/java2024/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.gif">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-10-19 16:12:38" itemprop="dateModified" datetime="2025-10-19T16:12:38+08:00">2025-10-19</time>
+                <time title="Modified: 2025-11-19 22:39:21" itemprop="dateModified" datetime="2025-11-19T22:39:21+08:00">2025-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -427,6 +427,10 @@
 </li>
 <li><p>频繁Full GC解决方案：调整堆&#x2F;老年代的内存大小（如增大Xmx&#x2F;Xms&#x2F;Xmn等参数）、检查和修复内存泄漏、优化代码，减少大对象频繁创建、替换或调整垃圾收集器策略（如用G1替代CMS）、限制频繁的System.gc()调用、监控和分析对象分配和回收情况，优化程序内存使用</p>
 </li>
+<li><p>java垃圾回收为什么StopTheWorld：垃圾回收的第一步是可达性分析：从 GC Roots 出发，遍历对象引用图，标记哪些对象是“可达的”（存活），哪些是“不可达的”（可回收）。保证可达性分析的准确性，防止漏标或误标。避免应用线程在GC过程中破坏对象图结构。 </p>
+</li>
+<li><p>垃圾回收算法对STW的优化：CMS（大部分标记阶段并发，仅初始标记和重新标记STW（较短））、G1（将堆分Region，增量回收，STW时间可控（目标化暂停时间））、ZGC（通过读写屏障实现几乎全并发，STW时间极短）</p>
+</li>
 </ul>
 <h2 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a>故障排查</h2><ul>
 <li>jvm排查线程cpu问题：1.ps -ef|grep java 或者 jps 查找出进程id。2.top -Hp 进程id 查找出最耗cpu的线程id。 top -c看进程的。3.printf “%x\n” 线程id ，转换为16进制的id。4.使用jstack 进程id | grep 16进制线程id 查找出堆栈信息，分析。另外，arthas也可以打印出前多少个线程及占有cpu情况thread -n 5。</li>
@@ -569,7 +573,7 @@
       <i class="fa fa-chevron-left"></i> 西瓜书
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" rel="next" title="那些年背过的面试题之redis&mysql">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/redismysql/" rel="next" title="那些年背过的面试题之redis&mysql">
       那些年背过的面试题之redis&mysql <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -645,7 +649,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

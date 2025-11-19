@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制proto">
+  <meta name="description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF 手搓RPC框架：RPC 框架需包含服务提供者、消费者、注册中心和网络通信四大核心。服务启动时，提供者向注册中心（如 Zookeeper）注册地址">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之中间件">
-<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
+<meta property="og:url" content="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
-<meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制proto">
+<meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF 手搓RPC框架：RPC 框架需包含服务提供者、消费者、注册中心和网络通信四大核心。服务启动时，提供者向注册中心（如 Zookeeper）注册地址">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:23:55.444Z">
-<meta property="article:modified_time" content="2025-11-04T15:54:33.164Z">
+<meta property="article:modified_time" content="2025-11-19T14:39:11.764Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+<link rel="canonical" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%AD%E9%97%B4%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -189,7 +189,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E4%B8%AD%E9%97%B4%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.gif">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-04 23:54:33" itemprop="dateModified" datetime="2025-11-04T23:54:33+08:00">2025-11-04</time>
+                <time title="Modified: 2025-11-19 22:39:11" itemprop="dateModified" datetime="2025-11-19T22:39:11+08:00">2025-11-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,6 +258,8 @@
 </li>
 </ul>
 <h2 id="rpc、HSF"><a href="#rpc、HSF" class="headerlink" title="rpc、HSF"></a>rpc、HSF</h2><ul>
+<li><p>手搓RPC框架：<br>RPC 框架需包含服务提供者、消费者、注册中心和网络通信四大核心。<br>服务启动时，提供者向注册中心（如 Zookeeper）注册地址，消费者订阅并缓存服务列表，实现服务发现与负载均衡。<br>调用时，通过动态代理拦截方法，将接口、参数等封装为请求，经序列化（如 Protobuf）后，传输层可以用HTTP&#x2F;2或自定义TCP保持长连接，或由 Netty 异步传输到服务端。服务端反序列化后，通过反射调用本地方法，执行结果回传。<br>增加一些：超时控制、重试机制、熔断降级、身份验证。</p>
+</li>
 <li><p>rpc：远程过程调用，就像调用本地函数一样调用远程服务，通信协议、序列化协议，http、自定义报文tcp，文本xml json 二进制protobuf hessian。</p>
 </li>
 <li><p>自定义报文？http消息头复杂，短链接</p>
@@ -324,6 +326,7 @@
 <li>分布式锁：分布式系统中同步访问共享资源的机制，避免多节点同时修改同一数据的冲突。1⃣️基于数据库锁，select for update对特定行上行级锁。2⃣️基于redis，SETNX命令，expire过期时间。3⃣️基于zookeeper，分布式协调服务，创建一个独特的节点表示获锁。保障原子性和唯一性。</li>
 </ul>
 <h2 id="metaq"><a href="#metaq" class="headerlink" title="metaq"></a>metaq</h2><ul>
+<li>手搓消息中间件：<br>架构上采用生产者-消费者模型，支持发布&#x2F;订阅和点对点两种模式。<br>整体分为三个核心组件：Broker（服务端）、Producer（生产者）和Consumer（消费者）。<br>Broker负责消息的接收、存储、转发与持久化。<br>1、Broker存储：为保障可靠性，消息持久化到磁盘，并支持多副本机制（如Raft协议）实现主从同步，防止单点故障。Broker集群通过元数据管理（可借助ZooKeeper）实现负载均衡与故障转移。<br>2、Broker通信：为保证高性能，Broker采用异步非阻塞I&#x2F;O（如Netty）处理网络通信，支持海量连接。消息写入时，使用顺序磁盘写入（如日志结构存储），结合内存映射文件（mmap）提升吞吐量。为提高读取效率，引入索引机制（如哈希索引或跳表）快速定位消息。<br>3、Broker高并发：引入主题（Topic）与分区（Partition）机制，每个Topic可划分为多个Partition，分布到不同Broker节点，实现水平扩展。Consumer以组为单位订阅，组内各Consumer分配不同Partition，保证消息有序且负载均衡。<br>4、Broker的ACK：支持消息确认机制（ACK），消费者处理成功后才删除或标记偏移量（Offset），防止消息丢失。同时提供重试队列与死信队列，处理异常消息。<br>5、支持多种消息类型（普通、延时、事务消息）事务消息通过两阶段提交。</li>
 <li>metaq：分布式的，基于队列模型的消息队列中间件，基于发布订阅模式，有push&#x2F;pull两种消费模式。支持严格的消息顺序，亿级别堆积能力，支持消息回溯。延时消息。</li>
 <li>消息队列三大场景：异步、解耦、削峰。</li>
 <li>metaq架构：NameServer（路由注册中心，实例彼此独立，用于服务发现和Topic的注册中心，每个节点维护topic和broker的映射关系）、Broker（实际消息存储的服务器，分master和slave，每个Broker与所有的NameServer建立长连接，定时注册Topic信息到NameServer。主节点读写，从节点提供冗余和故障转移。）、Producer（消息生产者，与NameServer其中一个建立长连接，读取Topic路由信息。与提供Topic服务的Master Broker建立长连接，并定时向其发送心跳）、Consumer（消息消费者，与NameServer其中一个建立长连接，读取Topic路由信息。从Master Broker&#x2F;Slave Broker订阅消息，与Broker建立心跳。可pull可push，可集群可广播）。</li>
@@ -486,6 +489,8 @@
 </li>
 <li><p>nginx调度（负载均衡）：轮询（Round Robin），默认方式，依次将请求分发到各后端服务器；权重（Weight），可以为不同后端分配权重，请求按权重比例分配；IP哈希（IP Hash），通过客户端IP进行哈希，同一IP的请求分配到同一台服务器，适用于会话保持场景。最少连接（Least Connections），优先将请求分配给当前连接数最少的服务器，实现更均衡的负载。</p>
 </li>
+<li><p>虚拟内存：是操作系统提供的一种内存管理技术，它为每个进程提供一个独立的、连续的地址空间。它通过将内存和磁盘结合起来，利用 分页（paging） 或 分段（segmentation） 技术，把暂时不用的数据换出到磁盘，需要时再换入。使得程序可以使用比实际物理内存更大的地址空间。使用 页表（Page Table） 实现虚拟地址到物理地址的映射。常见页面大小是 4KB。如果频繁换入换出，会导致 抖动（Thrashing），性能急剧下降。</p>
+</li>
 </ul>
 <h2 id="边缘计算"><a href="#边缘计算" class="headerlink" title="边缘计算"></a>边缘计算</h2><ul>
 <li>边缘计算：一种分布式计算框架，在靠近数据生成的位置（边缘）处理数据的方法。将计算能力下放到网络的边缘，边缘网络基本上由终端设备、边缘设备、边缘服务器等构成。特点：低延迟、节省带宽、提高隐私和安全性、实时数据处理。应用场景：物联网（IoT）、智慧城市、无人超市。</li>
@@ -519,11 +524,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8Bredismysql/" rel="prev" title="那些年背过的面试题之redis&mysql">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/redismysql/" rel="prev" title="那些年背过的面试题之redis&mysql">
       <i class="fa fa-chevron-left"></i> 那些年背过的面试题之redis&mysql
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E9%82%A3%E4%BA%9B%E5%B9%B4%E8%83%8C%E8%BF%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8BSpring/" rel="next" title="那些年背过的面试题之Spring">
+    <a href="/2025/07/24/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/spring/" rel="next" title="那些年背过的面试题之Spring">
       那些年背过的面试题之Spring <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -599,7 +604,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">57</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
