@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Vibe Coding：一种全新的编程范式，Andrej提出，开发者用自然语言描述意图，不依赖逐行审查代码，而是通过运行结果是否符合预期来判断是否达到目标，通过迭代式对话，不断调整直到生成可用代码。 AI原生开发，从Claude Code到OpenSpec最终目的：OpenSpec和spec-kit来开发真实需求。 一、什么是AI原生开发AI原生开发是什么：AI原生开发工作流可以拆成三根支柱：可执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VibeCoding学习">
+<meta property="og:url" content="http://example.com/2026/01/23/myblog/%E5%AD%A6%E4%B9%A0/VibeCoding%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="Vibe Coding：一种全新的编程范式，Andrej提出，开发者用自然语言描述意图，不依赖逐行审查代码，而是通过运行结果是否符合预期来判断是否达到目标，通过迭代式对话，不断调整直到生成可用代码。 AI原生开发，从Claude Code到OpenSpec最终目的：OpenSpec和spec-kit来开发真实需求。 一、什么是AI原生开发AI原生开发是什么：AI原生开发工作流可以拆成三根支柱：可执">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-23T02:48:43.484Z">
+<meta property="article:modified_time" content="2026-01-25T06:07:37.119Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2026/01/23/myblog/%E5%AD%A6%E4%B9%A0/VibeCoding%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>VibeCoding学习 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/23/myblog/%E5%AD%A6%E4%B9%A0/VibeCoding%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VibeCoding学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-01-23 10:48:43" itemprop="dateCreated datePublished" datetime="2026-01-23T10:48:43+08:00">2026-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-25 14:07:37" itemprop="dateModified" datetime="2026-01-25T14:07:37+08:00">2026-01-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Vibe Coding：一种全新的编程范式，Andrej提出，开发者用自然语言描述意图，不依赖逐行审查代码，而是通过运行结果是否符合预期来判断是否达到目标，通过迭代式对话，不断调整直到生成可用代码。</p>
+<h2 id="AI原生开发，从Claude-Code到OpenSpec"><a href="#AI原生开发，从Claude-Code到OpenSpec" class="headerlink" title="AI原生开发，从Claude Code到OpenSpec"></a>AI原生开发，从Claude Code到OpenSpec</h2><p>最终目的：OpenSpec和spec-kit来开发真实需求。</p>
+<h3 id="一、什么是AI原生开发"><a href="#一、什么是AI原生开发" class="headerlink" title="一、什么是AI原生开发"></a>一、什么是AI原生开发</h3><p>AI原生开发是什么：AI原生开发工作流可以拆成三根支柱：可执行的规范（Specs）、持久化的上下文、可编排的行动。</p>
+<p><strong>1.1 可执行的规范（Specs）</strong>【输入，定义做什么】</p>
+<p>过去我们习惯把”需求文档”和”代码”当成两回事——文档写给人看，代码才是机器跑的东西。但在AI原生的玩法里，一份好的需求规格说明（Specification，简称Spec），比如spec.md，它本身就应该是一份**”意图代码”**。这就是说这份文档不再是给产品经理或开发者看的那种松散的自然语言描述，而是一份结构化的、AI能精确理解并照着执行的”高级语言”。</p>
+<p>它意味着维护软件的重心，从维护那些天天在变的代码，转移到了维护相对稳定的规范上。需求变了，我们先改spec.md，然后让AI重新生成代码。这就是**规范驱动开发（Spec-Driven Development, SDD）**的核心思想。</p>
+<p><strong>1.2 持久化的上下文Context</strong>【背景，帮助AI理解怎么做】</p>
+<p>这就是CLAUDE.md、AGENTS.md这类上下文文件的作用——它们给AI提供了关于项目的”长期记忆”。更妙的是，这种记忆可以分层设计：</p>
+<p>企业级记忆：公司层面的安全红线、合规要求，谁都不能违反</p>
+<p>项目级记忆：constitution.md里定义的技术选型、架构原则、编码规范</p>
+<p>模块级记忆：某个特定模块的API设计、核心业务逻辑</p>
+<p>个人级记忆：你自己的代码风格偏好</p>
+<p>这种分层设计让AI在不同场景下能拿到合适的背景知识，既保证了一致性，又足够灵活。</p>
+<p><strong>1.3 可编排的行动Actions</strong>【执行，负责完成它】</p>
+<p>AI能干的不只是读文件、写代码。通过自定义指令（Slash Commands）、钩子（Hooks）和MCP服务器，我们可以给它装上各种”外挂”，让它的能力边界几乎无限扩展。</p>
+<h3 id="二、AI编程的演进"><a href="#二、AI编程的演进" class="headerlink" title="二、AI编程的演进"></a>二、AI编程的演进</h3><p>2.1 <strong>AI作为外部知识库</strong>，作为一个外部顾问，需要离开开发环境去咨询，例如ChatGPT、Gemini、Claude等，核心价值是信息检索和知识问答。</p>
+<p>2.2 <strong>AI作为嵌入式副驾驶</strong>，包括各类AI插件（如GitHub Copilot Chat），以及像Cursor这样从头开始就围绕AI构建的”AI原生IDE”。这个阶段提供了强大的编码增强能力，但它本质上仍未脱离”辅助开发者”的范畴。AI在这里是一个聪明的助手，但仍然被动、文件级、行动空间受限且环境绑定。</p>
+<p>2.3 <strong>AI作为原生工作流智能体</strong>，以Claude Code为首的命令行AI智能体代表了这一阶段。这类工具可以感知全局、规划行动、与环境交互。它们不再是被动的助手，而是能够主动执行复杂任务的数字”外包”。这正是AI原生开发真正想要达到的状态。</p>
+<p>2.4 <strong>AI作为自主软件工程师</strong>，面向未来，还未实现，比如Claude Code的”Headless模式”（即无需人工授权的”YOLO模式”）。</p>
+<p>演进带来的开发者价值的金字塔的倒转：传统开发模式下，顶层是沟通和需求理解，中间层进行设计和架构，底层基石是编码和实现。AI原生开发模式下，底层基石变为意图定义与规范设计，AI完成从清晰指令到代码，开发者需要定义清晰指令。中间层是设计和工作流编排，不光要设计软件架构，还要设计人和AI怎么配合干活。顶层是编码和实现，大量被AI接管。总之，开发者从代码的生产者变为规范设计者，从任务执行者变为AI工作流的指挥家。</p>
+<h3 id="三、SDD的本质，代码为王到规范为王"><a href="#三、SDD的本质，代码为王到规范为王" class="headerlink" title="三、SDD的本质，代码为王到规范为王"></a>三、SDD的本质，代码为王到规范为王</h3><p>3.1 之前软件开发的难题：意图和实现之间的鸿沟，PRD产品需求文档到设计文档到代码，文档只是参考，代码才是真相。</p>
+<p>3.2 SDD的核心主张：让规范成为真相，让代码变为规范的衍生物。就像源代码编译为二进制文件一样，规范编译为代码。前提是规范必须足够精确，精确到AI能直接照着执行。</p>
+<p>3.3 AI扮演的角色：智能编译器，接收人类给出的高层级、非结构化的意图描述Spec，一步步把它转化、细化，最终输出可执行的代码。</p>
+<p>3.4 SDD的四个阶段：</p>
+<p>第一步：<strong>意图定义</strong>，只关心业务层面的事情，不关心任何技术细节，包括用什么框架，数据怎么存，接口怎么设计。产出一份清晰的意图描述spec.md。</p>
+<p>第二步：<strong>技术规划</strong>，AI拿到意图定义结合项目的技术栈和架构原则，生成技术实现方案，产出架构设计、数据模型、接口规范等。</p>
+<p>第三步：<strong>任务分解</strong>，把技术方案拆成一个个具体的原子级的开发任务，理清任务之间的依赖关系和可并行点。</p>
+<p>第四步：<strong>自动化实现</strong>，建文件、写代码、跑测试。</p>
+<p>总结：传统开发围着代码转，SDD围着规范转，但是，现阶段AI在长链路推理上不够稳定，会失忆、会跑偏。</p>
+<h3 id="四、Claude-Code实战"><a href="#四、Claude-Code实战" class="headerlink" title="四、Claude Code实战"></a>四、Claude Code实战</h3><p>为什么用命令行Agent：<strong>执行深度和集成自由度</strong>。Cursor、Copilot这些IDE内置的AI的执行环境是受限的——只能在IDE能触达的范围内干活，无法跑shell命令等。而命令行Agent可以遍历整个文件系统、执行任意Shell命令、跟任何外部系统交互。更关键的是，它可以被部署到任何地方——服务器、CI流水线、Docker容器——独立运行。IDE插件是”嵌入式助手”，命令行Agent是”可以派到任何地方干活的数字员工”</p>
+<p>有哪些Coding Agent：OpenAI的Codex CLI、Google的Gemini CLI、Anthropic的Claude Code（具有先发优势，Sub-agent、Hooks、Checkpointing这些高级能力目前基本只有它有）。</p>
+<p>Claude Code：quick start <a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/quickstart?spm=ata.21736010.0.0.436075368q60Dg%EF%BC%88%E4%B8%8B%E8%BE%BE%E6%8C%87%E4%BB%A4%E5%90%8E%E4%BC%9A%E8%87%AA%E5%B7%B1%E6%8B%86%E8%A7%A3%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%AE%9E%E6%97%B6%E5%B1%95%E7%A4%BA%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%EF%BC%8C%E6%9C%89%E8%87%AA%E5%8A%A8%E8%AE%B0%E5%BF%86%E5%8E%8B%E7%BC%A9%EF%BC%8C%E6%94%AF%E6%8C%81MCP%E6%9C%8D%E5%8A%A1%E6%B7%BB%E5%8A%A0%EF%BC%89">https://code.claude.com/docs/en/quickstart?spm=ata.21736010.0.0.436075368q60Dg（下达指令后会自己拆解任务，实时展示执行过程，有自动记忆压缩，支持MCP服务添加）</a></p>
+<p>4.1 Claude Code分层配置体系</p>
+<p>Claude Code的配置不是一个文件搞定的，而是一套分层结构，高层级配置会覆盖低层级的同名设置：</p>
+<p>企业级策略（managed-settings.json）：IT部门统一下发，优先级最高，不可覆盖</p>
+<p>命令行参数（–model等）：单次会话的临时覆盖</p>
+<p>项目级个人配置（.claude&#x2F;settings.local.json）：你在这个项目的个人偏好，不提交Git</p>
+<p>项目级团队配置（.claude&#x2F;settings.json）：团队共用，要提交Git</p>
+<p>用户级全局配置（~&#x2F;.claude&#x2F;settings.json）：你个人的全局偏好</p>
+<p>4.2 Claude Code核心交互</p>
+<p>@是”喂上下文”：引用单个文件：@&#x2F;src&#x2F;main&#x2F;java&#x2F;SomeClass.java、引用整个目录：@&#x2F;src&#x2F;</p>
+<p>!是”执行命令”：语法：! &lt;shell命令&gt;，跑个Git命令：! git log –oneline -5、编译项目：! mvn compile</p>
+<p>4.3 长期记忆CLAUDE.md与AGENTS.md</p>
+<p>@指令给的是”这次对话需要看的内容”，属于短期记忆。但有些信息是每次对话都需要的——项目的技术栈、团队的编码规范、常用的命令……这些内容应该写进<strong>CLAUDE.md</strong>。它会在每次启动会话时自动加载，成为AI的”长期记忆”。</p>
+<p><strong>AGENTS.md</strong>是另一类上下文文件。它是OpenAI、Google等公司和社区一起推的开放标准（agents.md），目标是建立一个”AI Agent通用的项目说明书”格式。包含：项目概述、常用命令、项目结构。</p>
+<p>实践中使用：AGENTS.md放通用信息，任何Agent都能理解的部分。CLAUDE.md放Claude Code专属的配置。在CLAUDE.md中导入通用规范@AGENTS.md。都要git到代码库，&#x2F;memory查看会话上下文。</p>
+<p>4.4 项目宪法<strong>constitution.md</strong></p>
+<p>这个概念来自spec-kit。如果说CLAUDE.md是”操作手册”，constitution.md就是”根本大法”，是原则是红线。</p>
+<p>4.5 工具箱Slash Command</p>
+<p>斜杠命令可以把那些高频、复杂的工作流封装成一个简单的指令，一键调用。有一些官方的内置命令，可以&#x2F;help查看。可以自定义命令存在commands文件下，团队共享和用户级。</p>
+<h3 id="五、OpenSpec和Spec-kit两个SDD工具"><a href="#五、OpenSpec和Spec-kit两个SDD工具" class="headerlink" title="五、OpenSpec和Spec-kit两个SDD工具"></a>五、OpenSpec和Spec-kit两个SDD工具</h3><p>5.1 OpenSpec：fission-ai开源的SDD框架和命令行工具，轻量灵活</p>
+<p>主打“小步快跑”，特别适合在老项目上加功能、改逻辑；</p>
+<p>用 changes&#x2F; （存放正在进行的变更提案）和 specs&#x2F; （存放已经实现并验收的功能规范）两个文件夹管变更，一目了然谁在开发什么；</p>
+<p>规范写得简洁（约250行），review轻松，不强迫你立“宪法”，靠自觉+好习惯；</p>
+<p>流程（三步骤）：&#x2F;openspec:proposal：创建变更提案、&#x2F;openspec:apply：应用变更实现、&#x2F;openspec:archive：归档完成的变更。归档后可以用openspec view查看dashboard，一种delta格式描述变更，天然适合”我要在现有系统上加个功能”这种需求。</p>
+<p>安装简单（npm一条命令）上手零压力。</p>
+<p>5.2 Spec-kit：GitHub出品的SDD工具，严谨，规范完整</p>
+<p>核心理念是规范即代码Specification as Code，强调从原则到实现的完整链路，每一步都有明确的产物和校验机制，引入Constitution宪法，不可妥协的原则。</p>
+<p>适合从零开始的新项目，或需要强流程的大团队；</p>
+<p>流程（五步骤）：&#x2F;speckit.constitution → 建立项目原则、&#x2F;speckit.specify → 描述要做什么（纯功能层面）、&#x2F;speckit.plan → 技术方案设计、&#x2F;speckit.tasks → 任务分解、&#x2F;speckit.implement → 执行实现</p>
+<p>输出非常详细（800+行），每一步都留痕，还能自动检查是否守规矩（比如没写测试就卡住）；</p>
+<p>依赖Python和uv，环境配置稍麻烦，但换来的是结构清晰、角色分明。</p>
+<p>5.3 OpenSpec和Spec-kit的区别：1、规范产出量不同；2、流程复杂度，OpenSpec三步，规划-开发-交付，Sepc-kit五步+校验，规划-开发-测试-审查-交付-校验；3、宪法约束不同，一个是可选自觉，一个是强制门控；4、变更管理不同，一个是目录结构，一个是Git分支；</p>
+<h3 id="六、关于SDD思考"><a href="#六、关于SDD思考" class="headerlink" title="六、关于SDD思考"></a>六、关于SDD思考</h3><p>6.1 SDD的实践层次：</p>
+<p>Spec-first（规范先行）：先写规范，再辅助开发（当前主流状态）</p>
+<p>Spec-anchored（规范锚定）：规范持续留存，指导后续演进与维护（较少实现）</p>
+<p>Spec-as-source（规范即源码）：规范是唯一权威源文件，代码完全由其生成，人类永不直接修改代码（理想但尚未成熟）</p>
+<p>6.2 关于SDD的质疑：1、普适性困境：标准化工作流（如spec-kit）难以适配所有问题规模；2、审查成本：大量生成Markdown规范文件，审查难度超过审查代码；3、控制幻觉：AI的上下文理解偏差和推理不稳定而偏离指令；4、规范边界模糊：功能规范和技术规范在实践中何时该抽象何时该具体的失焦。</p>
+<p>6.3 SDD和MDD模型驱动开发：都是以高层抽象（UML&#x2F;自然语言Spec）作为真理之源生成代码，但是LLM无需构建复杂解析器，但是引入非确定性。</p>
+<p>6.4 怎么实践：构建项目专属的AI资产，Agent.md、CLAUDE.md、constitution.md；渐进式采用SDD工作流；AI原生开发不是简单的用AI写代码，而是开发范式的根本转变，代码和规范哪个才是真理之源，核心价值是编写代码还是定义意图。</p>
+<h2 id="AI-Coding和Claude-Code"><a href="#AI-Coding和Claude-Code" class="headerlink" title="AI Coding和Claude Code"></a>AI Coding和Claude Code</h2><h3 id="一、AI-Coding经验"><a href="#一、AI-Coding经验" class="headerlink" title="一、AI Coding经验"></a>一、AI Coding经验</h3><p>Prompt 质量 &#x3D; 输出质量上限，推崇 COSTAR 框架构建清晰指令。在 Claude 中善用伪 XML 标签提升模型理解精度。</p>
+<p>上下文工程：主动管理 AI的“工作记忆”，进行信息压缩，为了避免上下文丢失的情况，将关键信息提取成markdown 放到 memory bank。</p>
+<p>对于已有项目，先给Al提供更多信息，像Claude Code，提供了&#x2F;init 指令，目的是为了让AI快速了解项目的背景、技术架构等，知识库记录了业务需求、技术规约、常见的工程流程等信息。</p>
+<h3 id="二、如何使用Claude-Code"><a href="#二、如何使用Claude-Code" class="headerlink" title="二、如何使用Claude Code"></a>二、如何使用Claude Code</h3><p>Claude Code 官方文档: <a target="_blank" rel="noopener" href="https://code.claude.com/docs/zh-CN/overview#claude-code-%E4%B8%BA%E6%82%A8%E5%81%9A%E">https://code.claude.com/docs/zh-CN/overview#claude-code-%E4%B8%BA%E6%82%A8%E5%81%9A%E</a></p>
+<p>Claude Code Router：被设计为 Anthropic官方命令行工具 Claude Code的一个强大扩展。它允许将用户的代码生成请求，路由到不同的大模型平台以及指定的模型。专为模型路由设计。它支持将代码生成请求智能分发至多个大模型平台（如 DeepSeek、Gemini、 Ollama、OpenRouter 等），并可基于任务类型（如 think、longContext、webSearch）、上下文长度或推理模式自动选择最优模型，实现多供应商整合与动态负载分发，显著超越 Claude Code 原生的手动模型配置能力。</p>
+<p>推荐使用模型：Qwen3-Coder-480B-A35B-Instruct、GLM-4.7、Kimi-K2-Instruct-0905。能生成代码，能写文件，能用Skills。</p>
+<h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><p>安装NodeJS：版本要&gt;&#x3D;18，Node.js 是让 JavaScript 能在浏览器外运行的环境，可用来写服务器、工具和脚本。安装 claude-code 需要NodeJS，因为它本质是一个基于 Node生态的命令行工具，通过 npm 安装和运行。</p>
+<p>npm是Node.js 的包管理器，用来安装、更新和管理各种JavaScript 库与工具。全球大量开源项目都通过 npm分发，因此它也是 Node生态的核心。开发者使用npm 可以方便地安装依赖、运行脚本、发布自己的工具，是Node.js 项目运作的基础。</p>
+<p>nvm 是 Node.js 的版本管理工具，用来在同一台电脑上安装、切换和管理多个不同版本的Node.js。它解决了项目对 Node 版本要求不一致的问题，让开发者可以快速切换环境，避免兼容性冲突。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">\# Download and install nvm：</span><br><span class="line">curl -o-https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</span><br><span class="line"></span><br><span class="line">\# in lieu of restarting the shell</span><br><span class="line">\. &quot;$HOME/ .nvm/nvm.sh&quot;</span><br><span class="line"></span><br><span class="line">\# Download and install Node.js:</span><br><span class="line">nvm install 20</span><br><span class="line"></span><br><span class="line">\# Verify the Node.js version:</span><br><span class="line">node -v  # Should print &quot;v20.19.6&quot;</span><br><span class="line"></span><br><span class="line">\# Verify npm version:</span><br><span class="line">npm -v  # Should print &quot;10.8.2&quot;</span><br></pre></td></tr></table></figure>
+
+<p>交装claude： 安装命令：<code>npm install -g @anthropic-ai/claude-code</code>。</p>
+<p>配置模型连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建配置目录（如果不存在）</span></span><br><span class="line">mkdir -p ~/.claude</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建并编辑配置文件</span></span><br><span class="line"></span><br><span class="line">vim -/.claude/settings.json</span><br><span class="line">&#123;</span><br><span class="line">&quot;env&quot;: &#123;</span><br><span class="line">	&quot;DISABLE_PROMPT_CACHING&quot;: &quot;0&quot;,</span><br><span class="line">	&quot;ANTHROPIC_BASE_URL&quot;：&quot;指定模型服务的API地址&quot;,</span><br><span class="line">	&quot;ANTHROPIC_AUTH_TOKEN&quot;: &quot;AK&quot;,</span><br><span class="line">	&quot;ANTHROPIC_MODEL&quot;: &quot;qwen3-coder-plus&quot;,</span><br><span class="line">	&quot;ANTHROPIC_SMALL_FAST_MODEL&quot;: &quot;qwen3-coder-plus&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接入智普：<a target="_blank" rel="noopener" href="https://docs.bigmodel.cn/cn/guide/develop/claude">https://docs.bigmodel.cn/cn/guide/develop/claude</a></p>
+<p>接入阿里云：<a target="_blank" rel="noopener" href="https://help.aliyun.com/zh/model-studio/claude-code">https://help.aliyun.com/zh/model-studio/claude-code</a></p>
+<p>在终端中设置环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export ANTHROPIC_AUTH_TOKEN=&quot;你的API KEY&quot; </span><br><span class="line">export ANTHROPIC_BASE_URL=&quot;端点URL&quot;</span><br></pre></td></tr></table></figure>
+
+<p>验证：终端输入claude进入cli，输入&#x2F;status查看状态</p>
+<p>ccusage blocks –live 查看模型使用量</p>
+<h4 id="2-Claude-Code使用"><a href="#2-Claude-Code使用" class="headerlink" title="2.Claude Code使用"></a>2.Claude Code使用</h4><p>ClaudeCode 的交互主要通过斜杠&#x2F;命令、@文件引用、＃记忆符号来完成。</p>
+<p>项目级记忆：在项目根目录的.&#x2F;CLAUDE.md文件中定义，团队共享。内容可以是项目架构、编码规范等。</p>
+<p>用户级记忆：在~&#x2F;.claude&#x2F;CLAUDE.md 文件中定义，属于个人偏好。内容可以是代码风格、常用工具等。</p>
+<p>临时添加记忆：在对话中使用＃符号。</p>
+<p>示例：# 我是一名 Java 后端开发者，请使用 Spring Boot 风格回答问题</p>
+<p>执行终端命令用！，例如!ls -i。</p>
+<p>还可以创建自己的快捷命令来简化重复性输入。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.在~/.claude/ 目录下创建一个名为 commands 的文件夹。</span><br><span class="line">2.在 commands 文件夹中，创建一个 Markdown 文件，文件名即为你的命令名（例如 cr.md）。</span><br><span class="line">3.在 cr.md 文件中写入你希望快捷输入的内容，例如：“请帮我 Review 一下当前分支与 master 分支的 diff 内容，重点关注代码逻辑、潜在 bug 和可读性。”</span><br><span class="line">4.现在，在 ClaudeCode 中输入/cr，就会自动填充上述文本。</span><br></pre></td></tr></table></figure>
+
+<p>IDE集成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ClaudeCode 可以与 VS Code、JetBrains IDEs（如 IntelliJ IDEA） 等编辑器集成，以实现代码的无缝流转。</span><br><span class="line">1.在 IDE 中安装对应的 &quot;Claude Code”插件。</span><br><span class="line">2.在 ClaudeCode终端中使用 /ide 命令，并选择你正在使用的IDE。</span><br><span class="line">3.完成连接后，当你在IDE 中选中一段代码时，它会自动出现在 ClaudeCode 的输入框中，方便你快速提问。</span><br></pre></td></tr></table></figure>
+
+<p><code>/init</code>指令，可以让Claude Code扫描整个工程，了解项目结构，并将结果写入CLAUDE.md文件。</p>
+<p>可以通过&#x2F;memory 直接编辑这个文件，也可以用#命令追加内容。</p>
+<p>建议在CLAUDE.md中包含以下关键内容：</p>
+<ol>
+<li>AI必须了解的核心信息：项目背景、技术栈、架构设计等</li>
+<li>项目编码标准、流程等指导AI正确执行任务的行为准则</li>
+</ol>
+<p>对于常用框架、开发语言规范甚至是工作流，可参考GitHub上的优质资源，如awesome-cursor-rules-mdc，描述了各种语言、各种框架沉淀的code conduct。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.**workfLow**：处理Excel时使用pandas进行数据分析</span><br><span class="line">2.**rules**：服务端接口必须包含success、code、msg、body字段</span><br><span class="line">3.**SOP**：通过读取README.md了解项目情况，提交git前请更新README.md</span><br></pre></td></tr></table></figure>
+
+<p>如果单个CLAUDE.md信息量过大，可以将其分层分模块存储，按模块准备不同的CLAUDE.md文件。Claude会从修改最深一级的记忆开始查找。</p>
+<h4 id="3-学习资料"><a href="#3-学习资料" class="headerlink" title="3.学习资料"></a>3.学习资料</h4><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jGtEzNEAv/?spm_id_from=333.788.player.switch&vd_source=5400c79847c54b11a3fdbc93a1850">https://www.bilibili.com/video/BV1jGtEzNEAv/?spm_id_from=333.788.player.switch&amp;vd_source=5400c79847c54b11a3fdbc93a1850</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/01/06/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/goland/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2026/01/25/myblog/%E5%AD%A6%E4%B9%A0/MAC%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3/" rel="next" title="MAC环境">
+      MAC环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91%EF%BC%8C%E4%BB%8EClaude-Code%E5%88%B0OpenSpec"><span class="nav-number">1.</span> <span class="nav-text">AI原生开发，从Claude Code到OpenSpec</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFAI%E5%8E%9F%E7%94%9F%E5%BC%80%E5%8F%91"><span class="nav-number">1.1.</span> <span class="nav-text">一、什么是AI原生开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81AI%E7%BC%96%E7%A8%8B%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-number">1.2.</span> <span class="nav-text">二、AI编程的演进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81SDD%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%8C%E4%BB%A3%E7%A0%81%E4%B8%BA%E7%8E%8B%E5%88%B0%E8%A7%84%E8%8C%83%E4%B8%BA%E7%8E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">三、SDD的本质，代码为王到规范为王</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Claude-Code%E5%AE%9E%E6%88%98"><span class="nav-number">1.4.</span> <span class="nav-text">四、Claude Code实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81OpenSpec%E5%92%8CSpec-kit%E4%B8%A4%E4%B8%AASDD%E5%B7%A5%E5%85%B7"><span class="nav-number">1.5.</span> <span class="nav-text">五、OpenSpec和Spec-kit两个SDD工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%85%B3%E4%BA%8ESDD%E6%80%9D%E8%80%83"><span class="nav-number">1.6.</span> <span class="nav-text">六、关于SDD思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AI-Coding%E5%92%8CClaude-Code"><span class="nav-number">2.</span> <span class="nav-text">AI Coding和Claude Code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81AI-Coding%E7%BB%8F%E9%AA%8C"><span class="nav-number">2.1.</span> <span class="nav-text">一、AI Coding经验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Claude-Code"><span class="nav-number">2.2.</span> <span class="nav-text">二、如何使用Claude Code</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Claude-Code%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.Claude Code使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">2.2.3.</span> <span class="nav-text">3.学习资料</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

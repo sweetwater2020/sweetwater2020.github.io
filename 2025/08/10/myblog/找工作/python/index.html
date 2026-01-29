@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="DjangoDjango 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻">
+  <meta name="description" content="Python基础 Python 的装饰器：一种函数，它可以接受另一个函数作为输入，并修改其行为，而不需要修改该函数的源代码。通常用于引入横切关注点（如透明地添加功能、日志记录、缓存等），从而提高代码的可重用性和可维护性。  装饰器本质是个函数，接收另一个函数作为参数，返回一个新函数。 1234567891011def log_time(func):    def wrapper(*args, **">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年背过的面试题之Python">
 <meta property="og:url" content="http://example.com/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/python/index.html">
 <meta property="og:site_name" content="Sweetwater&#39;s blog">
-<meta property="og:description" content="DjangoDjango 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻">
+<meta property="og:description" content="Python基础 Python 的装饰器：一种函数，它可以接受另一个函数作为输入，并修改其行为，而不需要修改该函数的源代码。通常用于引入横切关注点（如透明地添加功能、日志记录、缓存等），从而提高代码的可重用性和可维护性。  装饰器本质是个函数，接收另一个函数作为参数，返回一个新函数。 1234567891011def log_time(func):    def wrapper(*args, **">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-11-19T14:39:38.874Z">
+<meta property="article:modified_time" content="2025-12-05T09:06:04.847Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-19 22:39:38" itemprop="dateModified" datetime="2025-11-19T22:39:38+08:00">2025-11-19</time>
+                <time title="Modified: 2025-12-05 17:06:04" itemprop="dateModified" datetime="2025-12-05T17:06:04+08:00">2025-12-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,35 +249,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h2><p>Django 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻击。凭借其完备的生态系统和严谨的设计，Django 非常适合构建数据驱动、安全可靠的中大型 Web 应用，让开发者更专注于业务逻辑的实现。</p>
-<p><strong>使用 Django 开发的步骤</strong>：1. <strong>安装</strong>：<code>pip install django</code>。2. <strong>创建项目</strong>：<code>django-admin startproject mysite</code>，生成项目骨架。3. <strong>创建应用</strong>：<code>python manage.py startapp myapp</code>，Django 鼓励功能模块化。4. <strong>定义模型</strong>：在 <code>models.py</code> 中用 Python 类定义数据结构，Django ORM 映射到数据库。5. <strong>注册应用</strong>：将应用名添加到 <code>settings.py</code> 的 <code>INSTALLED_APPS</code> 中。6. <strong>设计 URL</strong>：在项目和应用中配置 <code>urls.py</code>，将 URL 路由到视图。7. <strong>编写视图</strong>：在 <code>views.py</code> 中处理请求并返回响应（如渲染模板）。8. <strong>创建模板</strong>：在 <code>templates</code> 目录下编写 HTML 模板。9. <strong>迁移数据库</strong>：<code>makemigrations</code> 生成迁移文件，<code>migrate</code> 同步模型到数据库。10. <strong>运行</strong>：<code>python manage.py runserver</code> 启动开发服务器。</p>
-<p><strong>在Docker内运行</strong>：编写 <code>Dockerfile</code> 定义Python环境、安装依赖（包括Django）；创建 <code>docker-compose.yml</code> 配置Web服务和数据库（如PostgreSQL）；将代码复制到镜像；暴露端口（如8000）；使用 <code>docker-compose up</code> 构建并运行容器，Django应用即在隔离环境中启动。</p>
-<h2 id="python中fastapi如何实现流式输出"><a href="#python中fastapi如何实现流式输出" class="headerlink" title="python中fastapi如何实现流式输出"></a>python中fastapi如何实现流式输出</h2><p>FastAPI是Python Web框架，专为快速构建RESTful API而设计，支持类型注解、自动生成交互式文档，并具备异步性能。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="Python基础"><a href="#Python基础" class="headerlink" title="Python基础"></a>Python基础</h2><ul>
+<li><p>Python 的装饰器：一种函数，它可以接受另一个函数作为输入，并修改其行为，而不需要修改该函数的源代码。通常用于引入横切关注点（如透明地添加功能、日志记录、缓存等），从而提高代码的可重用性和可维护性。</p>
+</li>
+<li><p>装饰器本质是个函数，接收另一个函数作为参数，返回一个新函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">log_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">      start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">      <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> took <span class="subst">&#123;time.time() - start:<span class="number">.2</span>f&#125;</span>s&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">  <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@log_time</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>():</span><br><span class="line">  ...	</span><br></pre></td></tr></table></figure>
 
-<p>FastAPI 通过 StreamingResponse 实现流式输出，适合实时返回数据（如 AI 回复）。使用 yield 关键字将函数变成生成器，在其中逐段产出数据，每次 yield 发送一部分，不占用大量内存。yield 类似“暂停并返回”，下次从断点继续。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">generate</span>():</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">f&quot;消息 <span class="subst">&#123;i&#125;</span>\n&quot;</span></span><br><span class="line"></span><br><span class="line">     </span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stream</span>():</span><br><span class="line">  <span class="keyword">return</span> StreamingResponse(generate(), media_type=<span class="string">&quot;text/plain&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Python-中-GIL（全局解释器锁）"><a href="#Python-中-GIL（全局解释器锁）" class="headerlink" title="Python 中 GIL（全局解释器锁）"></a>Python 中 GIL（全局解释器锁）</h2><p>GIL 是 CPython 里的一个机制，保证同一时间只有一个线程执行 Python 字节码。所以对于 CPU 密集型任务，多线程其实跑不快，因为线程要抢 GIL。但如果是 I&#x2F;O 密集型（比如读文件、网络请求），多线程还是有用的，因为等 I&#x2F;O 的时候会释放 GIL。真要并行算，一般用 multiprocessing 或者用 async&#x2F;await。</p>
-<h2 id="Python-里-list-和-tuple"><a href="#Python-里-list-和-tuple" class="headerlink" title="Python 里 list 和 tuple"></a><strong>Python 里 list 和 tuple</strong></h2><p>list 是可变的，tuple 是不可变的。如果你的数据不会变，比如配置项、坐标点，就用 tuple，更安全也更快一点；如果要增删改，比如动态收集结果，就用 list。</p>
-<h2 id="装饰器（decorator）是怎么工作的"><a href="#装饰器（decorator）是怎么工作的" class="headerlink" title="装饰器（decorator）是怎么工作的"></a><strong>装饰器（decorator）是怎么工作的</strong></h2><p>装饰器本质是个函数，接收另一个函数作为参数，返回一个新函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">log_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> took <span class="subst">&#123;time.time() - start:<span class="number">.2</span>f&#125;</span>s&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@log_time</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="PyTorch-和-TensorFlow"><a href="#PyTorch-和-TensorFlow" class="headerlink" title="PyTorch 和 TensorFlow"></a><strong>PyTorch 和 TensorFlow</strong></h2><p>更常用 PyTorch，因为它动态图（eager execution）写起来像写 Python，调试方便，特别适合研究和快速实验。TensorFlow 2.x 也支持 eager 模式了，但在部署、生产环境（比如 TFServing、TensorRT）上生态更成熟。现在两者差距不大，但 PyTorch 在学术界更主流。</p>
-<p><strong>“PyTorch 做实验，TensorFlow 跑生产”</strong> —— 但现在界限模糊了，关键看团队技术栈和具体需求。</p>
-<h2 id="怎么保存和加载-PyTorch-模型"><a href="#怎么保存和加载-PyTorch-模型" class="headerlink" title="怎么保存和加载 PyTorch 模型"></a><strong>怎么保存和加载 PyTorch 模型</strong></h2><p>有两种方式。一种是只存参数（推荐）：<code>torch.save(model.state_dict(), &#39;model.pth&#39;)</code>，加载时先建好模型结构再 <code>load_state_dict()</code>；另一种是直接存整个模型（不推荐，依赖代码结构）。生产部署一般用第一种，灵活又安全。</p>
-<h2 id="怎么防止过拟合"><a href="#怎么防止过拟合" class="headerlink" title="怎么防止过拟合"></a><strong>怎么防止过拟合</strong></h2><p>常用方法包括：加 Dropout、权重衰减（L2 正则）、早停（early stopping）、数据增强（比如图像旋转裁剪）、用更小的模型。我在项目里经常组合用：比如图像分类任务，加 RandAugment + Dropout + ReduceLROnPlateau + early stopping，效果不错。</p>
+</li>
+<li><p>Python 中的迭代器和生成器：</p>
+<p>迭代器是一个可以被 for 循环遍历的对象，必须实现 <strong>iter</strong>() 和 <strong>next</strong>() 方法。</p>
+<p>生成器是一种特殊的迭代器，它是通过函数def和 yield 关键字定义的，能够“懒惰地”生成数据，自动实现迭代器协议。当在函数中调用 yield 语句时，函数会被暂停，一个值被返回给调用者，并保留函数的状态，以便在下次调用时从该状态恢复。生成器代码更简洁、内存更节省，适合处理大量数据，如文件逐行读取。所有生成器都是迭代器。</p>
+<p>生成器的好处是它可以迭代大型数据集而显著减少内存使用。</p>
+</li>
+<li><p>Python 的虚拟环境：是一个独立的 Python 运行环境，用来隔离不同项目的依赖包，避免版本冲突。内置了 venv 模块来创建虚拟环境。或者用conda。</p>
+</li>
+<li><p>Python的lambda：lambda 是 Python 中的一种匿名函数，用于临时定义一个小型、单用途的函数。用于定义简单的、只有一行表达式的函数，而不需要用 def 关键字命名。<code>add_two_numbers = lambda x, y: x + y</code></p>
+</li>
+<li><p>python数据结构：列表（list）、元组（tuple）、字典（dict）和集合（set）。列表（list） 是有序、可变的集合，支持增删改查；元组（tuple） 是有序、不可变的，常用于固定数据；字典（dict） 存储键值对，查找高效，适用于映射关系；集合（set） 是无序不重复元素集，适合去重和成员判断。</p>
+</li>
+<li><p>list和tuple：list 是可变的，tuple 是不可变的。如果你的数据不会变，比如配置项、坐标点，就用 tuple，更安全也更快一点；如果要增删改，比如动态收集结果，就用 list。</p>
+</li>
+<li><p>python的collections模块：比内置类型更高级的容器类型。namedtuple：带字段名的元组，可通过属性访问元素。deque：双向队列，支持在首尾高效添加和删除，适用于队列、栈等场景。Counter：用于统计元素出现次数。</p>
+</li>
+<li><p>python的is和&#x3D;&#x3D;：&#x3D;&#x3D; 比较两个对象的值是否相等；is 比较它们是否是同一个对象（内存地址相同）</p>
+</li>
+<li><p>Python 中的继承和多态：继承是指子类可以复用父类的方法和属性。多态表示比如父类有 speak() 方法，子类 Dog 和 Cat 可以各自实现不同的行为。</p>
+</li>
+<li><p>python中的<code>__init__、__str__、__repr__</code>：<code>__init__</code>：构造方法，用于初始化对象属性。<code>__str__</code>：定义 str(obj) 或 print(obj) 时的字符串表示，面向用户。<code>__repr__</code>：定义 repr(obj) 时的“官方”字符串表示。</p>
+</li>
+</ul>
+<h2 id="python常用库"><a href="#python常用库" class="headerlink" title="python常用库"></a>python常用库</h2><ul>
+<li>python内置模块：</li>
+</ul>
+<p>os：用于与操作系统交互，如文件&#x2F;目录操作（os.listdir、os.remove）、路径处理（os.path.join）、环境变量（os.environ）等。</p>
+<p>sys：与解释器相关，如命令行参数（sys.argv）、模块搜索路径（sys.path）、程序退出（sys.exit）。</p>
+<p>re：正则表达式处理，常用 re.match、re.search、re.findall、re.sub 进行字符串匹配与替换。</p>
+<p>datetime &#x2F; time：用于日期时间处理与时间戳操作，datetime 更偏向日期时间对象，time 偏底层与时间戳、sleep。</p>
+<p>math：提供数学函数，如 sqrt、ceil、floor、sin、log 等，多为 C 实现，性能较高。</p>
 <ul>
-<li><p>python多线程编程：使用 threading 模块实现，适用于 I&#x2F;O 密集型任务（如网络请求、文件读写），但受限于 GIL（全局解释器锁），同一时刻只能有一个线程执行 Python 字节码，因此 不适合 CPU 密集型任务，无法同时在多个CPU内核上并行运算。 </p>
+<li><p>requests：用于发送 HTTP 请求：<code>response = requests.get(&quot;https://httpbin.org/get&quot;) </code></p>
+</li>
+<li><p>numpy：数值计算基础库，高效的多维数组与矩阵运算：<code>arr = np.array([1, 2, 3, 4])</code> </p>
+</li>
+<li><p>pandas：数据分析和处理，DataFrame用于结构化数据操作：<code>df = pd.read_csv(&#39;data.csv&#39;) </code></p>
+</li>
+<li><p>matplotlib：数据可视化，用于绘图：<code>plt.plot(x, y, label=&quot;sin(x)&quot;) </code></p>
+</li>
+<li><p>TensorFlow &#x2F; PyTorch：度学习框架，用于搭建和训练神经网络。<code>torch.cuda.is_available()</code>。<code>torch.no_grad() </code>临时关闭梯度计算。 </p>
+</li>
+<li><p>fastText：Facebook开源的一个高效的自然语言处理库，可进行文本分类、分词、语种识别等：<code>tokens = self.fasttext.FastText.tokenize(text)</code>、保存和加载模型<code>fasttext.load_model、model.save_model</code> </p>
+</li>
+<li><p>nlkt：自然语言NLP库，可进行分词：<code>from nltk.tokenize import word_tokenize, sent_tokenize</code>；<code>print(sent_tokenize(text))</code>。可去除停用词。可进行情感分析sentiment。 </p>
+</li>
+<li><p>jieba：开源的中文分词库，精确模式分词：<code>seg_list = jieba.cut(text, cut_all=False)</code>，还可以进行关键字提取、词性标注等。 </p>
+</li>
+<li><p>transformers：Hugging Face开发维护的基于transformer架构的python库，提供数千种预训练模型（BERT、GPT、T5），可进行文本分类、命名实体识别、文本生成等。加载模型：<code>tokenizer = AutoTokenizer.from_pretrained()</code>。<code>BertForSequenceClassification</code>用于文本分类任务。 </p>
+</li>
+<li><p>vllm：为LLM设计的高性能推理框架，提升推理速度、降低显存占用、支持高并发请求。PagedAttention技术，类似操作系统的分页内存，优化注意力机制中的KV存储。比 Hugging Face Transformers 快 24 倍以上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载模型（支持大多数 HF 格式模型）</span></span><br><span class="line">llm = LLM(model=<span class="string">&quot;meta-llama/Llama-2-7b-chat-hf&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置采样参数</span></span><br><span class="line">sampling_params = SamplingParams(temperature=<span class="number">0.7</span>, top_p=<span class="number">0.95</span>, max_tokens=<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入提示</span></span><br><span class="line">prompts = [</span><br><span class="line">    <span class="string">&quot;请写一首关于春天的诗。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;人工智能未来会如何发展？&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批量生成</span></span><br><span class="line">outputs = llm.generate(prompts, sampling_params)</span><br><span class="line">openai： OpenAI 公司提供的方便调用LLM等API服务。</span><br><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">client = OpenAI(api_key=<span class="string">&quot;sk-...&quot;</span>)  <span class="comment"># 或从环境变量读取</span></span><br><span class="line">response = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你是一个 helpful 的助手。&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;请推荐三本经典的中文小说。&quot;</span>&#125;</span><br><span class="line">    ],</span><br><span class="line">    max_tokens=<span class="number">150</span>,</span><br><span class="line">    temperature=<span class="number">0.7</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>fastapi：高性能的web框架，专为构建API设计。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"><span class="comment"># 定义一个根路径接口</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="python并发编程"><a href="#python并发编程" class="headerlink" title="python并发编程"></a>python并发编程</h2><ul>
+<li><p>python的GIL：全局解释器锁，是 CPython 里的一个机制。它是一种为了确保在同一时间只有一个线程可以执行 Python 代码的机制。这个锁主要是出于安全目的的考虑，Python 在管理内存和解析器的过程中依赖于很多全局数据结构。使用 GIL，Python 能够避免多个线程同时访问和更改这些结构，从而保证线程安全。</p>
+</li>
+<li><p>python多线程编程：使用 threading 模块实现，适用于 I&#x2F;O 密集型任务（如网络请求、文件读写）因为等 I&#x2F;O 的时候会释放 GIL。但受限于 GIL（全局解释器锁），同一时刻只能有一个线程执行 Python 字节码，因此 不适合 CPU 密集型任务，无法同时在多个CPU内核上并行运算。 真要并行算，一般用 multiprocessing 或者用 async&#x2F;await。</p>
 <p>创建线程：<code>t1 = threading.Thread(target=worker, args=(&quot;A&quot;,)) </code></p>
 <p>启动线程：<code>t1.start() </code></p>
 <p>等待线程完成：<code>t1.join()</code></p>
 </li>
 <li><p>python多进程：multiprocessing模块，支持多进程编程。每个进程都拥有独立的Python解释器和内存空间，它们之间不会相互受GIL影响。多个进程就能被操作系统分配到不同CPU核心上，实现真正的并行运算。 <code>p = multiprocessing.Process(target=compute_square, args=(num,)) </code></p>
+</li>
+<li><p>python异步编程：基于 async &#x2F; await 关键字和 asyncio 事件循环实现，适合高并发的 I&#x2F;O 密集型应用，单线程中实现并发，利用“等待时间”做别的事，避免阻塞。async def  定义一个协程函数，await 等待一个异步操作完成，asyncio 提供事件循环（event loop）来调度协程。常用库有 httpx、aiohttp，现代框架如 FastAPI 天然支持。但不适合 CPU 密集型任务，且需要避免在协程中使用阻塞操作。异步不是“更快”，而是“更忙”——它让程序在等待时也不闲着，把每一秒都用到极致。</p>
+</li>
+<li><p>python并发编程总结：</p>
+<p>1、threading 提供多线程支持，适合 IO 密集型任务（如网络、磁盘 IO）。但由于 CPython 的 GIL（全局解释器锁），同一进程内同一时刻只允许一个线程执行字节码，所以无法利用多核并行。t &#x3D; threading.Thread(target&#x3D;func); t.start()</p>
+<p>2、multiprocessing 通过多进程绕过 GIL，每个进程有独立的 Python 解释器和内存空间，可充分利用多核 CPU，适合 CPU 密集型任务。需要通过 Queue、Pipe、Manager 等实现进程间通信，开销比线程大。p &#x3D; multiprocessing.Process(target&#x3D;func); p.start()</p>
+<p>3、asyncio 提供基于事件循环的协程模型，使用 async&#x2F;await 语法实现单线程高并发 IO，适合大量网络请求、爬虫、异步服务等。底层利用非阻塞 IO + 事件循环调度协程执行。asyncio.run(main())</p>
 </li>
 <li><p>python中的锁：<code>threading.Lock</code>，确保同一时刻只有一个线程执行某段代码（临界区）。</p>
 <p>创建一个锁：<code>lock = threading.Lock()</code>。</p>
@@ -288,6 +337,40 @@
 <li><p>python中的线程池：<code>concurrent.futures</code>中的<code>ThreadPoolExecutor</code>，指定最大线程数。submit() 提交任务、as_completed() 获取结果。 “ThreadPoolExecutor 主要有四个参数：max_workers 控制并发度，thread_name_prefix 便于调试，initializer 和 initargs 用于线程初始化。 导入模块：<code>from concurrent.futures import ThreadPoolExecutor</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个最多包含 3 个线程的线程池</span></span><br><span class="line"><span class="keyword">with</span> ThreadPoolExecutor(max_workers=<span class="number">3</span>) <span class="keyword">as</span> executor:</span><br><span class="line">    <span class="comment"># 提交所有任务</span></span><br><span class="line">    futures = [executor.submit(fetch_url, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 按完成顺序输出结果</span></span><br><span class="line">    <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(futures):</span><br><span class="line">        <span class="built_in">print</span>(future.result())</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2 id="python网络编程"><a href="#python网络编程" class="headerlink" title="python网络编程"></a>python网络编程</h2><ul>
+<li>python中http请求：使用第三方库 requests，response &#x3D; requests.get(“https:&#x2F;&#x2F;…”)。也可以用python内置库urllib，但是代码冗长，错误处理麻烦，不支持连接池。</li>
+<li>python异步请求：httpx 是 requests 的异步增强版：async with httpx.AsyncClient() as client: response &#x3D; await client.get(url)。也可以用aiohttp发起异步请求。</li>
+<li>python的web开发：主要使用 Django 和 Flask 等框架。Django内置 ORM、模板引擎、表单、认证、后台管理等，适合中大型项目、后台管理系统、企业级应用。Flask 是一个轻量级微框架，核心非常小，只提供路由、请求&#x2F;响应等基础能力，其他如 ORM依赖第三方扩展，适合小项目、微服务、API 服务。</li>
+</ul>
+<h2 id="python测试"><a href="#python测试" class="headerlink" title="python测试"></a>python测试</h2><ul>
+<li>python测试：</li>
+</ul>
+<p>unittest 是标准库自带的 xUnit 风格框架，使用类来组织测试用例，提供丰富的断言方法（如 assertEqual、assertTrue 等），支持 setUp &#x2F; tearDown 进行测试前后初始化和清理。适合对测试结构要求比较规范、优点是“零依赖”，随 Python 一起安装。</p>
+<p>pytest 是第三方框架，特点是语法更简洁、上手更快：不强制使用类，直接定义 test_ 开头的函数即可，通过 assert 即可断言。它有强大的 fixture 机制，用于数据准备和依赖注入，配合丰富的插件生态（如覆盖率、失败重跑、并行执行）非常适合中大型项目。实际工程中 pytest 使用更普遍。</p>
+<h2 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h2><p>Django 是一个用 Python 编写的高级 Web 框架，倡导“开箱即用”和快速开发。它内置了 ORM（对象关系映射）、URL 路由、模板引擎、表单处理、用户认证和强大的后台管理（Admin）等核心功能，能有效处理 Web 开发中的常见任务。Django 遵循 **MVT（模型-视图-模板）**设计模式，结构清晰，代码复用性高。它注重安全性，能自动防范 CSRF、XSS 等常见攻击。凭借其完备的生态系统和严谨的设计，Django 非常适合构建数据驱动、安全可靠的中大型 Web 应用，让开发者更专注于业务逻辑的实现。</p>
+<p><strong>使用 Django 开发的步骤</strong>：1. <strong>安装</strong>：<code>pip install django</code>。2. <strong>创建项目</strong>：<code>django-admin startproject mysite</code>，生成项目骨架。3. <strong>创建应用</strong>：<code>python manage.py startapp myapp</code>，Django 鼓励功能模块化。4. <strong>定义模型</strong>：在 <code>models.py</code> 中用 Python 类定义数据结构，Django ORM 映射到数据库。5. <strong>注册应用</strong>：将应用名添加到 <code>settings.py</code> 的 <code>INSTALLED_APPS</code> 中。6. <strong>设计 URL</strong>：在项目和应用中配置 <code>urls.py</code>，将 URL 路由到视图。7. <strong>编写视图</strong>：在 <code>views.py</code> 中处理请求并返回响应（如渲染模板）。8. <strong>创建模板</strong>：在 <code>templates</code> 目录下编写 HTML 模板。9. <strong>迁移数据库</strong>：<code>makemigrations</code> 生成迁移文件，<code>migrate</code> 同步模型到数据库。10. <strong>运行</strong>：<code>python manage.py runserver</code> 启动开发服务器。</p>
+<p><strong>在Docker内运行</strong>：编写 <code>Dockerfile</code> 定义Python环境、安装依赖（包括Django）；创建 <code>docker-compose.yml</code> 配置Web服务和数据库（如PostgreSQL）；将代码复制到镜像；暴露端口（如8000）；使用 <code>docker-compose up</code> 构建并运行容器，Django应用即在隔离环境中启动。</p>
+<h2 id="Fastapi"><a href="#Fastapi" class="headerlink" title="Fastapi"></a>Fastapi</h2><p>FastAPI是Python Web框架，专为快速构建RESTful API而设计，支持类型注解、自动生成交互式文档，并具备异步性能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FastAPI 通过 StreamingResponse 实现流式输出，适合实时返回数据（如 AI 回复）。使用 yield 关键字将函数变成生成器，在其中逐段产出数据，每次 yield 发送一部分，不占用大量内存。yield 类似“暂停并返回”，下次从断点继续。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">generate</span>():</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">f&quot;消息 <span class="subst">&#123;i&#125;</span>\n&quot;</span></span><br><span class="line"></span><br><span class="line">     </span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stream</span>():</span><br><span class="line">  <span class="keyword">return</span> StreamingResponse(generate(), media_type=<span class="string">&quot;text/plain&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>python中fastapi如何实现流式输出</p>
+<p>FastAPI是Python Web框架，专为快速构建RESTful API而设计，支持类型注解、自动生成交互式文档，并具备异步性能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FastAPI 通过 StreamingResponse 实现流式输出，适合实时返回数据（如 AI 回复）。使用 yield 关键字将函数变成生成器，在其中逐段产出数据，每次 yield 发送一部分，不占用大量内存。yield 类似“暂停并返回”，下次从断点继续。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">generate</span>():</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">f&quot;消息 <span class="subst">&#123;i&#125;</span>\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stream</span>():</span><br><span class="line">  <span class="keyword">return</span> StreamingResponse(generate(), media_type=<span class="string">&quot;text/plain&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>FastAPI：一个现代、高性能的 Python Web 框架，用于构建 API。支持异步处理、流式输出，核心优势包括：自动生成功能完备的交互式 API 文档、强类型提示 + 请求数据校验。用于快速开发安全、可维护的后端服务。</p>
+</li>
+</ul>
+<h2 id="PyTorch-和-TensorFlow"><a href="#PyTorch-和-TensorFlow" class="headerlink" title="PyTorch 和 TensorFlow"></a><strong>PyTorch 和 TensorFlow</strong></h2><p>更常用 PyTorch，因为它动态图（eager execution）写起来像写 Python，调试方便，特别适合研究和快速实验。TensorFlow 2.x 也支持 eager 模式了，但在部署、生产环境（比如 TFServing、TensorRT）上生态更成熟。现在两者差距不大，但 PyTorch 在学术界更主流。</p>
+<p><strong>“PyTorch 做实验，TensorFlow 跑生产”</strong> —— 但现在界限模糊了，关键看团队技术栈和具体需求。</p>
+<h2 id="怎么保存和加载-PyTorch-模型"><a href="#怎么保存和加载-PyTorch-模型" class="headerlink" title="怎么保存和加载 PyTorch 模型"></a><strong>怎么保存和加载 PyTorch 模型</strong></h2><p>有两种方式。一种是只存参数（推荐）：<code>torch.save(model.state_dict(), &#39;model.pth&#39;)</code>，加载时先建好模型结构再 <code>load_state_dict()</code>；另一种是直接存整个模型（不推荐，依赖代码结构）。生产部署一般用第一种，灵活又安全。</p>
+<h2 id="怎么防止过拟合"><a href="#怎么防止过拟合" class="headerlink" title="怎么防止过拟合"></a><strong>怎么防止过拟合</strong></h2><p>常用方法包括：加 Dropout、权重衰减（L2 正则）、早停（early stopping）、数据增强（比如图像旋转裁剪）、用更小的模型。我在项目里经常组合用：比如图像分类任务，加 RandAugment + Dropout + ReduceLROnPlateau + early stopping，效果不错。</p>
 
     </div>
 
@@ -310,8 +393,8 @@
       <i class="fa fa-chevron-left"></i> 那些年背过的面试题之大模型
     </a></div>
       <div class="post-nav-item">
-    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/%E5%9C%BA%E6%99%AF%E9%A2%98/" rel="next" title="那些年背过的面试题之场景题">
-      那些年背过的面试题之场景题 <i class="fa fa-chevron-right"></i>
+    <a href="/2025/08/10/myblog/%E6%89%BE%E5%B7%A5%E4%BD%9C/leetcode%E9%A2%98%E7%9B%AE/" rel="next" title="不那些年之开始刷LeetCode">
+      不那些年之开始刷LeetCode <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -371,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django"><span class="nav-number">1.</span> <span class="nav-text">Django</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E4%B8%ADfastapi%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B5%81%E5%BC%8F%E8%BE%93%E5%87%BA"><span class="nav-number">2.</span> <span class="nav-text">python中fastapi如何实现流式输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E4%B8%AD-GIL%EF%BC%88%E5%85%A8%E5%B1%80%E8%A7%A3%E9%87%8A%E5%99%A8%E9%94%81%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Python 中 GIL（全局解释器锁）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E9%87%8C-list-%E5%92%8C-tuple"><span class="nav-number">4.</span> <span class="nav-text">Python 里 list 和 tuple</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8%EF%BC%88decorator%EF%BC%89%E6%98%AF%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="nav-number">5.</span> <span class="nav-text">装饰器（decorator）是怎么工作的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-%E5%92%8C-TensorFlow"><span class="nav-number">6.</span> <span class="nav-text">PyTorch 和 TensorFlow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD-PyTorch-%E6%A8%A1%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">怎么保存和加载 PyTorch 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E9%98%B2%E6%AD%A2%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">8.</span> <span class="nav-text">怎么防止过拟合</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">Python基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E5%B8%B8%E7%94%A8%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text">python常用库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">python并发编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">python网络编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">python测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Django"><span class="nav-number">6.</span> <span class="nav-text">Django</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fastapi"><span class="nav-number">7.</span> <span class="nav-text">Fastapi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch-%E5%92%8C-TensorFlow"><span class="nav-number">8.</span> <span class="nav-text">PyTorch 和 TensorFlow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD-PyTorch-%E6%A8%A1%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">怎么保存和加载 PyTorch 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E9%98%B2%E6%AD%A2%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">10.</span> <span class="nav-text">怎么防止过拟合</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -386,20 +469,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -426,7 +509,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

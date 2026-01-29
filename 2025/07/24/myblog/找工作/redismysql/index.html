@@ -28,7 +28,7 @@
 <meta property="og:description" content="redis分布式锁 redis分布式锁原理：1⃣️setnx键不存在时设置，expire过期时间避免死锁。2⃣️看门狗机制，如果客户端仍在运行，自动续租锁。3⃣️自旋，尝试自旋固定时间。固定次数。4⃣️lua脚本用于执行复杂操作，并保证原子性。5⃣️redis分布式锁不完全可靠，主从复制，主节点同步到从节点之前崩溃，从节点升级，又获取到锁。  redis分布式锁的原理：Redis分布式锁基于SET">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:22:24.486Z">
-<meta property="article:modified_time" content="2025-11-19T14:39:51.410Z">
+<meta property="article:modified_time" content="2026-01-06T04:18:03.337Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-19 22:39:51" itemprop="dateModified" datetime="2025-11-19T22:39:51+08:00">2025-11-19</time>
+                <time title="Modified: 2026-01-06 12:18:03" itemprop="dateModified" datetime="2026-01-06T12:18:03+08:00">2026-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,9 @@
 </li>
 <li><p>redis分布式锁需要考虑：setnx保障互斥性、设置过期时间避免客户端崩溃导致锁无法释放、任务执行时间长则通过后台线程定期续期、使用redis集群避免单点故障。</p>
 </li>
-<li><p>redis的lua脚本：通过 Lua 脚本在服务端原子执行复杂逻辑，保证多个操作的原子性，避免竞态条件。脚本由 EVAL 或 EVALSHA 命令调用，运行时 Redis 不会执行其他命令，确保线程安全。常用于高并发场景，如库存扣减、抢红包、限流控制等。比原生 MULTI&#x2F;EXEC 更灵活。同时减少网络往返，提升性能。</p>
+<li><p>redis分布式锁可重入吗：Redis本身不支持可重入锁（SETNX），但我们可以自己实现。比如用Hash结构，key是锁名，field存线程ID，value存重入次数。同一个线程再次加锁时，先判断是不是自己持有的，是的话计数加1。释放锁时计数减到0才真正删除。不过实际开发中一般不用手写，直接用 Redisson 就行，它提供的 RLock 是天然可重入的，还支持自动续期，更安全方便。</p>
+</li>
+<li><p>redis的lua脚本：通过 Lua 脚本在服务端原子执行复杂逻辑，保证多个操作的原子性，避免竞态条件，减少网络往返。脚本由 EVAL 或 EVALSHA 命令调用，运行时 Redis 不会执行其他命令，确保线程安全。常用于高并发场景，如库存扣减（DECR+过期时间设置）、抢红包、限流控制等。比原生 MULTI&#x2F;EXEC 更灵活。同时减少网络往返，提升性能。</p>
 <p>例子：EVAL “redis.call(‘SET’, KEYS[1], ARGV[1])” 1 foo bar</p>
 <p>表示给 key “foo” 设置 value “bar”：其中1表示指定 KEYS 数组长度，即有多少个 key 参数。java中用jedis.eval。</p>
 <p>例如：仅当锁 key 当前值和传入 value 一致时，才删除该 key（防止误删其它线程的锁）。</p>
@@ -269,7 +271,7 @@
 <li><p>redis和zk分布式锁区别：redis依赖单线程特性保证原子性，zk基于临时顺序节点，利用ZK的强一致性和Watch机制实现。redis在主从切换的时候可能出现锁丢失，zk强一致性但是性能较低。总之，Redis适合高性能场景，ZK适合高一致性场景。</p>
 </li>
 </ul>
-<h2 id="redis集群及主从"><a href="#redis集群及主从" class="headerlink" title="redis集群及主从"></a>redis集群及主从</h2><ul>
+<h2 id="redis集群及持久化"><a href="#redis集群及持久化" class="headerlink" title="redis集群及持久化"></a>redis集群及持久化</h2><ul>
 <li>redis集群：1⃣️自动分片：数据划分为多个哈希槽，每个节点负责多个哈希槽。2⃣️无中心架构：节点对等，无中心节点。3⃣️主从复制：一个节点可以有多个从节点，实现故障恢复、数据冗余、读写分离。</li>
 <li>redis集群模式数据分片的原理：整个集群共设有16384个哈希槽（2的14次方）。使用CRC16（16位循环冗余校验算法）对数据块进行多项式除法运算，生成一个16位的校验值。然后对16384取余，得到对应哈希槽。每个节点分配一些槽，实现负载均衡和横向扩展。</li>
 <li>redis集群扩容：纵向扩展：升级单个实例配置（内存&#x2F;磁盘&#x2F;CPU），简单但受限于硬件；横向扩展：增加Redis实例数量（分片），将数据分布到多个节点上。通过 Redis Cluster 实现，采用分片机制，使用16384个哈希槽来划分数据，新增节点后，系统会自动迁移部分Slot到新节点，实现负载均衡。</li>
@@ -278,8 +280,12 @@
 <li>redis持久化：redis数据存在内存中，持久化机制将数据存储到磁盘文件。RDB快照是某个时间点数据的二进制全量备份。AOF日志是修改内存数据的指令记录。</li>
 <li>redis的RDB：redis是单线程的，为了不阻塞请求响应，fork子线程进行快照持久化，持久化期间，两线程共享一份实体资源，只有在写操作发生时，共享的内存页会被复制，副本供写操作使用（写时复制），最小化对主进程影响。</li>
 <li>redis的AOF：使用fsync命令将指令记录存入AOF文件，每1s执行一次</li>
+<li>Redis 持久化过程的 save 和 bgsave：SAVE 是同步阻塞操作，执行时 Redis 主进程会暂停所有客户端请求，直到 RDB 文件生成完成；而 BGSAVE 是异步非阻塞操作，主进程 fork 出子进程来生成 RDB 文件，主进程可继续处理请求。因此生产环境通常使用 BGSAVE 避免服务中断。</li>
+<li>Redis的fork原理：Redis 调用 fork() 时，会创建一个子进程用于执行 RDB 保存、AOF 重写等后台任务。底层依赖操作系统的写时复制（COW）：fork 后父子进程共享相同物理内存页，父进程处理写请求时，写到某页会触发缺页中断，内核为该页拷贝一份新副本，父子各用一份。</li>
 <li>redis重启使用哪种持久化：都开启的话使用AOF持久化，因为包含更完整的操作历史记录。</li>
 <li>redis哨兵机制：保证高可用，实现集群监控故障转移。多个sentinel节点。1⃣️监控：sential节点与其他master&#x2F;slave&#x2F;sentinel节点发送PING做心跳检测，交换信息监控主从拓扑。2⃣️主观客观下线：主观一台认为，客观大多数认为。3⃣️哨兵选举：sentinel选出一个leader做故障转移，raft算法，1.节点认为主管下线就申请成为leader，2.其他节点没有答应别人就答应他，3.票数达标就成为leader。4⃣️故障转移：根据从节点优先级选择新的master节点，sentinel leader向其他节点发送命令，并关注原master。</li>
+<li>redis如何部署：Redis 部署方式主要有三种：第一，单机部署，可以从官网下载源码编译并启动服务；第二，使用 Docker 快速拉取官方镜像并启动容器；第三，集群部署，配置多个节点并通过命令组建集群用于高可用和分片扩展。</li>
+<li>redis使用场景：缓存热点数据、分布式锁、计数器、排行榜、消息队列。</li>
 </ul>
 <h2 id="双写一致性"><a href="#双写一致性" class="headerlink" title="双写一致性"></a>双写一致性</h2><ul>
 <li><p>redis双写一致性：更新操作同时写入数据库和缓存，因为分布式系统中网络延迟、系统故障等原因，导致两者数据不一致，解决：1.<strong>先写数据库再删缓存</strong>：高并发可能会多次缓存穿透，增加数据库压力。2.先写数据库再更新缓存：不会缓存穿透，但是更新缓存操作需要并发控制防止竞争。更高级：消息队列保障顺序、分布式锁。</p>
@@ -298,36 +304,48 @@
 </li>
 </ul>
 <h2 id="redis数据结构"><a href="#redis数据结构" class="headerlink" title="redis数据结构"></a>redis数据结构</h2><ul>
-<li>RDBMS和NoSQL：关系型数据库（组织化结构，行列格式）、Not only sql（数据存储没有固定格式，可横向扩展）。RDBMS：固定查询语言、事务一致性ACID。NoSQL：无固定查询语言、键值redis、列存储HBase、文档MongoDB、图形存储Neo4j、最终一致性BASE。</li>
-<li>redis：远程字典服务，键值对，数据缓存在内存，周期性持久化到磁盘、主从同步、哨兵机制高可用。应用：高速缓存、计数器。</li>
-<li>redis数据结构：1⃣️String：最大512M，实现：未使用C语言字符串，自己实现简单动态字符串SDS，带长度信息，embstr编码和raw编码，字符串修改时检查字符串长度避免缓冲区溢出，减少内存重新分配次数。2⃣️列表List：双向链表型数据结构，可两端插入弹出，可指定下标&#x2F;范围获取。实现消息队列、分页。实现：quikList，外层是双向链表linkedList，每个节点是zipList压缩列表，将多个元素序列化存储在一块连续内存中。3⃣️Set集合：不允许重复，没有顺序，支持多集合间并集交集差集操作。实现：如果元素都整数且数量较少，使用intset整数集合压缩数据结构。否则使用hashTable。4⃣️zset有序集合：给每个元素多设置一个分数，作为排序的依据。实现：hashTable存储元素到分数的映射，快速查询和更新分数。跳跃表skiplist维护元素的有序性，并提供高效范围查询。5⃣️hash：存储key-value记录。实现：当字段和值数量不多时，使用压缩列表zipList。否则使用哈希表hashtable，每项都包含指向键的指针和指向值的指针。</li>
-<li>redis为什么快：1.完全基于内存 2.单线程无上下文切换成本 3.基于C语言，优化过的数据结构 4.基于非阻塞的IO多路复用和事件驱动模型，使用Seletor监视所有注册的通道，IO事件发生时进行通知。单线程高效处理大量并发连接。</li>
-<li>redis6.0改用多线程：依然使用单线程处理客户端请求，只是多线程处理数据读写和协议解析。redis性能瓶颈在网络IO而非CPU。</li>
-<li>Redis 如何使用 Zset 设计延迟队列？</li>
+<li><p>RDBMS和NoSQL：关系型数据库（组织化结构，行列格式）、Not only sql（数据存储没有固定格式，可横向扩展）。RDBMS：固定查询语言、事务一致性ACID。NoSQL：无固定查询语言、键值redis、列存储HBase、文档MongoDB、图形存储Neo4j、最终一致性BASE。</p>
+</li>
+<li><p>redis：远程字典服务，键值对，数据缓存在内存，周期性持久化到磁盘、主从同步、哨兵机制高可用。应用：高速缓存、计数器。</p>
+</li>
+<li><p>redis数据结构：1⃣️String：最大512M，实现：未使用C语言字符串，自己实现简单动态字符串SDS，带长度信息，embstr编码和raw编码，字符串修改时检查字符串长度避免缓冲区溢出，减少内存重新分配次数。2⃣️列表List：双向链表型数据结构，可两端插入弹出，可指定下标&#x2F;范围获取。实现消息队列、分页。实现：quikList，外层是双向链表linkedList，每个节点是zipList压缩列表，将多个元素序列化存储在一块连续内存中。3⃣️Set集合：不允许重复，没有顺序，支持多集合间并集交集差集操作。实现：如果元素都整数且数量较少，使用intset整数集合压缩数据结构。否则使用hashTable。4⃣️zset有序集合：给每个元素多设置一个分数，作为排序的依据。实现：hashTable存储元素到分数的映射，快速查询和更新分数。跳跃表skiplist维护元素的有序性，并提供高效范围查询。5⃣️hash：存储key-value记录。实现：当字段和值数量不多时，使用压缩列表zipList。否则使用哈希表hashtable，每项都包含指向键的指针和指向值的指针。</p>
+</li>
+<li><p>redis的zrange的复杂度：<strong>O(log N + M)</strong>，其中 N 是有序集合的总元素数，M 是要返回的元素数量。这是因为 ZSET 底层基于跳跃表实现，定位起始元素需要 O(log N)，然后顺序遍历 M 个元素。</p>
+</li>
+<li><p>redis的zset插入复杂度：哈希表检查 member 是否已存在是O(1) ，插入时需要先在跳表中找到合适的位置，这个查找过程的时间复杂度是 O(log N)。当 Zset 元素很少且值很小时，Redis 会用 压缩列表（ziplist） 作为底层结构，此时插入是 O(N) 。</p>
+</li>
+<li><p>Zset 基于跳表插入元素的操作过程：Redis 的 ZSET 基于跳跃表插入元素时，首先通过哈希表 O(1) 判断成员是否存在；若存在则更新 score 并调整位置，否则执行插入。接着从跳表最高层开始，逐层向下查找新元素的插入位置，记录每层的前驱节点。然后根据随机算法（如按 1&#x2F;4 概率）确定新节点的层数，并创建对应层数的节点。最后，在各层链表中将新节点链接到前驱之后，更新指针。整个过程维持了跳表的有序性和概率平衡，时间复杂度为 O(log N)，高效且易于并发优化。</p>
+</li>
+<li><p>redis的zset的hashtable：一个跳跃表（skiplist）用于按分值排序，一个哈希表（hashtable）用于快速查找成员是否存在。哈希表以成员为 key、分值为 value，实现 O(1) 时间复杂度的成员存在性判断和分值获取，提升整体操作效率。</p>
+</li>
+<li><p>redis为什么快：1.完全基于内存 2.单线程无上下文切换成本 3.基于C语言，优化过的数据结构 4.基于非阻塞的IO多路复用和事件驱动模型，使用Seletor监视所有注册的通道，IO事件发生时进行通知。单线程高效处理大量并发连接。</p>
+</li>
+<li><p>redis6.0改用多线程：依然使用单线程处理客户端请求，只是多线程处理数据读写和协议解析。redis性能瓶颈在网络IO而非CPU。</p>
+</li>
+<li><p>redis多线程：Redis 6.0 起引入多线程，主要用于网络 I&#x2F;O：多个 I&#x2F;O 线程并行处理客户端请求的读取和响应写回，提升吞吐量。但命令执行仍由主线程单线程完成，保证数据一致性。此外，RDB&#x2F;AOF 异步刷盘等后台任务也使用独立线程。</p>
+</li>
+<li><p>Redis 如何使用 Zset 设计延迟队列？</p>
+<p>消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。<br>消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。<br>处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。<br>可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+</li>
 </ul>
-<p>​	消息入队：将消息内容作为 value，消息的预定执行时间（时间戳）作为 score，使用 ZADD 命令加入 Zset。例如：ZADD queue 1625205600 “msg1”。</p>
-<p>​	消息出队（消费）：定时轮询，用 ZRANGEBYSCORE queue -inf 当前时间 查询 score 小于等于当前时间的消息，这些即为到期可执行的消息。</p>
-<p>​	处理消息：消费后，用 ZREM 命令将已处理的消息从 Zset 删除。</p>
-<p>​	可结合 Lua 脚本保证“取-删”原子性，提升可靠性。</p>
+<ul>
+<li>redis的命令：（1）set key value、expire key 60、SET key value NX EX 60、（2）新建hash并设置字段：HSET hashkey field1 “value1”、HGET hashkey field1、HGETALL hashkey、（3）操作List：左侧插入LPUSH mylist “apple”、RPUSH mylist “orange”、LPOP mylist、RPOP mylist、获取指定区间的元素LRANGE mylist 0 -1（全部）、列表长度LLEN mylist、（4）操作zset：添加成员及分数ZADD myzset 100 “Tom”、获取前两位及分数ZRANGE myzset 0 1 WITHSCORES、获取某成员分数ZSCORE myzset “Tom”、获取总成员数ZCARD myzset、按分数区间获取ZRANGEBYSCORE myzset 90 100、删除成员ZREM myzset “Tom”、（5）操作set：SADD myset “apple”、获取所有元素SMEMBERS myset、判断是否在集合SISMEMBER myset “apple”、SREM myset “apple”、元素个数SCARD myset、交集SINTER set1 set2、并集SUNION set1 set2、差集SDIFF set1 set2、（6）自增键：用set设置，再用incr操作，INCR mycounter、INCRBY mycounter 5、DECR mycounter。</li>
+<li>redis设置过期时间：expire key seconds；set key value EX seconds；底层采用过期字典存储键的过期时间。</li>
+</ul>
 <h2 id="redis的热key大key"><a href="#redis的热key大key" class="headerlink" title="redis的热key大key"></a>redis的热key大key</h2><ul>
 <li>redis热key问题：某个key大量并发打到一台服务器，达到网卡上线，宕机。缓存雪崩。解决：热key打散在不同服务器。提前加载热key到内存，内存做二级缓存。</li>
 <li>redis的大key：指的是value（值）很大，而不是key（键）本身。大key包含大量的数据，如大型的字符串、列表、集合等。导致在进行某些操作时（如删除、过期、内存回收等）对Redis性能产生负面影响。可能会阻塞主线程，导致Redis响应延迟、持久化时间变长、传输消耗带宽。</li>
 <li>redis中大key解决：尽量避免将大量数据存储在一个key中，将数据拆分成多个小key存储，如大型集合拆分成多个小集合。使用分片，将数据分片存储在不同的Redis实例中。及时发现并清理大key。使用更高效的数据结构来存储数据，例如使用压缩列表（ziplist）或哈希表（hash）。对于需要删除的大key，可以使用渐进式删除的方法，逐步删除数据，避免一次性删除导致的阻塞。</li>
 </ul>
-<h2 id="redis过期淘汰"><a href="#redis过期淘汰" class="headerlink" title="redis过期淘汰"></a>redis过期淘汰</h2><ul>
+<h2 id="redis淘汰策略"><a href="#redis淘汰策略" class="headerlink" title="redis淘汰策略"></a>redis淘汰策略</h2><ul>
 <li>redis过期策略：1⃣️惰性删除：查询key时才对过期时间检测，已过期删除。2⃣️定期删除：定期执行过期键的扫描和删除，避免消耗过多计算资源，使用采样的过程随机抽取，如果过期的多就再抽样。3⃣️都没删除的：等redis内存淘汰机制。</li>
 <li>redis内存淘汰：LRU最近最久未使用，淘汰最长时间没有访问的。链表&#x2F;哈希表+双向链表。redis中使用近似的LRU，随机抽取一些键，检查最后访问时间戳，淘汰最久未访问的。</li>
+<li>Redis的LRU：Redis 的 LRU 不是真正的 LRU，而是“近似 LRU”。每个 key 上都会带一个最近访问时间戳，访问一次就更新一下。需要淘汰内存时，它不会把所有 key 扫一遍，而是随机抽样，挑其中最久没用的那个删掉。这样不用维护复杂的链表，开销小、效率高，虽然不完全精确，但实际效果还不错。</li>
 <li>redis高可用：主从架构、哨兵、持久化</li>
 <li>redis事务：1⃣️事务是一组命令的集合，数据库事务通过ACID保证，undo log撤销日志。2⃣️redis中事务机制：通过MULTI、EXEC、WATCH 和 DISCARD 四个命令提供。MULTI开启事务，输入多个命令，不会立即执行而是放入一个队列，调用EXEC命令才会将队列中命令原子执行。3⃣️事务监控：WATCH命令设置监控的键，在事务操作之前就监控，如果EXEC之前键被其他客户端修改，则不执行DISCARD。是一种CAS乐观锁的机制。</li>
 <li>redis操作一个命令最耗时的地方：网络IO延迟：尽可能使用长连接或连接池。数据持久化延迟：合理配置RDB快照和AOF Rewrite时机（每秒？每条指令？），避免频繁的fork带来的延迟。数据淘汰引发的延迟：避免同一时间大量key过期。</li>
 </ul>
-<ul>
-<li>redis如何部署：Redis 部署方式主要有三种：第一，单机部署，可以从官网下载源码编译并启动服务；第二，使用 Docker 快速拉取官方镜像并启动容器；第三，集群部署，配置多个节点并通过命令组建集群用于高可用和分片扩展。</li>
-<li>redis使用场景：缓存热点数据、分布式锁、计数器、排行榜、消息队列。</li>
-<li>redis的命令：（1）set key value、expire key 60、SET key value NX EX 60、（2）新建hash并设置字段：HSET hashkey field1 “value1”、HGET hashkey field1、HGETALL hashkey、（3）操作List：左侧插入LPUSH mylist “apple”、RPUSH mylist “orange”、LPOP mylist、RPOP mylist、获取指定区间的元素LRANGE mylist 0 -1（全部）、列表长度LLEN mylist、（4）操作zset：添加成员及分数ZADD myzset 100 “Tom”、获取前两位及分数ZRANGE myzset 0 1 WITHSCORES、获取某成员分数ZSCORE myzset “Tom”、获取总成员数ZCARD myzset、按分数区间获取ZRANGEBYSCORE myzset 90 100、删除成员ZREM myzset “Tom”、（5）操作set：SADD myset “apple”、获取所有元素SMEMBERS myset、判断是否在集合SISMEMBER myset “apple”、SREM myset “apple”、元素个数SCARD myset、交集SINTER set1 set2、并集SUNION set1 set2、差集SDIFF set1 set2、（6）自增键：用set设置，再用incr操作，INCR mycounter、INCRBY mycounter 5、DECR mycounter。</li>
-<li>redis设置过期时间：expire key seconds；set key value EX seconds；底层采用过期字典存储键的过期时间。</li>
-</ul>
-<h2 id="mysql事务"><a href="#mysql事务" class="headerlink" title="mysql事务"></a>mysql事务</h2><ul>
+<h2 id="mysql事务和日志"><a href="#mysql事务和日志" class="headerlink" title="mysql事务和日志"></a>mysql事务和日志</h2><ul>
 <li><p>RDBMS和NoSQL：RDBMS关系型数据库（组织化结构，表格行列格式，Mysql、Oracle、PostgreSQL）、Not only sql非关系型数据库（数据存储没有固定格式，可横向扩展）。1⃣️数据结构：结构化与非结构化，键值redis、列存储HBase、文档MongoDB、图形存储Neo4j。2⃣️数据关联：sql中多张表可关联，nosql数据之间无关联。3⃣️查询语言：sql固定查询语言，nosql不固定查询语言。4⃣️事务一致性：sql提供强一致性和完整事务支持，nosql提供BASE基本可用、软状态、最终一致性。5⃣️存储方式：sql存在磁盘，nosql存在内存。6⃣️扩展性：sql垂直扩展，升级单个服务器的内存cpu存储空间。nosql可水平扩展，分布式存储。</p>
 </li>
 <li><p>数据库事务：一条&#x2F;多条语句组成，要么全部执行要么全部不执行的执行单元。1⃣️原子性：最小执行单元，操作失败时undo log来回滚。2⃣️一致性：事务执行前后数据保持一致。3⃣️隔离性：并发执行的事务之间不会互相干扰，MVCC、锁机制实现不同隔离级别。4⃣️持久性：事务一旦提交对数据库的修改是永久的，系统崩溃时使用redo日志来恢复。</p>
@@ -342,11 +360,17 @@
 </li>
 </ul>
 <ul>
-<li>mysql三个日志：<br>redolog重做日志：确保事务的持久性，崩溃后能恢复已提交事务。物理日志：记录数据页的修改。采用循环写入机制，空间有限，旧日志会被新日志覆盖，不能用于长期归档。<br>undolog撤销日志：保证 原子性（Atomicity）和 MVCC。逻辑日志：记录修改前的旧值，用于回滚或读历史版本。每个事务都有自己的undo log。事务提交后，不再需要的 undo log 会被标记为可清理。<br>binlog归档日志：用于主从复制和数据恢复。逻辑日志：记录 SQL 语句或行变更（ROW 模式）。是Server层的日志，所有引擎都能用。<br>顺序：先写 redo log，再修改内存数据，最后写 binlog 并 commit。</li>
-<li>mysql日志总结：1、redo log：InnoDB 的物理日志，用于崩溃恢复，实现持久性；必须先写 redo log（prepare），再修改内存数据；2、undo log：记录修改前的数据，用于回滚和 MVCC；3、binlog：Server 层的逻辑日志，用于主从复制和数据恢复。 在事务提交时，采用两阶段提交：先写 redo log（prepare）→ 写 binlog → 最后提交 redo log，确保数据一致性。</li>
+<li><p>mysql三个日志：<br>redolog重做日志：确保事务的持久性，崩溃后能恢复已提交事务。物理日志：记录数据页的修改。采用循环写入机制，空间有限，旧日志会被新日志覆盖，不能用于长期归档。<br>undolog撤销日志：保证 原子性（Atomicity）和 MVCC。逻辑日志：记录修改前的旧值，用于回滚或读历史版本。每个事务都有自己的undo log。事务提交后，不再需要的 undo log 会被标记为可清理。<br>binlog归档日志：用于主从复制和数据恢复。逻辑日志：记录 SQL 语句或行变更（ROW 模式）。是Server层的日志，所有引擎都能用。<br>顺序：先写 redo log，再修改内存数据，最后写 binlog 并 commit。</p>
+</li>
+<li><p>mysql日志总结：1、redo log：InnoDB 的物理日志，用于崩溃恢复，实现持久性；必须先写 redo log（prepare），再修改内存数据；2、undo log：记录修改前的数据，用于回滚和 MVCC；3、binlog：Server 层的逻辑日志，用于主从复制和数据恢复。 在事务提交时，采用两阶段提交：先写 redo log（prepare）→ 写 binlog → 最后提交 redo log，确保数据一致性。</p>
+</li>
+<li><p>MySQL和Redis的分布式事务设计：<br>1、采用 最终一致性 + 补偿机制 的思路。先在MySQL中执行核心数据的写操作（如订单插入），利用本地事务保证该操作的原子性。然后用消息队列通知到Redis，确保最终一致性。若同步失败，可以通过队列重试或补偿机制。<br>2、采用可靠的中间件：TCC（Try-Confirm-Cancel）模型：在“Try”阶段：预留资源，准备操作。在“Confirm”阶段：最终确认，完成数据库和缓存的同步。在“Cancel”阶段：回滚操作。<br>3、分布式事务框架：使用Seata，统一管理多个服务和数据库&#x2F;缓存操作的事务，保证在某一环节失败后回滚。</p>
+</li>
 </ul>
 <h2 id="mysql锁"><a href="#mysql锁" class="headerlink" title="mysql锁"></a>mysql锁</h2><ul>
 <li><p>mysql的锁：表锁、行锁（Innodb有，通过给索引项加锁实现，如果没有索引相当于表锁）。共享锁、排他锁。insert、update、delete操作innodb会自动给涉及到的数据加排他锁。select for update加排他锁。select lock in share mode加共享锁。</p>
+</li>
+<li><p>mysql什么情况下会锁住整张表：1、MyISAM存储引擎。2、InnoDB 当 UPDATE 或 DELETE 语句的 WHERE 条件没有使用索引，或者索引失效，导致执行计划走全表扫描（需要对每一行都加锁，终效果等同于“锁住整张表”）。3、显式使用 LOCK TABLES 命令（LOCK TABLES user_table WRITE; 写锁）。4、在执行DDL数据定义语言（如ALTER TABLE）、长事务或高隔离级别下，可导致表级锁。5、死锁或长时间等待也可能使整个表被锁定。</p>
 </li>
 <li><p>间隙锁：Innodb中的，用于锁定一个范围，不是固定的行数据。Innodb中可重复读及更高级别使用的锁机制。可以避免幻读，避免其他事务在该范围内插入。</p>
 </li>
@@ -357,38 +381,8 @@
 <li><p>Innodp和Myisam：InnoDB支持事务处理、行级锁定和外键约束，适合于高并发和需要强数据完整性的应用。MyISAM拥有较高的读取速度和全文索引支持，但不支持事务处理，只有表级锁定。</p>
 </li>
 </ul>
-<h2 id="mysql索引"><a href="#mysql索引" class="headerlink" title="mysql索引"></a>mysql索引</h2><ul>
-<li><p>Mysql索引：数据库表中一个特殊的数据结构，帮助提高数据检索速率。使用B树和B+树作为索引的数据结构。Innodb中主键索引使用聚簇索引，B+树叶子结点存储表的实际行数据。非主键索引使用B+树，叶子结点存储对应行主键而不是行数据本身。Myisam中都是非聚簇索引，B+树叶子结点存储行数据的指针。</p>
-</li>
-<li><p>Mysql索引缺点：空间成本、维护成本（数据插入删除更新时索引也需要更新，导致更新操作变慢）。索引通常以索引文件的形式存储在磁盘。</p>
-</li>
-<li><p>Mysql中有哪些索引：主键索引、唯一索引、普通索引、全文索引、空间索引、组合索引、外键索引</p>
-</li>
-<li><p>B树和B+树区别：都是多路搜索树，自平衡。B+树所有的值存储在叶子结点，并且形成有序链表，适合范围查询，内部节点存储键和指向叶子结点的指针。更胖更低，IO效率高。B树每个节点都存储键和值，对于点查询更为高效。</p>
-</li>
-<li><p>哈希索引：Memory存储引擎使用，基于内存。散列算法使用哈希表很快O(1)，适合等值比较查询，不适合范围查询。如果重复的键会哈希冲突。Innodb中自适应哈希索引。</p>
-</li>
-<li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
-</li>
-<li><p>跳表和B+树区别：数据结构：跳表：基于有序链表，通过在原链表基础上添加多层索引链表来实现快速查找等操作，呈多层链式结构。B + 树：是一种多路平衡查找树，叶子节点形成有序链表且存储实际数据（或指向数据的指针），非叶子节点主要起索引作用。查找效率都O (log n)，跳表最坏O(n)。<strong>跳表</strong>常用于实现一些简单高效的内存数据结构，比如 Redis 的有序集合部分实现，适合在内存中处理动态数据集合的快速查找等操作。<strong>B +</strong> <strong>树</strong>广泛应用于数据库索引系统（如 MySQL 的 InnoDB 存储引擎索引），适合对外存（磁盘）数据进行高效组织和检索，减少磁盘 I&#x2F;O 次数。</p>
-</li>
-<li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
-</li>
-<li><p>mysql主键索引和非主键索引区别</p>
-<p>主键索引（聚簇索引）：数据页按照主键顺序存储，索引的叶子节点直接存储数据行。通过主键查询效率高，且主键唯一。</p>
-<p>非主键索引（辅助索引）：叶子节点存储主键信息（不是数据本身）。查询时先定位到主键，再回表根据主键查数据（称为回表查询）。可重复。</p>
-<p>总结：主键索引存储方式直接，查询快；非主键索引需多一步回表操作定位数据。</p>
-</li>
-<li><p>mysql建立联合索引，叶子结点和非叶子结点都存什么：联合索引的底层采用 B+树结构，非叶子节点只存索引字段的组合值和指针，用于索引检索，叶子节点真正存储联合索引值及主键或行地址。</p>
-</li>
-<li><p>最左前缀匹配：联合索引中，查询时使用的where子句中的条件必须包含联合索引中最左边的列索引才能生效，如果跳过或使用范围查询，则后面列不能有效使用索引。因为B+树是有序的。</p>
-</li>
-<li><p>sql语句执行过程：1.建立连接 2.mysql8.0查看是否开启缓存 3.解析器进行语法解析，生成解析树，检查语法正确 4.优化器生成执行计划，查看是否可优化。5.执行引擎执行sql。</p>
-</li>
-<li><p>数据库三范式：1.列不可分割 2.所有非主键字段都依赖于主键 3.所有非主键字段直接依赖于主键。</p>
-</li>
-<li><p>回表查询和覆盖索引：回表查询是普通索引，先定位主键，再定位行记录，扫描两遍索引树。覆盖索引是索引中包含了查询所需的所有字段，直接从索引中获取数据，不需要回表查询，减少磁盘IO。</p>
-</li>
+<ul>
+<li>基于mysql的分布式锁：可以建一张锁表，比如 distributed_lock，字段有 lock_key（唯一）、owner、expire_time 等。加锁时通过 INSERT 尝试插入一条记录，利用主键或唯一索引防止重复，插入成功就表示拿到锁；释放锁时 DELETE 或 UPDATE 标记释放。为了防死锁，设置 expire_time，超时自动失效。还可以配合定时任务清理过期锁。优点是不依赖 Redis 或 ZooKeeper，实现简单；缺点是数据库压力大、性能差，不适合高并发场景。一般用在低频操作，比如定时任务去重。高频场景更推荐用 Redis 或 ZooKeeper 实现。</li>
 </ul>
 <h2 id="mysql主从"><a href="#mysql主从" class="headerlink" title="mysql主从"></a>mysql主从</h2><ul>
 <li><p>mysql主从复制：主服务器将变更记录到二进制日志（binary log）文件，从服务器连接到主服务器后，请求从上次停止的位置开始传送日志，存到中继日志relay log，开线程重放。数据冗余、读写分离、高可用性。</p>
@@ -438,6 +432,39 @@
 <li>mysql底层数据结构：B+树（如InnoDB索引）、哈希表（Memory引擎、自适应哈希索引）以及页式存储（Page）。B+树支持高效检索和范围查询，页结构提升读写性能，事务日志（Redo、Undo Log）则保证数据安全和事务性。</li>
 <li>sql注入如何解决：SQL注入是一种攻击手段，攻击者通过拼接恶意SQL代码获取或篡改数据。解决SQL注入的关键方法是使用<strong>预编译</strong>或参数化查询，避免直接拼接SQL字符串，使用户输入不会被当作SQL指令解析。加强输入校验与过滤，控制输入的格式和内容，限制特殊字符。使用ORM框架如MyBatis、Hibernate，默认采用安全的参数绑定方式。设置适当的权限，敏感操作需严格验证和监控，从而综合防止SQL注入风险。</li>
 </ul>
+<h2 id="mysql索引"><a href="#mysql索引" class="headerlink" title="mysql索引"></a>mysql索引</h2><ul>
+<li><p>Mysql索引：数据库表中一个特殊的数据结构，帮助提高数据检索速率。使用B树和B+树作为索引的数据结构。Innodb中主键索引使用聚簇索引，B+树叶子结点存储表的实际行数据。非主键索引使用B+树，叶子结点存储对应行主键而不是行数据本身。Myisam中都是非聚簇索引，B+树叶子结点存储行数据的指针。</p>
+</li>
+<li><p>Mysql索引缺点：空间成本、维护成本（数据插入删除更新时索引也需要更新，导致更新操作变慢）。索引通常以索引文件的形式存储在磁盘。</p>
+</li>
+<li><p>Mysql中有哪些索引：主键索引、唯一索引、普通索引、全文索引、空间索引、组合索引、外键索引</p>
+</li>
+<li><p>B树和B+树区别：都是多路搜索树，自平衡。B+树所有的值存储在叶子结点，并且形成有序链表，适合范围查询，内部节点存储键和指向叶子结点的指针。更胖更低，IO效率高。B树每个节点都存储键和值，对于点查询更为高效。</p>
+</li>
+<li><p>哈希索引：Memory存储引擎使用，基于内存。散列算法使用哈希表很快O(1)，适合等值比较查询，不适合范围查询。如果重复的键会哈希冲突。Innodb中自适应哈希索引。</p>
+</li>
+<li><p>红黑树：自平衡的二叉搜索树，节点要么红色要么黑色，根节点黑色，红节点的子节点都是黑色，叶子结点都是黑色空节点。通过旋转、重新着色来维持平衡。</p>
+</li>
+<li><p>跳表和B+树区别：数据结构：跳表：基于有序链表，通过在原链表基础上添加多层索引链表来实现快速查找等操作，呈多层链式结构。B + 树：是一种多路平衡查找树，叶子节点形成有序链表且存储实际数据（或指向数据的指针），非叶子节点主要起索引作用。查找效率都O (log n)，跳表最坏O(n)。<strong>跳表</strong>常用于实现一些简单高效的内存数据结构，比如 Redis 的有序集合部分实现，适合在内存中处理动态数据集合的快速查找等操作。<strong>B +</strong> <strong>树</strong>广泛应用于数据库索引系统（如 MySQL 的 InnoDB 存储引擎索引），适合对外存（磁盘）数据进行高效组织和检索，减少磁盘 I&#x2F;O 次数。</p>
+</li>
+<li><p>聚簇索引和非聚簇索引：聚簇索引：数据存储和索引放在一块，索引结构的叶子结点保存了行数据（主键索引）、非聚簇索引：数据和索引分开，索引结构的叶子结点存储行数据的指针（辅助索引）。聚簇索引中，表中数据的物理顺序和索引顺序一致，所以一个表只能有一个聚簇索引。</p>
+</li>
+<li><p>mysql主键索引和非主键索引区别</p>
+<p>主键索引（聚簇索引）：数据页按照主键顺序存储，索引的叶子节点直接存储数据行。通过主键查询效率高，且主键唯一。</p>
+<p>非主键索引（辅助索引）：叶子节点存储主键信息（不是数据本身）。查询时先定位到主键，再回表根据主键查数据（称为回表查询）。可重复。</p>
+<p>总结：主键索引存储方式直接，查询快；非主键索引需多一步回表操作定位数据。</p>
+</li>
+<li><p>mysql建立联合索引，叶子结点和非叶子结点都存什么：联合索引的底层采用 B+树结构，非叶子节点只存索引字段的组合值和指针，用于索引检索，叶子节点真正存储联合索引值及主键或行地址。</p>
+</li>
+<li><p>最左前缀匹配：联合索引中，查询时使用的where子句中的条件必须包含联合索引中最左边的列索引才能生效，如果跳过或使用范围查询，则后面列不能有效使用索引。因为B+树是有序的。</p>
+</li>
+<li><p>sql语句执行过程：1.建立连接 2.mysql8.0查看是否开启缓存 3.解析器进行语法解析，生成解析树，检查语法正确 4.优化器生成执行计划，查看是否可优化。5.执行引擎执行sql。</p>
+</li>
+<li><p>数据库三范式：1.列不可分割 2.所有非主键字段都依赖于主键 3.所有非主键字段直接依赖于主键。</p>
+</li>
+<li><p>回表查询和覆盖索引：回表查询是普通索引，先定位主键，再定位行记录，扫描两遍索引树。覆盖索引是索引中包含了查询所需的所有字段，直接从索引中获取数据，不需要回表查询，减少磁盘IO。</p>
+</li>
+</ul>
 <h2 id="mysql索引失效"><a href="#mysql索引失效" class="headerlink" title="mysql索引失效"></a>mysql索引失效</h2><ul>
 <li><p>mysql索引失效：（1）对索引列使用了函数、计算表达式，索引会失效。（2）使用LIKE模糊查询时以“%”开头，则无法使用索引。（3）查询条件的类型与索引列不一致会造成隐式转换，从而索引失效。比如列为varchar，传入的是数字。（4）使用 !&#x3D;、&lt;&gt;、&lt;、&gt; 等非等值范围条件时，复合索引中，一旦遇到范围查询，右边的列将无法使用索引。!&#x3D; 和 &lt;&gt; 因匹配大量数据，优化器可能直接放弃索引转为全表扫描。（5）如果or连接的多个条件中，有部分字段未建索引，会导致全表扫描。（6）IS NOT NULL 通常导致索引失效，因匹配大量数据，优化器倾向于全表扫描。</p>
 </li>
@@ -486,6 +513,11 @@
 <p>GeoHash：将二维经纬度坐标编码为一个字符串（或数字），通过将空间递归划分为网格，实现“越相近的地理位置，编码前缀越相似”。支持前缀匹配，适用于快速粗略范围查找。</p>
 <p>数据库的空间索引：从 5.7 版本起，InnoDB 支持 SPATIAL INDEX，底层基于 R-Tree 结构，适用于二维空间范围查询。使用时，需将空间字段定义为 POINT、GEOMETRY 、LINESTRING、POLYGON等类型。借助MySQL内置的GIS函数（如ST_Within、ST_Contains、ST_Distance等），可实现高效的范围查询、邻近查找和空间关系判断。</p>
 <p>Redis的空间索引：Redis自3.2版本起支持地理空间索引，Redis 的 GEO 功能基于 Geohash 编码 和 Sorted Set（有序集合） 实现：将地理位置（经度、纬度）转换为 Geohash 字符串作为分值，利用 ZSet 支持范围查询。使用 GEOADD key longitude latitude member 可添加坐标点，如记录用户位置；通过 GEORADIUS key lon lat radius unit 查询指定半径内的成员，常用于“附近的人”或“周边服务”场景；还支持 GEODIST 计算距离等。</p>
+<h2 id="ES"><a href="#ES" class="headerlink" title="ES"></a>ES</h2><p>Elasticsearch 是分布式搜索分析引擎，专为全文检索、模糊匹配、复杂条件过滤和聚合分析设计，支持高并发下的近实时搜索，适用于日志分析、商品搜索、行为数据挖掘等场景，但不支持事务和强一致性。 </p>
+<p>MySQL 是关系型数据库，强调事务一致性（ACID）、结构化数据存储和复杂查询（如多表 JOIN），适合处理业务数据（如订单、用户信息），但全文检索和高并发查询性能较弱。 </p>
+<p>Redis 是内存键值数据库，主打高性能读写和低延迟，常用于缓存、会话存储、计数器等场景，支持简单数据结构（String、Hash、List 等），但数据容量受内存限制，不适合复杂查询。 </p>
+<p>要事务和结构化管理 → 用 MySQL<br>要高速缓存或临时数据 → 用 Redis<br>要强大搜索与分析能力 → 用 Elasticsearch </p>
+<p>MySQL 存主数据，Redis 缓存热点，ES 提供搜索功能。</p>
 
     </div>
 
@@ -569,7 +601,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">redis分布式锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E9%9B%86%E7%BE%A4%E5%8F%8A%E4%B8%BB%E4%BB%8E"><span class="nav-number">2.</span> <span class="nav-text">redis集群及主从</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">双写一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">redis数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E7%83%ADkey%E5%A4%A7key"><span class="nav-number">5.</span> <span class="nav-text">redis的热key大key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E8%BF%87%E6%9C%9F%E6%B7%98%E6%B1%B0"><span class="nav-number">6.</span> <span class="nav-text">redis过期淘汰</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%BA%8B%E5%8A%A1"><span class="nav-number">7.</span> <span class="nav-text">mysql事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E9%94%81"><span class="nav-number">8.</span> <span class="nav-text">mysql锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95"><span class="nav-number">9.</span> <span class="nav-text">mysql索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%B8%BB%E4%BB%8E"><span class="nav-number">10.</span> <span class="nav-text">mysql主从</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%BC%98%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">mysql优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88"><span class="nav-number">12.</span> <span class="nav-text">mysql索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">13.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">14.</span> <span class="nav-text">发号器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95%E7%AE%97%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">空间索引算法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">redis分布式锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E9%9B%86%E7%BE%A4%E5%8F%8A%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">redis集群及持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">双写一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">redis数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E7%83%ADkey%E5%A4%A7key"><span class="nav-number">5.</span> <span class="nav-text">redis的热key大key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="nav-number">6.</span> <span class="nav-text">redis淘汰策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%BA%8B%E5%8A%A1%E5%92%8C%E6%97%A5%E5%BF%97"><span class="nav-number">7.</span> <span class="nav-text">mysql事务和日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E9%94%81"><span class="nav-number">8.</span> <span class="nav-text">mysql锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%B8%BB%E4%BB%8E"><span class="nav-number">9.</span> <span class="nav-text">mysql主从</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E4%BC%98%E5%8C%96"><span class="nav-number">10.</span> <span class="nav-text">mysql优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95"><span class="nav-number">11.</span> <span class="nav-text">mysql索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88"><span class="nav-number">12.</span> <span class="nav-text">mysql索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis"><span class="nav-number">13.</span> <span class="nav-text">mybatis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">14.</span> <span class="nav-text">发号器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E7%B4%A2%E5%BC%95%E7%AE%97%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">空间索引算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES"><span class="nav-number">16.</span> <span class="nav-text">ES</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -584,20 +616,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -624,7 +656,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

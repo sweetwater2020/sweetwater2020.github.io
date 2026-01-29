@@ -28,7 +28,7 @@
 <meta property="og:description" content="微服务 微服务是什么：架构风格，大型服务-多个小服务，轻量级通信机制协作。模块儿化，独立部署扩展维护、可靠、技术异构。  微服务组件：服务、通信机制、服务发现与注册、负载均衡、API网关  微服务间如何通信：http、消息队列、rpc   rpc、HSF 手搓RPC框架：RPC 框架需包含服务提供者、消费者、注册中心和网络通信四大核心。服务启动时，提供者向注册中心（如 Zookeeper）注册地址">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-24T14:23:55.444Z">
-<meta property="article:modified_time" content="2025-11-19T14:39:11.764Z">
+<meta property="article:modified_time" content="2026-01-05T15:49:19.453Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-19 22:39:11" itemprop="dateModified" datetime="2025-11-19T22:39:11+08:00">2025-11-19</time>
+                <time title="Modified: 2026-01-05 23:49:19" itemprop="dateModified" datetime="2026-01-05T23:49:19+08:00">2026-01-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,6 +325,14 @@
 <li>分布式事务方法：两阶段提交2PC（准备阶段询问所有参与者是否可提交，根据答复指示所有参与者提交&#x2F;回滚，所有ok才提交）、三阶段提交3PC（增加预提交，参与者将事务操作记录写入日志，即使协调者失去响应，参与者也有足够的信息来完成或回滚事务。减少因协调者故障导致的阻塞，提高容错）、分布式事务框架（XA事务协议）、事务补偿、BASE理论（宽松，基本可用，软状态，最终一致性）</li>
 <li>分布式锁：分布式系统中同步访问共享资源的机制，避免多节点同时修改同一数据的冲突。1⃣️基于数据库锁，select for update对特定行上行级锁。2⃣️基于redis，SETNX命令，expire过期时间。3⃣️基于zookeeper，分布式协调服务，创建一个独特的节点表示获锁。保障原子性和唯一性。</li>
 </ul>
+<ul>
+<li><p>MySQL和Redis的分布式事务设计：<br>1、采用 最终一致性 + 补偿机制 的思路。先在MySQL中执行核心数据的写操作（如订单插入），利用本地事务保证该操作的原子性。然后用消息队列通知到Redis，确保最终一致性。若同步失败，可以通过队列重试或补偿机制。<br>2、采用可靠的中间件：TCC（Try-Confirm-Cancel）模型：在“Try”阶段：预留资源，准备操作。在“Confirm”阶段：最终确认，完成数据库和缓存的同步。在“Cancel”阶段：回滚操作。<br>3、分布式事务框架：使用Seata，统一管理多个服务和数据库&#x2F;缓存操作的事务，保证在某一环节失败后回滚。</p>
+</li>
+<li><p>CAP理论：分布式系统最多只能同时满足以下三点中的两个：C（一致性）：所有节点看到的数据都是一致的；A（可用性）：每次请求都能得到响应，不丢请求；P（分区容错性）：网络出现分区时系统仍能工作。因为无法保证网络永远稳定，所以必须把“分区容错性”作为必选项（节点分布在不同机器或机房）。CP强一致性，比如Zookeeper。AP高可用性，比如redis cluster。</p>
+<p>BASE理论：不要求强一致，而是追求最终一致。它包括：Basically Available（基本可用）</p>
+<p>Soft state（允许中间状态）Eventually consistent（最终一致）。</p>
+</li>
+</ul>
 <h2 id="metaq"><a href="#metaq" class="headerlink" title="metaq"></a>metaq</h2><ul>
 <li>手搓消息中间件：<br>架构上采用生产者-消费者模型，支持发布&#x2F;订阅和点对点两种模式。<br>整体分为三个核心组件：Broker（服务端）、Producer（生产者）和Consumer（消费者）。<br>Broker负责消息的接收、存储、转发与持久化。<br>1、Broker存储：为保障可靠性，消息持久化到磁盘，并支持多副本机制（如Raft协议）实现主从同步，防止单点故障。Broker集群通过元数据管理（可借助ZooKeeper）实现负载均衡与故障转移。<br>2、Broker通信：为保证高性能，Broker采用异步非阻塞I&#x2F;O（如Netty）处理网络通信，支持海量连接。消息写入时，使用顺序磁盘写入（如日志结构存储），结合内存映射文件（mmap）提升吞吐量。为提高读取效率，引入索引机制（如哈希索引或跳表）快速定位消息。<br>3、Broker高并发：引入主题（Topic）与分区（Partition）机制，每个Topic可划分为多个Partition，分布到不同Broker节点，实现水平扩展。Consumer以组为单位订阅，组内各Consumer分配不同Partition，保证消息有序且负载均衡。<br>4、Broker的ACK：支持消息确认机制（ACK），消费者处理成功后才删除或标记偏移量（Offset），防止消息丢失。同时提供重试队列与死信队列，处理异常消息。<br>5、支持多种消息类型（普通、延时、事务消息）事务消息通过两阶段提交。</li>
 <li>metaq：分布式的，基于队列模型的消息队列中间件，基于发布订阅模式，有push&#x2F;pull两种消费模式。支持严格的消息顺序，亿级别堆积能力，支持消息回溯。延时消息。</li>
@@ -360,7 +368,9 @@
 <li>kafka的架构：zookeeper保存broker集群元数据，对控制器进行选举操作。Producer生产消息并发送到Broker。Consumer从Broker订阅并消费消息。Broker接收生产者的消息，存储消息，为消息设置偏移量。Topic消息的主题。一个Topic细分为多个分区，在存储上看作一个可追加的Log文件。offset是消息在分区中的唯一标识，保证消息在分区的顺序性，不跨分区，也就是kafka只保证分区有序性。Replication副本，保证高可用，同一Partion在多个Broker上存多个副本，主提供读写，主失效的话，zookeeper选举controller，controller选择主。</li>
 <li>kafka高可用：多分区，一个Topic主题分区数据跨越多个broker分布式存储，每个分区有多个副本，主出现故障，可以故障转移。</li>
 <li>kafka一定不会丢失消息吗：只有一个副本情况下会丢失，生产者确认策略是异步的还是同步的，异步的可能在消息到达服务器之前丢失。短暂网络故障、磁盘损坏。</li>
-<li>kafka如何保证不丢消息又不会重复消费：不丢消息：生产者发送消息时，等待所有副本确认；多副本存储，即使部分节点挂掉，数据也不丢；Kafka消费者在处理完一条消息后，手动告诉Kafka这条消息已经处理成功，然后Kafka才会更新消费者的偏移量（Offset）。不重复消费：生产者启用幂等性，避免重复发送相同消息。</li>
+<li>kafka中间宕机了：如果中间宕机，重启后会从上次成功提交的 offset 重新消费，业务层需实现幂等性。</li>
+<li>kafka如何保证不丢消息：生产者发送消息时，等待所有副本确认；多副本存储，即使部分节点挂掉，数据也不丢；Kafka消费者关闭自动提交偏移量，在处理完一条消息后，手动告诉Kafka这条消息已经处理成功，然后Kafka才会更新消费者的偏移量（Offset）。</li>
+<li>kafka如何保证不重复消费：生产者启用幂等性，避免重复发送相同消息。消费者端：关闭自动提交偏移量，在消息处理成功后再手动同步提交 offset。</li>
 <li>介绍kafka的分区，消费者和partition的关系是什么：Kafka的分区（Partition）是主题（Topic）在物理存储层的分片，一个主题可被划分为多个分区。每个分区都是独立、有序、不可变的消息队列，能提高并发能力和扩展性。消费者组（Consumer Group）中的每个消费者负责读取部分分区。Kafka保证每个分区只能被一个消费者组中的一台消费者独占消费，避免重复处理。分区数量越多，理论上并发消费能力越强。</li>
 </ul>
 <h2 id="netty"><a href="#netty" class="headerlink" title="netty"></a>netty</h2><ul>
@@ -389,7 +399,6 @@
 </ul>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
 <li>设计模式：23种，为复杂解耦，将一大坨代码拆分成职责单一的模块，满足高内聚低耦合、开闭原则（不改变现有代码的基础上扩展功能）。创建型：创建和使用解耦。结构型：不同的功能代码解耦。行为型：不同的行为代码解耦。</li>
-<li>面向对象的四大特征：封装（封装成对象，隐藏实现细节，private public控制访问权限）、抽象（忽略不同，抽象相同点，继承抽象类is a和实现接口has a）、继承（继承父类的属性和方法，允许重用和扩展）、多态（重载是静态，重写Override是动态）</li>
 <li>创建型模式：封装复杂的创建过程，解耦对象创建和使用。单例模式：创建全局唯一对象。工厂模式：创建不同但相关类型的对象（同一父类&#x2F;接口），给定参数决定对象类型。建造者模式：创建复杂对象，设置不同可选参数定制化对象Builder。原型模式：创建成本大，复制已有对象进行创建。</li>
 <li>单例模式：一个类创建全局唯一实例，提供全局访问点。spring容器一级缓存即单例池，ApplicationContext.getBean获取bean。唯一访问性能高，不适合有状态的。</li>
 <li>单例模式实现：1⃣️饿汉式：类加载时就创建，线程安全，但无法延迟加载。2⃣️懒汉式：第一次使用时才创建，延迟加载，但多线程下需要加锁保证线程安全避免创建多实例。3⃣️静态内部类：在外部类加载时不会被加载，只有第一次使用才加载并创建实例，JVM保证线程安全。4⃣️枚举类：天生单例。5⃣️双重检查锁定：既延迟加载又线程安全，同步外检查一次，同步块内检查一次，volatile+synchronized。</li>
@@ -407,18 +416,38 @@
 <li>工作中用到的设计模式：1⃣️单例模式：数据库连接池、XStream用来进行xml序列化反序列化，反复创建回造成ygc，使用单例模式。2⃣️工厂模式：根据不同业务类型返回对应的业务处理类。实现InitializingBean接口，重写afterPropertiesSet方法，用Map维护不同业务类的引用。3⃣️观察者模式：报警系统，定义事件类继承ApplicationEvent，业务类中使用applicationContext.publishEvent(ApplicationEvent)来发送事件，定义监听器EventListener，监听消息发送报警。4⃣️责任链模式：轨迹处理流程：解析、切分、抽稀、匹配、入库，定义责任链HandlerChain，按照流程处理。</li>
 </ul>
 <h2 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h2><ul>
-<li>zookeeper：分布式协调服务，用来管理hadoop生态圈的。为分布式应用提供一致性服务的软件，功能：配置管理、服务发现、领导者选举、集群管理。</li>
-<li>zookeeper为什么使用集群：1.高可用性，单节点失败仍可运行。2.数据一致性，ZAB协议实现所有节点数据一致性。3.负载均衡，分散负载。4.可伸缩性。</li>
-<li>zooleeper架构：1.Client连接到一台Server，向server获取信息，周期性发送心跳给server，server回复ack，没回复则重定向一台server。2.Server包括一台Leader和多台Follower。3.ensemble表示一组服务器，至少3台。4.Leader，服务启动时进行Leader选举，负责处理写操作，在集群中同步数据。5.Follower跟随者，处理读操作，数据冗余，转发写请求，参与投票。</li>
-<li>zookeeper中数据结构：和Unix文件系统类似，看作一棵树，节点称为Znode，存储1MB数据，通过其路径唯一标识。不能存大数据。create命令创建数据，get命令获取目录的值，用多版本并发控制来解决并发，set修改。</li>
-<li>zookeeper三种目录节点znode类型：1.持久目录：创建之后一直存在，直到显式删除，存储长期有效的配置信息和系统状态信息。2.临时目录：在client活动期间有效，断开自动删除，不能有子目录。常用于锁和服务发现机制，例如标记某个资源正在被使用，或一个实例的注册信息。3.顺序目录：在指定路径后增加一个单调递增的计数器作为后缀，生成唯一的标识符，用于分布式锁中的实现队列顺序。</li>
-<li>zookeeper分布式锁：顺序临时节点+watch监听器。创建一个锁节点&#x2F;locks，请求获锁，需要在该目录下创建一个顺序临时节点，然后判断自己是不是最小节点，是则获取到锁，不是则创建一个监听器监听比自己小一的上一个节点，上一个节点删除（手动删或断开连接自动删除）则该节点获取到锁。</li>
-<li>zookeeper的观察者模式：zookeeper&#x3D;文件系统+通知机制。zookeeper允许客户端设置对znode的监视（watch），典型的发布-订阅模式，节点发生变化时，客户端会被通知。特点：一次性（监视被触发后会被移除），可以对分布式环境中的状态变化快速做出反应。</li>
-<li>zookeeper的leader选举：最小号选举法：每个节点投票给自己，节点之间互相发送自己的投票，节点收到投票后评估选择最小id的节点成为领导者。当一个节点收到超过半数节点支持同一id的投票时，节点认为领导者已选好。考虑节点id和最大的事务id（zxid），确保领导者是数据最新的节点。</li>
-<li>zookeeper的ZAB协议：原子广播协议，保证数据一致性。负责服务之间的数据复制（顺序一致性的）和领导者选举过程中的状态同步。1⃣️消息广播：类似两阶段提交，Leader接收写请求，请求封装成事务，事务zxid保证顺序，发送给所有Follower，超过半数成功响应则执行commit。未响应的随后同步。2⃣️崩溃恢复：选举数据最新的节点作为Leader，与集群中其他节点同步状态。</li>
-<li>zookeeper集群搭建：准备至少三台服务器，安装zookeeper，zoo.cfg配置文件中设置数据目录，设置连接端口，配置服务器列表。启动zookeeper服务。</li>
-<li>zookeeper如何保证hadoop高可用的：1⃣️故障切换和Leader选举：Zookeeper故障转移控制器ZKFC监控和处理NameNode的故障切换，协助备用NameNode成为主节点保障HDFS高可用。ResourceManager也是。2⃣️集群元信息同步：zookeeper提供一致性的分布式数据管理，Hadoop的组件可以利用zookeeper维护和同步系统信息如配置信息、集群状态。3⃣️服务发现：zooKeeper 可以作为一个服务注册表，帮助客户端发现当前可用的服务地址。</li>
-<li>zookeeper的应用：Kafka中zookeeper用于集群管理和协调，包括 Broker 的注册、领导者选举、集群配置管理等。还是Kafka 集群元数据的存储中心。HBase中zookeeper用于领导者选举、存储集群元数据。</li>
+<li><p>zookeeper：分布式协调服务，用来管理hadoop生态圈的。为分布式应用提供一致性服务的软件，功能：配置管理、服务发现、领导者选举、集群管理。</p>
+</li>
+<li><p>zookeeper为什么使用集群：1.高可用性，单节点失败仍可运行。2.数据一致性，ZAB协议实现所有节点数据一致性。3.负载均衡，分散负载。4.可伸缩性。</p>
+</li>
+<li><p>zooleeper架构：1.Client连接到一台Server，向server获取信息，周期性发送心跳给server，server回复ack，没回复则重定向一台server。2.Server包括一台Leader和多台Follower。3.ensemble表示一组服务器，至少3台。4.Leader，服务启动时进行Leader选举，负责处理写操作，在集群中同步数据。5.Follower跟随者，处理读操作，数据冗余，转发写请求，参与投票。</p>
+</li>
+<li><p>zookeeper中数据结构：和Unix文件系统类似，看作一棵树，节点称为Znode，存储1MB数据，通过其路径唯一标识。不能存大数据。create命令创建数据，get命令获取目录的值，用多版本并发控制来解决并发，set修改。</p>
+</li>
+<li><p>zookeeper三种目录节点znode类型：1.持久目录：创建之后一直存在，直到显式删除，存储长期有效的配置信息和系统状态信息。2.临时目录：在client活动期间有效，断开自动删除，不能有子目录。常用于锁和服务发现机制，例如标记某个资源正在被使用，或一个实例的注册信息。3.顺序目录：在指定路径后增加一个单调递增的计数器作为后缀，生成唯一的标识符，用于分布式锁中的实现队列顺序。</p>
+</li>
+<li><p>zookeeper分布式锁：顺序临时节点+watch监听器。创建一个锁节点&#x2F;locks，请求获锁，需要在该目录下创建一个顺序临时节点，然后判断自己是不是最小节点，是则获取到锁，不是则创建一个监听器监听比自己小一的上一个节点，上一个节点删除（手动删或断开连接自动删除）则该节点获取到锁。</p>
+</li>
+<li><p>zookeeper的观察者模式：zookeeper&#x3D;文件系统+通知机制。zookeeper允许客户端设置对znode的监视（watch），典型的发布-订阅模式，节点发生变化时，客户端会被通知。特点：一次性（监视被触发后会被移除），可以对分布式环境中的状态变化快速做出反应。</p>
+</li>
+<li><p>zookeeper的leader选举：最小号选举法：每个节点投票给自己，节点之间互相发送自己的投票，节点收到投票后评估选择最小id的节点成为领导者。当一个节点收到超过半数节点支持同一id的投票时，节点认为领导者已选好。考虑节点id和最大的事务id（zxid），确保领导者是数据最新的节点。</p>
+</li>
+<li><p>zookeeper的ZAB协议：原子广播协议，保证数据一致性。负责服务之间的数据复制（顺序一致性的）和领导者选举过程中的状态同步。1⃣️消息广播：类似两阶段提交，Leader接收写请求，请求封装成事务，事务zxid保证顺序，发送给所有Follower，超过半数成功响应则执行commit。未响应的随后同步。2⃣️崩溃恢复：选举数据最新的节点作为Leader，与集群中其他节点同步状态。</p>
+</li>
+<li><p>Zookeeper的ZAB协议</p>
+<p>ZAB 协议（Zookeeper Atomic Broadcast）是 Zookeeper 的核心一致性协议，用来保证分布式数据的强一致性和高可用。</p>
+<p>它主要有两种模式：</p>
+<p>崩溃恢复（Leader 选举）：当 Leader 宕机后，Follower 们通过投票选出新的 Leader，确保系统不中断。</p>
+<p>消息广播（原子广播）：所有写请求必须由 Leader 处理，Leader 将事务请求广播给所有 Follower，只有超过半数确认后才提交，保证数据一致。</p>
+<p>ZAB 基于 主从架构 + 两阶段提交 + 唯一 Leader，确保任何时刻只有一个 Leader 提案，避免脑裂。同时通过事务 ID（zxid）保证事务的全局有序。</p>
+<p>简单说：ZAB 让 Zookeeper 在分布式环境下，既能选主，又能安全地同步数据，是它实现一致性保障的基石。</p>
+</li>
+<li><p>zookeeper集群搭建：准备至少三台服务器，安装zookeeper，zoo.cfg配置文件中设置数据目录，设置连接端口，配置服务器列表。启动zookeeper服务。</p>
+</li>
+<li><p>zookeeper如何保证hadoop高可用的：1⃣️故障切换和Leader选举：Zookeeper故障转移控制器ZKFC监控和处理NameNode的故障切换，协助备用NameNode成为主节点保障HDFS高可用。ResourceManager也是。2⃣️集群元信息同步：zookeeper提供一致性的分布式数据管理，Hadoop的组件可以利用zookeeper维护和同步系统信息如配置信息、集群状态。3⃣️服务发现：zooKeeper 可以作为一个服务注册表，帮助客户端发现当前可用的服务地址。</p>
+</li>
+<li><p>zookeeper的应用：Kafka中zookeeper用于集群管理和协调，包括 Broker 的注册、领导者选举、集群配置管理等。还是Kafka 集群元数据的存储中心。HBase中zookeeper用于领导者选举、存储集群元数据。</p>
+</li>
 </ul>
 <h2 id="hadoop"><a href="#hadoop" class="headerlink" title="hadoop"></a>hadoop</h2><ul>
 <li>hadoop：分布式计算框架，用于在分布式服务器集群上存储和处理大数据集的框架，包括底层存储框架HDFS、分布式计算框架MapReduce、资源调度系统YARN。可以分布式运行PB级别数据。Zookeeper提供协调服务，例如HBase中集群协调领导者选举。</li>
@@ -452,6 +481,8 @@
 <li><p>网络分层：物理层（比特流的透明传输，中继器、集线器）、数据链路层（传送帧MAC、网卡、网桥、交换机）、网络层（选择合适的路由，IP、ICMP、路由器、防火墙）、传输层（TCP、UDP）、应用层（DNS、HTTP、SMTP、FTP）</p>
 </li>
 <li><p>TCP的安全性：三次握手（客户端SYN，服务端ACKSYN，客户端ACK）、四次挥手（客户端FIN、服务端ACK、服务端传输完FIN、客户端ACK）</p>
+</li>
+<li><p>tcp四次挥手，timewait做了什么：TCP 四次挥手中，主动关闭方在发送最后一个 ACK 后会进入 TIME_WAIT 状态，并等待 2MSL 时间。MSL 是报文最大生存时间。主要目的有两个：一是确保对方收到最终的 ACK（若丢失可重传 FIN 并再次确认），二是防止旧连接的延迟报文干扰新连接。2MSL 足以覆盖一次完整的“ACK + 重传 FIN”的往返延迟，所有属于该连接的旧报文都已消失，不会被误认为是新连接的数据。</p>
 </li>
 <li><p>tcp流量控制：避免发送方发送得太快接收方来不及处理，滑动窗口的方式，接收端告诉客户端确认序列号和还能接受多少数据。发送端调整滑动窗口（已发送未确认、为发送可接受）。更新窗口信息可能丢失，设置0窗口探测报文。</p>
 </li>
@@ -506,6 +537,16 @@
 <li>Linux 如何打印进程号：ps aux | grep 进程名：查看指定进程的 PID。echo $$：打印当前 shell 的进程号。</li>
 <li>Linux 如何搜寻错误日志：grep “error” &#x2F;var&#x2F;log&#x2F;*.log、加-i忽略大小写。</li>
 </ul>
+<h2 id="限流"><a href="#限流" class="headerlink" title="限流"></a>限流</h2><p>✅限流算法：控制系统请求频率，用于保护系统资源，避免过载，保证服务的稳定性。</p>
+<p>令牌桶算法：一个固定容量的桶，按照固定速率向桶添加令牌。请求到来时，需要从桶中取出一个令牌才能被处理，如果桶为空，则拒绝该请求或等待。保证平均流入系统的请求数量不会超过设定值。实现用 Guava RateLimiter。 </p>
+<p>漏桶算法：一个底部带孔的桶用来接住所有的进水，桶以固定速率（流出孔洞）处理请求，桶满则拒绝请求。 </p>
+<p>计数器算法：设定一个固定时间窗口，统计请求数量，超过阈值则拒绝请求直到下一个窗口。窗口边界容易造成突发流量问题（例如第0.9秒和第1.1秒各来100个请求，总共200个）。 </p>
+<p>滑动窗口算法：改进自计数器算法，将固定时间窗口改为滑动窗口，更平滑，减少尖峰时刻对系统的影响。使用队列或环形数组记录请求时间戳，清除过期请求，判断当前请求数是否超限。 </p>
+<p>✅令牌桶和漏桶的核心区别在于<strong>对突发流量的处理方式</strong>：<strong>令牌桶</strong>以固定速率生成令牌，请求消耗令牌；<strong>只要有令牌，就允许突发请求</strong>，适合保护后端服务（如 API 限流）；<strong>漏桶</strong>以固定速率处理请求，<strong>无论输入多快，输出始终匀速</strong>，会缓冲或丢弃突发流量，适合网络流量整形。实际工程中，像 Guava、Sentinel 等限流组件都采用<strong>令牌桶</strong>，因为它更灵活，既能控平均速率，又容忍短时高峰。</p>
+<p>✅Sentinel：阿里开源限流组件，用于微服务中的限流、降级、熔断和系统保护。通过 @SentinelResource 注解定义资源，结合 Sentinel Dashboard 可视化界面，动态配置限流。 </p>
+<p>✅Sentinel原理：Sentinel的限流原理结合了滑动时间窗口和令牌桶算法，通过统计每个时间窗口内的请求数（QPS）来控制流量。请求进入时，系统记录指标，并在环形队列中累计不同时间片的请求数，计算出当前QPS。如果超过设定阈值，Sentinel会触发限流，拒绝后续请求。它支持多种限流模式，如单机、集群和热点参数限流，确保系统在高并发情况下的稳定性。</p>
+<p>✅令牌桶和滑动窗口：令牌桶：以预先生成的令牌控制请求速率，支持突发流量，适合需要平滑限制同时允许短时间内突发的场景，如API接口限流。（例如，假设令牌桶容量为100，每秒生成10个令牌。若系统空闲10秒，桶中会积满100个令牌。此时瞬间有100个请求到达可请求。）滑动窗口：通过统计一定时间范围内的请求数，提供更平滑的请求控制，适用于需要精准流量控制的场景，比如电商秒杀。</p>
+<p>✅熔断：在设计系统时，为了避免某个接口太慢或报错太多拖垮整个应用，就会加熔断。用 Sentinel 实现，主要是通过注解 @SentinelResource 把要保护的接口标为一个资源，然后设置规则，支持基于异常比例、异常数或慢调用比例触发熔断。支持快速恢复、监控面板和动态规则调整。</p>
 
     </div>
 
@@ -589,7 +630,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kafka"><span class="nav-number">6.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">14.</span> <span class="nav-text">Linux</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">微服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpc%E3%80%81HSF"><span class="nav-number">2.</span> <span class="nav-text">rpc、HSF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo"><span class="nav-number">3.</span> <span class="nav-text">dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#metaq"><span class="nav-number">5.</span> <span class="nav-text">metaq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kafka"><span class="nav-number">6.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty"><span class="nav-number">7.</span> <span class="nav-text">netty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zookeeper"><span class="nav-number">9.</span> <span class="nav-text">zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hadoop"><span class="nav-number">10.</span> <span class="nav-text">hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">计算机原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E8%AE%A1%E7%AE%97"><span class="nav-number">13.</span> <span class="nav-text">边缘计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux"><span class="nav-number">14.</span> <span class="nav-text">Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E6%B5%81"><span class="nav-number">15.</span> <span class="nav-text">限流</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -604,20 +645,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -644,7 +685,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

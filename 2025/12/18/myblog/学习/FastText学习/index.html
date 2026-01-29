@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、基本信息功能：文本分类、词向量表示  FastText 是由 Facebook AI Research (FAIR) 开发的一款高效文本处理工具包，主要用于文本分类和词向量表示。  官网：https:&#x2F;&#x2F;fasttext.cc&#x2F;  官方介绍：fastText is a library for efficient learning of word representations and sent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FastText学习">
+<meta property="og:url" content="http://example.com/2025/12/18/myblog/%E5%AD%A6%E4%B9%A0/FastText%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Sweetwater&#39;s blog">
+<meta property="og:description" content="1、基本信息功能：文本分类、词向量表示  FastText 是由 Facebook AI Research (FAIR) 开发的一款高效文本处理工具包，主要用于文本分类和词向量表示。  官网：https:&#x2F;&#x2F;fasttext.cc&#x2F;  官方介绍：fastText is a library for efficient learning of word representations and sent">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-18T11:53:34.708Z">
+<meta property="article:modified_time" content="2025-12-22T07:59:43.911Z">
+<meta property="article:author" content="Sweetwater">
+<meta property="article:tag" content="MachineLearning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/12/18/myblog/%E5%AD%A6%E4%B9%A0/FastText%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FastText学习 | Sweetwater's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sweetwater's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/12/18/myblog/%E5%AD%A6%E4%B9%A0/FastText%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.gif">
+      <meta itemprop="name" content="Sweetwater">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sweetwater's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FastText学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-18 19:53:34" itemprop="dateCreated datePublished" datetime="2025-12-18T19:53:34+08:00">2025-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-12-22 15:59:43" itemprop="dateModified" datetime="2025-12-22T15:59:43+08:00">2025-12-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1、基本信息"><a href="#1、基本信息" class="headerlink" title="1、基本信息"></a>1、基本信息</h2><p>功能：文本分类、词向量表示 </p>
+<p>FastText 是由 Facebook AI Research (FAIR) 开发的一款高效文本处理工具包，主要用于文本分类和词向量表示。 </p>
+<p>官网：<a target="_blank" rel="noopener" href="https://fasttext.cc/">https://fasttext.cc/</a> </p>
+<p>官方介绍：fastText is a library for efficient learning of word representations and sentence classification. </p>
+<p>环境：编译器要求，由于 fastText 使用了 C++11 的语言特性（如智能指针、lambda 表达式等），因此需要一个对 C++11 支持良好的编译器。GCC &#x2F; Clang。 </p>
+<p>文本分类论文：Bag of Tricks for Efficient Text Classification<br>地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.01759v3">https://arxiv.org/abs/1607.01759v3</a> </p>
+<p>训练词向量论文：Enriching Word Vectors with Subword Information<br>地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.04606">https://arxiv.org/abs/1607.04606</a></p>
+<h2 id="2、文本分类"><a href="#2、文本分类" class="headerlink" title="2、文本分类"></a>2、文本分类</h2><p>背景：文本分类在网页检索、信息检索等领域很重要，传统基于神经网络的模型虽然性能好，但是在训练和测试时非常慢，限制在大规模数据集上的使用。同时，线性分类器通常被认为是文本分类问题的强基线。</p>
+<p>本文展示了具有秩约束和快速损失近似的线性模型，可以在10分钟内训练10亿个单词，同时实现与最先进的性能相当的性能。</p>
+<p>模型架构：本质上是一个**“词向量平均 + 线性分类器”**的浅层网络。具体做法是：先用矩阵 A 将输入文本的词或 n‑gram 映射为低维向量，再对这些向量求平均得到句子&#x2F;文档表示；然后用矩阵 B 将该表示映射到类别空间，并通过 softmax（大类别数时用分层 softmax）输出类别概率。整个模型可视作带低秩约束的线性分类器，结构简单、训练极快。FastText不使用预训练的词嵌入。 </p>
+<p>使用霍夫曼树作为输出层（即Hierarcial Softmax），非叶子节点上的向量为二分类提供计算，叶子节点对应的是所有类别（而不是词汇表所有词的向量）。<br>模型开始训练时，词向量（参数）随机初始化，结束后保存起来用于预测就行，目的是分类，而不是词向量。<br>Fasttext模型的输入不仅仅是针对每个单词，并且加入了词序信息，词序信息通过n-gram的形式加入。n-gram对应的单位是word，而不是char。 </p>
+<p><strong>Fasttext工具包的优势</strong>：<br>在保持较高精度的情况下, 快速的进行训练和预测是fasttext的最大优势。<br>FastText 是开源的，用户可以自由使用、修改和分发。<br>Fasttext工具包中内含的Fasttext模型具有十分简单的网络结构。 </p>
+<p>由于fasttext模型过于简单，无法捕捉词序特征，因此会进行n-gram特征提取以弥补模型缺陷提升精度。</p>
+<p>使用fasttext模型训练词向量时使用层次softmax结构，来提升超多类别下的模型性能。</p>
+<p>可进行的文本分类任务：二分类、单标签多分类、多标签多分类。</p>
+<p>Fasttext训练： FastText 的训练数据需要满足以下格式：每行样本的格式为：<code>__label__&lt;标签&gt; &lt;文本&gt;</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fasttext</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line">model = fasttext.train_supervised(<span class="built_in">input</span>=<span class="string">&quot;train.txt&quot;</span>, epoch=<span class="number">10</span>, lr=<span class="number">1.0</span>, wordNgrams=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型</span></span><br><span class="line">model.save_model(<span class="string">&quot;model.bin&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载模型</span></span><br><span class="line">model = fasttext.load_model(<span class="string">&quot;model.bin&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">text = <span class="string">&quot;This movie is amazing!&quot;</span></span><br><span class="line">predictions = model.predict(text)</span><br><span class="line"><span class="built_in">print</span>(predictions)  <span class="comment"># 输出： ((&#x27;__label__positive&#x27;,), array([0.99999994]))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 评估</span></span><br><span class="line">test_result = model.test(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Precision: <span class="subst">&#123;test_result[<span class="number">1</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Recall: <span class="subst">&#123;test_result[<span class="number">2</span>]&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Number of examples: <span class="subst">&#123;test_result[<span class="number">0</span>]&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3、词向量表示"><a href="#3、词向量表示" class="headerlink" title="3、词向量表示"></a>3、词向量表示</h2><p>Fasttext是继word2vec词向量模型提出之后提出的模型（或者说算法），因为训练速度非常快而比较受工业界关注。 </p>
+<p>FastText 的词向量表示原理基于子词（subword）机制：它将每个词拆解为字符级 n-gram（如 tri-gram）并添加边界符号，同时保留原词本身作为一个单元；该词的最终向量表示是其所有子词（包括原词）对应向量的平均值。这种设计使得即使遇到训练中未出现的词（OOV），只要其子词在其他词中出现过，也能通过子词向量组合生成合理的语义表示，从而有效处理罕见词、拼写变体和形态丰富的语言。 </p>
+<p>使用负采样的skip-gram，将每个中心词看作子词的集合，并学习这些子词的词向量。 </p>
+<p>子词(subword)是论文核心，以中心词为where为例，设定子词大小为3，那么子词集合分为两部分，整词和子词。<br>整词即<code>&lt;where&gt; </code><br>子词<code>&lt;wh, whe, her,ere,re&gt; </code><br>最终<code>&lt;wh, whe, her,ere,re, where&gt; </code><br>背景词则直接使用整词。 输入层使用子词+整词，输出层使用整词。 如果OOV，则使用子词的向量和表示该词，这也是subword的一个优势所在。</p>
+<h2 id="4、FastText模型训练参数"><a href="#4、FastText模型训练参数" class="headerlink" title="4、FastText模型训练参数"></a>4、FastText模型训练参数</h2><p>FastText模型训练支持多种参数，这些参数允许用户根据具体任务需求对模型进行细致的定制。 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1. -input: 训练数据文件的路径，每行格式一般为__label__class_label text_of_the_document。</span><br><span class="line">2. -lr: 学习率，决定梯度下降过程中参数更新的幅度。</span><br><span class="line">3. -dim: 词向量的维度，即每个词表示的向量空间的大小。</span><br><span class="line">4. -epoch: 训练轮数，即模型完整遍历数据集的次数。</span><br><span class="line">5. -wordNgrams: 考虑的词n-grams的最大长度，用于捕捉词序列的信息。</span><br><span class="line">6. -loss: 损失函数类型，常见的有ns（Negative Sampling）、hs（Hierarchical Softmax）、softmax等。</span><br><span class="line">7. -minCount: 构建词典时忽略低于此频率的词，有助于减少稀有词的影响。</span><br><span class="line">8. -bucket: 用于哈希化n-grams的bucket数量，影响模型的内存占用和运行速度。</span><br><span class="line">9. -thread : 使用的线程数，可以加快训练速度。</span><br><span class="line">10. -lrUpdateRate : 更新学习率的步数间隔，可以设置动态学习率调整策略。</span><br><span class="line">11. -neg : 在负采样中使用的负样本数量，仅当loss为ns时生效。</span><br><span class="line">12. -wordVectors : 预训练的词向量文件路径，可用于初始化模型的词向量。</span><br><span class="line">13. -verbose : 控制训练过程中的日志输出详细程度。</span><br><span class="line">14. -label : 自定义标签前缀，默认为__label__。</span><br><span class="line">15. -pretrainedVectors : 如果模型支持，可以指定预训练的词向量文件来进一步微调。</span><br></pre></td></tr></table></figure>
+
+<p><strong>词向量的维度</strong>： 词向量的维度并没有一个固定的标准，它可以根据具体的应用场景和模型需求来设定。<br>50维：资源受限或轻量级应用（如移动端），牺牲部分语义精度换取低内存和快速推理。<br>100维：通用型选择，适用于多数文本分类、检索等中等复杂度任务。<br>300维：主流预训练模型（Word2Vec、GloVe、FastText）默认配置，在语义丰富性和性能间取得良好平衡。<br>大于300维（如500+）：用于高精度需求的复杂任务（如机器翻译、语义解析），但显著增加计算与存储开销。</p>
+<p>维度过大：内存与计算成本剧增、小数据下易过拟合、优化困难，收敛慢。<br>维度过小： 语义信息表达不足、难以区分近义&#x2F;反义词、模型表示与泛化能力受限。<br>实践建议：起点推荐：从 100–300 维 开始实验；调参策略：结合任务复杂度、数据规模和硬件条件，通过验证集性能对比不同维度。</p>
+<p><strong>Epoch参数</strong>： Epoch（训练周期）：模型完整遍历一遍训练集并更新参数一次。 </p>
+<p>Iteration（迭代）：一次用一个 batch 做前向 + 反向 + 参数更新叫一次迭代。若数据集被切成 n 个 batch，则：1 个 Epoch &#x3D; n 次 Iteration。 </p>
+<p>Epoch 过少（训练不够）：容易欠拟合、性能不稳定：结果高度依赖初始化，多次训练差异可能较大。<br>Epoch 过多（训练过头）：容易过拟合、浪费资源：后期收益很小，却消耗大量时间和算力。有时会在局部最优或鞍点附近“打转”，增加 Epoch 也不再提升效果。 </p>
+<p>如何选择合适的 Epoch 数：<br>早停法（Early Stopping）：监控验证集效果，不再提升甚至下降时停止训练。<br>学习率调整：配合学习率衰减，在多 Epoch 的训练中前期快学、后期细调。<br>交叉验证：在不同数据划分上评估，帮助确定合理的 Epoch 数。<br>实践中，常见的Epoch数范围可以从几十到几百不等，具体取决于数据集大小、模型复杂度以及任务的难易程度。</p>
+<p><strong>ngram参数</strong>：在FastText模型中，n-grams（也称为字符n-grams）是一个关键参数，用于捕获词内部的字符级组合信息。n-gram的大小（n值）对模型性能有着重要影响。</p>
+<p>n-grams 太小的影响（如 n&#x3D;1,2）<br>信息不足：只能看到单字符或短组合，难以捕捉词内部较复杂的形态和语义结构。<br>区分能力弱：对形近词、细微语义差别的词，表示能力有限，影响模型在分类、序列标注等任务上的泛化。</p>
+<p>n-grams 太大的影响<br>维度 &#x2F; 特征数暴涨：n 增大后 n-gram 组合数激增，导致模型维度高、内存和计算成本显著上升。<br>特征稀疏：很多长 n-gram 在语料中极少出现，信息利用率低，噪声多、信号少。<br>过拟合风险增大：高维稀疏特征容易让模型记住训练数据中的偶然模式和噪声，泛化变差。</p>
+<p>如何选择合适的 n-grams：<br>需要在 信息丰富度 和 计算&#x2F;稀疏性&#x2F;过拟合风险 之间折中。<br>使用较小的 n，如 2～3，既能捕获一定的内部结构，又避免维度爆炸。<br>针对具体任务和数据，通过在验证集上对不同 n 值（或 n 范围，如 3–6）做实验，选择效果最好的设置。<br>可以组合多个 n 值（例如同时用 3、4、5-gram）以提升表现，但要配合合理的哈希桶数和资源限制。</p>
+<h2 id="5、分层softmax"><a href="#5、分层softmax" class="headerlink" title="5、分层softmax"></a>5、分层softmax</h2><p>例如有一个文本分类任务，包含四个类别：A、B、C、D。对应不同频率，首先根据类别的频率构建哈夫曼树。</p>
+<p>1、初始化：将每个类别作为一个叶节点，并赋予其频率。<br>2、合并：每次选择两个频率最小的节点，合并成一个新的内部节点，新节点的频率是这两个节点频率之和。<br>3、重复：重复上述步骤，直到所有节点都被合并成一个根节点。</p>
+<p>这样，每个类别的路径可以表示为从根节点到叶子结点的一系列二进制决策（左子树还是右子树）。分层Softmax减少了计算复杂度，特别在处理大量类别的分类任务时，每个节点是一个二分类器，提高训练效率和内存使用效率。</p>
+<h2 id="6、pytorch重构fasttext"><a href="#6、pytorch重构fasttext" class="headerlink" title="6、pytorch重构fasttext"></a>6、pytorch重构fasttext</h2><p>背景：大语言模型预训练数据：多样广泛、高质量、规模庞大。对网页内容进行分类时，通常使用fasttext、bert模型，性能要求高、精确程度要求高。分类模型流程：分词、token化、向量化、推理得到结果。</p>
+<p>为提高性能进行批处理：批处理将一批数据以一个矩阵的形式表达，通过多次矩阵计算来计算结果，避免显式的for循环。使用np.dot进行可以得到两个数量级的优化。但是fasttext的列表预测接口并未使用批处理，仍然使用的for循环。因此可以重构fasttext，或从fasttext导出权重，进行手动矩阵计算。</p>
+<h3 id="6-1、导出权重：fasttext支持将权重参数导出。"><a href="#6-1、导出权重：fasttext支持将权重参数导出。" class="headerlink" title="6.1、导出权重：fasttext支持将权重参数导出。"></a>6.1、导出权重：fasttext支持将权重参数导出。</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ft = fasttext.load_model(source_path)</span><br><span class="line"><span class="comment"># 提取输入词向量矩阵，这个矩阵存储了每个“原子单元”（包括整词和子词）</span></span><br><span class="line">word_vectors = torch.from_numpy(ft.get_input_matrix())</span><br><span class="line"><span class="comment"># 提取输出矩阵</span></span><br><span class="line">classifier_fc = torch.from_numpy(ft.get_output_matrix())</span><br></pre></td></tr></table></figure>
+
+<p>提取输出矩阵，如果加载的是 词向量模型（如 cc.en.300.bin），get_output_matrix() 返回的是 Skip-gram 的输出向量（用于预测上下文），不能直接用于分类。如果加载的是 文本分类模型（通过 fasttext supervised 训练），则 get_output_matrix() 才是真正的 分类权重矩阵（每行对应一个类别）。</p>
+<p>问题：召回率低，算法相对保守。应该增加掩盖masked操作和调整最大序列长度。</p>
+<p>矩阵运算需要长度补齐，由于引入了batch，所以在将所有的词进行均值计算的时候，也需要将补齐的元素进行掩盖，防止补齐的token被引入到计算。</p>
+<p>最大序列长度max_length是控制每个序列（文本）的长度，所有的输入文本都会被截断&#x2F;补齐到这个长度，以进行批处理。但是训练阶段的max_length已经确定，无法对其内部的截断&#x2F;补齐的逻辑进行修改。</p>
+<h3 id="6-2、pytorch重构fasttext"><a href="#6-2、pytorch重构fasttext" class="headerlink" title="6.2、pytorch重构fasttext"></a>6.2、pytorch重构fasttext</h3><p>把训练阶段的max_length与推理阶段的max_length进行对齐，召回率随着max_length的提升，逐步升级到了70%左右。</p>
+<p>反映一个模型的训练效果，最直接的方式就观察其训练阶段的损失值的曲线，横坐标是训练步数，纵坐标是损失值，损失曲线应该是逐步下降的，光滑完整的。<strong>曲线有较多尖刺和凸起</strong>，意味着损失值上下起伏，模型学习能力反复。有以下几种解释：<br>1、学习率过高：当学习率设置过高时，模型在每次更新时可能会跳过最优解附近的区域，导致损失在不同的迭代间波动较大。<br>2、数据噪声：如果训练数据中存在较多的噪声，模型可能难以很好地拟合数据，从而导致损失值出现波动。<br>3、模型容量：模型可能过于简单（对于fasttext，该模型确实不复杂），无法有效捕捉数据的复杂模式，或过于复杂，导致在训练数据上过拟合。<br>4、批量大小：使用较小的批量大小可能会导致损失曲线更为震荡，因为每次迭代中的梯度估计可能会有较大变化。</p>
+<p>针对学习率过高：使用<strong>学习率Scheduler</strong>，一种用于动态调整神经网络训练过程中学习率的机制。可以固定步长衰减，每隔一定的训练步数（或epoch）将学习率降低一个固定比例。可以指数衰减，可以余弦退火。在PyTorch中，可以使用<code>torch.optim.lr_scheduler</code>模块来方便地设置这些策略。<code>scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)</code></p>
+<p>针对批量大小：<strong>小批量梯度下降</strong>（在每次参数更新时使用训练集中的一小部分数据mini-batch，例如32、64或128个样本。过小可能造成收敛过程不稳定）与<strong>批量梯度下降</strong>（在每次参数更新时使用整个训练集的所有数据）。调整batch_size，越大损失值的震荡情况越小。</p>
+<p>最常见的防止过拟合的手段就是<strong>dropout</strong>，设置丢弃概率，训练时一定概率的神经元被丢弃。</p>
+<p>Transformers 提供了一些快速高效的分词包，主要用于自然语言处理任务。如BertTokenizerFast、RobertaTokenizerFast、GPT2TokenizerFast。</p>
+<p>注意训练和推理时使用的分词器应该一致，因为在不同场景(代码，数学等)下，会有不同的算法提供不同的fasttext模型（bin文件），bin文件推理做两个步骤：<strong>分词和推理</strong>。pytorch生成的模型是一个.pth文件，入参是一个张量，而不是字符串，从字符串到张量，需要分词、token化、向量化。分词方式有ngram分词方式、transformers加载分词文件的分词方式。</p>
+<p>批量运算，使用masked，将输入变为矩阵，需要进行pad&#x2F;truncated(补充或者截断)。使用 transformers 库可以方便地进行 pad&#x2F;truncated。注意padding参数，true表示补齐到batch的最长的样本序列长度，max_length表示所有数据补齐到该值，设置2048.</p>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2482274">https://cloud.tencent.com/developer/article/2482274</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1696968">https://cloud.tencent.com/developer/article/1696968</a></p>
+<h2 id="7-训练分类模型代码"><a href="#7-训练分类模型代码" class="headerlink" title="7.训练分类模型代码"></a>7.训练分类模型代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fasttext</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设我们有一个包含标签和文本的数据集</span></span><br><span class="line">data = [</span><br><span class="line">    <span class="string">&#x27;__label__positive I love this movie&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__negative This is a bad film&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__positive Great performance&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__negative Terrible acting&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__positive Amazing experience&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__negative Boring and dull&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__positive Excellent story&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;__label__negative Poor direction&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据转换为 DataFrame</span></span><br><span class="line">df = pd.DataFrame(data, columns=[<span class="string">&#x27;text&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 scikit-learn 分割数据集</span></span><br><span class="line">train_df, test_df = train_test_split(df, test_size=<span class="number">0.2</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存训练和测试数据到文件</span></span><br><span class="line">train_df.to_csv(<span class="string">&#x27;train.txt&#x27;</span>, index=<span class="literal">False</span>, header=<span class="literal">False</span>)</span><br><span class="line">test_df.to_csv(<span class="string">&#x27;test.txt&#x27;</span>, index=<span class="literal">False</span>, header=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义模型参数</span></span><br><span class="line">model_params = &#123;</span><br><span class="line">    <span class="string">&#x27;lr&#x27;</span>: <span class="number">0.1</span>,                 <span class="comment"># 学习率</span></span><br><span class="line">    <span class="string">&#x27;epoch&#x27;</span>: <span class="number">4</span>,               <span class="comment"># 训练轮数</span></span><br><span class="line">    <span class="string">&#x27;wordNgrams&#x27;</span>: <span class="number">2</span>,           <span class="comment"># 使用多少连续的单词作为特征</span></span><br><span class="line">    <span class="string">&#x27;dim&#x27;</span>: <span class="number">100</span>,                <span class="comment"># 向量维度大小</span></span><br><span class="line">    <span class="string">&#x27;loss&#x27;</span>: <span class="string">&#x27;softmax&#x27;</span>,         <span class="comment"># 损失函数</span></span><br><span class="line">    <span class="string">&#x27;thread&#x27;</span>: <span class="number">4</span>,               <span class="comment"># 线程数</span></span><br><span class="line">    <span class="string">&#x27;minCount&#x27;</span>: <span class="number">1</span>,             <span class="comment"># 最小词频</span></span><br><span class="line">    <span class="string">&#x27;bucket&#x27;</span>: <span class="number">20000</span>,         <span class="comment"># 特征桶的数量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line">model = fasttext.train_supervised(<span class="built_in">input</span>=<span class="string">&#x27;train.txt&#x27;</span>, **model_params)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型</span></span><br><span class="line">model.save_model(<span class="string">&#x27;model.bin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试集评估模型</span></span><br><span class="line">result = model.test(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Precision: <span class="subst">&#123;result[<span class="number">1</span>] * <span class="number">100</span>:<span class="number">.2</span>f&#125;</span>%&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Recall: <span class="subst">&#123;result[<span class="number">2</span>] * <span class="number">100</span>:<span class="number">.2</span>f&#125;</span>%&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Number of examples: <span class="subst">&#123;result[<span class="number">0</span>]&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测</span></span><br><span class="line">predictions = model.predict(<span class="string">&quot;I really liked the story&quot;</span>)  </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(predictions)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MachineLearning/" rel="tag"># MachineLearning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/10/16/myblog/%E5%AD%A6%E4%B9%A0/%E5%9B%BE%E8%A7%A3%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8/" rel="prev" title="图解机器学习与深度学习入门">
+      <i class="fa fa-chevron-left"></i> 图解机器学习与深度学习入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/22/myblog/%E5%AD%A6%E4%B9%A0/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%AD%A6%E4%B9%A0/" rel="next" title="大模型数据学习">
+      大模型数据学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">1、基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">2、文本分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E8%AF%8D%E5%90%91%E9%87%8F%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">3、词向量表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81FastText%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E5%8F%82%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4、FastText模型训练参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E5%88%86%E5%B1%82softmax"><span class="nav-number">5.</span> <span class="nav-text">5、分层softmax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81pytorch%E9%87%8D%E6%9E%84fasttext"><span class="nav-number">6.</span> <span class="nav-text">6、pytorch重构fasttext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1%E3%80%81%E5%AF%BC%E5%87%BA%E6%9D%83%E9%87%8D%EF%BC%9Afasttext%E6%94%AF%E6%8C%81%E5%B0%86%E6%9D%83%E9%87%8D%E5%8F%82%E6%95%B0%E5%AF%BC%E5%87%BA%E3%80%82"><span class="nav-number">6.1.</span> <span class="nav-text">6.1、导出权重：fasttext支持将权重参数导出。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2%E3%80%81pytorch%E9%87%8D%E6%9E%84fasttext"><span class="nav-number">6.2.</span> <span class="nav-text">6.2、pytorch重构fasttext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E8%AE%AD%E7%BB%83%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E4%BB%A3%E7%A0%81"><span class="nav-number">7.</span> <span class="nav-text">7.训练分类模型代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sweetwater"
+      src="/images/head.gif">
+  <p class="site-author-name" itemprop="name">Sweetwater</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sweetwater</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

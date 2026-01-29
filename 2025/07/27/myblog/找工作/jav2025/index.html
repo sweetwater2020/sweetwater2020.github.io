@@ -28,7 +28,7 @@
 <meta property="og:description" content="Reactor响应式编程和Reactor线程模型Reactor 是一个响应式编程库，提供了非阻塞、高效的异步数据流处理能力。Project Reactor应用于Spring生态系统（Spring WebFlux），用于处理 HTTP 请求和响应的异步流式数据。 特点：非阻塞：通过事件驱动的方式处理数据流，避免线程阻塞。背压支持：允许消费者控制生产者的速率，防止资源过载。高效性：适合高并发场景，能够">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-07-27T11:18:28.830Z">
-<meta property="article:modified_time" content="2025-11-19T14:39:30.055Z">
+<meta property="article:modified_time" content="2026-01-06T07:43:53.757Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-19 22:39:30" itemprop="dateModified" datetime="2025-11-19T22:39:30+08:00">2025-11-19</time>
+                <time title="Modified: 2026-01-06 15:43:53" itemprop="dateModified" datetime="2026-01-06T15:43:53+08:00">2026-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -463,7 +463,7 @@
 <h2 id="Autowired构造器注入"><a href="#Autowired构造器注入" class="headerlink" title="@Autowired构造器注入"></a>@Autowired构造器注入</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OrderService</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> UserService userService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">OrderService</span><span class="params">(UserService userService)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.userService = userService;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>构造器注入是在实例创建时，将所有依赖通过构造函数一次性注入，缺少依赖会报错，通常配合final修饰成员变量，对象创建后依赖不可变（更安全）。可直接用构造方法传入mock对象，便于单元测试。字段注入则直接将依赖赋值给类属性，写法更简洁但依赖可变，可维护性和可测试性较差，容易出现依赖未注入或隐性错误。</p>
-<h2 id="BeanPostProcessor、InitializingBean的afterPropertiesSet、-PostConstruct"><a href="#BeanPostProcessor、InitializingBean的afterPropertiesSet、-PostConstruct" class="headerlink" title="BeanPostProcessor、InitializingBean的afterPropertiesSet、@PostConstruct"></a>BeanPostProcessor、InitializingBean的afterPropertiesSet、@PostConstruct</h2><p>BeanPostProcessor</p>
+<h2 id="BeanPostProcessor等"><a href="#BeanPostProcessor等" class="headerlink" title="BeanPostProcessor等"></a>BeanPostProcessor等</h2><p>BeanPostProcessor</p>
 <p>作用：Spring 提供的扩展接口，用于在 Spring 容器初始化每一个 Bean 前后统一做自定义处理。适用于全局 Bean 增强、AOP代理等场景。此处理器会应用于所有 Bean。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title class_">BeanPostProcessor</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化前的处理</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Before:&quot;</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> &#123;</span><br><span class="line">        <span class="comment">// 初始化后的处理</span></span><br><span class="line">        System.out.println(<span class="string">&quot;After:&quot;</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -494,10 +494,106 @@
 <p>前缀和算法：本质是线段切割法，首先，将总金额减去每份的最小值（如0.01元），以“分”为单位处理，然后，在剩余金额区间内生成N-1个随机分割点，并将这些切割点排序。接着，以切割点为前缀和区间，将剩余金额分成N份，每份金额为相邻切割点之差，加上最小值即为最终红包金额。</p>
 <p>并发安全：使用分布式锁或 Redis 的 INCR&#x2F;DECR 原子操作控制红包库存。抢红包接口做幂等处理（如用户ID+红包ID唯一索引），防止重复领取。利用 Lua 脚本保证“判断-扣减-写入”原子性。</p>
 <p>稳定性：通过消息队列缓冲抢红包请求，异步处理。红包数据预加载到缓存（如 Redis），避免频繁查库。限流降级：防止恶意请求，超时熔断。</p>
+<h2 id="微信群发红包系统"><a href="#微信群发红包系统" class="headerlink" title="微信群发红包系统"></a>微信群发红包系统</h2><p>设计微信群红包系统需考虑高并发、公平性和一致性。</p>
+<p>核心思路： </p>
+<p>1、发红包：服务端预生成所有红包金额（如用二倍均值法），将明细写入 DB。并把红包 ID列表存 Redis List（如 LPUSH 进去）。 </p>
+<p>2、抢红包：用 Redis 的 LIST 或 SET 存放待抢红包，用户请求时通过 Lua 脚本原子判断是否已抢过、红包是否还有，若有则弹出一个并记录领取关系。公平性：因为 Lua 脚本在 Redis 中是原子执行的，多个请求同时到达时，Redis 会串行处理，天然实现了“拼手速”——第一个执行 RPOP 的人拿到红包，后面的就抢空了。 </p>
+<p>3、防重复：用 SET 记录已抢用户（如 redpack:rid:users），避免重复领取。 </p>
+<p>4、数据持久化：抢完后异步写入 DB，保证最终一致性。 </p>
+<p>5、异步到账：抢成功后，发送消息到 Kafka，进行到账通知。 </p>
+<p>6、限流降级：对高频请求做限流，超时或失败可返回“手慢了”。 </p>
+<p>关键点：Redis + Lua 保证原子性，避免超发；异步落库提升性能；幂等设计防重抢。</p>
+<h2 id="春节红包雨"><a href="#春节红包雨" class="headerlink" title="春节红包雨"></a>春节红包雨</h2><p>考虑高并发、超大流量削峰、库存强一致、防作弊、最终资金安全。 </p>
+<p>1、前端限流：客户端加随机延迟、按钮置灰；CDN 拦截无效请求。 </p>
+<p>2、服务端入口：API 网关做 IP&#x2F;设备级限流，风控服务实时拦截机器人。 </p>
+<p>3、核心发放：红包总库存预热到 Redis 分片集群（如分成 1000 个子库存）；用 Lua 脚本原子扣减库存 + 记录用户领取（防超发、防重）；不分配具体金额，只标记“抢到资格”。 </p>
+<p>4、异步到账：抢成功后发消息到 Kafka，下游服务异步分配金额、写账单、发通知。 </p>
+<p>5、兜底保障：Redis 故障时降级为本地缓存快速失败；活动结束后跑对账任务，确保“发出 &#x3D; 领取 + 未领退款”。 </p>
+<p>关键点：不拼单点性能，而是靠分片+缓存扛流量，用最终一致性换高可用，同时严防羊毛党。</p>
+<h2 id="春节红包雨设计"><a href="#春节红包雨设计" class="headerlink" title="春节红包雨设计"></a>春节红包雨设计</h2><p>抖音春节红包雨是一个典型的<strong>瞬时百万级 QPS、强一致性、有限库存</strong>的高并发场景。</p>
+<p><strong>1. 限流（防流量洪峰）</strong></p>
+<ul>
+<li><strong>前端限流</strong>：客户端限制用户每秒最多点击 1~2 次，避免恶意刷请求；</li>
+<li><strong>网关限流</strong>：API 网关基于令牌桶或滑动窗口对 QPS 做全局&#x2F;用户级限流；</li>
+<li><strong>服务端熔断</strong>：当发放服务负载过高时，自动拒绝部分请求（返回“手慢了”），保护系统不雪崩。</li>
+</ul>
+<p><strong>2. 红包库存 + 随机红包（保一致、防超发）</strong></p>
+<ul>
+<li><strong>库存预热</strong>：活动开始前将总库存（如 1 亿）写入 Redis；</li>
+<li><strong>分片存储</strong>：将库存拆成多个分片（如 <code>stock:0</code> ~ <code>stock:99</code>），分散热点 Key；</li>
+<li><strong>随机金额</strong>：在发放时从预设的红包金额池（如 [0.5, 1, 2, 8.88]）按权重随机选择，<strong>金额分配在扣库存成功后才确定</strong>；</li>
+<li><strong>原子操作</strong>：通过 <strong>Lua 脚本</strong> 一次性完成“查库存 → 扣减 → 用户去重 → 记录领取”，确保不超发、不重复。</li>
+</ul>
+<p><strong>3. 异步到账（解耦提性能）</strong></p>
+<ul>
+<li>发放成功后，<strong>不直接写数据库</strong>，而是发送消息到 Kafka；</li>
+<li>由独立的“红包到账服务”异步消费，执行：<br>✓ 写入用户账单（MySQL 分库分表）<br>✓ 更新资产缓存（Redis）<br>✓ 推送通知</li>
+<li>这样核心发放链路延迟 &lt; 50ms，QPS 可轻松支撑百万级。</li>
+</ul>
+<p><strong>4. 容灾降级（保可用）</strong></p>
+<ul>
+<li><strong>Redis 故障</strong>：降级为本地缓存快速失败，或切换到备用集群；若完全不可用，可临时关闭红包雨入口；</li>
+<li><strong>超卖兜底</strong>：DB 层做二次校验，活动结束后跑对账任务，补偿异常数据；</li>
+<li><strong>幂等保障</strong>：每个请求带唯一 ID，服务端用 Redis Token 防重，确保重复点击不重复领；</li>
+<li><strong>监控告警</strong>：实时监控库存剩余、QPS、错误率，异常自动触发预案。</li>
+</ul>
+<p><strong>总结</strong>：通过“<strong>限流控入口、Redis+Lua 保核心、异步解耦提吞吐、多级降级守底线</strong>”，实现高性能、高可用、强一致的红包雨系统。</p>
 <h2 id="超长链表恢复重复"><a href="#超长链表恢复重复" class="headerlink" title="超长链表恢复重复"></a>超长链表恢复重复</h2><p>一个超长链表，是升序的，中间被打乱或者被插入了新的数，不可能一次性加载全部链表进行排序，问这种情况下怎么把链表变为有序的？</p>
 <p>1、将大链表分块读入内存，每块排序后写回磁盘（或临时存储），最后做多路归并。 </p>
 <p>2、扫描链表，找出所有最大连续递增子序列（不连续就截断），把这些子序列看作已排序的“块”，然后多路归并。 </p>
 <p>3、遍历链表，检测“下降点”，收集所有异常节点（用双指针找），把它们提取出来，单独排序，再合并回主链表（像插入排序一样）。</p>
+<h2 id="防超卖系统"><a href="#防超卖系统" class="headerlink" title="防超卖系统"></a>防超卖系统</h2><p>采用 Redis + Lua 脚本 实现库存的原子扣减，利用 Redis 的单线程特性保证高并发下不超卖。扣减成功后，通过 消息队列异步创建订单和持久化库存，实现系统解耦和削峰。<br><strong>危险</strong>：Redis 故障，我会：<br>使用 Redis Cluster&#x2F;Sentinel 保证高可用；<br>开启 AOF 持久化 防止数据丢失；<br>设计 降级方案：当 Redis 不可用时，切换到数据库乐观锁；<br>UPDATE products SET stock &#x3D; stock - 1, version &#x3D; version + 1<br>WHERE id &#x3D; ? AND stock &gt; 0 AND version &#x3D; ?<br>通过 定时对账任务 核对 Redis 与数据库库存，自动修复不一致；<br>为什么不用数据库悲观锁：悲观锁性能差、易死锁、压垮数据库，违背“降级保可用”的原则。乐观锁无锁、高并发、资源消耗小，更适合应对突发流量。悲观锁行级写锁，阻塞其他事务的读写。<br><strong>其他</strong>：<br>库存分段，随机选择一段扣减，降低冲突概率。<br>前置过滤，限流、排队机制减少并发。<br>用本地缓存缓存库存状态，提前拒绝请求。</p>
+<h2 id="高并发订单系统"><a href="#高并发订单系统" class="headerlink" title="高并发订单系统"></a>高并发订单系统</h2><p>整体采用 <strong>微服务 + 消息队列 + 缓存</strong> 架构，前端请求先经过限流（如 Sentinel），防止瞬间流量打垮系统。</p>
+<p>防止超卖：Redis 预热库存，用 Lua 脚本原子扣减（保证不超卖），扣减成功后发消息到 Kafka&#x2F;RocketMQ，异步创建订单。</p>
+<p>数据库层面：订单表分库分表，创建关键索引，使用分布式ID生成订单号。</p>
+<p>保证 MySQL 和 Redis 数据一致：</p>
+<p>1、用“先写 DB 再删缓存”策略。</p>
+<p>2、当你更新了数据库，但缓存没更新成功时，通过监听数据库的变更日志（binlog），自动把数据同步到 Redis，保证数据库和缓存最终是一致的。</p>
+<p>3、用Canal 是阿里开源的一个工具，伪装成 MySQL 的从库，能实时监听 MySQL 的 binlog，一旦发现数据变了（增删改），就拿到这条记录，发到 MQ 或直接更新 Redis。</p>
+<h2 id="微服务架构下如何保证事务一致性"><a href="#微服务架构下如何保证事务一致性" class="headerlink" title="微服务架构下如何保证事务一致性"></a>微服务架构下如何保证事务一致性</h2><p>在微服务架构下，传统数据库事务无法跨服务，所以我们不用强一致性，而是采用 最终一致性 + 分布式事务方案。</p>
+<p>1、TCC（Try-Confirm-Cancel）：把一个操作拆成尝试、确认、取消三步，通过事务协调器保证所有服务都确认或都取消，适合资金类场景。</p>
+<p>2、Saga（序列化事务）：将跨服务的事务拆分成一系列本地事务，通过补偿机制回滚或修复异常操作。例如，订单创建成功后再调用库存与支付服务，出现异常执行补偿操作。</p>
+<p>3、基于消息队列（如 RocketMQ 事务消息）：通过异步消息队列，将操作拆分为多步，确保各个服务最终达成一致，但不要求瞬时一致，适合分布式环境。</p>
+<p>4、Seata 框架：支持 AT 模式（自动生成回滚日志），适合简单场景。</p>
+<p>5、两阶段提交（2PC）：在某些场景下使用，但成本高且性能较低，不常用，主要在金融等对一致性要求极高的场合。</p>
+<h2 id="设计一个分布式配置中心"><a href="#设计一个分布式配置中心" class="headerlink" title="设计一个分布式配置中心"></a>设计一个分布式配置中心</h2><p>核心目标是：统一管理配置、实时推送更新、高可用、高性能。</p>
+<p>1、集中存储：使用Zookeeper作为底层存储，保证配置的强一致和高可用。支持版本和监听。</p>
+<p>2、版本控制与动态刷新：支持配置版本管理，配置变更后，能够实时通知相关服务，动态加载新配置，避免重启。</p>
+<p>3、权限管理：实现权限控制，确保配置安全，区分不同应用或环境的访问权限。</p>
+<p>4、多环境支持：支持不同的环境（开发、测试、生产）配置隔离，便于管理。</p>
+<p>5、高可用与容错：采用副本、多节点部署，确保单点失效不影响配置访问。</p>
+<p>6、推拉模型结合：支持配置的主动推送（变更通知）和服务端拉取，结合使用提高性能和一致性。</p>
+<p>7、配置变更时，通过 长轮询（Long Polling） 或事件通知机制推送到客户端。</p>
+<p>8、加缓存避免重复请求。</p>
+<h2 id="榜单系统设计"><a href="#榜单系统设计" class="headerlink" title="榜单系统设计"></a>榜单系统设计</h2><p><strong>第一，核心数据结构选择 Redis 的 Sorted Set（ZSET）</strong>。<br> 因为 ZSET 天然支持按分数（打赏总额）排序，<code>ZADD</code> 可原子性地累加用户金额，<code>ZREVRANGE</code> 能在 O(logN + M) 时间内高效获取 Top N 榜单，完美契合需求。Key 可设计为 <code>live:room:&#123;roomId&#125;:top_donors</code>，实现房间隔离。</p>
+<p><strong>第二，写路径采用“异步+幂等”模式</strong>。<br> 用户打赏成功后，不直接操作缓存，而是发送消息到 Kafka&#x2F;RocketMQ；由独立的打赏处理服务消费消息，更新 Redis ZSET。这样既能削峰填谷，又能通过订单 ID 去重保证幂等，避免重复打赏导致金额错误。</p>
+<p><strong>第三，读路径直连 Redis，极致优化性能</strong>。<br> 客户端请求榜单时，API 服务直接调用 <code>ZREVRANGE</code> 返回结果，响应时间通常在毫秒级，轻松支撑十万级 QPS。</p>
+<p><strong>第四，持久化与容灾</strong>。<br> 虽然 Redis 是内存存储，但我们会定期（如每小时或每天）将 ZSET 快照异步落盘到 MySQL，用于故障恢复或生成历史榜单。若 Redis 宕机，可降级返回 DB 数据或空榜，保证服务可用性。</p>
+<p><strong>第五，针对高并发场景做进阶优化</strong>：</p>
+<ul>
+<li>对于<strong>超大主播房间</strong>（热点 Key），可对 ZSET 分片（如按用户 ID 哈希拆成多个子 ZSET），查询时用 <code>ZUNIONSTORE</code> 聚合；</li>
+<li>设置合理的<strong>过期时间</strong>和<strong>自动裁剪</strong>（如只保留 Top 1000），控制内存；</li>
+<li>支持多维度榜单（日榜、周榜）通过不同 Key 隔离；</li>
+<li>结合限流防止刷榜攻击。</li>
+</ul>
+<p><strong>为什么不直接用数据库？</strong><br> 因为 MySQL 即使有索引，在高并发下频繁 <code>ORDER BY amount LIMIT 100</code> 仍会成为瓶颈，而 Redis ZSET 是为此类场景量身定制的，性能高出几个数量级。</p>
+<p>综上，这个方案以<strong>缓存为核心、异步解耦、读写分离</strong>，兼顾了<strong>高性能、实时性、可靠性和可扩展性</strong>，是工业界成熟的做法。</p>
+<h2 id="mysql-redis的发号器"><a href="#mysql-redis的发号器" class="headerlink" title="mysql+redis的发号器"></a>mysql+redis的发号器</h2><p>核心思想是：<strong>MySQL 存储号段元数据，Redis 缓存当前可用号段，实现高性能发号</strong>。</p>
+<p>mysql存储：业务标识、当前已分配的最大ID、每次申请的号段长度。初始时 <code>max_id = 1000, step = 1000</code>，表示下次可分配 [1001, 2000]。</p>
+<p>redis存储：使用 <strong>String 类型</strong>存储两个关键值（也可用 Hash，但 String 更简单高效）：</p>
+<ul>
+<li><code>id:&#123;biz_tag&#125;:current</code> → 当前可分配的 ID（初始 &#x3D; 号段结束值）</li>
+<li><code>id:&#123;biz_tag&#125;:end</code> → 当前号段的上限<br>例如：<code>SET id:order:current 2000</code>，<code>SET id:order:end 2000</code></li>
+</ul>
+<p><strong>发号流程</strong>：</p>
+<ul>
+<li>客户端调用发号接口；</li>
+<li>服务端对 <code>current</code> 执行 <strong><code>DECR</code> 原子操作</strong>，得到新 ID；</li>
+<li>若 <code>DECR</code> 后的值 ≥ <code>end - step + 1</code>，说明仍在有效号段内，直接返回；</li>
+<li>否则（号段用完或未初始化），<strong>加本地锁</strong>，从 MySQL 申请新号段。拿到新号段后，更新 Redis 的 <code>current</code> 和 <code>end</code>。</li>
+</ul>
+<p><strong>Redis 宕机或数据丢失</strong>：服务重启后，首次发号会发现 Redis 无数据或号段无效，自动从 MySQL 重新加载最新 <code>max_id</code>，重建号段；<strong>MySQL 是权威源</strong>，只要 DB 不丢数据，ID 就不会重复；</p>
+<p>该方案兼顾了<strong>高性能（Redis 本地发号）、高可用（DB 作为兜底）和唯一性</strong>，是业界成熟做法。<strong>ID 可能浪费</strong>：实例 crash 会导致当前号段未用完即丢弃；</p>
 
     </div>
 
@@ -581,7 +677,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%92%8CReactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Reactor响应式编程和Reactor线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">record关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E4%B8%8Aredis%E6%9C%BA%E5%99%A8%E7%88%86%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">线上redis机器爆了，如何优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1-Transactional"><span class="nav-number">4.</span> <span class="nav-text">spring声明式事务@Transactional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E5%92%8CHashTable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">HashMap和HashTable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">6.</span> <span class="nav-text">什么是零拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%92%8C%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">Redis字典的实现方式和冲突处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DMVC%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">介绍MVC机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink%E5%92%8CSpark%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">Flink和Spark的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DJVM"><span class="nav-number">10.</span> <span class="nav-text">介绍JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E8%B0%83%E4%BC%98%E7%BB%8F%E9%AA%8C"><span class="nav-number">11.</span> <span class="nav-text">JVM调优经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E7%9A%84%E5%A0%86%E5%88%86%E4%B8%BA%E5%93%AA%E5%87%A0%E9%83%A8%E5%88%86"><span class="nav-number">12.</span> <span class="nav-text">JVM的堆分为哪几部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%92%8C%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">数据仓库和传统数据库有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">IO多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%92%8CPython%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">Java和Python的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seata%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">16.</span> <span class="nav-text">Seata分布式事务解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AE%9E%E7%8E%B0%E9%98%B2%E8%B6%85%E5%8D%96"><span class="nav-number">17.</span> <span class="nav-text">Redis实现防超卖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%99%90%E6%B5%81%E5%92%8C%E7%86%94%E6%96%AD"><span class="nav-number">18.</span> <span class="nav-text">高并发项目中的限流和熔断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%81%E7%A8%8B%E7%BC%96%E6%8E%92%EF%BC%8C%E4%BC%98%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E%E6%80%A7%E8%83%BD"><span class="nav-number">19.</span> <span class="nav-text">优化多节点流程编排，优化工作流引擎性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">20.</span> <span class="nav-text">双写一致性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP%E7%90%86%E8%AE%BA"><span class="nav-number">21.</span> <span class="nav-text">CAP理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RocketMQ%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF"><span class="nav-number">22.</span> <span class="nav-text">RocketMQ事务消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%96%87%E4%BB%B6%E6%89%BE%E7%9B%B8%E5%90%8Curl"><span class="nav-number">23.</span> <span class="nav-text">大文件找相同url</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">24.</span> <span class="nav-text">布隆过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F"><span class="nav-number">25.</span> <span class="nav-text">设计一个秒杀系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">26.</span> <span class="nav-text">实现一个消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-number">27.</span> <span class="nav-text">常见的限流算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F"><span class="nav-number">28.</span> <span class="nav-text">镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E4%B8%A4%E5%A4%A7%E6%9E%B6%E6%9E%84%EF%BC%9AARM%E5%92%8CX86"><span class="nav-number">29.</span> <span class="nav-text">CPU两大架构：ARM和X86</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autowired%E6%9E%84%E9%80%A0%E5%99%A8%E6%B3%A8%E5%85%A5"><span class="nav-number">30.</span> <span class="nav-text">@Autowired构造器注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor%E3%80%81InitializingBean%E7%9A%84afterPropertiesSet%E3%80%81-PostConstruct"><span class="nav-number">31.</span> <span class="nav-text">BeanPostProcessor、InitializingBean的afterPropertiesSet、@PostConstruct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ApplicationContextAware"><span class="nav-number">32.</span> <span class="nav-text">ApplicationContextAware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A2%E5%8C%85%E9%9A%8F%E6%9C%BA%E5%88%86%E9%85%8D"><span class="nav-number">33.</span> <span class="nav-text">红包随机分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E9%95%BF%E9%93%BE%E8%A1%A8%E6%81%A2%E5%A4%8D%E9%87%8D%E5%A4%8D"><span class="nav-number">34.</span> <span class="nav-text">超长链表恢复重复</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%92%8CReactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Reactor响应式编程和Reactor线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">record关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E4%B8%8Aredis%E6%9C%BA%E5%99%A8%E7%88%86%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">线上redis机器爆了，如何优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1-Transactional"><span class="nav-number">4.</span> <span class="nav-text">spring声明式事务@Transactional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap%E5%92%8CHashTable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">HashMap和HashTable的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">6.</span> <span class="nav-text">什么是零拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%E5%92%8C%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">Redis字典的实现方式和冲突处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DMVC%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">介绍MVC机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flink%E5%92%8CSpark%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">Flink和Spark的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DJVM"><span class="nav-number">10.</span> <span class="nav-text">介绍JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E8%B0%83%E4%BC%98%E7%BB%8F%E9%AA%8C"><span class="nav-number">11.</span> <span class="nav-text">JVM调优经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM%E7%9A%84%E5%A0%86%E5%88%86%E4%B8%BA%E5%93%AA%E5%87%A0%E9%83%A8%E5%88%86"><span class="nav-number">12.</span> <span class="nav-text">JVM的堆分为哪几部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%92%8C%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">13.</span> <span class="nav-text">数据仓库和传统数据库有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">14.</span> <span class="nav-text">IO多路复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%92%8CPython%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">15.</span> <span class="nav-text">Java和Python的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seata%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">16.</span> <span class="nav-text">Seata分布式事务解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis%E5%AE%9E%E7%8E%B0%E9%98%B2%E8%B6%85%E5%8D%96"><span class="nav-number">17.</span> <span class="nav-text">Redis实现防超卖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E9%99%90%E6%B5%81%E5%92%8C%E7%86%94%E6%96%AD"><span class="nav-number">18.</span> <span class="nav-text">高并发项目中的限流和熔断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%A4%9A%E8%8A%82%E7%82%B9%E6%B5%81%E7%A8%8B%E7%BC%96%E6%8E%92%EF%BC%8C%E4%BC%98%E5%8C%96%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%BC%95%E6%93%8E%E6%80%A7%E8%83%BD"><span class="nav-number">19.</span> <span class="nav-text">优化多节点流程编排，优化工作流引擎性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">20.</span> <span class="nav-text">双写一致性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP%E7%90%86%E8%AE%BA"><span class="nav-number">21.</span> <span class="nav-text">CAP理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RocketMQ%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF"><span class="nav-number">22.</span> <span class="nav-text">RocketMQ事务消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%96%87%E4%BB%B6%E6%89%BE%E7%9B%B8%E5%90%8Curl"><span class="nav-number">23.</span> <span class="nav-text">大文件找相同url</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">24.</span> <span class="nav-text">布隆过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F"><span class="nav-number">25.</span> <span class="nav-text">设计一个秒杀系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">26.</span> <span class="nav-text">实现一个消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-number">27.</span> <span class="nav-text">常见的限流算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F"><span class="nav-number">28.</span> <span class="nav-text">镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E4%B8%A4%E5%A4%A7%E6%9E%B6%E6%9E%84%EF%BC%9AARM%E5%92%8CX86"><span class="nav-number">29.</span> <span class="nav-text">CPU两大架构：ARM和X86</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autowired%E6%9E%84%E9%80%A0%E5%99%A8%E6%B3%A8%E5%85%A5"><span class="nav-number">30.</span> <span class="nav-text">@Autowired构造器注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor%E7%AD%89"><span class="nav-number">31.</span> <span class="nav-text">BeanPostProcessor等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ApplicationContextAware"><span class="nav-number">32.</span> <span class="nav-text">ApplicationContextAware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A2%E5%8C%85%E9%9A%8F%E6%9C%BA%E5%88%86%E9%85%8D"><span class="nav-number">33.</span> <span class="nav-text">红包随机分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1%E7%BE%A4%E5%8F%91%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F"><span class="nav-number">34.</span> <span class="nav-text">微信群发红包系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%A5%E8%8A%82%E7%BA%A2%E5%8C%85%E9%9B%A8"><span class="nav-number">35.</span> <span class="nav-text">春节红包雨</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%A5%E8%8A%82%E7%BA%A2%E5%8C%85%E9%9B%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">36.</span> <span class="nav-text">春节红包雨设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E9%95%BF%E9%93%BE%E8%A1%A8%E6%81%A2%E5%A4%8D%E9%87%8D%E5%A4%8D"><span class="nav-number">37.</span> <span class="nav-text">超长链表恢复重复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E8%B6%85%E5%8D%96%E7%B3%BB%E7%BB%9F"><span class="nav-number">38.</span> <span class="nav-text">防超卖系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E5%B9%B6%E5%8F%91%E8%AE%A2%E5%8D%95%E7%B3%BB%E7%BB%9F"><span class="nav-number">39.</span> <span class="nav-text">高并发订单系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E4%B8%8B%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">40.</span> <span class="nav-text">微服务架构下如何保证事务一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">41.</span> <span class="nav-text">设计一个分布式配置中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%9C%E5%8D%95%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">42.</span> <span class="nav-text">榜单系统设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-redis%E7%9A%84%E5%8F%91%E5%8F%B7%E5%99%A8"><span class="nav-number">43.</span> <span class="nav-text">mysql+redis的发号器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -596,20 +692,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -636,7 +732,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

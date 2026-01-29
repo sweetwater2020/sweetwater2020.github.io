@@ -28,7 +28,7 @@
 <meta property="og:description" content="大模型基础 Transformer模型：Transformer 是基于自注意力机制的神经网络架构，摒弃了传统 RNN 的序列依赖，支持并行计算。它由编码器-解码器结构组成，广泛用于 NLP 任务。其核心包括多头注意力、位置编码和前馈网络，是 BERT、GPT 等大模型的基础。 大模型微调：大模型微调是在预训练模型基础上，用特定领域数据继续训练以适配下游任务。相比从零训练，微调成本低、效果好，常用于">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-08-10T00:30:05.170Z">
-<meta property="article:modified_time" content="2025-11-19T14:38:18.530Z">
+<meta property="article:modified_time" content="2025-12-27T14:04:09.412Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-19 22:38:18" itemprop="dateModified" datetime="2025-11-19T22:38:18+08:00">2025-11-19</time>
+                <time title="Modified: 2025-12-27 22:04:09" itemprop="dateModified" datetime="2025-12-27T22:04:09+08:00">2025-12-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,7 +310,7 @@
 <p>3、通过 vLLM 的 OpenAI API server 启动模型服务</p>
 <p>vLLM自动管理多线程，并支持高并发和流式输出。</p>
 <p>支持 Streaming（流式），可以实现实时&#x2F;多轮对话。</p>
-<p>遇到问题：显存 OOM 的问题，多个并发请求一起进入时会超出显存。调整batch size，把并发&#x2F;批处理的上线调低，减少一次性分配的显存。</p>
+<p>遇到问题：显存 OOM 的问题，多个并发请求一起进入时会超出显存。调整batch size，把并发&#x2F;批处理的上限调低，减少一次性分配的显存。</p>
 </li>
 </ul>
 <h3 id="微调实战"><a href="#微调实战" class="headerlink" title="微调实战"></a>微调实战</h3><ul>
@@ -381,7 +381,7 @@
 <p>java：引入spring-ai-starter-mcp-server-webflux包，进行MCP服务端配置，然后@Tool进行工具代码编写，用@Bean注册为Bean。</p>
 </li>
 </ul>
-<h3 id="Agent实战"><a href="#Agent实战" class="headerlink" title="Agent实战"></a>Agent实战</h3><ul>
+<h3 id="LangChain实战"><a href="#LangChain实战" class="headerlink" title="LangChain实战"></a>LangChain实战</h3><ul>
 <li><p>LangChain实践：<strong>LangChain 是一个用于构建大语言模型（LLM）应用的开发框架</strong>，它通过模块化设计，帮助开发者将 LLM 与外部数据、工具和业务逻辑结合，构建如问答系统、智能代理、自动化工作流等应用。</p>
 <p>核心模块包括：</p>
 <ol>
@@ -411,6 +411,8 @@
 
 <p>核心思想：模块化 + 编排，让开发者灵活构建 LLM 应用。</p>
 </li>
+</ul>
+<h3 id="LangGraph实战"><a href="#LangGraph实战" class="headerlink" title="LangGraph实战"></a>LangGraph实战</h3><ul>
 <li><p>LangGraph实践</p>
 <p>ReAct（Reasoning and Acting）范式，让AI能够交替进行<strong>推理和行动</strong>，通过”思考-行动-观察-调整”的循环，实现更智能的决策过程。</p>
 <p>ReAct的核心在于推理和行动的交替进行，而不是传统AI的”纯推理”或”纯行动”模式。</p>
@@ -606,58 +608,66 @@
 </li>
 <li><p>DeepResearch和Manus的范式有什么不同：DeepResearch 代表的是“增强智能”范式 —— 以人类为中心，辅助完成复杂研究任务；而 Manus 代表的是“完全自主代理”范式 —— 以目标为中心，独立执行端到端任务。DeepResearch 适合专业深度研究；Manus 适合标准化流程自动化。在于 是否拥有独立执行权 和 是否追求端到端闭环。一个强调深入研究，一个强调自主行动。</p>
 </li>
-<li><p>Dify：是一个开源的 AI 应用开发与管理平台，快速构建LLM Agent。Dify 提供了可视化的工作流编排、数据管理、Prompt 设计、API 接口管理、用户访问控制等一站式工具。用户可以通过拖拽配置，组合模型、工具、数据库、第三方服务等，实现问答、智能检索、Chatbot、文档分析等多种智能场景。</p>
+<li><p>Coze：由字节跳动推出的，主打零代码&#x2F;低代码的 Agent 的构建体验，让不具备编程背景的用户也能轻松创造。拥有极其友好的可视化界面，用户可以像搭建乐高积木一样，通过拖拽插件、配置知识库和设定工作流来创建智能体。其内置了极为丰富的插件库，并支持一键发布到抖音、飞书、微信公众号等多个主流平台，极大地简化了分发流程。适用人群：AI 应用的入门用户、产品经理、运营人员，以及希望快速将创意变为可交互产品的个人创作者。</p>
+</li>
+<li><p>Dify：是一个开源的 AI 应用开发与管理平台，快速构建LLM Agent。Dify 提供了可视化的工作流编排、数据管理、Prompt 设计、API 接口管理、用户访问控制等一站式工具。用户可以通过拖拽配置，组合模型、工具、数据库、第三方服务等，实现问答、智能检索、Chatbot、文档分析等多种智能场景。适用人群：有一定技术背景的开发者、需要构建可扩展的企业级 AI 应用的团队。</p>
 </li>
 </ul>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><ul>
-<li><p>python常用库</p>
-<ul>
-<li><p>requests：用于发送 HTTP 请求：<code>response = requests.get(&quot;https://httpbin.org/get&quot;) </code></p>
-</li>
-<li><p>numpy：数值计算基础库，高效的多维数组与矩阵运算：<code>arr = np.array([1, 2, 3, 4])</code> </p>
-</li>
-<li><p>pandas：数据分析和处理，DataFrame用于结构化数据操作：<code>df = pd.read_csv(&#39;data.csv&#39;) </code></p>
-</li>
-<li><p>matplotlib：数据可视化，用于绘图：<code>plt.plot(x, y, label=&quot;sin(x)&quot;) </code></p>
-</li>
-<li><p>TensorFlow &#x2F; PyTorch：度学习框架，用于搭建和训练神经网络。<code>torch.cuda.is_available()</code>。<code>torch.no_grad() </code>临时关闭梯度计算。 </p>
-</li>
-<li><p>fastText：Facebook开源的一个高效的自然语言处理库，可进行文本分类、分词、语种识别等：<code>tokens = self.fasttext.FastText.tokenize(text)</code>、保存和加载模型<code>fasttext.load_model、model.save_model</code> </p>
-</li>
-<li><p>nlkt：自然语言NLP库，可进行分词：<code>from nltk.tokenize import word_tokenize, sent_tokenize</code>；<code>print(sent_tokenize(text))</code>。可去除停用词。可进行情感分析sentiment。 </p>
-</li>
-<li><p>jieba：开源的中文分词库，精确模式分词：<code>seg_list = jieba.cut(text, cut_all=False)</code>，还可以进行关键字提取、词性标注等。 </p>
-</li>
-<li><p>transformers：Hugging Face开发维护的基于transformer架构的python库，提供数千种预训练模型（BERT、GPT、T5），可进行文本分类、命名实体识别、文本生成等。加载模型：<code>tokenizer = AutoTokenizer.from_pretrained()</code>。<code>BertForSequenceClassification</code>用于文本分类任务。 </p>
-</li>
-<li><p>vllm：为LLM设计的高性能推理框架，提升推理速度、降低显存占用、支持高并发请求。PagedAttention技术，类似操作系统的分页内存，优化注意力机制中的KV存储。比 Hugging Face Transformers 快 24 倍以上。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载模型（支持大多数 HF 格式模型）</span></span><br><span class="line">llm = LLM(model=<span class="string">&quot;meta-llama/Llama-2-7b-chat-hf&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置采样参数</span></span><br><span class="line">sampling_params = SamplingParams(temperature=<span class="number">0.7</span>, top_p=<span class="number">0.95</span>, max_tokens=<span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入提示</span></span><br><span class="line">prompts = [</span><br><span class="line">    <span class="string">&quot;请写一首关于春天的诗。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;人工智能未来会如何发展？&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批量生成</span></span><br><span class="line">outputs = llm.generate(prompts, sampling_params)</span><br><span class="line">openai： OpenAI 公司提供的方便调用LLM等API服务。</span><br><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">client = OpenAI(api_key=<span class="string">&quot;sk-...&quot;</span>)  <span class="comment"># 或从环境变量读取</span></span><br><span class="line">response = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;gpt-3.5-turbo&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你是一个 helpful 的助手。&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;请推荐三本经典的中文小说。&quot;</span>&#125;</span><br><span class="line">    ],</span><br><span class="line">    max_tokens=<span class="number">150</span>,</span><br><span class="line">    temperature=<span class="number">0.7</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>fastapi：高性能的web框架，专为构建API设计。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"><span class="comment"># 定义一个根路径接口</span></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>python中fastapi如何实现流式输出</p>
-<p>FastAPI是Python Web框架，专为快速构建RESTful API而设计，支持类型注解、自动生成交互式文档，并具备异步性能。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line">app = FastAPI()</span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from FastAPI!&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>FastAPI 通过 StreamingResponse 实现流式输出，适合实时返回数据（如 AI 回复）。使用 yield 关键字将函数变成生成器，在其中逐段产出数据，每次 yield 发送一部分，不占用大量内存。yield 类似“暂停并返回”，下次从断点继续。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">generate</span>():</span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="keyword">yield</span> <span class="string">f&quot;消息 <span class="subst">&#123;i&#125;</span>\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stream</span>():</span><br><span class="line">  <span class="keyword">return</span> StreamingResponse(generate(), media_type=<span class="string">&quot;text/plain&quot;</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>FastAPI：一个现代、高性能的 Python Web 框架，用于构建 API。支持异步处理、流式输出，核心优势包括：自动生成功能完备的交互式 API 文档、强类型提示 + 请求数据校验。用于快速开发安全、可维护的后端服务。</p>
-</li>
-<li><p>Java中实现流式输出：Spring WebFlux 是 Spring 5 提供的响应式编程框架，支持非阻塞、异步流式处理，适合实现服务端持续推送数据（如 SSE）。它使用 Reactor 库中的 Flux 或 Mono 发送数据流，可逐条发射内容，客户端实时接收，无需等待全部生成。相比传统 Servlet，WebFlux 能以更少线程支持更高并发，非常适合流式场景。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(value = &quot;/stream&quot;, produces = &quot;text/plain&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Flux&lt;String&gt; <span class="title function_">stream</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> Flux.just(<span class="string">&quot;Hello&quot;</span>, <span class="string">&quot;World&quot;</span>, <span class="string">&quot;Flux&quot;</span>)</span><br><span class="line">        .delayElements(Duration.ofSeconds(<span class="number">1</span>))</span><br><span class="line">        .map(s -&gt; s + <span class="string">&quot;\n&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-</ul>
+<h2 id="Spring-AI"><a href="#Spring-AI" class="headerlink" title="Spring AI"></a>Spring AI</h2><p>Spring AI Alibaba 1.1 发布，构建企业级的 AI 智能体（Agent）应用。</p>
+<p><strong>三个层次</strong>：</p>
+<p>1、Agent Framework：基于 ReactAgent 的开箱即用智能体开发框架，内置自动上下文工程、Human-in-the-Loop（人工介入）、工具链集成等高级能力。</p>
+<p>2、Graph：底层工作流与多智能体协调引擎，以 State&#x2F;Node&#x2F;Edge 为模型，支持流式响应、状态持久化、混合编排（如 ReactAgent 作为子图节点），是复杂流程的运行时基座，用于实现复杂的工作流编排，同时对用户开放 API。</p>
+<p>3、Augmented LLM：Spring AI 提供的原子化 LLM 抽象层，统一封装模型调用、工具（Tools）、消息（Messages）、向量存储等基础能力，实现 LLM 应用的模块化构建。</p>
+<p><strong>核心设计理念</strong>：</p>
+<p>1、ReactAgent：基于 ReAct（Reasoning + Acting） 范式。这意味着 Agent 不仅仅是调用 LLM，它还可以在一个循环中运行，通过“思考（Reasoning）”来分析任务、决定使用哪个“工具（Acting）”，然后“观察（Observation）”工具结果，并迭代此过程，直到任务完成。ReactAgent 行为由三个核心组件定义：Model (模型)：Agent 的“大脑”，即 LLM 推理引擎，如 DashScopeChatModel。Tools (工具)：赋予 Agent 执行操作的能力。可以轻松定义一个工具回调。System Prompt (系统提示)：通过 systemPrompt 或 instruction 参数，塑造 Agent 的角色和行为方式。</p>
+<p>2、Graph（Workflow）：Graph 是 Agent Framework 的底层运行时基座，是一个低级工作流和多智能体编排框架。它通过 State（状态）、Node（节点） 和 Edge（边） 三个核心概念，使开发者能够实现复杂的应用程序编排。Graph 引擎原生支持 Streaming（流式响应）、Human In the Loop（人工介入）、Memory &amp; Context（记忆与上下文管理）等智能体核心能力。支持顺序执行、并行处理、条件分支（智能路由）等复杂流程控制。</p>
+<p><strong>要点</strong>：</p>
+<p>1、上下文工程：将上下文细分为 模型上下文、工具上下文、生命周期上下文，并通过 Hook（钩子）与 Interceptor（拦截器） 实现精细化控制（如人工审批、消息压缩、规划步骤、调用限频、工具重试、LLM 工具选择&#x2F;模拟、上下文编辑等）；</p>
+<p>Hooks：在 Agent 或模型生命周期的特定节点插入自定义逻辑，如日志记录或消息修剪。</p>
+<p>Interceptors：包裹模型或工具的调用，允许拦截和修改请求&#x2F;响应，或实现重试、缓存、安全护栏等。</p>
+<p>2、Memory 与状态管理： 将短期记忆作为 Agent 状态的一部分进行管理。是会话级的，存储在 Graph 的状态中，Agent 可以访问给定对话的完整上下文，同时保持不同对话之间的分离。长期记忆（Store 持久化），并提供 ModelHook 自动注入用户画像等上下文。</p>
+<p>3、多智能体 (Multi-agent)：当单个 Agent 难以处理复杂任务时，多智能体架构允许将任务分解为多个协同工作的专业化 Agent。</p>
+<p>模式一：工具调用 (Agent as a Tool) 一种集中式控制流，一个“控制器” (Controller) Agent 将其他“子 Agent” (Sub-agent) 作为工具来调用。子 Agent 独立执行任务并返回结果，但不直接与用户对话。可以精细化控制 Agent 间传递的上下文结构。</p>
+<p>模式二：工作流编排 (Handoffs &#x2F; Flow) 一种去中心化控制流，控制权从一个 Agent “交接”给下一个 Agent。框架内置了多种流程型 Agent：顺序流水线式、并行分发+结果合并、LLM动态路由至最适合专家Agent（LLM 会根据用户输入和子 Agent 的 description，智能地选择最合适的 Agent 来处理请求）。</p>
+<p>模式三：Agent as Workflow Node：在复杂的工作流场景中，可以将 ReactAgent 作为 Node 集成到 StateGraph 中，实现更强大的组合能力。Agent 作为 Node 可以利用其推理和工具调用能力，处理需要多步骤推理的任务。</p>
 <h2 id="LangChain"><a href="#LangChain" class="headerlink" title="LangChain"></a>LangChain</h2><ul>
 <li>LangChain：大模型 AI 应用开发框架，1. 组件化：抽象和封装了大模型领域常用的功能与模式，例如统一模型接口、提示词模板和上下文状态存储；2. 开箱即用：通过灵活的链式编排能力对上述原子组件进行结构化组装，以支持完成各式各样特定场景的高阶任务，例如私有知识库问答、结合外部工具的能力增强，以及自主决策行动的智能 Agent。仅支持Python和JavaScript。</li>
 <li>LangChain本质上是一个基于LLM的应用程序开发框架，就像Spring一样，Spring是为了方便统一管理Java bean，提供拓展接口，简化程序开发流程，同样的，LangChain是将与LLM的交互通过定制化模块的方式，以链的方式进行管理，方便应用程序的开发，并同时提供了各种可拓展的方法，以实现对LLM的灵活调用。</li>
 <li>LangChain中的模型包括：LLM、文本嵌入模型等，连续聊天、流式聊天。提示词模版化。输出结果结构化。数据连接组件，加载、转换、存储和查询数据，RAG：文档加载器、文档分割器、embedding模型（向量化）、知识检索。</li>
 </ul>
 <ul>
-<li>langgraph怎么看中间每个节点执行过程，langchain怎么看：LangGraph 基于 状态机（StateGraph），所有数据都保存在 state 中。可以在节点函数中打印state。也可以用 LangChain 的 RunnableConfig 添加回调，监听节点输入输出。LangChain 通过回调和日志输出查看链式执行细节。两者都可接入 LangSmith 实现可视化调试。 </li>
-<li>langchain怎么计算token数：LangChain 依赖模型对应的 tokenizer（分词器）来统计。它通过调用底层模型库（如 Hugging Face、OpenAI API）提供的 tokenizer，将文本转换为 token ID 列表，再通过 len() 得到 token 数量。不同模型使用不同的 tokenizer（如 GPT 用 tiktoken，Llama 用 sentencepiece），LangChain 封装了这些细节，提供统一接口进行估算和管理。</li>
-<li>LangGraph重启后还能接着执行吗：如果 LangGraph Agent 没有做状态持久化，状态在内存中，重启后将丢失上下文，无法继续执行；但如果使用了 检查点（Checkpointer） 保存中间状态，重启后可以从断点恢复，继续执行。</li>
+<li><p>LangChain的发展</p>
+<p> <strong>1、Chain时代</strong></p>
+<p>统一抽象：通过统一接口适配各家大模型<br>优雅语法：让开发者像搭积木一样组合提示词、模型和工具，代码简洁直观。<br>开箱即用：RAG、总结、翻译等常见流程预置模板，快速构建 AI 应用。</p>
+<p>缺点：预设流程太死板，无法应对动态决策需求。AI 只是按部就班执行。无法表达复杂的条件逻辑。</p>
+<p><strong>2、Agent AI时代</strong></p>
+<p>Agent API：将模型和工具组合，让 AI 自主决定调用策略。<br>自主决策：AI 根据任务需求，自行选择使用哪些工具<br>动态适应：无需预设流程，Agent 能应对各种复杂场景<br>简单易用：几行代码就能创建一个”智能助手”</p>
+<p>缺点：黑盒执行，Agent 做决策时看不到过程，调试困难。表达受限，复杂的条件逻辑（如重试、分支）难以实现。缺少持久化和人机协同，长任务无法恢复。</p>
+<p><strong>3、LangGraph基于状态图的全新架构</strong></p>
+<p>一个介于 Chain 和 Agent 之间的抽象——既能表达复杂逻辑，又不失去对执行过程的控制。（控制优于自动）<br>显式状态管理：每个节点的输入输出都是明确的状态对象，不再是黑盒<br>灵活的流程控制：条件分支、循环、并行执行，想怎么组合就怎么组合<br>可观测可调试：状态流转路径一目了然，问题排查不再靠猜</p>
+<p><strong>LangGraph核心理念</strong>：状态驱动图，定义状态、创建节点、设置边、编译图。</p>
+<p><strong>核心组件</strong>：</p>
+<p>State（状态）：数据流动的透明化、可调试查看节点状态、状态可持久化，中断恢复。<br>Node（节点）：每个节点就是一个纯函数——接收状态，执行逻辑，返回新状态。<br>Edge（边）：精确的流程控制，开发者完全掌控 Agent 的执行路径。可add_conditional_edges。<br>StateGraph（状态图）：把它们组装起来</p>
+<p><strong>完整工具链</strong>：</p>
+<p>LangGraph Studio：可视化开发环境，图形化设计、实时调试、一键部署<br>LangSmith：可观测性平台，提供调试追踪、质量评估、生产监控、数据集管理<br>LangGraph CLI：命令行工具，快速创建项目、本地开发、云端部署<br>Agent Chat UI：开箱即用的聊天界面，支持流式输出、人机协同交互</p>
+<p><strong>4、架构统一的 LangChain 1.0</strong></p>
+<p>2025年10月发布，1.0 将 Agent 完全基于 LangGraph 重构，架构层面的统一。</p>
+<p>底层统一：LangChain Agent 现在直接构建在 LangGraph 之上，天然继承了持久化、人机协同、流式输出等能力。</p>
+<p>新 API：引入 create_agent 作为核心接口，替代旧的 Agent API。</p>
+<p>无缝切换：简单场景：用 LangChain 高层 API，复杂需求：切换到 LangGraph，获得完全控制权。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.agents <span class="keyword">import</span> create_agent</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_weather</span>(<span class="params">city: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">  <span class="string">&quot;&quot;&quot;获取给定城市的天气&quot;&quot;&quot;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;city&#125;</span> 总是晴朗！&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 不到 10 行代码创建 Agent</span></span><br><span class="line">agent = create_agent(</span><br><span class="line">  model=<span class="string">&quot;anthropic:claude-3-7-sonnet-latest&quot;</span>,</span><br><span class="line">  tools=[get_weather],</span><br><span class="line">  system_prompt=<span class="string">&quot;你是一个乐于助人的助手&quot;</span></span><br><span class="line">)</span><br><span class="line">agent.invoke(&#123;<span class="string">&quot;messages&quot;</span>: [&#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;旧金山天气如何？&quot;</span>&#125;]&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Chain：抽象层级太低 → 表达力不够 → 无法应对复杂需求</p>
+<p>Agent：抽象层级太高 → 可控性不够 → 生产环境不可靠</p>
+<p>LangGraph：找到甜蜜点 → 既有表达力又可控 → 适合生产环境</p>
+<p>New Agent：统一架构 → 高低层自由切换 → 兼顾效率与控制</p>
+</li>
+<li><p>langgraph怎么看中间每个节点执行过程，langchain怎么看：LangGraph 基于 状态机（StateGraph），所有数据都保存在 state 中。可以在节点函数中打印state。也可以用 LangChain 的 RunnableConfig 添加回调，监听节点输入输出。LangChain 通过回调和日志输出查看链式执行细节。两者都可接入 LangSmith 实现可视化调试。 </p>
+</li>
+<li><p>langchain怎么计算token数：LangChain 依赖模型对应的 tokenizer（分词器）来统计。它通过调用底层模型库（如 Hugging Face、OpenAI API）提供的 tokenizer，将文本转换为 token ID 列表，再通过 len() 得到 token 数量。不同模型使用不同的 tokenizer（如 GPT 用 tiktoken，Llama 用 sentencepiece），LangChain 封装了这些细节，提供统一接口进行估算和管理。</p>
+</li>
+<li><p>LangGraph重启后还能接着执行吗：如果 LangGraph Agent 没有做状态持久化，状态在内存中，重启后将丢失上下文，无法继续执行；但如果使用了 检查点（Checkpointer） 保存中间状态，重启后可以从断点恢复，继续执行。</p>
+</li>
 </ul>
 <h2 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h2><ul>
 <li><p>提示词技巧：1⃣️结构化：提示词的本质就是通过语言将模型要做的事情交代清楚。角色+技能+限制。概述（角色+背景）、过程（技能+规则+流程）、依赖（工具+知识+素材）、控制（要求）。2⃣️加分隔符：在提示词中合理添加分隔符，区分指令和待处理的内容。例如 &#96;&#96;&#96;、— 、&#x3D;&#x3D;&#x3D; 等。3⃣️加示例。4⃣️加要求：发现 Bad Case 加入要求中，不断规范模型输出。5⃣️给出步骤：用来指导模型按照你的意图来输出信息。6⃣️自带知识库：对于非通用的知识，在提示词中给出知识库。采用检索增强生成技术（RAG），基于用户输入的信息通过内部或外部的搜索接口检索出相关信息作为背景知识拼接到提示词中传给模型。7⃣️重复提醒。8⃣️长提示词用户输入放最后。</p>
@@ -794,6 +804,8 @@
 </ul>
 <ul>
 <li><p>embedding词嵌入：将单词表示为数值向量的方法，它能够捕捉单词间的语义关系和上下文信息。在词嵌入空间中，具有相似含义的单词被定位在相近的位置，向量之间的距离和方向编码了单词之间的相似度。机器学习算法通过这些数值向量理解语言。</p>
+</li>
+<li><p>Embedding向量检索原理：通过神经网络将文本映射为高维向量（如BGE模型生成1024维向量），语义相似文本的向量距离更近（如余弦相似度&gt;0.9）。检索时，用户查询文本被编码为向量，在向量数据库（如FAISS）中通过近似最近邻算法（ANN）快速匹配Top-K相似向量。</p>
 </li>
 <li><p>应用场景：文本分类（垃圾邮件检测）、命名实体识别（NER）、词语相似度(类比任务)、问答系统中进行语义匹配和文档检索。</p>
 </li>
@@ -973,7 +985,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">一些实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98"><span class="nav-number">2.1.</span> <span class="nav-text">部署实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E8%B0%83%E5%AE%9E%E6%88%98"><span class="nav-number">2.2.</span> <span class="nav-text">微调实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAG%E5%AE%9E%E6%88%98"><span class="nav-number">2.3.</span> <span class="nav-text">RAG实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-AI%E5%AE%9E%E6%88%98"><span class="nav-number">2.4.</span> <span class="nav-text">Spring AI实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Agent%E5%AE%9E%E6%88%98"><span class="nav-number">2.5.</span> <span class="nav-text">Agent实战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">一些开源项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AgentScope"><span class="nav-number">3.1.</span> <span class="nav-text">AgentScope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hello-agent"><span class="nav-number">3.2.</span> <span class="nav-text">hello-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#all-in-rag"><span class="nav-number">3.3.</span> <span class="nav-text">all-in-rag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">4.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">5.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">6.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">7.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LangChain"><span class="nav-number">8.</span> <span class="nav-text">LangChain</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">9.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">10.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">11.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">12.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tokenizer%E5%92%8CEmbedding"><span class="nav-number">13.</span> <span class="nav-text">Tokenizer和Embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moe"><span class="nav-number">14.</span> <span class="nav-text">Moe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AF%84%E6%B5%8B"><span class="nav-number">15.</span> <span class="nav-text">大模型评测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">16.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">17.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">18.</span> <span class="nav-text">数据处理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">大模型基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">一些实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%88%98"><span class="nav-number">2.1.</span> <span class="nav-text">部署实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E8%B0%83%E5%AE%9E%E6%88%98"><span class="nav-number">2.2.</span> <span class="nav-text">微调实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RAG%E5%AE%9E%E6%88%98"><span class="nav-number">2.3.</span> <span class="nav-text">RAG实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-AI%E5%AE%9E%E6%88%98"><span class="nav-number">2.4.</span> <span class="nav-text">Spring AI实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LangChain%E5%AE%9E%E6%88%98"><span class="nav-number">2.5.</span> <span class="nav-text">LangChain实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LangGraph%E5%AE%9E%E6%88%98"><span class="nav-number">2.6.</span> <span class="nav-text">LangGraph实战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">一些开源项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AgentScope"><span class="nav-number">3.1.</span> <span class="nav-text">AgentScope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hello-agent"><span class="nav-number">3.2.</span> <span class="nav-text">hello-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#all-in-rag"><span class="nav-number">3.3.</span> <span class="nav-text">all-in-rag</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="nav-number">4.</span> <span class="nav-text">大模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83"><span class="nav-number">5.</span> <span class="nav-text">大模型微调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8BAgent"><span class="nav-number">6.</span> <span class="nav-text">大模型Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-AI"><span class="nav-number">7.</span> <span class="nav-text">Spring AI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LangChain"><span class="nav-number">8.</span> <span class="nav-text">LangChain</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prompt"><span class="nav-number">9.</span> <span class="nav-text">Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCP"><span class="nav-number">10.</span> <span class="nav-text">MCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAG"><span class="nav-number">11.</span> <span class="nav-text">RAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer"><span class="nav-number">12.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tokenizer%E5%92%8CEmbedding"><span class="nav-number">13.</span> <span class="nav-text">Tokenizer和Embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moe"><span class="nav-number">14.</span> <span class="nav-text">Moe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%AF%84%E6%B5%8B"><span class="nav-number">15.</span> <span class="nav-text">大模型评测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="nav-number">16.</span> <span class="nav-text">机器学习基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">17.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">18.</span> <span class="nav-text">数据处理</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -988,20 +1000,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1028,7 +1040,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
