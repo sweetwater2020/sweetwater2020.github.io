@@ -1409,7 +1409,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-01-25 14:07:37" itemprop="dateModified" datetime="2026-01-25T14:07:37+08:00">2026-01-25</time>
+                <time title="Modified: 2026-01-29 22:02:45" itemprop="dateModified" datetime="2026-01-29T22:02:45+08:00">2026-01-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1548,6 +1548,90 @@
 
 <p>如果单个CLAUDE.md信息量过大，可以将其分层分模块存储，按模块准备不同的CLAUDE.md文件。Claude会从修改最深一级的记忆开始查找。</p>
 <h4 id="3-学习资料"><a href="#3-学习资料" class="headerlink" title="3.学习资料"></a>3.学习资料</h4><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jGtEzNEAv/?spm_id_from=333.788.player.switch&vd_source=5400c79847c54b11a3fdbc93a1850">https://www.bilibili.com/video/BV1jGtEzNEAv/?spm_id_from=333.788.player.switch&amp;vd_source=5400c79847c54b11a3fdbc93a1850</a></p>
+<h2 id="Spec：从TDD思想到分层Agent架构"><a href="#Spec：从TDD思想到分层Agent架构" class="headerlink" title="Spec：从TDD思想到分层Agent架构"></a>Spec：从TDD思想到分层Agent架构</h2><h3 id="一、Vibe-Coding的困境及Spec的复兴"><a href="#一、Vibe-Coding的困境及Spec的复兴" class="headerlink" title="一、Vibe Coding的困境及Spec的复兴"></a>一、Vibe Coding的困境及Spec的复兴</h3><p>2024-2025年，AI编程助手的爆发式发展带来了一个新词汇—Vibe Coding（基于感觉的编程）。开发者与Al进行自然语言对话，AI即时生成代码，看起来效率惊人。</p>
+<p>Vibe Coding的问题：不可预测性、上下文丢失、难以审查、重复劳动。并且在协作层面无法解决团队沟通成本问题。</p>
+<p>早在2000年代初，Kent Beck提出的TDD（测试驱动开发）就包含了“先定义预期，再实现代码”的核心思想。而今天，这一思想正在AI编程的语境下获得新生。</p>
+<p>Spec驱动开发的本质：在编写代码之前，先用结构化的方式定义“系统应该做什么”，让这份规范成为：人类与AI之间的契约、代码实现的验收标准、团队协作的共同语言。</p>
+<p>Vibe Coding时代，我们关注“如何让AI更快地写出代码”。Spec驱动时代，我们关注”如何让团队更高效地协作”。Agent不仅是“代码生成器”，更是”协作规范生成器”。</p>
+<p>核心观点：</p>
+<p>1、Spec驱动开发的底层思想来自TDD家族（ATDD、BDD、UTDD），它们解决的是“如何确保软件行为符合预期”这一根本问题。</p>
+<p>2、现有工具（Spec-Kit、OpenSpec、Kiro）提供了不同层次的实现方案，但在企业级应用场景下仍存在“水士不服”。</p>
+<p>3、企业级应用的特点是多应用协同、职责分离，需要将Spec驱动按工程管理流程拆分成多个Agent环节。</p>
+<p>4、Skills + BaseAgent的模式可以实现渐进式上下文披露，高效利用有限的上下文窗口。</p>
+<p>5、Spec驱动的核心价值不仅是“AI可理解的输入”，更是“团队协作的共同语言“—解决PM与研发、研发与研发之间的沟通成本问题。</p>
+<h3 id="二、现有工具的实现方式"><a href="#二、现有工具的实现方式" class="headerlink" title="二、现有工具的实现方式"></a>二、现有工具的实现方式</h3><p>Spec-kit：GitHub推出的开源规范驱动开发工具包。</p>
+<p>OpenSpec：由Fission-Al开发的轻量级规范驱动框架，专门为AI编程助手设计。支持增量迭代。</p>
+<p>Kiro：是AWS推出的规范驱动Agentic AI IDE，代表了目前工具集成度最高的方案。商业的，支持Vibe模式（快速原型）和Spec模式（生产级开发），可在后台持续执行任务，定期汇报进度。</p>
+<h3 id="三、底层设计思想"><a href="#三、底层设计思想" class="headerlink" title="三、底层设计思想"></a>三、底层设计思想</h3><p>Spec驱动开发并非凭空出现，它深深扎根于软件工程的经典方法论—TDD家族。</p>
+<p>TDD特点：测试先行、最小实现、持续重构。</p>
+<p>TDD是一个广义概念，涵盖了所有”测试先行”的开发方法。UTDD、ATDD、BDD都是TDD在不同层次和视角的具体化。</p>
+<p>UTDD （Unit Test-Driven Development）是TDD在代码单元级别的具体应用。</p>
+<p>ATDD（Acceptance Test-Driven Development）是TDD在系统验收级别的扩展，强调跨职能协作。</p>
+<p>BDD（Behavior-Driven Development）是ATDD的演进，引入了领域特定语言（DSL）。标志贡献是Gherkin语法：Given-When-Then，使用自然语言描述系统行为，规范仅是文档，还是可直接执行的测试。</p>
+<h3 id="四、企业级应用的特殊挑战"><a href="#四、企业级应用的特殊挑战" class="headerlink" title="四、企业级应用的特殊挑战"></a>四、企业级应用的特殊挑战</h3><p>理解了TDD家族的层级关系后，我们需要面对一个现实：Spec-Kit、OpenSpec、、Kiro等工具无法直接应用于企业级应用。这不是工具本身的问题，而是企业级应用的本质特征决定的。</p>
+<p>企业级应用的本质：多应用协作，现有Spec驱动工具的隐含假设是：一个Spec对应一个应用。但企业级应用的现实是：一个需求需要多个职责分明的应用协同完成。</p>
+<p>现有工具假设”Spec可以直接生成代码”，但企业级应用的现实是：“Spec需要先经过技术方案设计，拆解到各个应用，定义协作接口，才能生成各应用的代码”</p>
+<p>如何解决：要解决这个根本矛盾，需要在Spec驱动流程中显式引入技术方案设计环节。</p>
+<p>采用分层Agent架构，核心思想：Agent不仅是“代码生成器”，更是”协作规范生成器”。</p>
+<p>1、PRD分析阶段：将需求转换为用户行为级别的Gherkin（ATDD层）</p>
+<p>2、技术方案设计阶段：分析用户行为，判断功能归属；设计应用间协作方式；定义接口契约；生成各应用的系统行为Gherkin（BDD层）</p>
+<p>3、代码开发阶段：各应用根据自己的系统行为Gherkin实现代码五、分层Agent架构</p>
+<p>现有Spec驱动工具采用的是线性流程：PRD-Spec-Code</p>
+<p>分层Agent的三层模型：</p>
+<p>第一层：用户行为层（ATDD）PRD分析Agent-&gt;用户行为Gherkin，参与者：PM+研发</p>
+<p>第二层：系统行为层（BDD +UTDD）技术方案设计Agent-&gt; 系统行为Gherkin +契约，参与者：技术负责人＋各团队</p>
+<p>第三层：代码实现层（UTDD执行）代码开发Agent-&gt;代码+测试，参与者：各团队开发者</p>
+<p>Skills渐进披露机制，AI编程助手面临的根本技术限制是上下文窗口有限。</p>
+<p>解决方案：Claude Skills 是Claude Code&#x2F;OpenCode提供的渐进式上下文加载机制。不是一次性加载所有背景，而是按需分批加载。就像程序员需要时查阅文档，而不是先背诵所有文档一样。</p>
+<p>BaseAgent提供通用能力，Skills提供业务上下文，可复用。</p>
+<p>Skills支持按需分批加载，而不是一次性全部加载，三层加载机制：</p>
+<p>第一层：基础能力「总是加载」，Agent执行时</p>
+<p>第二层：领域知识「按需加载」，Agent识别需要时</p>
+<p>第三层：详细参考「临时按需加载」，Agent遇到具体问题时加载六、总结</p>
+<p><strong>总结</strong>：本文从Vibe Coding的协作成本问题出发，梳理了TDD家族的理论基础，分析了现有Spec驱动工具在企业级应用中的局限性，提出了分层Agent架构这一创新解决方案。通过显式引入技术方案设计环节、分层Gherkin转换、Skills渐进披露机制，以及Skils+BaseAgent的复用模式，我们不仅解决了“个人编码效率”的问题，更重要的是解决了“团队协作效率”的核心痛点。</p>
+<p>展望：随着AI编程能力的持续演进，分层Agent架构将成为连接人类、AI、工具链的关键桥梁。未来的软件开发将是”人类提出愿景、Agent生成规范、AI执行代码、工具链自动化部署”的协同过程。而这一切的核心，仍然是那个从Kent Beck时代就开始的理念：“先定义预期，再实现代码”。</p>
+<h2 id="OpenSpec实践"><a href="#OpenSpec实践" class="headerlink" title="OpenSpec实践"></a>OpenSpec实践</h2><h3 id="实践一OpenSpec"><a href="#实践一OpenSpec" class="headerlink" title="实践一OpenSpec"></a>实践一OpenSpec</h3><p>✅ 一、前置条件：安装 Node.js OpenSpec 需要 Node.js ≥ 20.19.0，建议使用 LTS 版本： 安装 nvm（Node Version Manager）： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>重新加载 shell 配置（如使用 Zsh）： <code>source ~/.zshrc</code> </p>
+<p>安装最新 LTS 版本 Node.js： <code>nvm install --lts</code> </p>
+<p>验证安装： </p>
+<p><code>node -v    # 应显示 v20.x.x</code> </p>
+<p><code>npm -v     # 应显示 npm 版本</code> </p>
+<p>✅ 二、安装 OpenSpec CLI 工具 </p>
+<p>在终端执行以下命令全局安装： <code>npm install -g @fission-ai/openspec@latest</code> </p>
+<p>验证是否安装成功： <code>openspec --version</code> 若返回版本号（如 v0.x.x），说明安装成功。 </p>
+<p>✅ 三、初始化项目 </p>
+<p>进入你的项目目录后运行： <code>cd your-project-path</code> </p>
+<p><code>openspec init</code> </p>
+<p>该命令会：<br>引导你选择 AI 编码工具（如 Cursor、Claude Code 等）；<br>自动生成 openspec&#x2F; 目录结构，包含： specs&#x2F;：规范文档（spec.md） changes&#x2F;：变更提案（proposal）<br>自动配置快捷指令（如 &#x2F;openspec:proposal） </p>
+<p>⚠️ 注意：仅需在项目初始化时安装一次，无需团队全员安装。 </p>
+<p>🧠 小贴士 OpenSpec 是轻量级工具，无需 API 密钥或复杂配置； 支持主流 AI 编码工具（Cursor、Claude Code、GitHub Copilot 等）； 通过 Markdown 文件驱动开发流程，非常适合敏捷团队和遗留项目改造。 现在就可以开始用 AI 规范驱动开发啦！🚀</p>
+<h3 id="实践二OpenSpec-iFlow"><a href="#实践二OpenSpec-iFlow" class="headerlink" title="实践二OpenSpec+iFlow"></a>实践二OpenSpec+iFlow</h3><p>✅ 一、安装 OpenSpec（核心依赖） </p>
+<p>OpenSpec 并非 iFlow 内置组件，需单独安装。推荐使用 uv 工具（轻量、快速、现代）： </p>
+<p><code>uv tool install specify-cli --from git+https://github.com/github/spec-kit.git </code></p>
+<p>⚠️ 注意：该命令是官方推荐安装方式</p>
+<p>✅ 二、初始化 OpenSpec 项目环境 </p>
+<p>在您的目标代码项目根目录下执行： <code>openspec init</code> </p>
+<p>该命令会生成基础结构，包括： <code>openspec/project.md</code>（项目上下文初稿，需AI辅助填充） <code>openspec/AGENTS.md</code>（Agent 规范总览） </p>
+<p><strong>初始化后必须让 AI 扫描工程并填充 project.md</strong>，以建立准确的工程上下文。 </p>
+<p>✅ 三、启动并进入 iFlow 环境</p>
+<p>iFlow 有两种主流使用方式，您可根据场景选择： </p>
+<p>1⃣️方式1：使用 iflow-cli（推荐，命令行原生支持） </p>
+<p>安装 CLI（若未安装）： </p>
+<p>参考官方快速入门：<a target="_blank" rel="noopener" href="https://platform.iflow.cn/cli/quickstart11">https://platform.iflow.cn/cli/quickstart11</a> </p>
+<p>进入项目目录后，直接运行： iflow → 将自动打开 Web UI（默认 <a href="http://localhost:3000），或进入交互式">http://localhost:3000），或进入交互式</a> CLI 模式。 </p>
+<p>在 iFlow 中，您可通过 &#x2F;init 命令让 AI 分析当前项目结构，为后续 OpenSpec 协同打下基础。</p>
+<p>2⃣️方式2：Web 版 iFlow（平台化操作） </p>
+<p>访问 <a target="_blank" rel="noopener" href="https://platform.iflow.cn/">https://platform.iflow.cn</a> </p>
+<p>登录后，点击「新建工作流」→ 选择「空白项目」或导入已有代码库 </p>
+<p>在工作流编辑器中，可调用已安装的 Skills（如 openspec-proposal、openspec-apply）</p>
+<p>✅ 四、启动首个 SDD 流程（端到端示例） </p>
+<p>以“为商品详情页添加 AI 推荐模块”为例： </p>
+<p>在 iFlow 中输入 prompt，触发 openspec-proposal： “请为商品详情页新增 AI 推荐模块：基于用户浏览历史，实时推荐3个相似商品，需返回商品ID、标题、相似度分值。” </p>
+<p>Review 提案内容（自动生成的 openspec&#x2F;changes&#x2F;add-ai-recommendation&#x2F;PROPOSAL.md），补充场景细节（如 WHEN 用户停留超10秒 THEN 触发推荐）</p>
+<p>执行 openspec-apply → iFlow 调用 AI 生成 skills&#x2F;recommender.iflow、测试用例、API 文档等</p>
+<p>验证通过后，运行 openspec-archive → 自动归档并更新 openspec&#x2F;AGENTS.md 和 project.md</p>
 
       
     </div>
