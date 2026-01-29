@@ -28,7 +28,7 @@
 <meta property="og:description" content="MAC软件uTools（文本代码对比、Markdown笔记、剪贴板、聚合翻译、sql编辑器、json格式化、计算器、备忘快贴、截图工具） Mos - 拯救鼠标滚动的神器（鼠标方向） https:&#x2F;&#x2F;mos.caldis.me&#x2F;插件（标签分组扩展、垂直的标签＆书签） 环境配置包管理工具homebrew 默认终端的替代品iterm2 修改命令行提示符 安装流行的Zsh shell框架oh my zsh">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-01-25T02:11:28.252Z">
-<meta property="article:modified_time" content="2026-01-25T06:11:06.775Z">
+<meta property="article:modified_time" content="2026-01-29T14:18:59.800Z">
 <meta property="article:author" content="Sweetwater">
 <meta property="article:tag" content="MAC">
 <meta name="twitter:card" content="summary">
@@ -211,10 +211,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2026-01-25 10:11:28 / Modified: 14:11:06" itemprop="dateCreated datePublished" datetime="2026-01-25T10:11:28+08:00">2026-01-25</time>
+              <time title="Created: 2026-01-25 10:11:28" itemprop="dateCreated datePublished" datetime="2026-01-25T10:11:28+08:00">2026-01-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-29 22:18:59" itemprop="dateModified" datetime="2026-01-29T22:18:59+08:00">2026-01-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -243,9 +249,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="MAC软件"><a href="#MAC软件" class="headerlink" title="MAC软件"></a>MAC软件</h2><p>uTools（文本代码对比、Markdown笔记、剪贴板、聚合翻译、sql编辑器、json格式化、计算器、备忘快贴、截图工具）</p>
+        <h3 id="MAC软件"><a href="#MAC软件" class="headerlink" title="MAC软件"></a>MAC软件</h3><p>uTools（文本代码对比、Markdown笔记、剪贴板、聚合翻译、sql编辑器、json格式化、计算器、备忘快贴、截图工具）</p>
 <p>Mos - 拯救鼠标滚动的神器（鼠标方向） <a target="_blank" rel="noopener" href="https://mos.caldis.me/%E6%8F%92%E4%BB%B6%EF%BC%88%E6%A0%87%E7%AD%BE%E5%88%86%E7%BB%84%E6%89%A9%E5%B1%95%E3%80%81%E5%9E%82%E7%9B%B4%E7%9A%84%E6%A0%87%E7%AD%BE%EF%BC%86%E4%B9%A6%E7%AD%BE%EF%BC%89">https://mos.caldis.me/插件（标签分组扩展、垂直的标签＆书签）</a></p>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>包管理工具homebrew</p>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p>包管理工具homebrew</p>
 <p>默认终端的替代品iterm2</p>
 <p>修改命令行提示符</p>
 <p>安装流行的Zsh shell框架oh my zsh</p>
@@ -253,6 +259,47 @@
 <p>安装jdk，配置java环境</p>
 <p>安装maven，配置环境，setting文件</p>
 <p>下载IDEA、Pycharm</p>
+<h3 id="查看ssd寿命"><a href="#查看ssd寿命" class="headerlink" title="查看ssd寿命"></a>查看ssd寿命</h3><p>brew安装查询工具：<code>brew install smartmontools</code></p>
+<p>参看磁盘：<code>diskutil list</code></p>
+<p>参看使用情况：<code>smartctl -a disk0</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">SMART/Health Information (NVMe Log 0x02)</span><br><span class="line">Critical Warning:                   0x00</span><br><span class="line">Temperature:                        47 Celsius</span><br><span class="line">Available Spare:                    83%</span><br><span class="line">Available Spare Threshold:          2%</span><br><span class="line">Percentage Used:                    5%</span><br><span class="line">Data Units Read:                    97,383,945 [49.8 TB]</span><br><span class="line">Data Units Written:                 85,617,562 [43.8 TB]</span><br><span class="line">Host Read Commands:                 1,110,595,079</span><br><span class="line">Host Write Commands:                574,485,961</span><br><span class="line">Controller Busy Time:               0</span><br><span class="line">Power Cycles:                       11,730</span><br><span class="line">Power On Hours:                     389</span><br><span class="line">Unsafe Shutdowns:                   34</span><br><span class="line">Media and Data Integrity Errors:    0</span><br><span class="line">Error Information Log Entries:      0</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://www.xiaoyuanjiu.com/18812.html">https://www.xiaoyuanjiu.com/18812.html</a></p>
+<h3 id="打开终端"><a href="#打开终端" class="headerlink" title="打开终端"></a>打开终端</h3><p>command + 空格，搜索终端，即出来了。</p>
+<h3 id="打开后台"><a href="#打开后台" class="headerlink" title="打开后台"></a>打开后台</h3><p>command+option+esc：打开后台</p>
+<h3 id="文件夹添加为收藏"><a href="#文件夹添加为收藏" class="headerlink" title="文件夹添加为收藏"></a>文件夹添加为收藏</h3><p>文件夹往过拖就行</p>
+<h3 id="安装brew"><a href="#安装brew" class="headerlink" title="安装brew"></a>安装brew</h3><p><code>/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</code></p>
+<p>brew help检查</p>
+<h3 id="iterm2终端"><a href="#iterm2终端" class="headerlink" title="iterm2终端"></a>iterm2终端</h3><p>1.iTerm2 是默认终端的替代品，也是目前 macOS 下最好用的终端工具，集颜值和效率于一身。</p>
+<p>官网安装即可，配置颜色，窗口，光标等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参考：https://cloud.tencent.com/developer/article/1772592</span><br><span class="line">https://www.jianshu.com/p/5ba0a559416e</span><br></pre></td></tr></table></figure>
+
+<p>2.安装on my zsh </p>
+<p><code>$ sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;&quot;</code></p>
+<p>如果不行，就自建脚本复制粘贴，然后允许，一样的意思。</p>
+<p>3.安装<strong>powerlevel10k</strong></p>
+<p>powerlevel10k是一款 zsh 主题，是 powerlevel9k的升级版，强调快速、高效和开箱即用。powerlevel10k 免去了之前 powerlevel9k 比较繁琐的安装方式，如安装字体，配置样式、修改主题等一系列繁琐的操作，开箱即用，非常简单。</p>
+<p><code>brew install romkatv/powerlevel10k/powerlevel10k</code>，并根据brew提示，在.zshrc中添加<code>source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme</code></p>
+<p><code>source ~/.zshrc</code></p>
+<p><code>p10k configure</code> &#x2F;&#x2F;开始配置</p>
+<p>4.安装插件</p>
+<p>安装zsh命令行高亮插件<code>brew install zsh-syntax-highlighting</code>，并根据brew提示在.zshrc中添加<code>source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh</code></p>
+<p>安装zsh自动提示插件<code>brew install zsh-autosuggestions</code>，并根据brew提示在.zshrc中添加<code>source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh</code></p>
+<p><code>source ~/.zshrc</code></p>
+<h3 id="切换输入法"><a href="#切换输入法" class="headerlink" title="切换输入法"></a>切换输入法</h3><p>control+空格</p>
+<h3 id="文件夹整理"><a href="#文件夹整理" class="headerlink" title="文件夹整理"></a>文件夹整理</h3><p>command+control+1</p>
+<h3 id="mvn、mysql开机须自启问题"><a href="#mvn、mysql开机须自启问题" class="headerlink" title="mvn、mysql开机须自启问题"></a>mvn、mysql开机须自启问题</h3><p>jdk配置在 &#x2F;etc&#x2F;profile中，开机时运行<br>mvn配置在 ~&#x2F;.zprofile中，启动终端时运行<br>export PATH&#x3D;”$Maven&#x2F;bin:$PATH”<br>~&#x2F;.zshrc 中增加 source &#x2F;etc&#x2F;profile 使得jdk配置生效<br>一些p10k的配置也在 ～&#x2F;.zshrc中配置了</p>
+<p>关于mysql重启之后就没了<br>在 &#x2F;etc&#x2F;profile 中增加：<br>sudo .&#x2F;support-files&#x2F;mysql.server start<br>也不行。</p>
+<p>发现brew没了，不知道为什么。<br>重开一下终端就好了。</p>
+<p>目前是：<br>&#x2F;etc&#x2F;profile 中加了个开启mysql的语句<br>.zshrc中没有加 source &#x2F;etc&#x2F;profile的语句。<br>重启之后，mysql就不行啦，source &#x2F;etc&#x2F;profile 一下得了</p>
+<h3 id="mac剪贴板历史"><a href="#mac剪贴板历史" class="headerlink" title="mac剪贴板历史"></a>mac剪贴板历史</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05d7bd51a4bf">https://www.jianshu.com/p/05d7bd51a4bf</a></p>
+<p>clipy软件：官网地址：<a target="_blank" rel="noopener" href="https://clipy-app.com/">https://clipy-app.com/</a></p>
+<p>使用快捷键shift+command+v即可调用剪切板</p>
+<p>command + d 是复制一份一样的。<br>command + c，然后command+option+v，是移动，相当于剪切。</p>
+<h3 id="安装xcode"><a href="#安装xcode" class="headerlink" title="安装xcode"></a>安装xcode</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xcode-select: error: command line tools are already installed, use &quot;Software Update&quot; to install updates</span><br><span class="line"></span><br><span class="line">$ rm -rf /Library/Developer/CommandLineTools</span><br><span class="line">$ xcode-select --install</span><br><span class="line"></span><br><span class="line">若没权限，加sudo</span><br></pre></td></tr></table></figure>
+
+
+
 
     </div>
 
@@ -336,7 +383,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MAC%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">MAC软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">MAC软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bssd%E5%AF%BF%E5%91%BD"><span class="nav-number">3.</span> <span class="nav-text">查看ssd寿命</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%BB%88%E7%AB%AF"><span class="nav-number">4.</span> <span class="nav-text">打开终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%90%8E%E5%8F%B0"><span class="nav-number">5.</span> <span class="nav-text">打开后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E6%B7%BB%E5%8A%A0%E4%B8%BA%E6%94%B6%E8%97%8F"><span class="nav-number">6.</span> <span class="nav-text">文件夹添加为收藏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85brew"><span class="nav-number">7.</span> <span class="nav-text">安装brew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iterm2%E7%BB%88%E7%AB%AF"><span class="nav-number">8.</span> <span class="nav-text">iterm2终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">切换输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E6%95%B4%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">文件夹整理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mvn%E3%80%81mysql%E5%BC%80%E6%9C%BA%E9%A1%BB%E8%87%AA%E5%90%AF%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">mvn、mysql开机须自启问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%8E%86%E5%8F%B2"><span class="nav-number">12.</span> <span class="nav-text">mac剪贴板历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85xcode"><span class="nav-number">13.</span> <span class="nav-text">安装xcode</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
